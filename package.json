@@ -1,0 +1,31 @@
+{
+  "name": "memorize-messenger-bot",
+  "version": "1.0.0",
+  "description": "Memorize messenger bot",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tortuvshin/memorize-bot.git"
+  },
+  "keywords": [
+    "messenger",
+    "bot",
+    "nodejs"
+  ],
+  "author": "Tortuvshin Byambaa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tortuvshin/memorize-bot/issues"
+  },
+  "homepage": "https://github.com/tortuvshin/memorize-bot#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "config": "^1.24.0",
+    "ejs": "^2.5.5",
+    "express": "^4.14.0",
+    "request": "^2.79.0"
+  }
+}
