@@ -1,0 +1,19 @@
+{
+  "name": "memorize-bot",
+  "scripts": {
+    "postdeploy": "node app.js",
+    "pr-predestroy": "node app.js"
+  },
+  "env": {
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
