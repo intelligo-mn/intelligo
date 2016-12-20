@@ -1,5 +1,5 @@
 {
-  "name": "secretbots",
+  "name": "probot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,10 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "config": "^1.20.4",
+    "ejs": "^2.4.2",
     "express": "^4.13.4",
-    "request": "^2.71.0"
+    "request": "^2.72.0"
   }
 }
