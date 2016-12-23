@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 
 // index
 app.get('/', function (req, res) {
-	res.send('Сайн уу Pro bot байна уу')
+	res.send('Сайн уу Pro bot байна')
 })
 
 // for facebook verification
@@ -79,7 +79,7 @@ app.post('/webhook/', function (req, res) {
 
 // recommended to inject access tokens as environmental variables, e.g.
 // const token = process.env.PAGE_ACCESS_TOKEN
-const token = "EAARx4ZCPHY40BALQnv7SfSSKITxu6QGsl8VykH4ZBMBB8xqZCmiZCZACsrP3uxOTrSUFj0y4CEwE7hKdaZBC6L5lskiri94m21mQcF3hVXIWZBK2ynLopPf7zYrat5kIy67ZBA3dKUnDlLt2c0FBWIL4Hkk5tEWR9ZAZC7mOlWKPy5JAZDZD"
+const token = "EAARx4ZCPHY40BAOdnm3PrXWvwY0bzqwil6uIIrwJ0E98MiCFRZAz2jQCxm5hrEkHYEAZBt1l7ilTm7TX7J5lj1k2ped2GI7ERVsv9QWjsluLuh4JVQ8J9ZCQjnbHNmQZCfx3aRZArTlRoune6jFxtMXDLr26e8I3NLriRFQaIydQZDZD"
 
 function sendTextMessage(sender, text) {
 	let messageData = { text:text }
