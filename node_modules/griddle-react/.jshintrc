@@ -1,0 +1,7 @@
+{
+  "esnext": true,
+  "asi": true,
+  "eqeqeq": "cantbeturnedoff",
+  "eqnull": true,
+  "sub":true
+}
