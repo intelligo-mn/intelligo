@@ -19,20 +19,25 @@
     "config": "^1.20.4",
     "cookie-parser": "^1.4.3",
     "ejs": "^2.4.2",
+    "eventemitter3": "^2.0.2",
     "express": "^4.13.4",
     "griddle-react": "^0.7.1",
+    "node-fetch": "^1.6.3",
     "path": "^0.12.7",
     "react": "^15.4.1",
     "request": "^2.72.0"
   },
   "devDependencies": {
     "browserify": "^13.3.0",
+    "chai": "^3.5.0",
     "gulp": "^3.9.1",
     "gulp-browserify": "^0.5.1",
     "gulp-concat": "^2.6.1",
+    "mocha": "^3.2.0",
     "node-jsx": "^0.13.3",
     "react-tools": "^0.13.3",
-    "reactify": "^1.1.1"
+    "reactify": "^1.1.1",
+    "sinon": "^1.17.7"
   },
   "engines": {
     "node": "~4.1.2"
