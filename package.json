@@ -1,12 +1,13 @@
 {
-  "name": "Memorize bot",
+  "name": "probot",
   "version": "1.0.0",
   "description": "Memorize Bot Platform",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "lint": "jshint --exclude node_modules .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --recursive test/*",
+    "test:watch": "npm test -- --watch"
   },
   "repository": {
     "type": "git",
