@@ -161,7 +161,7 @@ function receivedMessage(event) {
   if (messageText) {
 
     switch (messageText) {
-      case 'image':
+      case 'зураг':
         sendImageMessage(senderID);
         break;
 
@@ -169,19 +169,19 @@ function receivedMessage(event) {
         sendGifMessage(senderID);
         break;
 
-      case 'audio':
+      case 'дуу':
         sendAudioMessage(senderID);
         break;
 
-      case 'video':
+      case 'бичлэг':
         sendVideoMessage(senderID);
         break;
 
-      case 'file':
+      case 'файл':
         sendFileMessage(senderID);
         break;
 
-      case 'button':
+      case 'товч':
         sendButtonMessage(senderID);
         break;
 

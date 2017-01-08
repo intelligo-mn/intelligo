@@ -1,6 +1,6 @@
 {
     "appSecret": "ca241b1c2149c63ab81b74789becb8d8",
-    "pageAccessToken": "EAASQGqhbd54BAPoGUTPeim6eR3X6E2NwlB13M6DYmHvvRQQJqXJtbX3YpDlI6JCA4v9QSVNnmGRO4srKNYW1NVtd4HgmLmdQwlylncjxYV9rJAkYBGKU9ir0QCZCWczU3dX4A2HX5wKOhaIXELTj47PoPeghfQ7JgdA9ZAoAZDZD",
+    "pageAccessToken": "EAASQGqhbd54BAH3jzDRfu5QIemWnZBoJtgZCtzfJLYeyCiDjjxEuR0B3ZBBEZBQSuD6DMVTDBmXoZCkLFUdvcVnoc26FSyfDGyDWXECxwsJZATZBZA8CCVlgUK0LfadACvId4vR7tSaFA4daNBbYttItp5v7Szsjn09XV720JOhmBwZDZD",
     "validationToken": "my_voice_is_my_password_verify_me",
-    "serverURL": "https://memorize-bot.herokuapp.com/webhook"
+    "serverURL": "https://memorize-bot-tortuvshin.c9users.io/"
 }
