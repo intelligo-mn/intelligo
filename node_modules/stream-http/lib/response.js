@@ -53,6 +53,8 @@ var IncomingMessage = exports.IncomingMessage = function (xhr, response, mode) {
 				}
 				self.push(new Buffer(result.value))
 				read()
+			}).catch(function(err) {
+				self.emit('error', err)
 			})
 		}
 		read()
