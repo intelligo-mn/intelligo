@@ -55,8 +55,8 @@ db.on('error', console.error);
 db.once('open', function () {
     console.log('Connected to mongodb server');
 });
-// mongoose.connect('mongodb://username:password@host:port/database=');
-_mongoose2.default.connect('mongodb://localhost/codelab');
+mongoose.connect('mongodb://username:password@host:port/database=');
+_mongoose2.default.connect('mongodb://localhost:27017/codelab');
 
 /* use session */
 app.use((0, _expressSession2.default)({

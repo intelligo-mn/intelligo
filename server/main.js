@@ -25,7 +25,7 @@ const db = mongoose.connection;
 db.on('error', console.error);
 db.once('open', () => { console.log('Connected to mongodb server'); });
 // mongoose.connect('mongodb://username:password@host:port/database=');
-mongoose.connect('mongodb://localhost/codelab');
+mongoose.connect('mongodb://localhost:27017/');
 
 /* use session */
 app.use(session({
