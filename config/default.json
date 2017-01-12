@@ -1,6 +1,6 @@
 {
-    "appSecret": "ca241b1c2149c63ab81b74789becb8d8",
-    "pageAccessToken": "EAASQGqhbd54BAPoGUTPeim6eR3X6E2NwlB13M6DYmHvvRQQJqXJtbX3YpDlI6JCA4v9QSVNnmGRO4srKNYW1NVtd4HgmLmdQwlylncjxYV9rJAkYBGKU9ir0QCZCWczU3dX4A2HX5wKOhaIXELTj47PoPeghfQ7JgdA9ZAoAZDZD",
+    "appSecret": "3246baae79b42f2126e1bb35d6267d5d",
+    "pageAccessToken": "EAARx4ZCPHY40BAO3yARQFfZAMB2yuERZCLPTAJUm31sCKYuUCSKMVBW6fZBLsZBVzpaWkiy9btP9PlVQeOwZBTxmkLcfA6Ievshfk9XAZAhi9tmL4kghWsyN4jlZCxgM274W2FFFIoiJWVD9y12ZA9TH33YOVR9hpPFyS5Lxb1fORMgZDZD",
     "validationToken": "my_voice_is_my_password_verify_me",
-    "serverURL": "https://memorize-bot.herokuapp.com/webhook"
+    "serverURL": "https://probot-tortuvshin.c9users.io/webhook"
 }

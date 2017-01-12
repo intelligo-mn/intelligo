@@ -19,7 +19,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = require('./React');
-var ReactAddonsDOMDependencies = require('./ReactAddonsDOMDependencies');
 var ReactTransitionChildMapping = require('./ReactTransitionChildMapping');
 
 var emptyFunction = require('fbjs/lib/emptyFunction');
@@ -63,12 +62,7 @@ var ReactTransitionGroup = function (_React$Component) {
 
       delete _this.currentlyTransitioningKeys[key];
 
-      var currentChildMapping;
-      if (process.env.NODE_ENV !== 'production') {
-        currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children, ReactAddonsDOMDependencies.getReactInstanceMap().get(_this)._debugID);
-      } else {
-        currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children);
-      }
+      var currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children);
 
       if (!currentChildMapping || !currentChildMapping.hasOwnProperty(key)) {
         // This was removed before it had fully appeared. Remove it.
@@ -92,12 +86,7 @@ var ReactTransitionGroup = function (_React$Component) {
 
       delete _this.currentlyTransitioningKeys[key];
 
-      var currentChildMapping;
-      if (process.env.NODE_ENV !== 'production') {
-        currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children, ReactAddonsDOMDependencies.getReactInstanceMap().get(_this)._debugID);
-      } else {
-        currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children);
-      }
+      var currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children);
 
       if (!currentChildMapping || !currentChildMapping.hasOwnProperty(key)) {
         // This was removed before it had fully entered. Remove it.
@@ -124,12 +113,7 @@ var ReactTransitionGroup = function (_React$Component) {
 
       delete _this.currentlyTransitioningKeys[key];
 
-      var currentChildMapping;
-      if (process.env.NODE_ENV !== 'production') {
-        currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children, ReactAddonsDOMDependencies.getReactInstanceMap().get(_this)._debugID);
-      } else {
-        currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children);
-      }
+      var currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children);
 
       if (currentChildMapping && currentChildMapping.hasOwnProperty(key)) {
         // This entered again before it fully left. Add it again.
@@ -160,12 +144,7 @@ var ReactTransitionGroup = function (_React$Component) {
   };
 
   ReactTransitionGroup.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-    var nextChildMapping;
-    if (process.env.NODE_ENV !== 'production') {
-      nextChildMapping = ReactTransitionChildMapping.getChildMapping(nextProps.children, ReactAddonsDOMDependencies.getReactInstanceMap().get(this)._debugID);
-    } else {
-      nextChildMapping = ReactTransitionChildMapping.getChildMapping(nextProps.children);
-    }
+    var nextChildMapping = ReactTransitionChildMapping.getChildMapping(nextProps.children);
     var prevChildMapping = this.state.children;
 
     this.setState({

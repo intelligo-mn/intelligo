@@ -1,5 +1,5 @@
  /**
-  * React (with addons) v15.4.1
+  * React (with addons) v15.4.2
   */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.React = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 /**
@@ -265,17 +265,6 @@ var fourArgumentPooler = function (a1, a2, a3, a4) {
   }
 };
 
-var fiveArgumentPooler = function (a1, a2, a3, a4, a5) {
-  var Klass = this;
-  if (Klass.instancePool.length) {
-    var instance = Klass.instancePool.pop();
-    Klass.call(instance, a1, a2, a3, a4, a5);
-    return instance;
-  } else {
-    return new Klass(a1, a2, a3, a4, a5);
-  }
-};
-
 var standardReleaser = function (instance) {
   var Klass = this;
   !(instance instanceof Klass) ? "development" !== 'production' ? invariant(false, 'Trying to release an instance into a pool of a different type.') : _prodInvariant('25') : void 0;
@@ -315,8 +304,7 @@ var PooledClass = {
   oneArgumentPooler: oneArgumentPooler,
   twoArgumentPooler: twoArgumentPooler,
   threeArgumentPooler: threeArgumentPooler,
-  fourArgumentPooler: fourArgumentPooler,
-  fiveArgumentPooler: fiveArgumentPooler
+  fourArgumentPooler: fourArgumentPooler
 };
 
 module.exports = PooledClass;
@@ -420,28 +408,32 @@ module.exports = React;
  *
  */
 
-/* globals ReactDOM */
-
 'use strict';
 
-exports.getReactDOM = function () {
-  return ReactDOM;
-};
+var ReactDOM;
 
-exports.getReactInstanceMap = function () {
-  return ReactDOM.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactInstanceMap;
-};
+function getReactDOM() {
+  if (!ReactDOM) {
+    // This is safe to use because current module only exists in the addons build:
+    var ReactWithAddonsUMDEntry = _dereq_(32);
+    // This is injected by the ReactDOM UMD build:
+    ReactDOM = ReactWithAddonsUMDEntry.__SECRET_INJECTED_REACT_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+  }
+  return ReactDOM;
+}
+
+exports.getReactDOM = getReactDOM;
 
 if ("development" !== 'production') {
   exports.getReactPerf = function () {
-    return ReactDOM.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactPerf;
+    return getReactDOM().__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactPerf;
   };
 
   exports.getReactTestUtils = function () {
-    return ReactDOM.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactTestUtils;
+    return getReactDOM().__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactTestUtils;
   };
 }
-},{}],7:[function(_dereq_,module,exports){
+},{"32":32}],7:[function(_dereq_,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -2848,7 +2840,14 @@ var ReactElementValidator = {
     // We warn in this case but don't throw. We expect the element creation to
     // succeed and there will likely be errors in render.
     if (!validType) {
-      "development" !== 'production' ? warning(false, 'React.createElement: type should not be null, undefined, boolean, or ' + 'number. It should be a string (for DOM elements) or a ReactClass ' + '(for composite components).%s', getDeclarationErrorAddendum()) : void 0;
+      if (typeof type !== 'function' && typeof type !== 'string') {
+        var info = '';
+        if (type === undefined || typeof type === 'object' && type !== null && Object.keys(type).length === 0) {
+          info += ' You likely forgot to export your component from the file ' + 'it\'s defined in.';
+        }
+        info += getDeclarationErrorAddendum();
+        "development" !== 'production' ? warning(false, 'React.createElement: type is invalid -- expected a string (for ' + 'built-in components) or a class/function (for composite ' + 'components) but got: %s.%s', type == null ? type : typeof type, info) : void 0;
+      }
     }
 
     var element = ReactElement.createElement.apply(this, arguments);
@@ -3966,7 +3965,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = _dereq_(5);
-var ReactAddonsDOMDependencies = _dereq_(6);
 var ReactTransitionChildMapping = _dereq_(27);
 
 var emptyFunction = _dereq_(44);
@@ -4010,12 +4008,7 @@ var ReactTransitionGroup = function (_React$Component) {
 
       delete _this.currentlyTransitioningKeys[key];
 
-      var currentChildMapping;
-      if ("development" !== 'production') {
-        currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children, ReactAddonsDOMDependencies.getReactInstanceMap().get(_this)._debugID);
-      } else {
-        currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children);
-      }
+      var currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children);
 
       if (!currentChildMapping || !currentChildMapping.hasOwnProperty(key)) {
         // This was removed before it had fully appeared. Remove it.
@@ -4039,12 +4032,7 @@ var ReactTransitionGroup = function (_React$Component) {
 
       delete _this.currentlyTransitioningKeys[key];
 
-      var currentChildMapping;
-      if ("development" !== 'production') {
-        currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children, ReactAddonsDOMDependencies.getReactInstanceMap().get(_this)._debugID);
-      } else {
-        currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children);
-      }
+      var currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children);
 
       if (!currentChildMapping || !currentChildMapping.hasOwnProperty(key)) {
         // This was removed before it had fully entered. Remove it.
@@ -4071,12 +4059,7 @@ var ReactTransitionGroup = function (_React$Component) {
 
       delete _this.currentlyTransitioningKeys[key];
 
-      var currentChildMapping;
-      if ("development" !== 'production') {
-        currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children, ReactAddonsDOMDependencies.getReactInstanceMap().get(_this)._debugID);
-      } else {
-        currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children);
-      }
+      var currentChildMapping = ReactTransitionChildMapping.getChildMapping(_this.props.children);
 
       if (currentChildMapping && currentChildMapping.hasOwnProperty(key)) {
         // This entered again before it fully left. Add it again.
@@ -4107,12 +4090,7 @@ var ReactTransitionGroup = function (_React$Component) {
   };
 
   ReactTransitionGroup.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-    var nextChildMapping;
-    if ("development" !== 'production') {
-      nextChildMapping = ReactTransitionChildMapping.getChildMapping(nextProps.children, ReactAddonsDOMDependencies.getReactInstanceMap().get(this)._debugID);
-    } else {
-      nextChildMapping = ReactTransitionChildMapping.getChildMapping(nextProps.children);
-    }
+    var nextChildMapping = ReactTransitionChildMapping.getChildMapping(nextProps.children);
     var prevChildMapping = this.state.children;
 
     this.setState({
@@ -4194,7 +4172,7 @@ ReactTransitionGroup.defaultProps = {
 
 
 module.exports = ReactTransitionGroup;
-},{"27":27,"44":44,"49":49,"5":5,"6":6}],30:[function(_dereq_,module,exports){
+},{"27":27,"44":44,"49":49,"5":5}],30:[function(_dereq_,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -4207,7 +4185,7 @@ module.exports = ReactTransitionGroup;
 
 'use strict';
 
-module.exports = '15.4.1';
+module.exports = '15.4.2';
 },{}],31:[function(_dereq_,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -4280,6 +4258,7 @@ var ReactWithAddons = _dereq_(31);
 
 // `version` will be added here by the React module.
 var ReactWithAddonsUMDEntry = _assign({
+  __SECRET_INJECTED_REACT_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: null, // Will be injected by ReactDOM UMD build.
   __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: {
     ReactCurrentOwner: _dereq_(14)
   }
@@ -5158,12 +5137,18 @@ module.exports = emptyObject;
  * will remain to ensure logic does not differ in production.
  */
 
-function invariant(condition, format, a, b, c, d, e, f) {
-  if ("development" !== 'production') {
+var validateFormat = function validateFormat(format) {};
+
+if ("development" !== 'production') {
+  validateFormat = function validateFormat(format) {
     if (format === undefined) {
       throw new Error('invariant requires an error message argument');
     }
-  }
+  };
+}
+
+function invariant(condition, format, a, b, c, d, e, f) {
+  validateFormat(format);
 
   if (!condition) {
     var error;
