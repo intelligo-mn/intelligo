@@ -94,6 +94,8 @@ the server.
 * `message.trailers` and `message.rawTrailers` will remain empty.
 * Redirects are followed silently by the browser, so it isn't possible to access the 301/302
 redirect pages.
+* The `timeout` options in the `request` method is non-operational in Safari <= 5 and
+Opera <= 12.
 
 ## Example
 
@@ -101,11 +103,11 @@ redirect pages.
 http.get('/bundle.js', function (res) {
 	var div = document.getElementById('result');
 	div.innerHTML += 'GET /beep<br>';
-	
+
 	res.on('data', function (buf) {
 		div.innerHTML += buf;
 	});
-	
+
 	res.on('end', function () {
 		div.innerHTML += '<br>__END__';
 	});
