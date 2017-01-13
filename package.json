@@ -2,7 +2,7 @@
   "name": "probot",
   "version": "0.0.2",
   "description": "Memorize Bot Platform",
-  "main": "server/main.js",
+  "main": "./build/main.js",
   "scripts": {
     "clean": "rm -rf build public/bundle.js",
     "build": "babel server --out-dir build --presets=es2015 && webpack",
