@@ -24,10 +24,6 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _mongoose = require('mongoose');
-
-var _mongoose2 = _interopRequireDefault(_mongoose);
-
 var _expressSession = require('express-session');
 
 var _expressSession2 = _interopRequireDefault(_expressSession);
@@ -38,10 +34,10 @@ var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// HTTP REQUEST LOGGER
+// PARSE HTML BODY
 
-
-var app = (0, _express2.default)(); // PARSE HTML BODY
+// import mongoose from 'mongoose';
+var app = (0, _express2.default)(); // HTTP REQUEST LOGGER
 
 var port = 3000;
 var devPort = 4000;
@@ -50,13 +46,11 @@ app.use((0, _morgan2.default)('dev'));
 app.use(_bodyParser2.default.json());
 
 /* mongodb connection */
-var db = _mongoose2.default.connection;
-db.on('error', console.error);
-db.once('open', function () {
-    console.log('Connected to mongodb server');
-});
-mongoose.connect('mongodb://username:password@host:port/database=');
-_mongoose2.default.connect('mongodb://localhost:27017/codelab');
+// const db = mongoose.connection;
+// db.on('error', console.error);
+// db.once('open', () => { console.log('Connected to mongodb server'); });
+// mongoose.connect('mongodb://username:password@host:port/database=');
+// mongoose.connect('mongodb://localhost:27017/');
 
 /* use session */
 app.use((0, _expressSession2.default)({
