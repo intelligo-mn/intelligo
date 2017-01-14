@@ -40,7 +40,11 @@ app.use('/', express.static(path.join(__dirname, './../public')));
 app.use('/api', api);
 
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, './../public/index.html'));
+    res.sendFile(path.resolve(__dirname, './../public/intro.html'));
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './../public/team.html'));
 });
 
 /* handle error */
