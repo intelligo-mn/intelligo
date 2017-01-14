@@ -182,7 +182,11 @@
   <div class="screen-section screen-section--mobile">
     <div class="screen-section__wrap">
       <div id='phoneScreenMobile' class="phone-screen phone-screen--mobile" >
-        <img src="images/pro-video-65e382efb3.png" alt="pro-video" data-alt="images/pro-video-bf017409df.gif">
+      <video preload="auto" loop class="video video--desktop" controls muted>
+          <source src="/img/chat.mp4" type="video/mp4" /><!-- Safari / iOS video    -->
+          <source src="/images/chat.ogg" type="video/ogg" /><!-- Firefox / Opera / Chrome10 -->
+          <source src="/images/chat.webm" type="video/webm" />
+        </video>
       </div>
     </div>
   </div>
