@@ -39,7 +39,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // import mongoose from 'mongoose';
 var app = (0, _express2.default)(); // HTTP REQUEST LOGGER
 
-var port = 3000;
+// var port = 3000;
+var port = process.env.PORT;
 var devPort = 4000;
 
 app.use((0, _morgan2.default)('dev'));
