@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:300,400,700|Roboto+Condensed:300,400&subset=cyrillic,cyrillic-ext');
 .container,
 .container-fluid {
     margin-right: auto;
@@ -1099,46 +1100,11 @@ svg {
     }
 }
 
-@font-face {
-    font-family: Cabernet;
-    src: url(../fonts/CabernetJF-Regular-2bfff0b3f2.eot), url(../fonts/CabernetJF-Regular-2bfff0b3f2.eot?#iefix) format("embedded-opentype"), url(../fonts/CabernetJF-Regular-f8eec85ce8.woff) format("woff"), url(../fonts/CabernetJF-Regular-59f5166dac.ttf) format("truetype"), url(../fonts/CabernetJF-Regular-35bece4069.svg#d2dd9e011d7c6ff1ffb75550549cd8b0) format("svg");
-    font-style: normal;
-    font-weight: 400
-}
-
-@font-face {
-    font-family: Ridley Grotesk;
-    src: url("../fonts/Radomir Tinkov - RidleyGrotesk-Black-e760775130.eot"), url("../fonts/Radomir Tinkov - RidleyGrotesk-Black-e760775130.eot?#iefix") format("embedded-opentype"), url("../fonts/Radomir Tinkov - RidleyGrotesk-Black-4ebea47dc7.woff") format("woff"), url("../fonts/Radomir Tinkov - RidleyGrotesk-Black-a10ab3e54f.ttf") format("truetype"), url("../fonts/Radomir Tinkov - RidleyGrotesk-Black-63612f1373.svg#12311cf4125304da30970e0a0f0b4eee") format("svg");
-    font-style: normal;
-    font-weight: 700
-}
-
-@font-face {
-    font-family: Ridley Grotesk;
-    src: url("../fonts/Radomir Tinkov - RidleyGrotesk-SemiBold-fc31da05e8.eot");
-    src: url("../fonts/Radomir Tinkov - RidleyGrotesk-SemiBold-fc31da05e8.eot?#iefix") format("embedded-opentype"), url("../fonts/Radomir Tinkov - RidleyGrotesk-SemiBold-efc2582d41.woff") format("woff"), url("../fonts/Radomir Tinkov - RidleyGrotesk-SemiBold-6f0c996827.ttf") format("truetype"), url("../fonts/Radomir Tinkov - RidleyGrotesk-SemiBold-ec5252a357.svg#89358decc7b57e6f0c3b72fd93c42611") format("svg");
-    font-style: normal;
-    font-weight: 600
-}
-
-@font-face {
-    font-family: Ridley Grotesk;
-    src: url("../fonts/Radomir Tinkov - RidleyGrotesk-Medium-64ca1865f4.eot"), url("../fonts/Radomir Tinkov - RidleyGrotesk-Medium-64ca1865f4.eot?#iefix") format("embedded-opentype"), url("../fonts/Radomir Tinkov - RidleyGrotesk-Medium-cbc54d576f.woff") format("woff"), url("../fonts/Radomir Tinkov - RidleyGrotesk-Medium-f7136b9dce.ttf") format("truetype"), url("../fonts/Radomir Tinkov - RidleyGrotesk-Medium-c285bcbd7d.svg#12311cf4125304da30970e0a0f0b4eee") format("svg");
-    font-style: normal;
-    font-weight: 500
-}
-
-@font-face {
-    font-family: Ridley Grotesk;
-    src: url("../fonts/Radomir Tinkov - RidleyGrotesk-Regular-ef1a96d08c.eot"), url("../fonts/Radomir Tinkov - RidleyGrotesk-Regular-ef1a96d08c.eot?#iefix") format("embedded-opentype"), url("../fonts/Radomir Tinkov - RidleyGrotesk-Regular-250c9a82f7.woff") format("woff"), url("../fonts/Radomir Tinkov - RidleyGrotesk-Regular-fb391b7230.ttf") format("truetype"), url("../fonts/Radomir Tinkov - RidleyGrotesk-Regular-0d9d5e9e24.svg#94f7fe2b89257ac217c8184aff1116d4") format("svg");
-    font-style: normal;
-    font-weight: 400
-}
 
 body,
 html {
     font-size: 16px;
-    font-family: Ridley Grotesk, sans-serif;
+    font-family: 'Comfortaa', cursive;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale
 }
@@ -1215,7 +1181,7 @@ p {
 }
 
 .brand-logo {
-    font-family: Cabernet, serif;
+    font-family: 'Comfortaa', cursive;
     font-size: 48px;
     font-size: parseInt(48px)/14rem;
     text-align: center;
@@ -1262,7 +1228,7 @@ a {
 
 button {
     border: none;
-    font-family: Ridley Grotesk, sans-serif;
+    font-family: 'Comfortaa', cursive;
     font-weight: 400;
     outline: none
 }
@@ -1784,7 +1750,7 @@ nav ul li:first-child {
 nav ul li a {
     text-decoration: none;
     color: #32384f;
-    font-weight: 500;
+    font-weight: 700;
     transition: all .2s ease-in-out;
     font-size: 20px;
     font-size: parseInt(20px)/14rem
@@ -2154,7 +2120,7 @@ nav.isActive ul {
 }
 
 form {
-    font-family: Ridley Grotesk, sans-serif
+    font-family: 'Comfortaa', cursive;
 }
 
 form input {
@@ -2177,6 +2143,7 @@ form input {
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
     display: block;
+
     margin: 16px auto 0;
     max-width: 280px
 }
@@ -2224,6 +2191,7 @@ form input {
 @media (min-width:365px) {
     .text-bubble__wrap p {
         font-size: 16px;
+        font-weight: 100;
         font-size: parseInt(16px)/14rem;
         line-height: 22px;
         line-height: parseInt(22px)/14rem
