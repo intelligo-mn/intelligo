@@ -14,7 +14,7 @@ import api from './routes';
 
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 const devPort = 4000;
 
 app.use(morgan('dev'));
@@ -40,10 +40,10 @@ app.use('/', express.static(path.join(__dirname, './../public')));
 app.use('/api', api);
 
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, './../public/intro.html'));
+    res.sendFile(path.resolve(__dirname, './../public/index.html'));
 });
 
-app.get('*', (req, res) => {
+app.get('/team', (req, res) => {
     res.sendFile(path.resolve(__dirname, './../public/team.html'));
 });
 

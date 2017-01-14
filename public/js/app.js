@@ -4927,7 +4927,7 @@ webpackJsonp([0, 1], [function(t, e, n) {
                 scrolloverflow: !0,
                 bigSectionsDestination: "null",
                 showActiveTooltip: !0,
-                anchors: ["meet-ernest", "explore-ernest", "features-section", "trust-ernest", "about-ernest", "discover-ernest"]
+                anchors: ["meet-pro", "explore-pro", "features-section", "trust-pro", "about-pro", "discover-pro"]
             }), (0, _.animationFeedback)(), (0, _.footerActivation)(), (0, _.animationLogoFinalSection)(), (0, _.animationScreen)(), (0, _.animationLogoAndTitle)(), (0, _.animationText)(), (0, _.animationDarkBackground)(), (0, _.animationTextBubble)(), (0, _.animationTextOnDark)(), (0, _.animationSectionFirst)(), (0, _.animationSectionFourth)(), (0, _.animationLastSection)(), (0, _.animationOtherPages)(), (0, m.navStickyDesktop)(),
             function() {
                 (0, p.default)("#main").hasClass("home") && ! function() {
