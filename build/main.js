@@ -40,6 +40,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var app = (0, _express2.default)(); // HTTP REQUEST LOGGER
 
 var port = process.env.PORT;
+// const port = 3000;
 var devPort = 4000;
 
 app.use((0, _morgan2.default)('dev'));
@@ -64,12 +65,16 @@ app.use('/', _express2.default.static(_path2.default.join(__dirname, './../publi
 /* setup routers & static directory */
 app.use('/api', _routes2.default);
 
-app.get('*', function (req, res) {
-    res.sendFile(_path2.default.resolve(__dirname, './../public/index.html'));
-});
-
 app.get('/team', function (req, res) {
     res.sendFile(_path2.default.resolve(__dirname, './../public/team.html'));
+});
+
+app.get('/app', function (req, res) {
+    res.sendFile(_path2.default.resolve(__dirname, './../public/words.html'));
+});
+
+app.get('*', function (req, res) {
+    res.sendFile(_path2.default.resolve(__dirname, './../public/index.html'));
 });
 
 /* handle error */

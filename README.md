@@ -41,3 +41,9 @@ npm install
 - `npm run start` 
 - `npm run development` 
 
+
+
+`rm -rf build public/bundle.js`
+`babel server --out-dir build --presets=es2015 && webpack`
+`cross-env NODE_ENV=production node ./build/main.js`
+`cross-env NODE_ENV=development nodemon --exec babel-node --presets=es2015 ./server/main.js --watch server`
