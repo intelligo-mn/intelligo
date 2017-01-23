@@ -27,6 +27,40 @@ app.use(morgan('dev'));
 app.use(bodyParser.json({ verify: verifyRequestSignature }));               
 
 
+/* mongodb connection */
+// const db = mongoose.connection;
+// db.on('error', console.error);
+// db.once('open', () => { console.log('Connected to mongodb server'); });
+// mongoose.connect('mongodb://username:password@host:port/database=');
+// mongoose.connect('mongodb://localhost:27017/');
+
+/* use session */
+app.use(session({
+    secret: 'CodeLab1$1$234',
+    resave: false,
+    saveUninitialized: true
+}));
+
+app.use('/', express.static(path.join(__dirname, './../public')));
+
+/* setup routers & static directory */
+app.use('/api', api);
+
+app.get('/team', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './../public/team.html'));
+});
+
+app.get('/app', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './../public/words.html'));
+});
+
+
+/* handle error */
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
   process.env.MESSENGER_APP_SECRET :
   config.get('appSecret');
@@ -619,43 +653,6 @@ function callSendAPI(messageData) {
     }
   });  
 }
-
-/* mongodb connection */
-// const db = mongoose.connection;
-// db.on('error', console.error);
-// db.once('open', () => { console.log('Connected to mongodb server'); });
-// mongoose.connect('mongodb://username:password@host:port/database=');
-// mongoose.connect('mongodb://localhost:27017/');
-
-/* use session */
-app.use(session({
-    secret: 'CodeLab1$1$234',
-    resave: false,
-    saveUninitialized: true
-}));
-
-app.use('/', express.static(path.join(__dirname, './../public')));
-
-/* setup routers & static directory */
-app.use('/api', api);
-
-app.get('/team', (req, res) => {
-    res.sendFile(path.resolve(__dirname, './../public/team.html'));
-});
-
-app.get('/app', (req, res) => {
-    res.sendFile(path.resolve(__dirname, './../public/words.html'));
-});
-
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, './../public/index.html'));
-});
-
-/* handle error */
-app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
 
 app.listen(port, () => {
     console.log('Express is listening on port', port);

@@ -61,6 +61,39 @@ var devPort = 4000;
 app.use((0, _morgan2.default)('dev'));
 app.use(_bodyParser2.default.json({ verify: verifyRequestSignature }));
 
+/* mongodb connection */
+// const db = mongoose.connection;
+// db.on('error', console.error);
+// db.once('open', () => { console.log('Connected to mongodb server'); });
+// mongoose.connect('mongodb://username:password@host:port/database=');
+// mongoose.connect('mongodb://localhost:27017/');
+
+/* use session */
+app.use((0, _expressSession2.default)({
+  secret: 'CodeLab1$1$234',
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.use('/', _express2.default.static(_path2.default.join(__dirname, './../public')));
+
+/* setup routers & static directory */
+app.use('/api', _routes2.default);
+
+app.get('/team', function (req, res) {
+  res.sendFile(_path2.default.resolve(__dirname, './../public/team.html'));
+});
+
+app.get('/app', function (req, res) {
+  res.sendFile(_path2.default.resolve(__dirname, './../public/words.html'));
+});
+
+/* handle error */
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 var APP_SECRET = process.env.MESSENGER_APP_SECRET ? process.env.MESSENGER_APP_SECRET : _config3.default.get('appSecret');
 
 var VALIDATION_TOKEN = process.env.MESSENGER_VALIDATION_TOKEN ? process.env.MESSENGER_VALIDATION_TOKEN : _config3.default.get('validationToken');
@@ -629,43 +662,6 @@ function callSendAPI(messageData) {
     }
   });
 }
-
-/* mongodb connection */
-// const db = mongoose.connection;
-// db.on('error', console.error);
-// db.once('open', () => { console.log('Connected to mongodb server'); });
-// mongoose.connect('mongodb://username:password@host:port/database=');
-// mongoose.connect('mongodb://localhost:27017/');
-
-/* use session */
-app.use((0, _expressSession2.default)({
-  secret: 'CodeLab1$1$234',
-  resave: false,
-  saveUninitialized: true
-}));
-
-app.use('/', _express2.default.static(_path2.default.join(__dirname, './../public')));
-
-/* setup routers & static directory */
-app.use('/api', _routes2.default);
-
-app.get('/team', function (req, res) {
-  res.sendFile(_path2.default.resolve(__dirname, './../public/team.html'));
-});
-
-app.get('/app', function (req, res) {
-  res.sendFile(_path2.default.resolve(__dirname, './../public/words.html'));
-});
-
-app.get('*', function (req, res) {
-  res.sendFile(_path2.default.resolve(__dirname, './../public/index.html'));
-});
-
-/* handle error */
-app.use(function (err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
 
 app.listen(port, function () {
   console.log('Express is listening on port', port);
