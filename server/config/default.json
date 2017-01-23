@@ -1,6 +1,6 @@
 {
     "appSecret": "3246baae79b42f2126e1bb35d6267d5d",
-    "pageAccessToken": "EAARx4ZCPHY40BAO3yARQFfZAMB2yuERZCLPTAJUm31sCKYuUCSKMVBW6fZBLsZBVzpaWkiy9btP9PlVQeOwZBTxmkLcfA6Ievshfk9XAZAhi9tmL4kghWsyN4jlZCxgM274W2FFFIoiJWVD9y12ZA9TH33YOVR9hpPFyS5Lxb1fORMgZDZD",
+    "pageAccessToken": "EAAJawlihpywBALxSZCW0TRQAr6QKVTJ1hEamZBzKgZAJfE19bHobzOcAZBpiVISdH6IbLCBamKyfXijdMKoESlgIZBcFHuxZBL4bCOctbsRmfV01hiGxcYjciz6Kpl5PpaFp0ZCaZCUhFfPTsj9EsqZChF88N61K7e1K57mcZBytChAQZDZD",
     "validationToken": "my_voice_is_my_password_verify_me",
-    "serverURL": "https://probot-tortuvshin.c9users.io/webhook"
+    "serverURL": "https://proenglish.herokuapp.com/webhook/"
 }
