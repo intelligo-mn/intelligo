@@ -82,6 +82,81 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   process.exit(1);
 }
 
+request({
+  url: 'https://graph.facebook.com/v2.8/me/thread_settings',
+  qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+  method: 'POST',
+  json: {
+    "setting_type":"call_to_actions",
+    "thread_state":"new_thread",
+    "call_to_actions":[
+      {
+        "payload":"PAYLOAD_NEW_THREAD"
+      }
+    ]
+  }
+}, function(error, response, body) {
+  if (error) {
+    console.log('Error sending message: ', error);
+  } else if (response.body.error) {
+    console.log('Error: ', response.body.error);
+  }
+});
+
+// greeting
+request({
+  url: 'https://graph.facebook.com/v2.8/me/thread_settings',
+  qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+  method: 'POST',
+  json: {
+    "setting_type":"greeting",
+    "greeting":{
+      "text": "Hi there - I'm Pro Bot!"
+    }
+  }
+}, function(error, response, body) {
+  if (error) {
+    console.log('Error sending message: ', error);
+  } else if (response.body.error) {
+    console.log('Error: ', response.body.error);
+  }
+});
+
+// persistent menu
+request({
+  url: 'https://graph.facebook.com/v2.8/me/thread_settings',
+  qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+  method: 'POST',
+  json: {
+    "setting_type":"call_to_actions",
+    "thread_state" : "existing_thread",
+    "call_to_actions":[
+      {
+        "type":"postback",
+        "title":"Тусламж",
+        "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
+      },
+      {
+        "type":"web_url",
+        "title":"Call Customer Support",
+        "url":"https://proenglish.herokuapp.com/",
+        "webview_height_ratio": "full"
+      },
+      {
+        "type":"web_url",
+        "title":"Вэб",
+        "url":"https://proenglish.herokuapp.com/"
+      }
+    ]
+  }
+}, function(error, response, body) {
+  if (error) {
+    console.log('Error sending message: ', error);
+  } else if (response.body.error) {
+    console.log('Error: ', response.body.error);
+  }
+});
+
 app.get('/webhook', function(req, res) {
   if (req.query['hub.mode'] === 'subscribe' &&
       req.query['hub.verify_token'] === VALIDATION_TOKEN) {
