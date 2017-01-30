@@ -138,7 +138,7 @@ request({
       },
       {
         "type":"postback",
-        "title":"👉 Харилцан ярих",
+        "title":"😁 Харилцан ярих",
         "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
       },
       {
@@ -149,13 +149,13 @@ request({
       },
       {
         "type":"postback",
-        "title":"Тохиргоо",
+        "title":"🌟 Тохиргоо",
         "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
       },
       
       {
         "type":"web_url",
-        "title":"🌟 Танилцуулга",
+        "title":"🤖 Танилцуулга 👉",
         "url":"https://proenglish.herokuapp.com/"
       }
     ]

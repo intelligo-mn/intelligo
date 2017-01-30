@@ -159,7 +159,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
       "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
     }, {
       "type": "postback",
-      "title": "👉 Харилцан ярих",
+      "title": "😁 Харилцан ярих",
       "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
     }, {
       "type": "web_url",
@@ -168,11 +168,11 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
       "webview_height_ratio": "full"
     }, {
       "type": "postback",
-      "title": "Тохиргоо",
+      "title": "🌟 Тохиргоо",
       "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
     }, {
       "type": "web_url",
-      "title": "🌟 Танилцуулга",
+      "title": "🤖 Танилцуулга 👉",
       "url": "https://proenglish.herokuapp.com/"
     }]
   }
