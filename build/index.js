@@ -109,7 +109,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
 
 (0, _request2.default)({
   url: 'https://graph.facebook.com/v2.8/me/thread_settings',
-  qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
+  qs: { access_token: PAGE_ACCESS_TOKEN },
   method: 'POST',
   json: {
     "setting_type": "call_to_actions",
@@ -129,7 +129,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
 // greeting
 (0, _request2.default)({
   url: 'https://graph.facebook.com/v2.8/me/thread_settings',
-  qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
+  qs: { access_token: PAGE_ACCESS_TOKEN },
   method: 'POST',
   json: {
     "setting_type": "greeting",
@@ -148,7 +148,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
 // persistent menu
 (0, _request2.default)({
   url: 'https://graph.facebook.com/v2.8/me/thread_settings',
-  qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
+  qs: { access_token: PAGE_ACCESS_TOKEN },
   method: 'POST',
   json: {
     "setting_type": "call_to_actions",
