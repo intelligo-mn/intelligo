@@ -223,6 +223,18 @@ function receivedMessage(event) {
         sendButtonMessage(senderID);
         break;
 
+      case 'вэб':
+        sendWebUrl(senderID);
+        break;
+
+      case 'утас':
+        sendPhoneNumber(senderID);
+        break;
+
+      case 'судалгаа':
+        sendFormUrl(senderID);
+        break;
+
       case 'generic':
         sendGenericMessage(senderID);
         break;
@@ -317,7 +329,7 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: SERVER_URL + "/assets/rift.png"
+          url: SERVER_URL + "/img/pro.png"
         }
       }
     }
@@ -335,7 +347,7 @@ function sendGifMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: SERVER_URL + "/assets/instagram_logo.gif"
+          url: SERVER_URL + "/img/giphy.gif"
         }
       }
     }
@@ -353,7 +365,7 @@ function sendAudioMessage(recipientId) {
       attachment: {
         type: "audio",
         payload: {
-          url: SERVER_URL + "/assets/sample.mp3"
+          url: SERVER_URL + "/img/duu.mp3"
         }
       }
     }
@@ -363,6 +375,7 @@ function sendAudioMessage(recipientId) {
 }
 
 function sendVideoMessage(recipientId) {
+  sendTypingOn(recipientId);
   var messageData = {
     recipient: {
       id: recipientId
@@ -371,13 +384,14 @@ function sendVideoMessage(recipientId) {
       attachment: {
         type: "video",
         payload: {
-          url: SERVER_URL + "/assets/allofus480.mov"
+          url: SERVER_URL + "/img/eminem.mov"
         }
       }
     }
   };
 
   callSendAPI(messageData);
+  sendTypingOff(recipientId);
 }
 
 function sendFileMessage(recipientId) {
@@ -389,7 +403,7 @@ function sendFileMessage(recipientId) {
       attachment: {
         type: "file",
         payload: {
-          url: SERVER_URL + "/assets/test.txt"
+          url: SERVER_URL + "/img/hi.txt"
         }
       }
     }
@@ -422,19 +436,91 @@ function sendButtonMessage(recipientId) {
         type: "template",
         payload: {
           template_type: "button",
-          text: "This is test text",
+          text: "Холбоо барих мэдээллүүд",
           buttons: [{
             type: "web_url",
-            url: "https://www.oculus.com/en-us/rift/",
-            title: "Open Web URL"
+            url: "https://proenglish.herokuapp.com",
+            title: "Вэб хуудас"
           }, {
             type: "postback",
             title: "Trigger Postback",
             payload: "DEVELOPER_DEFINED_PAYLOAD"
           }, {
             type: "phone_number",
-            title: "Call Phone Number",
-            payload: "+16505551234"
+            title: "Утасны дугаар",
+            payload: "+97689860933"
+          }]
+        }
+      }
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+function sendPhoneNumber(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Холбоо барих утасны дугаар",
+          buttons: [{
+            type: "phone_number",
+            title: "Утасруу залгах",
+            payload: "+97689860933"
+          }]
+        }
+      }
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+function sendWebUrl(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Вэб хуудас",
+          buttons: [{
+            type: "web_url",
+            url: "https://www.proenglish.herokuapp.com",
+            title: "Вэб хуудас"
+          }]
+        }
+      }
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+function sendFormUrl(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Судалгаа",
+          buttons: [{
+            type: "web_url",
+            url: "https://docs.google.com/forms/d/e/1FAIpQLSfMbmOLRuss7NqBlgzMN3HZWIKs4_k9NHiBigqVO-l_D3_QEQ/viewform?c=0&w=1",
+            title: "Судалгаа өгөх"
           }]
         }
       }
@@ -455,13 +541,13 @@ function sendGenericMessage(recipientId) {
         payload: {
           template_type: "generic",
           elements: [{
-            title: "rift",
+            title: "Pro",
             subtitle: "Next-generation virtual reality",
-            item_url: "https://www.oculus.com/en-us/rift/",
+            item_url: "https://proenglish.herokuapp.com",
             image_url: SERVER_URL + "/assets/rift.png",
             buttons: [{
               type: "web_url",
-              url: "https://www.oculus.com/en-us/rift/",
+              url: "https://proenglish.herokuapp.com",
               title: "Open Web URL"
             }, {
               type: "postback",
@@ -471,12 +557,12 @@ function sendGenericMessage(recipientId) {
           }, {
             title: "touch",
             subtitle: "Your Hands, Now in VR",
-            item_url: "https://www.oculus.com/en-us/touch/",
+            item_url: "https://proenglish.herokuapp.com",
             image_url: SERVER_URL + "/assets/touch.png",
             buttons: [{
               type: "web_url",
-              url: "https://www.oculus.com/en-us/touch/",
-              title: "Open Web URL"
+              url: "https://proenglish.herokuapp.com",
+              title: "Вэбэд зочлох"
             }, {
               type: "postback",
               title: "Call Postback",

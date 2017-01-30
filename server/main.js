@@ -443,7 +443,7 @@ function sendButtonMessage(recipientId) {
   callSendAPI(messageData);
 }
 
-function sendPhoneNumber () {
+function sendPhoneNumber (recipientId) {
     var messageData = {
     recipient: {
       id: recipientId
