@@ -264,7 +264,7 @@ function receivedMessage(event) {
         break;
 
       default:
-        sendTextMessage(senderID, messageText);
+        sendTextMessage(senderID, messageText + " " + getUserName());
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
@@ -725,6 +725,19 @@ function sendAccountLinking(recipientId) {
 
   callSendAPI(messageData);
 }
+
+function getUserName() {
+  var user = (0, _request2.default)({
+    url: 'https://graph.facebook.com/983576398362498?fields=name',
+    qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
+    method: 'GET',
+    json: {
+      "name": "First Lastname",
+      "id": "user_id"
+    }
+  });
+  return user.name;
+};
 
 function callSendAPI(messageData) {
   (0, _request2.default)({
