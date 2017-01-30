@@ -727,7 +727,7 @@ function getUserName() {
                 "id": "user_id"
         }
     });
-    return user.name
+    return user.first_name
 
 };
 
