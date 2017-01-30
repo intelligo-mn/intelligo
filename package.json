@@ -6,8 +6,8 @@
   "scripts": {
     "clean": "rm -rf build public/bundle.js",
     "build": "babel server --out-dir build --presets=es2015 && webpack",
-    "start": "cross-env NODE_ENV=production node ./build/main.js",
-    "development": "cross-env NODE_ENV=development nodemon --exec babel-node --presets=es2015 ./server/main.js --watch server"
+    "start": "cross-env NODE_ENV=production node ./build/index.js",
+    "development": "cross-env NODE_ENV=development nodemon --exec babel-node --presets=es2015 ./server/index.js --watch server"
   },
   "repository": {
     "type": "git",
