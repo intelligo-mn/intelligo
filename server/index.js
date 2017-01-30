@@ -719,11 +719,11 @@ function sendAccountLinking(recipientId) {
 
 function getUserName() {
     var user = request({
-        url: 'https://graph.facebook.com/983576398362498?fields=name',
+        url: 'https://graph.facebook.com/v2.8/<USER_ID>?fields=first_name,last_name,profile_pic,locale,timezone,gender',
         qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
         method: 'GET',
         json: {
-                "name": "First Lastname",
+                "first_name ": "First Lastname",
                 "id": "user_id"
         }
     });
