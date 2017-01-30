@@ -160,18 +160,16 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
     }, {
       "type": "postback",
       "title": "👉 Харилцан ярих",
-      "url": "https://proenglish.herokuapp.com/",
-      "webview_height_ratio": "full"
+      "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
     }, {
-      "type": "postback",
+      "type": "web_url",
       "title": "😌 Судалгаа өгөх",
       "url": "https://docs.google.com/forms/d/e/1FAIpQLSfMbmOLRuss7NqBlgzMN3HZWIKs4_k9NHiBigqVO-l_D3_QEQ/viewform",
       "webview_height_ratio": "full"
     }, {
       "type": "postback",
       "title": "Тохиргоо",
-      "url": "https://proenglish.herokuapp.com/",
-      "webview_height_ratio": "full"
+      "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
     }, {
       "type": "web_url",
       "title": "🌟 Танилцуулга",
