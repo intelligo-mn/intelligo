@@ -1,18 +1,65 @@
-'use strict';
+import express from 'express';
+import path from 'path';
 
-const 
-  bodyParser = require('body-parser'),
-  config = require('config'),
-  crypto = require('crypto'),
-  express = require('express'),
-  https = require('https'),  
-  request = require('request');
+import webpack from 'webpack';
+import WebpackDevServer from 'webpack-dev-server';
 
-var app = express();
-app.set('port', process.env.PORT || 5000);
-app.set('view engine', 'ejs');
-app.use(bodyParser.json({ verify: verifyRequestSignature }));
-app.use(express.static('public'));
+import morgan from 'morgan'; // HTTP REQUEST LOGGER
+import bodyParser from 'body-parser'; // PARSE HTML BODY
+import config from 'config';
+import crypto from 'crypto';
+import https from 'https';
+import request from 'request';
+
+// import mongoose from 'mongoose';
+import session from 'express-session';
+
+import api from './routes';
+
+
+
+const app = express();
+const port = process.env.PORT;
+// const port = 3000;
+const devPort = 4000;
+
+app.use(morgan('dev'));
+app.use(bodyParser.json({ verify: verifyRequestSignature }));               
+
+
+/* mongodb connection */
+// const db = mongoose.connection;
+// db.on('error', console.error);
+// db.once('open', () => { console.log('Connected to mongodb server'); });
+// mongoose.connect('mongodb://username:password@host:port/database=');
+// mongoose.connect('mongodb://localhost:27017/');
+
+/* use session */
+app.use(session({
+    secret: 'CodeLab1$1$234',
+    resave: false,
+    saveUninitialized: true
+}));
+
+app.use('/', express.static(path.join(__dirname, './../public')));
+
+/* setup routers & static directory */
+app.use('/api', api);
+
+app.get('/team', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './../public/team.html'));
+});
+
+app.get('/app', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './../public/words.html'));
+});
+
+
+/* handle error */
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
   process.env.MESSENGER_APP_SECRET :
@@ -78,20 +125,6 @@ app.post('/webhook', function (req, res) {
   }
 });
 
-app.get('/authorize', function(req, res) {
-  var accountLinkingToken = req.query.account_linking_token;
-  var redirectURI = req.query.redirect_uri;
-
-  var authCode = "1234567890";
-  var redirectURISuccess = redirectURI + "&authorization_code=" + authCode;
-
-  res.render('authorize', {
-    accountLinkingToken: accountLinkingToken,
-    redirectURI: redirectURI,
-    redirectURISuccess: redirectURISuccess
-  });
-});
-
 function verifyRequestSignature(req, res, buf) {
   var signature = req.headers["x-hub-signature"];
 
@@ -110,20 +143,6 @@ function verifyRequestSignature(req, res, buf) {
       throw new Error("Couldn't validate the request signature.");
     }
   }
-}
-
-function receivedAuthentication(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var timeOfAuth = event.timestamp;
-
-  var passThroughParam = event.optin.ref;
-
-  console.log("Received authentication for user %d and page %d with pass " +
-    "through param '%s' at %d", senderID, recipientID, passThroughParam, 
-    timeOfAuth);
-
-  sendTextMessage(senderID, "Authentication successful");
 }
 
 function receivedMessage(event) {
@@ -184,6 +203,18 @@ function receivedMessage(event) {
       case 'товч':
         sendButtonMessage(senderID);
         break;
+
+      case 'вэб':
+        sendWebUrl(senderID);
+        break;
+
+      case 'утас':
+        sendPhoneNumber(senderID);
+            break;
+
+        case 'судалгаа':
+            sendFormUrl(senderID);
+            break;
 
       case 'generic':
         sendGenericMessage(senderID);
@@ -283,7 +314,7 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: SERVER_URL + "/assets/rift.png"
+          url: SERVER_URL + "/img/pro.png"
         }
       }
     }
@@ -301,7 +332,7 @@ function sendGifMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: SERVER_URL + "/assets/instagram_logo.gif"
+          url: SERVER_URL + "/img/giphy.gif"
         }
       }
     }
@@ -319,7 +350,7 @@ function sendAudioMessage(recipientId) {
       attachment: {
         type: "audio",
         payload: {
-          url: SERVER_URL + "/assets/sample.mp3"
+          url: SERVER_URL + "/img/duu.mp3"
         }
       }
     }
@@ -329,6 +360,7 @@ function sendAudioMessage(recipientId) {
 }
 
 function sendVideoMessage(recipientId) {
+    sendTypingOn(recipientId);
   var messageData = {
     recipient: {
       id: recipientId
@@ -337,13 +369,14 @@ function sendVideoMessage(recipientId) {
       attachment: {
         type: "video",
         payload: {
-          url: SERVER_URL + "/assets/allofus480.mov"
+          url: SERVER_URL + "/img/eminem.mov"
         }
       }
     }
   };
 
   callSendAPI(messageData);
+  sendTypingOff(recipientId);
 }
 
 function sendFileMessage(recipientId) {
@@ -355,7 +388,7 @@ function sendFileMessage(recipientId) {
       attachment: {
         type: "file",
         payload: {
-          url: SERVER_URL + "/assets/test.txt"
+          url: SERVER_URL + "/img/hi.txt"
         }
       }
     }
@@ -388,19 +421,19 @@ function sendButtonMessage(recipientId) {
         type: "template",
         payload: {
           template_type: "button",
-          text: "This is test text",
+          text: "Холбоо барих мэдээллүүд",
           buttons:[{
             type: "web_url",
-            url: "https://www.oculus.com/en-us/rift/",
-            title: "Open Web URL"
+            url: "https://proenglish.herokuapp.com",
+            title: "Вэб хуудас"
           }, {
             type: "postback",
             title: "Trigger Postback",
             payload: "DEVELOPER_DEFINED_PAYLOAD"
           }, {
             type: "phone_number",
-            title: "Call Phone Number",
-            payload: "+16505551234"
+            title: "Утасны дугаар",
+            payload: "+97689860933"
           }]
         }
       }
@@ -409,6 +442,80 @@ function sendButtonMessage(recipientId) {
 
   callSendAPI(messageData);
 }
+
+function sendPhoneNumber (recipientId) {
+    var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Холбоо барих утасны дугаар",
+          buttons:[{
+            type: "phone_number",
+            title: "Утасруу залгах",
+            payload: "+97689860933"
+          }]
+        }
+      }
+    }
+  };  
+
+  callSendAPI(messageData);
+}
+
+function sendWebUrl(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Вэб хуудас",
+          buttons:[{
+            type: "web_url",
+            url: "https://www.proenglish.herokuapp.com",
+            title: "Вэб хуудас"
+          }]
+        }
+      }
+    }
+  };  
+
+  callSendAPI(messageData);
+}
+
+
+function sendFormUrl(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Судалгаа",
+          buttons:[{
+            type: "web_url",
+            url: "https://docs.google.com/forms/d/e/1FAIpQLSfMbmOLRuss7NqBlgzMN3HZWIKs4_k9NHiBigqVO-l_D3_QEQ/viewform?c=0&w=1",
+            title: "Судалгаа өгөх"
+          }]
+        }
+      }
+    }
+  };  
+
+  callSendAPI(messageData);
+}
+
 
 function sendGenericMessage(recipientId) {
   var messageData = {
@@ -421,13 +528,13 @@ function sendGenericMessage(recipientId) {
         payload: {
           template_type: "generic",
           elements: [{
-            title: "rift",
+            title: "Pro",
             subtitle: "Next-generation virtual reality",
-            item_url: "https://www.oculus.com/en-us/rift/",               
+            item_url: "https://proenglish.herokuapp.com",               
             image_url: SERVER_URL + "/assets/rift.png",
             buttons: [{
               type: "web_url",
-              url: "https://www.oculus.com/en-us/rift/",
+              url: "https://proenglish.herokuapp.com",
               title: "Open Web URL"
             }, {
               type: "postback",
@@ -437,12 +544,12 @@ function sendGenericMessage(recipientId) {
           }, {
             title: "touch",
             subtitle: "Your Hands, Now in VR",
-            item_url: "https://www.oculus.com/en-us/touch/",               
+            item_url: "https://proenglish.herokuapp.com",               
             image_url: SERVER_URL + "/assets/touch.png",
             buttons: [{
               type: "web_url",
-              url: "https://www.oculus.com/en-us/touch/",
-              title: "Open Web URL"
+              url: "https://proenglish.herokuapp.com",
+              title: "Вэбэд зочлох"
             }, {
               type: "postback",
               title: "Call Postback",
@@ -635,9 +742,18 @@ function callSendAPI(messageData) {
   });  
 }
 
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
+app.listen(port, () => {
+    console.log('Express is listening on port', port);
 });
 
-module.exports = app;
-
+if(process.env.NODE_ENV == 'development') {
+    console.log('Server is running on development mode');
+    const config = require('../webpack.dev.config');
+    const compiler = webpack(config);
+    const devServer = new WebpackDevServer(compiler, config.devServer);
+    devServer.listen(
+        devPort, () => {
+            console.log('webpack-dev-server is listening on port', devPort);
+        }
+    );
+}
