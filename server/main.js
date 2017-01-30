@@ -348,6 +348,7 @@ function sendAudioMessage(recipientId) {
 }
 
 function sendVideoMessage(recipientId) {
+    sendTypingOn(recipientId);
   var messageData = {
     recipient: {
       id: recipientId
@@ -363,6 +364,7 @@ function sendVideoMessage(recipientId) {
   };
 
   callSendAPI(messageData);
+  sendTypingOff(recipientId);
 }
 
 function sendFileMessage(recipientId) {
