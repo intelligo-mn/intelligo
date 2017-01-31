@@ -2,44 +2,5 @@
     "appSecret": "a0b6f8b13b317980978a22ab8329d00a",
     "pageAccessToken": "EAAJawlihpywBABSxZAd2qLMr1ZCK9OX7ZC7PtcZBpOxpZC9zMkVR9yf9GutJInDTiA40kDE6P7K7maTnjZAVMUkl9a7D2o3mVrStWE1YNLGLNsXXbkHjY0czGVZA3gVBuThC5Kj3mzgc1rwHZAPc1OoOwDG6COI9rWgvlgf8ZC7n1dwZDZD",
     "validationToken": "my_voice_is_my_password_verify_me",
-    "serverURL": "https://proenglish.herokuapp.com/webhook/",
-    "displayGetStarted":true,
-   	"greetingMessage":"🔥 Сайн уу {{user_first_name}}, намайг Pro гэдэг. \n\nБи таны хэл сурахад тулгарч буй бүх асуудлыг шийдэх болно! \n 💪\n.",
-   	"persistentMenu":true,
-   	"persistentMenuItems":[  
-      	{  
-        	"type":"postback",
-         	"title":"💪 TOEFL",
-         	"payload":"GET_VIDEO_GYM"
-      	},
-	    {  
-	        "type":"postback",
-	        "title":"🔥 IELTS",
-	        "payload":"GET_VIDEO_WORK"
-	    },
-	    {  
-	        "type":"postback",
-	        "title":"😌 Судалгаа өгөх",
-	        "payload":"GET_VIDEO_LIFE"
-	    },
-	    {  
-	        "type":"postback",
-	        "title":"👉 Харилцан ярих",
-	        "payload":"MANAGE_SUBSCRIPTIONS"
-	    },
-	    {  
-	        "type":"postback",
-	        "title":"🌟 Би бас open-source",
-	        "value":"OPEN_SOURCE"
-	    }	
-   ],
-   "automaticallyMarkAsRead":true,
-   "trustedDomains":[  
-      "https://www.youtube.com"
-   ],
-   "autoRespondGetStarted":false,
-   "autoResponse":"Hello!",
-   "error":"",
-   "homepage":"https://proenglish.herokuapp.com",
-   "message":""
+    "serverURL": "https://proenglish.herokuapp.com/webhook/"
 }

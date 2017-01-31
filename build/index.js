@@ -336,8 +336,12 @@ function receivedMessage(event) {
         sendTypingOff(senderID);
         break;
 
-      case 'account linking':
-        sendAccountLinking(senderID);
+      case '💪 Шинэ үг авах':
+        sendLanguageLevel(senderID);
+        break;
+
+      case '🌟 Тохиргоо':
+        sendSettings(senderID);
         break;
 
       default:
@@ -734,6 +738,54 @@ function sendQuickReply(recipientId) {
         "content_type": "text",
         "title": "Drama",
         "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_DRAMA"
+      }]
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+function sendSettings(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "Та өдөрт хэдэн цагт шинэ үг хүлээн авахаа тохируулна уу?",
+      quick_replies: [{
+        "content_type": "text",
+        "title": "08:00",
+        "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_ACTION"
+      }, {
+        "content_type": "text",
+        "title": "13:00",
+        "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_COMEDY"
+      }, {
+        "content_type": "text",
+        "title": "18:00",
+        "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_DRAMA"
+      }]
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+function sendLanguageLevel(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "Та ямар ангилалын үг хүлээн авахаа сонгоно уу?",
+      quick_replies: [{
+        "content_type": "text",
+        "title": "TOEFL",
+        "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_ACTION"
+      }, {
+        "content_type": "text",
+        "title": "IELTS",
+        "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_COMEDY"
       }]
     }
   };
