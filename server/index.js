@@ -133,13 +133,11 @@ request({
     "call_to_actions":[
       {
         "type":"postback",
-        "title":"💪 Шинэ үг авах",
-        "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
+        "title":"💪 Шинэ үг авах"
       },
       {
         "type":"postback",
-        "title":"😁 Харилцан ярих",
-        "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
+        "title":"😁 Харилцан ярих"
       },
       {
         "type":"web_url",
@@ -149,8 +147,7 @@ request({
       },
       {
         "type":"postback",
-        "title":"🌟 Тохиргоо",
-        "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
+        "title":"🌟 Тохиргоо"
       },
       
       {

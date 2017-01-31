@@ -155,12 +155,10 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
     "thread_state": "existing_thread",
     "call_to_actions": [{
       "type": "postback",
-      "title": "💪 Шинэ үг авах",
-      "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
+      "title": "💪 Шинэ үг авах"
     }, {
       "type": "postback",
-      "title": "😁 Харилцан ярих",
-      "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
+      "title": "😁 Харилцан ярих"
     }, {
       "type": "web_url",
       "title": "😌 Судалгаа өгөх",
@@ -168,8 +166,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
       "webview_height_ratio": "full"
     }, {
       "type": "postback",
-      "title": "🌟 Тохиргоо",
-      "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
+      "title": "🌟 Тохиргоо"
     }, {
       "type": "web_url",
       "title": "🤖 Танилцуулга 👉",
