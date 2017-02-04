@@ -514,10 +514,6 @@ function sendButtonMessage(recipientId) {
             url: "https://proenglish.herokuapp.com",
             title: "Вэб хуудас"
           }, {
-            type: "postback",
-            title: "Trigger Postback",
-            payload: "DEVELOPER_DEFINED_PAYLOAD"
-          }, {
             type: "phone_number",
             title: "Утасны дугаар",
             payload: "+97689860933"
