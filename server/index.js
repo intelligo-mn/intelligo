@@ -10,6 +10,7 @@ import config from 'config';
 import crypto from 'crypto';
 import https from 'https';
 import request from 'request';
+import firebase from 'firebase';
 
 // import mongoose from 'mongoose';
 import session from 'express-session';
@@ -60,6 +61,19 @@ app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
+
+var firebase_config = {
+  apiKey: "AIzaSyCnDxlx7nPSsrnyjop8apSXljlyDKVYbpk",
+  authDomain: "memorize-a2ca1.firebaseapp.com",
+  databaseURL: "https://memorize-a2ca1.firebaseio.com",
+  storageBucket: "memorize-a2ca1.appspot.com",
+  messagingSenderId: "125299550820"
+};
+firebase.initializeApp(firebase_config);
+firebase.database.enableLogging(true)
+
+var rootRef = firebase.database().ref();
+
 
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
   process.env.MESSENGER_APP_SECRET :
