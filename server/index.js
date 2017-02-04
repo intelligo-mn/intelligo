@@ -62,7 +62,7 @@ app.use(function(err, req, res, next) {
   res.status(500).send('Something broke!');
 });
 
-var firebase_config = {
+const firebase_config = {
   apiKey: "AIzaSyCnDxlx7nPSsrnyjop8apSXljlyDKVYbpk",
   authDomain: "memorize-a2ca1.firebaseapp.com",
   databaseURL: "https://memorize-a2ca1.firebaseio.com",
@@ -72,7 +72,7 @@ var firebase_config = {
 firebase.initializeApp(firebase_config);
 firebase.database.enableLogging(true)
 
-var rootRef = firebase.database().ref();
+const rootRef = firebase.database().ref();
 
 
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
