@@ -125,7 +125,7 @@ request({
   json: {
     "setting_type":"greeting",
     "greeting":{
-      "text": "Hi there - I'm Pro Bot!"
+      "text": "Сайн байна уу! Би про бот байна."
     }
   }
 }, function(error, response, body) {
