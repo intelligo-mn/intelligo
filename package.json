@@ -1,7 +1,7 @@
 {
   "name": "probot",
   "version": "0.0.2",
-  "description": "Memorize Bot Platform",
+  "description": "Pro Bot Platform",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf build public/bundle.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tortuvshin/memorize-bot.git"
+    "url": "https://github.com/tortuvshin/pro-bot.git"
   },
   "author": "Tortuvshin Byambaa",
   "license": "MIT",
