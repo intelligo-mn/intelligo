@@ -1,7 +1,7 @@
 {
   "name": "probot",
-  "version": "0.0.2",
-  "description": "Pro Bot Platform",
+  "version": "0.0.3",
+  "description": "Pro ChatBot Platform",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf build public/bundle.js",
