@@ -40,6 +40,10 @@ var _request = require('request');
 
 var _request2 = _interopRequireDefault(_request);
 
+var _firebase = require('firebase');
+
+var _firebase2 = _interopRequireDefault(_firebase);
+
 var _expressSession = require('express-session');
 
 var _expressSession2 = _interopRequireDefault(_expressSession);
@@ -51,8 +55,8 @@ var _routes2 = _interopRequireDefault(_routes);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import mongoose from 'mongoose';
-// PARSE HTML BODY
-var app = (0, _express2.default)(); // HTTP REQUEST LOGGER
+// HTTP REQUEST LOGGER
+var app = (0, _express2.default)(); // PARSE HTML BODY
 
 var port = process.env.PORT;
 // const port = 3000;
@@ -94,6 +98,18 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Something broke!');
 });
 
+var firebase_config = {
+  apiKey: "AIzaSyCnDxlx7nPSsrnyjop8apSXljlyDKVYbpk",
+  authDomain: "memorize-a2ca1.firebaseapp.com",
+  databaseURL: "https://memorize-a2ca1.firebaseio.com",
+  storageBucket: "memorize-a2ca1.appspot.com",
+  messagingSenderId: "125299550820"
+};
+_firebase2.default.initializeApp(firebase_config);
+_firebase2.default.database.enableLogging(true);
+
+var rootRef = _firebase2.default.database().ref();
+
 var APP_SECRET = process.env.MESSENGER_APP_SECRET ? process.env.MESSENGER_APP_SECRET : _config3.default.get('appSecret');
 
 var VALIDATION_TOKEN = process.env.MESSENGER_VALIDATION_TOKEN ? process.env.MESSENGER_VALIDATION_TOKEN : _config3.default.get('validationToken');
@@ -134,7 +150,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   json: {
     "setting_type": "greeting",
     "greeting": {
-      "text": "Hi there - I'm Pro Bot!"
+      "text": "Сайн байна уу! Би про бот байна."
     }
   }
 }, function (error, response, body) {
@@ -519,10 +535,6 @@ function sendButtonMessage(recipientId) {
             type: "web_url",
             url: "https://proenglish.herokuapp.com",
             title: "Вэб хуудас"
-          }, {
-            type: "postback",
-            title: "Trigger Postback",
-            payload: "DEVELOPER_DEFINED_PAYLOAD"
           }, {
             type: "phone_number",
             title: "Утасны дугаар",
