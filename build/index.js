@@ -365,6 +365,21 @@ function receivedMessage(event) {
   }
 }
 
+function sendWelcome(recipientId) {
+  (0, _request2.default)({
+    url: 'https://graph.facebook.com/v2.6/' + recipientId + '?access_token=' + process.env.PAGE_ACCESS_TOKEN
+  }, function (error, response, body) {
+    if (error || response.statusCode != 200) return;
+
+    var fbProfileBody = JSON.parse(body);
+    var userName = fbProfileBody["first_name"];
+    var greetings = ["Hey", "Howdy", "Hello", "G'day", "Bonjur", "Good Evening", "Good Morning", "Yo", "What's up"];
+    var randomGreeting = getRandomItemFromArray(greetings);
+    var welcomeMsg = randomGreeting + ' ' + userName + ', \nI\'m your personal probot! \ntype \'pro\' and see what happens... \n\xAF\\_(\u30C4)_/\xAF \nor \'help\' for more details.\n      ';
+    sendTextMessage(recipientId, welcomeMsg);
+  });
+}
+
 function receivedDeliveryConfirmation(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -898,6 +913,27 @@ function callSendAPI(messageData) {
       console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
     }
   });
+}
+
+function getRandomNumber(minimum, maxmimum) {
+  return Math.floor(Math.exp(Math.random() * Math.log(maxmimum - minimum + 1))) + minimum;
+}
+
+function randomIntFromInterval(min, max) {
+  return getRandomNumber(min, max);
+}
+
+function textMatches(message, matchString) {
+  return message.toLowerCase().indexOf(matchString) != -1;
+}
+
+function getRandomItemFromArray(items) {
+  var random_item = items[getRandomNumber(0, items.length - 1)];
+  return random_item;
+}
+
+function logObject(obj) {
+  console.log(JSON.stringify(obj, null, 2));
 }
 
 app.listen(port, function () {
