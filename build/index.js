@@ -367,7 +367,7 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: "https://proenglish.herokuapp.com/public/img/pro.png"
+          url: "https://proenglish.herokuapp.com/img/pro.png"
         }
       }
     }
@@ -385,7 +385,7 @@ function sendGifMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: "https://proenglish.herokuapp.com/public/img/giphy.gif"
+          url: "https://proenglish.herokuapp.com/img/giphy.gif"
         }
       }
     }
@@ -403,7 +403,7 @@ function sendAudioMessage(recipientId) {
       attachment: {
         type: "audio",
         payload: {
-          url: "https://proenglish.herokuapp.com/public/img/duu.mp3"
+          url: "https://proenglish.herokuapp.com/img/duu.mp3"
         }
       }
     }
@@ -422,7 +422,7 @@ function sendVideoMessage(recipientId) {
       attachment: {
         type: "video",
         payload: {
-          url: "https://proenglish.herokuapp.com/public/img/eminem.mov"
+          url: "https://proenglish.herokuapp.com/img/eminem.mov"
         }
       }
     }
@@ -441,7 +441,7 @@ function sendFileMessage(recipientId) {
       attachment: {
         type: "file",
         payload: {
-          url: "https://proenglish.herokuapp.com/public/img/hi.txt"
+          url: "https://proenglish.herokuapp.com/img/hi.txt"
         }
       }
     }
