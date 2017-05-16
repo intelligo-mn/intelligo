@@ -367,7 +367,7 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: SERVER_URL + "/img/pro.png"
+          url: SERVER_URL + "public/img/pro.png"
         }
       }
     }
@@ -385,7 +385,7 @@ function sendGifMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: SERVER_URL + "/img/giphy.gif"
+          url: SERVER_URL + "public/img/giphy.gif"
         }
       }
     }
@@ -403,7 +403,7 @@ function sendAudioMessage(recipientId) {
       attachment: {
         type: "audio",
         payload: {
-          url: SERVER_URL + "/img/duu.mp3"
+          url: SERVER_URL + "public/img/duu.mp3"
         }
       }
     }
@@ -422,7 +422,7 @@ function sendVideoMessage(recipientId) {
       attachment: {
         type: "video",
         payload: {
-          url: SERVER_URL + "/img/eminem.mov"
+          url: SERVER_URL + "public/img/eminem.mov"
         }
       }
     }
@@ -441,7 +441,7 @@ function sendFileMessage(recipientId) {
       attachment: {
         type: "file",
         payload: {
-          url: SERVER_URL + "/img/hi.txt"
+          url: SERVER_URL + "public/img/hi.txt"
         }
       }
     }
