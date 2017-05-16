@@ -288,78 +288,7 @@ function receivedMessage(event) {
 
   if (messageText) {
 
-    switch (messageText) {
-      case 'зураг':
-        sendImageMessage(senderID);
-        break;
-
-      case 'gif':
-        sendGifMessage(senderID);
-        break;
-
-      case 'дуу':
-        sendAudioMessage(senderID);
-        break;
-
-      case 'бичлэг':
-        sendVideoMessage(senderID);
-        break;
-
-      case 'файл':
-        sendFileMessage(senderID);
-        break;
-
-      case 'товч':
-        sendButtonMessage(senderID);
-        break;
-
-      case 'вэб':
-        sendWebUrl(senderID);
-        break;
-
-      case 'утас':
-        sendPhoneNumber(senderID);
-        break;
-
-      case 'судалгаа':
-        sendFormUrl(senderID);
-        break;
-
-      case 'generic':
-        sendGenericMessage(senderID);
-        break;
-
-      case 'receipt':
-        sendReceiptMessage(senderID);
-        break;
-
-      case 'quick reply':
-        sendQuickReply(senderID);
-        break;
-
-      case 'read receipt':
-        sendReadReceipt(senderID);
-        break;
-
-      case 'typing on':
-        sendTypingOn(senderID);
-        break;
-
-      case 'typing off':
-        sendTypingOff(senderID);
-        break;
-
-      case '💪 Шинэ үг авах':
-        sendLanguageLevel(senderID);
-        break;
-
-      case '🌟 Тохиргоо':
-        sendSettings(senderID);
-        break;
-
-      default:
-        sendTextMessage(senderID, messageText + " " + getUserName());
-    }
+    if (textMatches(messageText, "зураг")) sendImageMessage(senderID);else if (textMatches(messageText, "gif")) sendGifMessage(senderID);else if (textMatches(messageText, "дуу")) sendAudioMessage(senderID);else if (textMatches(messageText, "бичлэг")) sendVideoMessage(senderID);else if (textMatches(messageText, "файл")) sendFileMessage(senderID);else if (textMatches(messageText, "товч")) sendButtonMessage(senderID);else if (textMatches(messageText, "вэб")) sendWebUrl(senderID);else if (textMatches(messageText, "утас")) sendPhoneNumber(senderID);else if (textMatches(messageText, "судалгаа")) sendFormUrl(senderID);else if (textMatches(messageText, "generic")) sendGenericMessage(senderID);else if (textMatches(messageText, "receipt")) sendReceiptMessage(senderID);else if (textMatches(messageText, "quick reply")) sendQuickReply(senderID);else if (textMatches(messageText, "read receipt")) sendReadReceipt(senderID);else if (textMatches(messageText, "typing on")) sendTypingOn(senderID);else if (textMatches(messageText, "typing off")) sendTypingOff(senderID);else if (textMatches(messageText, "шинэ үг")) sendLanguageLevel(senderID);else if (textMatches(messageText, "тохиргоо")) sendSettings(senderID);else sendWelcome(senderID);
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
   }
@@ -367,7 +296,7 @@ function receivedMessage(event) {
 
 function sendWelcome(recipientId) {
   (0, _request2.default)({
-    url: 'https://graph.facebook.com/v2.6/' + recipientId + '?access_token=' + process.env.PAGE_ACCESS_TOKEN
+    url: 'https://graph.facebook.com/v2.8/' + recipientId + '?access_token=' + PAGE_ACCESS_TOKEN
   }, function (error, response, body) {
     if (error || response.statusCode != 200) return;
 
