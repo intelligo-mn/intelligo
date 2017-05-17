@@ -151,10 +151,6 @@ request({
         "title":"💪 Шинэ үг авах"
       },
       {
-        "type":"postback",
-        "title":"😁 Харилцан ярих"
-      },
-      {
         "type":"web_url",
         "title":"😌 Судалгаа өгөх",
         "url":"https://docs.google.com/forms/d/e/1FAIpQLSfMbmOLRuss7NqBlgzMN3HZWIKs4_k9NHiBigqVO-l_D3_QEQ/viewform",
@@ -341,7 +337,7 @@ function sendWelcome(recipientId) {
     
       var fbProfileBody = JSON.parse(body);
       var userName = fbProfileBody["first_name"];
-      var greetings = ["Hey", "Howdy", "Hello", "G'day", "Bonjur", "Good Evening", "Good Morning", "Yo", "What's up", "Сайн уу","юу байна", "сайн уу"];
+      var greetings = ["Hey", "Hello", "Bonjur", "Good Evening", "Good Morning", "What's up", "Сайн уу","юу байна", "сайн уу"];
       var randomGreeting = getRandomItemFromArray(greetings);
       var welcomeMsg = `${randomGreeting} ${userName}, 
 Намайг Про гэдэг!
