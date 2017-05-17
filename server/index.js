@@ -367,7 +367,7 @@ function sendHelp(recipientId) {
   why = ??
   how = source code link
   `;
-    sendTextMessage(recipientId, apiDesc);
+  sendTextMessage(recipientId, Desc);
 }
 
 function receivedDeliveryConfirmation(event) {
