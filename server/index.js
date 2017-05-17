@@ -90,6 +90,7 @@ const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
 const SERVER_URL = (process.env.SERVER_URL) ?
   (process.env.SERVER_URL) :
   config.get('serverURL');
+  
 
 if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   console.error("Missing config values");
@@ -167,6 +168,11 @@ request({
       {
         "type":"web_url",
         "title":"🤖 Танилцуулга 👉",
+        "url":"https://proenglish.herokuapp.com/"
+      },
+      {
+        "type":"web_url",
+        "title":"Тусламж",
         "url":"https://proenglish.herokuapp.com/"
       }
     ]
@@ -308,8 +314,14 @@ function receivedMessage(event) {
       sendTypingOff(senderID);
     else if (textMatches(messageText, "шинэ үг")) 
       sendLanguageLevel(senderID);
+    else if (textMatches(messageText, "сургалт")) 
+      sendGenericMessage(senderID);
+    else if (textMatches(messageText, "хичээл")) 
+      sendReceiptMessage(senderID);
     else if (textMatches(messageText, "тохиргоо")) 
       sendSettings(senderID);
+    else if (textMatches(messageText, "тусламж")) 
+      sendHelp(senderID);
     else
       sendWelcome(senderID);
   } else if (messageAttachments) {
@@ -327,17 +339,33 @@ function sendWelcome(recipientId) {
     
       var fbProfileBody = JSON.parse(body);
       var userName = fbProfileBody["first_name"];
-      var greetings = ["Hey", "Howdy", "Hello", "G'day", "Bonjur", "Good Evening", "Good Morning", "Yo", "What's up"];
+      var greetings = ["Hey", "Howdy", "Hello", "G'day", "Bonjur", "Good Evening", "Good Morning", "Yo", "What's up", "Сайн уу","юу байна", "сайн уу", "", ""];
       var randomGreeting = getRandomItemFromArray(greetings);
       var welcomeMsg = `${randomGreeting} ${userName}, 
-I'm your personal probot! 
-type 'pro' and see what happens... 
-¯\\_(ツ)_/¯ 
-or 'help' for more details.
+Намайг Про гэдэг!
+Таныг сонирхолтой байдлаар хэл сурахад туслана.
+¯\\_(ツ)_/¯ .
       `;
       sendTextMessage(recipientId, welcomeMsg);
     }
   );
+}
+function sendHelp(recipientId) {
+  var Desc = `
+  🤖 Тусламж 👉
+  Та дараах коммандуудыг ашиглаж илүү их зүйл мэдэх боломжтой 
+  шинэ үг = Шинэ үг авах ;)
+  бичлэг = сонирхолтой бичлэг үзэх
+  дуу = сонсголын сайжруулах
+  зураг = Meme зураг авах
+  gif  = хөдөлгөөнтэй зурагнууд
+  судалгаа = судалгаа өгөх
+  тохиргоо = шинэ үг авах цаг болон IELTS, TOEFL ямар төрлийн шинэ үг авах вэ
+  Тусламж = this...
+  why = ??
+  how = source code link
+  `;
+    sendTextMessage(recipientId, apiDesc);
 }
 
 function receivedDeliveryConfirmation(event) {
@@ -612,31 +640,31 @@ function sendGenericMessage(recipientId) {
         payload: {
           template_type: "generic",
           elements: [{
-            title: "Pro",
-            subtitle: "Next-generation virtual reality",
+            title: "IBT",
+            subtitle: "IELTS, TOEFL-д бэлдэнэ",
             item_url: "https://proenglish.herokuapp.com",               
-            image_url: SERVER_URL + "/assets/rift.png",
-            buttons: [{
-              type: "web_url",
-              url: "https://proenglish.herokuapp.com",
-              title: "Open Web URL"
-            }, {
-              type: "postback",
-              title: "Call Postback",
-              payload: "Payload for first bubble",
-            }],
-          }, {
-            title: "touch",
-            subtitle: "Your Hands, Now in VR",
-            item_url: "https://proenglish.herokuapp.com",               
-            image_url: SERVER_URL + "/assets/touch.png",
+            image_url: "https://proenglish.herokuapp.com/img/pro.png",
             buttons: [{
               type: "web_url",
               url: "https://proenglish.herokuapp.com",
               title: "Вэбэд зочлох"
             }, {
               type: "postback",
-              title: "Call Postback",
+              title: "Болих",
+              payload: "Payload for first bubble",
+            }],
+          }, {
+            title: "Nogoonjade",
+            subtitle: "Nogoonjade сургалтын төв",
+            item_url: "https://proenglish.herokuapp.com",               
+            image_url: "https://proenglish.herokuapp.com/img/pro.png",
+            buttons: [{
+              type: "web_url",
+              url: "https://proenglish.herokuapp.com",
+              title: "Вэбэд зочлох"
+            }, {
+              type: "postback",
+              title: "Болих",
               payload: "Payload for second bubble",
             }]
           }]
@@ -660,33 +688,26 @@ function sendReceiptMessage(recipientId) {
         type: "template",
         payload: {
           template_type: "receipt",
-          recipient_name: "Peter Chang",
+          recipient_name: "ToRoo",
           order_number: receiptId,
           currency: "USD",
           payment_method: "Visa 1234",        
           timestamp: "1428444852", 
-          elements: [{
-            title: "Oculus Rift",
-            subtitle: "Includes: headset, sensor, remote",
-            quantity: 1,
-            price: 599.00,
-            currency: "USD",
-            image_url: SERVER_URL + "/assets/riftsq.png"
-          }, {
-            title: "Samsung Gear VR",
-            subtitle: "Frost White",
+          elements: [ {
+            title: "IELTS",
+            subtitle: "Төлбөртэй хичээл үзсэн",
             quantity: 1,
             price: 99.99,
             currency: "USD",
             image_url: SERVER_URL + "/assets/gearvrsq.png"
           }],
           address: {
-            street_1: "1 Hacker Way",
+            street_1: "Itpark",
             street_2: "",
-            city: "Menlo Park",
+            city: "",
             postal_code: "94025",
-            state: "CA",
-            country: "US"
+            state: "Ulaanbaatar",
+            country: "Mongolia"
           },
           summary: {
             subtotal: 698.99,

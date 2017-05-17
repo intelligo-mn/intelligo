@@ -187,6 +187,10 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
       "type": "web_url",
       "title": "🤖 Танилцуулга 👉",
       "url": "https://proenglish.herokuapp.com/"
+    }, {
+      "type": "web_url",
+      "title": "Тусламж",
+      "url": "https://proenglish.herokuapp.com/"
     }]
   }
 }, function (error, response, body) {
@@ -288,7 +292,7 @@ function receivedMessage(event) {
 
   if (messageText) {
 
-    if (textMatches(messageText, "зураг")) sendImageMessage(senderID);else if (textMatches(messageText, "gif")) sendGifMessage(senderID);else if (textMatches(messageText, "дуу")) sendAudioMessage(senderID);else if (textMatches(messageText, "бичлэг")) sendVideoMessage(senderID);else if (textMatches(messageText, "файл")) sendFileMessage(senderID);else if (textMatches(messageText, "товч")) sendButtonMessage(senderID);else if (textMatches(messageText, "вэб")) sendWebUrl(senderID);else if (textMatches(messageText, "утас")) sendPhoneNumber(senderID);else if (textMatches(messageText, "судалгаа")) sendFormUrl(senderID);else if (textMatches(messageText, "generic")) sendGenericMessage(senderID);else if (textMatches(messageText, "receipt")) sendReceiptMessage(senderID);else if (textMatches(messageText, "quick reply")) sendQuickReply(senderID);else if (textMatches(messageText, "read receipt")) sendReadReceipt(senderID);else if (textMatches(messageText, "typing on")) sendTypingOn(senderID);else if (textMatches(messageText, "typing off")) sendTypingOff(senderID);else if (textMatches(messageText, "шинэ үг")) sendLanguageLevel(senderID);else if (textMatches(messageText, "тохиргоо")) sendSettings(senderID);else sendWelcome(senderID);
+    if (textMatches(messageText, "зураг")) sendImageMessage(senderID);else if (textMatches(messageText, "gif")) sendGifMessage(senderID);else if (textMatches(messageText, "дуу")) sendAudioMessage(senderID);else if (textMatches(messageText, "бичлэг")) sendVideoMessage(senderID);else if (textMatches(messageText, "файл")) sendFileMessage(senderID);else if (textMatches(messageText, "товч")) sendButtonMessage(senderID);else if (textMatches(messageText, "вэб")) sendWebUrl(senderID);else if (textMatches(messageText, "утас")) sendPhoneNumber(senderID);else if (textMatches(messageText, "судалгаа")) sendFormUrl(senderID);else if (textMatches(messageText, "generic")) sendGenericMessage(senderID);else if (textMatches(messageText, "receipt")) sendReceiptMessage(senderID);else if (textMatches(messageText, "quick reply")) sendQuickReply(senderID);else if (textMatches(messageText, "read receipt")) sendReadReceipt(senderID);else if (textMatches(messageText, "typing on")) sendTypingOn(senderID);else if (textMatches(messageText, "typing off")) sendTypingOff(senderID);else if (textMatches(messageText, "шинэ үг")) sendLanguageLevel(senderID);else if (textMatches(messageText, "сургалт")) sendGenericMessage(senderID);else if (textMatches(messageText, "хичээл")) sendReceiptMessage(senderID);else if (textMatches(messageText, "тохиргоо")) sendSettings(senderID);else if (textMatches(messageText, "тусламж")) sendHelp(senderID);else sendWelcome(senderID);
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
   }
@@ -302,11 +306,15 @@ function sendWelcome(recipientId) {
 
     var fbProfileBody = JSON.parse(body);
     var userName = fbProfileBody["first_name"];
-    var greetings = ["Hey", "Howdy", "Hello", "G'day", "Bonjur", "Good Evening", "Good Morning", "Yo", "What's up"];
+    var greetings = ["Hey", "Howdy", "Hello", "G'day", "Bonjur", "Good Evening", "Good Morning", "Yo", "What's up", "Сайн уу", "юу байна", "сайн уу", "", ""];
     var randomGreeting = getRandomItemFromArray(greetings);
-    var welcomeMsg = randomGreeting + ' ' + userName + ', \nI\'m your personal probot! \ntype \'pro\' and see what happens... \n\xAF\\_(\u30C4)_/\xAF \nor \'help\' for more details.\n      ';
+    var welcomeMsg = randomGreeting + ' ' + userName + ', \n\u041D\u0430\u043C\u0430\u0439\u0433 \u041F\u0440\u043E \u0433\u044D\u0434\u044D\u0433!\n\u0422\u0430\u043D\u044B\u0433 \u0441\u043E\u043D\u0438\u0440\u0445\u043E\u043B\u0442\u043E\u0439 \u0431\u0430\u0439\u0434\u043B\u0430\u0430\u0440 \u0445\u044D\u043B \u0441\u0443\u0440\u0430\u0445\u0430\u0434 \u0442\u0443\u0441\u043B\u0430\u043D\u0430.\n\xAF\\_(\u30C4)_/\xAF .\n      ';
     sendTextMessage(recipientId, welcomeMsg);
   });
+}
+function sendHelp(recipientId) {
+  var Desc = '\n  \uD83E\uDD16 \u0422\u0443\u0441\u043B\u0430\u043C\u0436 \uD83D\uDC49\n  \u0422\u0430 \u0434\u0430\u0440\u0430\u0430\u0445 \u043A\u043E\u043C\u043C\u0430\u043D\u0434\u0443\u0443\u0434\u044B\u0433 \u0430\u0448\u0438\u0433\u043B\u0430\u0436 \u0438\u043B\u04AF\u04AF \u0438\u0445 \u0437\u04AF\u0439\u043B \u043C\u044D\u0434\u044D\u0445 \u0431\u043E\u043B\u043E\u043C\u0436\u0442\u043E\u0439 \n  \u0448\u0438\u043D\u044D \u04AF\u0433 = \u0428\u0438\u043D\u044D \u04AF\u0433 \u0430\u0432\u0430\u0445 ;)\n  \u0431\u0438\u0447\u043B\u044D\u0433 = \u0441\u043E\u043D\u0438\u0440\u0445\u043E\u043B\u0442\u043E\u0439 \u0431\u0438\u0447\u043B\u044D\u0433 \u04AF\u0437\u044D\u0445\n  \u0434\u0443\u0443 = \u0441\u043E\u043D\u0441\u0433\u043E\u043B\u044B\u043D \u0441\u0430\u0439\u0436\u0440\u0443\u0443\u043B\u0430\u0445\n  \u0437\u0443\u0440\u0430\u0433 = Meme \u0437\u0443\u0440\u0430\u0433 \u0430\u0432\u0430\u0445\n  gif  = \u0445\u04E9\u0434\u04E9\u043B\u0433\u04E9\u04E9\u043D\u0442\u044D\u0439 \u0437\u0443\u0440\u0430\u0433\u043D\u0443\u0443\u0434\n  \u0441\u0443\u0434\u0430\u043B\u0433\u0430\u0430 = \u0441\u0443\u0434\u0430\u043B\u0433\u0430\u0430 \u04E9\u0433\u04E9\u0445\n  \u0442\u043E\u0445\u0438\u0440\u0433\u043E\u043E = \u0448\u0438\u043D\u044D \u04AF\u0433 \u0430\u0432\u0430\u0445 \u0446\u0430\u0433 \u0431\u043E\u043B\u043E\u043D IELTS, TOEFL \u044F\u043C\u0430\u0440 \u0442\u04E9\u0440\u043B\u0438\u0439\u043D \u0448\u0438\u043D\u044D \u04AF\u0433 \u0430\u0432\u0430\u0445 \u0432\u044D\n  \u0422\u0443\u0441\u043B\u0430\u043C\u0436 = this...\n  why = ??\n  how = source code link\n  ';
+  sendTextMessage(recipientId, apiDesc);
 }
 
 function receivedDeliveryConfirmation(event) {
@@ -575,31 +583,31 @@ function sendGenericMessage(recipientId) {
         payload: {
           template_type: "generic",
           elements: [{
-            title: "Pro",
-            subtitle: "Next-generation virtual reality",
+            title: "IBT",
+            subtitle: "IELTS, TOEFL-д бэлдэнэ",
             item_url: "https://proenglish.herokuapp.com",
-            image_url: SERVER_URL + "/assets/rift.png",
-            buttons: [{
-              type: "web_url",
-              url: "https://proenglish.herokuapp.com",
-              title: "Open Web URL"
-            }, {
-              type: "postback",
-              title: "Call Postback",
-              payload: "Payload for first bubble"
-            }]
-          }, {
-            title: "touch",
-            subtitle: "Your Hands, Now in VR",
-            item_url: "https://proenglish.herokuapp.com",
-            image_url: SERVER_URL + "/assets/touch.png",
+            image_url: "https://proenglish.herokuapp.com/img/pro.png",
             buttons: [{
               type: "web_url",
               url: "https://proenglish.herokuapp.com",
               title: "Вэбэд зочлох"
             }, {
               type: "postback",
-              title: "Call Postback",
+              title: "Болих",
+              payload: "Payload for first bubble"
+            }]
+          }, {
+            title: "Nogoonjade",
+            subtitle: "Nogoonjade сургалтын төв",
+            item_url: "https://proenglish.herokuapp.com",
+            image_url: "https://proenglish.herokuapp.com/img/pro.png",
+            buttons: [{
+              type: "web_url",
+              url: "https://proenglish.herokuapp.com",
+              title: "Вэбэд зочлох"
+            }, {
+              type: "postback",
+              title: "Болих",
               payload: "Payload for second bubble"
             }]
           }]
@@ -623,33 +631,26 @@ function sendReceiptMessage(recipientId) {
         type: "template",
         payload: {
           template_type: "receipt",
-          recipient_name: "Peter Chang",
+          recipient_name: "ToRoo",
           order_number: receiptId,
           currency: "USD",
           payment_method: "Visa 1234",
           timestamp: "1428444852",
           elements: [{
-            title: "Oculus Rift",
-            subtitle: "Includes: headset, sensor, remote",
-            quantity: 1,
-            price: 599.00,
-            currency: "USD",
-            image_url: SERVER_URL + "/assets/riftsq.png"
-          }, {
-            title: "Samsung Gear VR",
-            subtitle: "Frost White",
+            title: "IELTS",
+            subtitle: "Төлбөртэй хичээл үзсэн",
             quantity: 1,
             price: 99.99,
             currency: "USD",
             image_url: SERVER_URL + "/assets/gearvrsq.png"
           }],
           address: {
-            street_1: "1 Hacker Way",
+            street_1: "Itpark",
             street_2: "",
-            city: "Menlo Park",
+            city: "",
             postal_code: "94025",
-            state: "CA",
-            country: "US"
+            state: "Ulaanbaatar",
+            country: "Mongolia"
           },
           summary: {
             subtotal: 698.99,
