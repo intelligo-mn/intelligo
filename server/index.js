@@ -286,6 +286,8 @@ function receivedMessage(event) {
       sendImageMessage(senderID);
     else if (textMatches(messageText, "gif")) 
         sendGifMessage(senderID);
+    else if (textMatches(messageText, "get started")) 
+        sendWelcome(senderID);
     else if (textMatches(messageText, "дуу")) 
         sendAudioMessage(senderID);
     else if (textMatches(messageText, "бичлэг")) 
