@@ -298,10 +298,6 @@ function receivedMessage(event) {
         sendPhoneNumber(senderID);
     else if (textMatches(messageText, "судалгаа")) 
         sendFormUrl(senderID);
-    else if (textMatches(messageText, "generic")) 
-      sendGenericMessage(senderID);
-    else if (textMatches(messageText, "receipt")) 
-      sendReceiptMessage(senderID);
     else if (textMatches(messageText, "quick reply")) 
       sendQuickReply(senderID);
     else if (textMatches(messageText, "read receipt")) 
@@ -420,6 +416,7 @@ function receivedAccountLink(event) {
 }
 
 function sendImageMessage(recipientId) {
+  sendTypingOn(receiptId);
   var messageData = {
     recipient: {
       id: recipientId
@@ -435,9 +432,11 @@ function sendImageMessage(recipientId) {
   };
 
   callSendAPI(messageData);
+  sendTypingOff(recipientId);
 }
 
 function sendGifMessage(recipientId) {
+  sendTypingOn(recipientId);
   var messageData = {
     recipient: {
       id: recipientId
@@ -453,9 +452,11 @@ function sendGifMessage(recipientId) {
   };
 
   callSendAPI(messageData);
+  sendTypingoff(recipientId);
 }
 
 function sendAudioMessage(recipientId) {
+  sendTypingOn(recipientId);
   var messageData = {
     recipient: {
       id: recipientId
@@ -471,10 +472,11 @@ function sendAudioMessage(recipientId) {
   };
 
   callSendAPI(messageData);
+  sendTypingOff(receiptId);
 }
 
 function sendVideoMessage(recipientId) {
-    sendTypingOn(recipientId);
+  sendTypingOn(recipientId);
   var messageData = {
     recipient: {
       id: recipientId
@@ -494,6 +496,7 @@ function sendVideoMessage(recipientId) {
 }
 
 function sendFileMessage(recipientId) {
+  sendTypingOn(recipientId);
   var messageData = {
     recipient: {
       id: recipientId
@@ -509,6 +512,7 @@ function sendFileMessage(recipientId) {
   };
 
   callSendAPI(messageData);
+  sendTypingOff(recipientId);
 }
 
 function sendTextMessage(recipientId, messageText) {
@@ -851,43 +855,6 @@ function sendTypingOff(recipientId) {
 
   callSendAPI(messageData);
 }
-
-function sendAccountLinking(recipientId) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "button",
-          text: "Welcome. Link your account.",
-          buttons:[{
-            type: "account_link",
-            url: SERVER_URL + "/authorize"
-          }]
-        }
-      }
-    }
-  };  
-
-  callSendAPI(messageData);
-}
-
-function getUserName() {
-    var user = request({
-        url: 'https://graph.facebook.com/v2.8/<USER_ID>?fields=first_name,last_name,profile_pic,locale,timezone,gender',
-        qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
-        method: 'GET',
-        json: {
-                "first_name ": "First Lastname",
-                "id": "user_id"
-        }
-    });
-    return user.first_name
-
-};
 
 function callSendAPI(messageData) {
   request({
