@@ -1,6 +1,6 @@
 {
-    "appSecret": "a0b6f8b13b317980978a22ab8329d00a",
-    "pageAccessToken": "EAAJawlihpywBABSxZAd2qLMr1ZCK9OX7ZC7PtcZBpOxpZC9zMkVR9yf9GutJInDTiA40kDE6P7K7maTnjZAVMUkl9a7D2o3mVrStWE1YNLGLNsXXbkHjY0czGVZA3gVBuThC5Kj3mzgc1rwHZAPc1OoOwDG6COI9rWgvlgf8ZC7n1dwZDZD",
+    "appSecret": "ca241b1c2149c63ab81b74789becb8d8",
+    "pageAccessToken": "EAASQGqhbd54BAFCgYQ8vkBtI2gFvLsWndwDrAkMSIosyFXK5Blo2ZAaa32IbChuZABgyZB8cxK86Lm2dRXUHUpayWi7OEXdUvoevWrPUQzLd4jcStQKrY47ZCViJv9hPLprDQHnyOyNhZBgoJYJINQnVQWD3TvZBMBDkPVxagCyAZDZD",
     "validationToken": "my_voice_is_my_password_verify_me",
-    "serverURL": "https://proenglish.herokuapp.com/webhook/"
+    "serverURL": "https://memorize-bot.herokuapp.com/webhook/"
 }
