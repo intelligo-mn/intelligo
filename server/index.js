@@ -126,7 +126,7 @@ request({
   json: {
     "setting_type":"greeting",
     "greeting":{
-      "text": "Сайн байна уу! Би про бот байна."
+      "text": "Сайн байна уу! Би Memorize бот байна."
     }
   }
 }, function(error, response, body) {
@@ -164,7 +164,7 @@ request({
       {
         "type":"web_url",
         "title":"🤖 Танилцуулга 👉",
-        "url":"https://proenglish.herokuapp.com/"
+        "url":""+SERVER_URL
       },
       {
         "type":"web_url",
@@ -333,10 +333,10 @@ function sendWelcome(recipientId) {
     
       var fbProfileBody = JSON.parse(body);
       var userName = fbProfileBody["first_name"];
-      var greetings = ["Hey", "Hello", "Bonjur", "Good Evening", "Good Morning", "What's up", "Сайн уу","юу байна", "сайн уу"];
+      var greetings = ["Hey", "Hello", "Good Evening", "Good Morning", "What's up", "Сайн уу","Юу байна", "Сайн уу"];
       var randomGreeting = getRandomItemFromArray(greetings);
       var welcomeMsg = `${randomGreeting} ${userName}, 
-Намайг Про гэдэг!
+Намайг Memorize Bot гэдэг!
 Таныг сонирхолтой байдлаар хэл сурахад туслана.
 ¯\\_(ツ)_/¯ .
       `;
@@ -425,7 +425,7 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url:  "https://proenglish.herokuapp.com/img/pro.png"
+          url:  SERVER_URL+"/img/pro.png"
         }
       }
     }
@@ -445,7 +445,7 @@ function sendGifMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: "https://proenglish.herokuapp.com/img/giphy.gif"
+          url: SERVER_URL+"/img/giphy.gif"
         }
       }
     }
@@ -465,7 +465,7 @@ function sendAudioMessage(recipientId) {
       attachment: {
         type: "audio",
         payload: {
-          url: "https://proenglish.herokuapp.com/img/duu.mp3"
+          url: SERVER_URL+"/img/duu.mp3"
         }
       }
     }
@@ -485,7 +485,7 @@ function sendVideoMessage(recipientId) {
       attachment: {
         type: "video",
         payload: {
-          url: "https://proenglish.herokuapp.com/img/eminem.mov"
+          url: SERVER_URL+"/img/eminem.mov"
         }
       }
     }
@@ -505,7 +505,7 @@ function sendFileMessage(recipientId) {
       attachment: {
         type: "file",
         payload: {
-          url: "https://proenglish.herokuapp.com/img/hi.txt"
+          url: SERVER_URL+"/img/hi.txt"
         }
       }
     }
@@ -542,7 +542,7 @@ function sendButtonMessage(recipientId) {
           text: "Холбоо барих мэдээллүүд",
           buttons:[{
             type: "web_url",
-            url: "https://proenglish.herokuapp.com",
+            url: SERVER_URL,
             title: "Вэб хуудас"
           }, {
             type: "phone_number",
@@ -594,7 +594,7 @@ function sendWebUrl(recipientId) {
           text: "Вэб хуудас",
           buttons:[{
             type: "web_url",
-            url: "https://www.proenglish.herokuapp.com",
+            url: SERVER_URL,
             title: "Вэб хуудас"
           }]
         }
