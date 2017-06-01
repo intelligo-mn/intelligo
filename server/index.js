@@ -10,14 +10,9 @@ import config from 'config';
 import crypto from 'crypto';
 import https from 'https';
 import request from 'request';
-import firebase from 'firebase';
-
-// import mongoose from 'mongoose';
 import session from 'express-session';
 
 import api from './routes';
-
-
 
 const app = express();
 const port = process.env.PORT;
@@ -26,21 +21,6 @@ const devPort = 4000;
 
 app.use(morgan('dev'));
 app.use(bodyParser.json({ verify: verifyRequestSignature }));               
-
-
-/* mongodb connection */
-// const db = mongoose.connection;
-// db.on('error', console.error);
-// db.once('open', () => { console.log('Connected to mongodb server'); });
-// mongoose.connect('mongodb://username:password@host:port/database=');
-// mongoose.connect('mongodb://localhost:27017/');
-
-/* use session */
-app.use(session({
-    secret: 'CodeLab1$1$234',
-    resave: false,
-    saveUninitialized: true
-}));
 
 app.use('/', express.static(path.join(__dirname, './../public')));
 
@@ -55,25 +35,11 @@ app.get('/app', (req, res) => {
     res.sendFile(path.resolve(__dirname, './../public/words.html'));
 });
 
-
 /* handle error */
 app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
-
-const firebase_config = {
-  apiKey: "AIzaSyCnDxlx7nPSsrnyjop8apSXljlyDKVYbpk",
-  authDomain: "memorize-a2ca1.firebaseapp.com",
-  databaseURL: "https://memorize-a2ca1.firebaseio.com",
-  storageBucket: "memorize-a2ca1.appspot.com",
-  messagingSenderId: "125299550820"
-};
-firebase.initializeApp(firebase_config);
-firebase.database.enableLogging(true)
-
-const rootRef = firebase.database().ref();
-
 
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
   process.env.MESSENGER_APP_SECRET :
@@ -164,12 +130,12 @@ request({
       {
         "type":"web_url",
         "title":"🤖 Танилцуулга 👉",
-        "url":"https://proenglish.herokuapp.com/"
+        "url":"https://memorize-bot.herokuapp.com/"
       },
       {
         "type":"web_url",
         "title":"Тусламж",
-        "url":"https://proenglish.herokuapp.com/"
+        "url":"https://memorize-bot.herokuapp.com/"
       }
     ]
   }
@@ -425,7 +391,7 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url:  "https://proenglish.herokuapp.com/img/pro.png"
+          url:  "https://memorize-bot.herokuapp.com/img/pro.png"
         }
       }
     }
@@ -445,7 +411,7 @@ function sendGifMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: "https://proenglish.herokuapp.com/img/giphy.gif"
+          url: "https://memorize-bot.herokuapp.com/img/giphy.gif"
         }
       }
     }
@@ -465,7 +431,7 @@ function sendAudioMessage(recipientId) {
       attachment: {
         type: "audio",
         payload: {
-          url: "https://proenglish.herokuapp.com/img/duu.mp3"
+          url: "https://memorize-bot.herokuapp.com/img/duu.mp3"
         }
       }
     }
@@ -485,7 +451,7 @@ function sendVideoMessage(recipientId) {
       attachment: {
         type: "video",
         payload: {
-          url: "https://proenglish.herokuapp.com/img/eminem.mov"
+          url: "https://memorize-bot.herokuapp.com/img/eminem.mov"
         }
       }
     }
@@ -505,7 +471,7 @@ function sendFileMessage(recipientId) {
       attachment: {
         type: "file",
         payload: {
-          url: "https://proenglish.herokuapp.com/img/hi.txt"
+          url: "https://memorize-bot.herokuapp.com/img/hi.txt"
         }
       }
     }
@@ -542,7 +508,7 @@ function sendButtonMessage(recipientId) {
           text: "Холбоо барих мэдээллүүд",
           buttons:[{
             type: "web_url",
-            url: "https://proenglish.herokuapp.com",
+            url: "https://memorize-bot.herokuapp.com",
             title: "Вэб хуудас"
           }, {
             type: "phone_number",
@@ -594,7 +560,7 @@ function sendWebUrl(recipientId) {
           text: "Вэб хуудас",
           buttons:[{
             type: "web_url",
-            url: "https://www.proenglish.herokuapp.com",
+            url: "https://www.memorize-bot.herokuapp.com",
             title: "Вэб хуудас"
           }]
         }
@@ -644,11 +610,11 @@ function sendGenericMessage(recipientId) {
           elements: [{
             title: "IBT",
             subtitle: "IELTS, TOEFL-д бэлдэнэ",
-            item_url: "https://proenglish.herokuapp.com",               
-            image_url: "https://proenglish.herokuapp.com/img/pro.png",
+            item_url: "https://memorize-bot.herokuapp.com",               
+            image_url: "https://memorize-bot.herokuapp.com/img/pro.png",
             buttons: [{
               type: "web_url",
-              url: "https://proenglish.herokuapp.com",
+              url: "https://memorize-bot.herokuapp.com",
               title: "Вэбэд зочлох"
             }, {
               type: "postback",
@@ -658,11 +624,11 @@ function sendGenericMessage(recipientId) {
           }, {
             title: "Nogoonjade",
             subtitle: "Nogoonjade сургалтын төв",
-            item_url: "https://proenglish.herokuapp.com",               
-            image_url: "https://proenglish.herokuapp.com/img/pro.png",
+            item_url: "https://memorize-bot.herokuapp.com",               
+            image_url: "https://memorize-bot.herokuapp.com/img/pro.png",
             buttons: [{
               type: "web_url",
-              url: "https://proenglish.herokuapp.com",
+              url: "https://memorize-bot.herokuapp.com",
               title: "Вэбэд зочлох"
             }, {
               type: "postback",
