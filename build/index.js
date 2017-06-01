@@ -119,7 +119,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   json: {
     "setting_type": "greeting",
     "greeting": {
-      "text": "Сайн байна уу! Би про бот байна."
+      "text": "Сайн байна уу! Би Memorize бот байна."
     }
   }
 }, function (error, response, body) {
@@ -152,11 +152,11 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
     }, {
       "type": "web_url",
       "title": "🤖 Танилцуулга 👉",
-      "url": "https://memorize-bot.herokuapp.com/"
+      "url": "" + SERVER_URL
     }, {
       "type": "web_url",
       "title": "Тусламж",
-      "url": "https://memorize-bot.herokuapp.com/"
+      "url": "" + SERVER_URL
     }]
   }
 }, function (error, response, body) {
@@ -272,9 +272,9 @@ function sendWelcome(recipientId) {
 
     var fbProfileBody = JSON.parse(body);
     var userName = fbProfileBody["first_name"];
-    var greetings = ["Hey", "Hello", "Bonjur", "Good Evening", "Good Morning", "What's up", "Сайн уу", "юу байна", "сайн уу"];
+    var greetings = ["Hey", "Hello", "Good Evening", "Good Morning", "What's up", "Сайн уу", "Юу байна", "Сайн уу"];
     var randomGreeting = getRandomItemFromArray(greetings);
-    var welcomeMsg = randomGreeting + ' ' + userName + ', \n\u041D\u0430\u043C\u0430\u0439\u0433 \u041F\u0440\u043E \u0433\u044D\u0434\u044D\u0433!\n\u0422\u0430\u043D\u044B\u0433 \u0441\u043E\u043D\u0438\u0440\u0445\u043E\u043B\u0442\u043E\u0439 \u0431\u0430\u0439\u0434\u043B\u0430\u0430\u0440 \u0445\u044D\u043B \u0441\u0443\u0440\u0430\u0445\u0430\u0434 \u0442\u0443\u0441\u043B\u0430\u043D\u0430.\n\xAF\\_(\u30C4)_/\xAF .\n      ';
+    var welcomeMsg = randomGreeting + ' ' + userName + ', \n\u041D\u0430\u043C\u0430\u0439\u0433 Memorize Bot \u0433\u044D\u0434\u044D\u0433!\n\u0422\u0430\u043D\u044B\u0433 \u0441\u043E\u043D\u0438\u0440\u0445\u043E\u043B\u0442\u043E\u0439 \u0431\u0430\u0439\u0434\u043B\u0430\u0430\u0440 \u0445\u044D\u043B \u0441\u0443\u0440\u0430\u0445\u0430\u0434 \u0442\u0443\u0441\u043B\u0430\u043D\u0430.\n\xAF\\_(\u30C4)_/\xAF .\n      ';
     sendTextMessage(recipientId, welcomeMsg);
   });
 }
@@ -342,7 +342,7 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: "https://memorize-bot.herokuapp.com/img/pro.png"
+          url: SERVER_URL + "/img/pro.png"
         }
       }
     }
@@ -362,7 +362,7 @@ function sendGifMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: "https://memorize-bot.herokuapp.com/img/giphy.gif"
+          url: SERVER_URL + "/img/giphy.gif"
         }
       }
     }
@@ -382,7 +382,7 @@ function sendAudioMessage(recipientId) {
       attachment: {
         type: "audio",
         payload: {
-          url: "https://memorize-bot.herokuapp.com/img/duu.mp3"
+          url: SERVER_URL + "/img/duu.mp3"
         }
       }
     }
@@ -402,7 +402,7 @@ function sendVideoMessage(recipientId) {
       attachment: {
         type: "video",
         payload: {
-          url: "https://memorize-bot.herokuapp.com/img/eminem.mov"
+          url: SERVER_URL + "/img/eminem.mov"
         }
       }
     }
@@ -422,7 +422,7 @@ function sendFileMessage(recipientId) {
       attachment: {
         type: "file",
         payload: {
-          url: "https://memorize-bot.herokuapp.com/img/hi.txt"
+          url: SERVER_URL + "/img/hi.txt"
         }
       }
     }
@@ -459,7 +459,7 @@ function sendButtonMessage(recipientId) {
           text: "Холбоо барих мэдээллүүд",
           buttons: [{
             type: "web_url",
-            url: "https://memorize-bot.herokuapp.com",
+            url: SERVER_URL,
             title: "Вэб хуудас"
           }, {
             type: "phone_number",
@@ -511,7 +511,7 @@ function sendWebUrl(recipientId) {
           text: "Вэб хуудас",
           buttons: [{
             type: "web_url",
-            url: "https://www.memorize-bot.herokuapp.com",
+            url: SERVER_URL,
             title: "Вэб хуудас"
           }]
         }
@@ -559,11 +559,11 @@ function sendGenericMessage(recipientId) {
           elements: [{
             title: "IBT",
             subtitle: "IELTS, TOEFL-д бэлдэнэ",
-            item_url: "https://memorize-bot.herokuapp.com",
-            image_url: "https://memorize-bot.herokuapp.com/img/pro.png",
+            item_url: "https://proenglish.herokuapp.com",
+            image_url: "https://proenglish.herokuapp.com/img/pro.png",
             buttons: [{
               type: "web_url",
-              url: "https://memorize-bot.herokuapp.com",
+              url: "https://proenglish.herokuapp.com",
               title: "Вэбэд зочлох"
             }, {
               type: "postback",
@@ -573,11 +573,11 @@ function sendGenericMessage(recipientId) {
           }, {
             title: "Nogoonjade",
             subtitle: "Nogoonjade сургалтын төв",
-            item_url: "https://memorize-bot.herokuapp.com",
-            image_url: "https://memorize-bot.herokuapp.com/img/pro.png",
+            item_url: "https://proenglish.herokuapp.com",
+            image_url: "https://proenglish.herokuapp.com/img/pro.png",
             buttons: [{
               type: "web_url",
-              url: "https://memorize-bot.herokuapp.com",
+              url: "https://proenglish.herokuapp.com",
               title: "Вэбэд зочлох"
             }, {
               type: "postback",
