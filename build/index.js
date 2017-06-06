@@ -87,7 +87,9 @@ var PAGE_ACCESS_TOKEN = process.env.MESSENGER_PAGE_ACCESS_TOKEN ? process.env.ME
 
 var SERVER_URL = process.env.SERVER_URL ? process.env.SERVER_URL : _config3.default.get('serverURL');
 
-if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
+var WEBHOOK_URL = process.env.WEBHOOK_URL ? process.env.WEBHOOK_URL : _config3.default.get('webhookURL');
+
+if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && WEBHOOK_URL)) {
   console.error("Missing config values");
   process.exit(1);
 }

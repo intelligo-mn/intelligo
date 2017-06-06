@@ -2,5 +2,6 @@
     "appSecret": "ca241b1c2149c63ab81b74789becb8d8",
     "pageAccessToken": "EAASQGqhbd54BAOSkQkyHTWplnZB5IqeGzVZBy9qv6P7uQSXcvjFZB9KANqoihefF1oBZA6To6xB1TV0RVCjl3T3V4MfZCH9dIKOYtFM8JAT4JqvUPG0T8rK5xSdM8YRPW8IQqRhvPGQOvMZCraaUaxlP3BxYhRBT8PoemEmj3HZAAZDZD",
     "validationToken": "my_voice_is_my_password_verify_me",
-    "serverURL": "https://memorize-bot.herokuapp.com/"
+    "serverURL": "https://memorize-bot.herokuapp.com/",
+    "webhookURL": "https://memorize-bot.herokuapp.com/webhook"
 }

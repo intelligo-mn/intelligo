@@ -57,9 +57,13 @@ const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
 const SERVER_URL = (process.env.SERVER_URL) ?
   (process.env.SERVER_URL) :
   config.get('serverURL');
+
+const WEBHOOK_URL = (process.env.WEBHOOK_URL) ?
+  (process.env.WEBHOOK_URL) :
+  config.get('webhookURL');
   
 
-if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
+if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && WEBHOOK_URL)) {
   console.error("Missing config values");
   process.exit(1);
 }
