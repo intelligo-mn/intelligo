@@ -135,12 +135,12 @@ request({
       {
         "type":"web_url",
         "title":"🤖 Танилцуулга 👉",
-        "url":""+SERVER_URL
+        "url":SERVER_URL
       },
       {
         "type":"web_url",
         "title":"Тусламж",
-        "url":""+SERVER_URL
+        "url":SERVER_URL
       }
     ]
   }
@@ -396,7 +396,7 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url:  ""+SERVER_URL+"/img/pro.png"
+          url:  SERVER_URL+"/img/pro.png"
         }
       }
     }
@@ -416,7 +416,7 @@ function sendGifMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: ""+SERVER_URL+"/img/giphy.gif"
+          url: SERVER_URL+"/img/giphy.gif"
         }
       }
     }
@@ -436,7 +436,7 @@ function sendAudioMessage(recipientId) {
       attachment: {
         type: "audio",
         payload: {
-          url: ""+SERVER_URL+"/img/duu.mp3"
+          url: SERVER_URL+"/img/duu.mp3"
         }
       }
     }
@@ -456,7 +456,7 @@ function sendVideoMessage(recipientId) {
       attachment: {
         type: "video",
         payload: {
-          url: ""+SERVER_URL+"/img/eminem.mov"
+          url: SERVER_URL+"/img/eminem.mov"
         }
       }
     }
@@ -476,7 +476,7 @@ function sendFileMessage(recipientId) {
       attachment: {
         type: "file",
         payload: {
-          url: ""+SERVER_URL+"/img/hi.txt"
+          url: SERVER_URL+"/img/hi.txt"
         }
       }
     }
@@ -616,10 +616,10 @@ function sendGenericMessage(recipientId) {
             title: "IBT",
             subtitle: "IELTS, TOEFL-д бэлдэнэ",
             item_url: SERVER_URL,               
-            image_url: ""+SERVER_URL+"/img/pro.png",
+            image_url: SERVER_URL+"/img/pro.png",
             buttons: [{
               type: "web_url",
-              url: ""+SERVER_URL,
+              url: SERVER_URL,
               title: "Вэбэд зочлох"
             }, {
               type: "postback",
@@ -629,11 +629,11 @@ function sendGenericMessage(recipientId) {
           }, {
             title: "Nogoonjade",
             subtitle: "Nogoonjade сургалтын төв",
-            item_url: ""+SERVER_URL,               
-            image_url: ""+SERVER_URL+"/img/pro.png",
+            item_url: SERVER_URL,               
+            image_url: SERVER_URL+"/img/pro.png",
             buttons: [{
               type: "web_url",
-              url: ""+SERVER_URL,
+              url: SERVER_URL,
               title: "Вэбэд зочлох"
             }, {
               type: "postback",
