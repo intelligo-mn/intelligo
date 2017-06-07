@@ -374,25 +374,25 @@ function sendGifMessage(recipientId) {
   sendTypingoff(recipientId);
 }
 
-// function sendAudioMessage(recipientId) {
-//   sendTypingOn(recipientId);
-//   var messageData = {
-//     recipient: {
-//       id: recipientId
-//     },
-//     message: {
-//       attachment: {
-//         type: "audio",
-//         payload: {
-//           url: SERVER_URL + "/img/duu.mp3"
-//         }
-//       }
-//     }
-//   };
+function sendAudioMessage(recipientId) {
+  sendTypingOn(recipientId);
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "audio",
+        payload: {
+          url: SERVER_URL + "/img/duu.mp3"
+        }
+      }
+    }
+  };
 
-//   callSendAPI(messageData);
-//   sendTypingOff(receiptId);
-// }
+  callSendAPI(messageData);
+  sendTypingOff(receiptId);
+}
 
 function sendVideoMessage(recipientId) {
   sendTypingOn(recipientId);
