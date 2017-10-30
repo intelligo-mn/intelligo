@@ -1,0 +1,23 @@
+# Mac.
+.DS_STORE
+
+# Node.
+node_modules
+
+# Tmp files.
+*~
+
+# Dot.
+*.dot
+*.png
+
+# Demo.
+demo.js
+
+# Debug
+debug.html
+
+
+.settings
+
+npm-debug.log

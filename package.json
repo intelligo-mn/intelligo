@@ -1,53 +1,28 @@
 {
-  "name": "probot",
-  "version": "0.0.3",
-  "description": "Pro ChatBot Platform",
+  "name": "qa-bot",
+  "version": "0.0.1",
+  "description": "QA ChatBot",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf build public/bundle.js",
-    "build": "babel server --out-dir build --presets=es2015 && webpack",
-    "start": "cross-env NODE_ENV=production node ./build/index.js",
-    "development": "cross-env NODE_ENV=development nodemon --exec babel-node --presets=es2015 ./server/index.js --watch server"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tortuvshin/pro-bot.git"
+    "url": "https://github.com/tortuvshin/qa-bot.git"
   },
   "author": "Tortuvshin Byambaa",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.15.3",
-    "babel-cli": "^6.18.0",
-    "babel-polyfill": "^6.20.0",
     "bcryptjs": "^2.4.0",
     "body-parser": "^1.15.2",
     "config": "^1.24.0",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
-    "firebase": "^3.6.8",
-    "mongoose": "^4.7.6",
+    "limdu": "^0.9.3",
     "morgan": "^1.7.0",
+    "natural-synaptic": "^1.0.1",
     "path": "^0.12.7",
-    "react": "^15.4.2",
-    "react-addons-css-transition-group": "^15.4.2",
-    "react-addons-update": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "react-redux": "^5.0.2",
-    "react-router": "^3.0.1",
-    "react-timeago": "^3.1.3",
-    "redux": "^3.6.0",
-    "redux-thunk": "^2.1.0",
-    "request": "^2.79.0"
-  },
-  "devDependencies": {
-    "babel-core": "^6.21.0",
-    "babel-loader": "^6.2.10",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0",
-    "css-loader": "^0.26.1",
-    "react-hot-loader": "^1.3.1",
-    "style-loader": "^0.13.1",
-    "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2"
+    "request": "^2.79.0",
+    "synaptic": "^1.0.11"
   }
 }

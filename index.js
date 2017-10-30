@@ -1,1 +1,1 @@
-require('./build/index');
+require('./src/index');

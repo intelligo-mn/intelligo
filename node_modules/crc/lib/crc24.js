@@ -2,6 +2,10 @@
 
 var _buffer = require('buffer');
 
+var _create_buffer = require('./create_buffer');
+
+var _create_buffer2 = _interopRequireDefault(_create_buffer);
+
 var _define_crc = require('./define_crc');
 
 var _define_crc2 = _interopRequireDefault(_define_crc);
@@ -14,7 +18,7 @@ var TABLE = [0x000000, 0x864cfb, 0x8ad50d, 0x0c99f6, 0x93e6e1, 0x15aa1a, 0x1933e
 if (typeof Int32Array !== 'undefined') TABLE = new Int32Array(TABLE);
 
 module.exports = (0, _define_crc2.default)('crc-24', function (buf, previous) {
-  if (!_buffer.Buffer.isBuffer(buf)) buf = new _buffer.Buffer(buf);
+  if (!_buffer.Buffer.isBuffer(buf)) buf = (0, _create_buffer2.default)(buf);
 
   var crc = typeof previous !== 'undefined' ? ~~previous : 0xb704ce;
 

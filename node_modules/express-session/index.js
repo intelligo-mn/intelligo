@@ -148,8 +148,8 @@ function session(options) {
 
   // notify user that this store is not
   // meant for a production environment
+  /* istanbul ignore next: not tested */
   if ('production' == env && store instanceof MemoryStore) {
-    /* istanbul ignore next: not tested */
     console.warn(warning);
   }
 
@@ -191,7 +191,7 @@ function session(options) {
     }
 
     // pathname mismatch
-    var originalPath = parseUrl.original(req).pathname;
+    var originalPath = parseUrl.original(req).pathname || '/'
     if (originalPath.indexOf(cookieOptions.path || '/') !== 0) return next();
 
     // ensure a secret is available or bail
@@ -364,13 +364,29 @@ function session(options) {
 
     // wrap session methods
     function wrapmethods(sess) {
+      var _reload = sess.reload
       var _save = sess.save;
+
+      function reload(callback) {
+        debug('reloading %s', this.id)
+        _reload.call(this, function () {
+          wrapmethods(req.session)
+          callback.apply(this, arguments)
+        })
+      }
 
       function save() {
         debug('saving %s', this.id);
         savedHash = hash(this);
         _save.apply(this, arguments);
       }
+
+      Object.defineProperty(sess, 'reload', {
+        configurable: true,
+        enumerable: false,
+        value: reload,
+        writable: true
+      })
 
       Object.defineProperty(sess, 'save', {
         configurable: true,
@@ -562,10 +578,13 @@ function getcookie(req, name, secrets) {
 
 function hash(sess) {
   return crc(JSON.stringify(sess, function (key, val) {
-    if (key !== 'cookie') {
-      return val;
+    // ignore sess.cookie property
+    if (this === sess && key === 'cookie') {
+      return
     }
-  }));
+
+    return val
+  }))
 }
 
 /**
@@ -619,9 +638,7 @@ function setcookie(res, name, val, secret, options) {
   debug('set-cookie %s', data);
 
   var prev = res.getHeader('set-cookie') || [];
-  var header = Array.isArray(prev) ? prev.concat(data)
-    : Array.isArray(data) ? [prev].concat(data)
-    : [prev, data];
+  var header = Array.isArray(prev) ? prev.concat(data) : [prev, data];
 
   res.setHeader('set-cookie', header)
 }

@@ -2,6 +2,10 @@
 
 var _buffer = require('buffer');
 
+var _create_buffer = require('./create_buffer');
+
+var _create_buffer2 = _interopRequireDefault(_create_buffer);
+
 var _define_crc = require('./define_crc');
 
 var _define_crc2 = _interopRequireDefault(_define_crc);
@@ -14,7 +18,7 @@ var TABLE = [0x00, 0x5e, 0xbc, 0xe2, 0x61, 0x3f, 0xdd, 0x83, 0xc2, 0x9c, 0x7e, 0
 if (typeof Int32Array !== 'undefined') TABLE = new Int32Array(TABLE);
 
 module.exports = (0, _define_crc2.default)('dallas-1-wire', function (buf, previous) {
-  if (!_buffer.Buffer.isBuffer(buf)) buf = new _buffer.Buffer(buf);
+  if (!_buffer.Buffer.isBuffer(buf)) buf = (0, _create_buffer2.default)(buf);
 
   var crc = ~~previous;
 

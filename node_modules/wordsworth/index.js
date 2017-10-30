@@ -1,0 +1,1 @@
+module.exports = require('./lib/spell_checker.js');

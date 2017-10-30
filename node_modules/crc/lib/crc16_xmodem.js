@@ -2,6 +2,10 @@
 
 var _buffer = require('buffer');
 
+var _create_buffer = require('./create_buffer');
+
+var _create_buffer2 = _interopRequireDefault(_create_buffer);
+
 var _define_crc = require('./define_crc');
 
 var _define_crc2 = _interopRequireDefault(_define_crc);
@@ -9,7 +13,7 @@ var _define_crc2 = _interopRequireDefault(_define_crc);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = (0, _define_crc2.default)('xmodem', function (buf, previous) {
-  if (!_buffer.Buffer.isBuffer(buf)) buf = new _buffer.Buffer(buf);
+  if (!_buffer.Buffer.isBuffer(buf)) buf = (0, _create_buffer2.default)(buf);
 
   var crc = typeof previous !== 'undefined' ? ~~previous : 0x0;
 
