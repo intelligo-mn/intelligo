@@ -379,6 +379,279 @@ function callSendAPI(messageData) {
   });  
 }
 
+function sendButtonMessage(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Холбоо барих мэдээллүүд",
+          buttons:[{
+            type: "web_url",
+            url: SERVER_URL,
+            title: "Вэб хуудас"
+          }, {
+            type: "phone_number",
+            title: "Утасны дугаар",
+            payload: "+97689860933"
+          }]
+        }
+      }
+    }
+  };  
+
+  callSendAPI(messageData);
+}
+
+function sendPhoneNumber (recipientId) {
+    var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Холбоо барих утасны дугаар",
+          buttons:[{
+            type: "phone_number",
+            title: "Утасруу залгах",
+            payload: "+97689860933"
+          }]
+        }
+      }
+    }
+  };  
+
+  callSendAPI(messageData);
+}
+
+function sendWebUrl(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Вэб хуудас",
+          buttons:[{
+            type: "web_url",
+            url: SERVER_URL,
+            title: "Вэб хуудас"
+          }]
+        }
+      }
+    }
+  };  
+
+  callSendAPI(messageData);
+}
+
+
+function sendFormUrl(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Судалгаа",
+          buttons:[{
+            type: "web_url",
+            url: "https://docs.google.com/forms/d/e/1FAIpQLSfMbmOLRuss7NqBlgzMN3HZWIKs4_k9NHiBigqVO-l_D3_QEQ/viewform?c=0&w=1",
+            title: "Судалгаа өгөх"
+          }]
+        }
+      }
+    }
+  };  
+
+  callSendAPI(messageData);
+}
+
+
+function sendGenericMessage(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: [{
+            title: "IBT",
+            subtitle: "IELTS, TOEFL-д бэлдэнэ",
+            item_url: SERVER_URL,               
+            image_url: SERVER_URL+"/img/pro.png",
+            buttons: [{
+              type: "web_url",
+              url: SERVER_URL,
+              title: "Вэбэд зочлох"
+            }, {
+              type: "postback",
+              title: "Болих",
+              payload: "Payload for first bubble",
+            }],
+          }, {
+            title: "Nogoonjade",
+            subtitle: "Nogoonjade сургалтын төв",
+            item_url: SERVER_URL,               
+            image_url: SERVER_URL+"/img/pro.png",
+            buttons: [{
+              type: "web_url",
+              url: SERVER_URL,
+              title: "Вэбэд зочлох"
+            }, {
+              type: "postback",
+              title: "Болих",
+              payload: "Payload for second bubble",
+            }]
+          }]
+        }
+      }
+    }
+  };  
+
+  callSendAPI(messageData);
+}
+
+function sendReceiptMessage(recipientId) {
+  var receiptId = "order" + Math.floor(Math.random()*1000);
+
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message:{
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "receipt",
+          recipient_name: "ToRoo",
+          order_number: receiptId,
+          currency: "USD",
+          payment_method: "Visa 1234",        
+          timestamp: "1428444852", 
+          elements: [ {
+            title: "IELTS",
+            subtitle: "Төлбөртэй хичээл үзсэн",
+            quantity: 1,
+            price: 99.99,
+            currency: "USD",
+            image_url: SERVER_URL + "/assets/gearvrsq.png"
+          }],
+          address: {
+            street_1: "Itpark",
+            street_2: "",
+            city: "",
+            postal_code: "94025",
+            state: "Ulaanbaatar",
+            country: "Mongolia"
+          },
+          summary: {
+            subtotal: 698.99,
+            shipping_cost: 20.00,
+            total_tax: 57.67,
+            total_cost: 626.66
+          },
+          adjustments: [{
+            name: "New Customer Discount",
+            amount: -50
+          }, {
+            name: "$100 Off Coupon",
+            amount: -100
+          }]
+        }
+      }
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+function sendQuickReply(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "What's your favorite movie genre?",
+      quick_replies: [
+        {
+          "content_type":"text",
+          "title":"Action",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_ACTION"
+        },
+        {
+          "content_type":"text",
+          "title":"Comedy",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_COMEDY"
+        },
+        {
+          "content_type":"text",
+          "title":"Drama",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_DRAMA"
+        }
+      ]
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+
+function sendReadReceipt(recipientId) {
+  console.log("Sending a read receipt to mark message as seen");
+
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    sender_action: "mark_seen"
+  };
+
+  callSendAPI(messageData);
+}
+
+function sendTypingOn(recipientId) {
+  console.log("Turning typing indicator on");
+
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    sender_action: "typing_on"
+  };
+
+  callSendAPI(messageData);
+}
+
+function sendTypingOff(recipientId) {
+  console.log("Turning typing indicator off");
+
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    sender_action: "typing_off"
+  };
+
+  callSendAPI(messageData);
+}
+
 function getRandomNumber(minimum, maxmimum) {
   return Math.floor(Math.exp(Math.random()*Math.log(maxmimum-minimum+1)))+minimum;
 }
