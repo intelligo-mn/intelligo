@@ -94,6 +94,40 @@ request({
   }
 });
 
+
+// persistent menu
+request({
+  url: 'https://graph.facebook.com/v2.8/me/thread_settings',
+  qs: {access_token: PAGE_ACCESS_TOKEN},
+  method: 'POST',
+  json: {
+    "setting_type":"call_to_actions",
+    "thread_state" : "existing_thread",
+    "call_to_actions":[
+      {
+        "type":"postback",
+        "title":"💪 Get Started"
+      },
+      {
+        "type":"web_url",
+        "title":"🤖 Танилцуулга 👉",
+        "url":SERVER_URL
+      },
+      {
+        "type":"web_url",
+        "title":"Тусламж",
+        "url":SERVER_URL
+      }
+    ]
+  }
+}, function(error, response, body) {
+  if (error) {
+    console.log('Error sending message: ', error);
+  } else if (response.body.error) {
+    console.log('Error: ', response.body.error);
+  }
+});
+
 app.get('/webhook', function(req, res) {
   if (req.query['hub.mode'] === 'subscribe' &&
       req.query['hub.verify_token'] === VALIDATION_TOKEN) {
@@ -117,7 +151,15 @@ app.post('/webhook', function (req, res) {
       pageEntry.messaging.forEach(function(messagingEvent) {
         if (messagingEvent.message) {
           receivedMessage(messagingEvent);
-        } else {
+        } else if (messagingEvent.delivery) {
+          receivedDeliveryConfirmation(messagingEvent);
+        } else if (messagingEvent.postback) {
+          receivedPostback(messagingEvent);
+        } else if (messagingEvent.read) {
+          receivedMessageRead(messagingEvent);
+        } else if (messagingEvent.account_linking) {
+          receivedAccountLink(messagingEvent);
+        }else {
           console.log("Webhook received unknown messagingEvent: ", messagingEvent);
         }
       });
