@@ -326,6 +326,57 @@ function callSendAPI(messageData) {
   });  
 }
 
+function sendWelcome(recipientId) {
+  request({
+      url: 'https://graph.facebook.com/v2.8/' + recipientId 
+        + '?access_token=' + PAGE_ACCESS_TOKEN
+    },
+    function (error, response, body) {
+      if (error || response.statusCode != 200) return;
+    
+      var fbProfileBody = JSON.parse(body);
+      var userName = fbProfileBody["first_name"];
+      var greetings = ["Hey", "Hello", "Good Evening", "Good Morning", "What's up", "Сайн уу","Юу байна", "Сайн уу"];
+      var randomGreeting = getRandomItemFromArray(greetings);
+      var welcomeMsg = `${randomGreeting} ${userName}, 
+I am Techstar AI bot.
+¯\\_(ツ)_/¯ .
+      `;
+      sendTextMessage(recipientId, welcomeMsg);
+    }
+  );
+}
+
+
+function sendHelp(recipientId) {
+  var Desc = `
+  🤖 Help 👉
+  
+  Help = this...
+  why = ??
+  how = source code link
+  `;
+  sendTextMessage(recipientId, Desc);
+}
+
+function receivedDeliveryConfirmation(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+  var delivery = event.delivery;
+  var messageIDs = delivery.mids;
+  var watermark = delivery.watermark;
+  var sequenceNumber = delivery.seq;
+
+  if (messageIDs) {
+    messageIDs.forEach(function(messageID) {
+      console.log("Received delivery confirmation for message ID: %s", 
+        messageID);
+    });
+  }
+
+  console.log("All message before %d were delivered.", watermark);
+}
+
 function sendButtonMessage(recipientId) {
   var messageData = {
     recipient: {
