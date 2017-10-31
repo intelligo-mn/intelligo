@@ -378,6 +378,30 @@ function callSendAPI(messageData) {
     }
   });  
 }
+
+function getRandomNumber(minimum, maxmimum) {
+  return Math.floor(Math.exp(Math.random()*Math.log(maxmimum-minimum+1)))+minimum;
+}
+
+function randomIntFromInterval(min,max) {
+  return getRandomNumber(min, max);
+}
+
+function textMatches(message, matchString) {
+  return message.toLowerCase().indexOf(matchString) != -1;
+}
+
+function getRandomItemFromArray(items) {
+  var random_item = items[getRandomNumber(0, items.length - 1)];
+  return random_item;
+}
+
+function logObject(obj) {
+  console.log(JSON.stringify(obj, null, 2));
+}
+
+
+
 app.listen(app.get('port'), function() {
   console.log('Bot server is running on port', app.get('port'));
   //learn start here
