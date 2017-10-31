@@ -222,7 +222,7 @@ function receivedMessage(event) {
   }
 
   if (messageText) {
-    //limdu ээс асуух
+    
     var result = answerAI(messageText);
     
     //Хэрэглэгчийн хайсан өгөгдөл олдсон эсэх
@@ -230,9 +230,43 @@ function receivedMessage(event) {
       sendTextMessage(senderID, "Уучлаарай, та асуултаа тодорхтой оруулна уу.");
       // askMore(senderID, messageText);
     }
-    else if (messageText == "update"){
-      sendTextMessage(senderID, updateJSON());
-    }else
+    else if (messageText == "update")
+      sendTextMessage(senderID, updateJSON());    
+    else if (textMatches(messageText, "зураг")) 
+      sendImageMessage(senderID);
+    else if (textMatches(messageText, "gif")) 
+        sendGifMessage(senderID);
+    else if (textMatches(messageText, "get started")) 
+        sendWelcome(senderID);
+    else if (textMatches(messageText, "дуу")) 
+        sendAudioMessage(senderID);
+    else if (textMatches(messageText, "бичлэг")) 
+        sendVideoMessage(senderID);
+    else if (textMatches(messageText, "файл")) 
+        sendFileMessage(senderID);
+    else if (textMatches(messageText, "товч")) 
+        sendButtonMessage(senderID);
+    else if (textMatches(messageText, "вэб")) 
+        sendWebUrl(senderID);
+    else if (textMatches(messageText, "утас")) 
+        sendPhoneNumber(senderID);
+    else if (textMatches(messageText, "судалгаа")) 
+        sendFormUrl(senderID);
+    else if (textMatches(messageText, "quick reply")) 
+      sendQuickReply(senderID);
+    else if (textMatches(messageText, "read receipt")) 
+      sendReadReceipt(senderID);
+    else if (textMatches(messageText, "typing on")) 
+      sendTypingOn(senderID);
+    else if (textMatches(messageText, "typing off")) 
+      sendTypingOff(senderID);
+    else if (textMatches(messageText, "сургалт")) 
+      sendGenericMessage(senderID);
+    else if (textMatches(messageText, "хичээл")) 
+      sendReceiptMessage(senderID);
+    else if (textMatches(messageText, "тусламж")) 
+      sendHelp(senderID);
+    else
       sendTextMessage(senderID, result+"");
     
   } else if (messageAttachments) {
