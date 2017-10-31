@@ -377,6 +377,142 @@ function receivedDeliveryConfirmation(event) {
   console.log("All message before %d were delivered.", watermark);
 }
 
+
+function receivedPostback(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+  var timeOfPostback = event.timestamp;
+
+  var payload = event.postback.payload;
+
+  console.log("Received postback for user %d and page %d with payload '%s' " + 
+    "at %d", senderID, recipientID, payload, timeOfPostback);
+
+  sendTextMessage(senderID, "Postback called");
+}
+
+function receivedMessageRead(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+
+  var watermark = event.read.watermark;
+  var sequenceNumber = event.read.seq;
+
+  console.log("Received message read event for watermark %d and sequence " +
+    "number %d", watermark, sequenceNumber);
+}
+
+function receivedAccountLink(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+
+  var status = event.account_linking.status;
+  var authCode = event.account_linking.authorization_code;
+
+  console.log("Received account link event with for user %d with status %s " +
+    "and auth code %s ", senderID, status, authCode);
+}
+
+function sendImageMessage(recipientId) {
+  sendTypingOn(receiptId);
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "image",
+        payload: {
+          url:  SERVER_URL+"/img/pro.png"
+        }
+      }
+    }
+  };
+
+  callSendAPI(messageData);
+  sendTypingOff(recipientId);
+}
+
+function sendGifMessage(recipientId) {
+  sendTypingOn(recipientId);
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "image",
+        payload: {
+          url: SERVER_URL+"/img/giphy.gif"
+        }
+      }
+    }
+  };
+
+  callSendAPI(messageData);
+  sendTypingoff(recipientId);
+}
+
+function sendAudioMessage(recipientId) {
+  sendTypingOn(recipientId);
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "audio",
+        payload: {
+          url: SERVER_URL+"/img/duu.mp3"
+        }
+      }
+    }
+  };
+
+  callSendAPI(messageData);
+  sendTypingOff(receiptId);
+}
+
+function sendVideoMessage(recipientId) {
+  sendTypingOn(recipientId);
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "video",
+        payload: {
+          url: SERVER_URL+"/img/eminem.mov"
+        }
+      }
+    }
+  };
+
+  callSendAPI(messageData);
+  sendTypingOff(recipientId);
+}
+
+function sendFileMessage(recipientId) {
+  sendTypingOn(recipientId);
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "file",
+        payload: {
+          url: SERVER_URL+"/img/hi.txt"
+        }
+      }
+    }
+  };
+
+  callSendAPI(messageData);
+  sendTypingOff(recipientId);
+}
+
 function sendButtonMessage(recipientId) {
   var messageData = {
     recipient: {
