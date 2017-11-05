@@ -1,1 +1,1 @@
-# Intelligo
+# Messenger bot
