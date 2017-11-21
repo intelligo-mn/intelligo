@@ -1,6 +1,0 @@
-# Messenger bot
-
-
-```
-npm install
-```
