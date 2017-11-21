@@ -224,12 +224,8 @@ function receivedMessage(event) {
     
     var result = answerAI(messageText);
     
-    //Хэрэглэгчийн хайсан өгөгдөл олдсон эсэх
-    if(result == null || result == ''){
-      sendTextMessage(senderID, "Уучлаарай, та асуултаа тодорхтой оруулна уу.");
-      // askMore(senderID, messageText);
-    }
-    else if (messageText == "update")
+    
+    if (messageText == "update")
       sendTextMessage(senderID, updateJSON());    
     else if (textMatches(messageText, "зураг")) 
       sendImageMessage(senderID);
@@ -265,8 +261,11 @@ function receivedMessage(event) {
       sendReceiptMessage(senderID);
     else if (textMatches(messageText, "тусламж")) 
       sendHelp(senderID);
+    else if(result == null || result == '')
+      sendTextMessage(senderID, "Уучлаарай, та асуултаа тодорхтой оруулна уу.");
     else
       sendTextMessage(senderID, result+"");
+      
     
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
