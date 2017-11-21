@@ -1,3 +1,8 @@
+### 0.1.3 / 2017-11-11
+
+* Accept extension names and parameters including uppercase letters
+* Handle extension names that clash with `Object.prototype` properties
+
 ### 0.1.2 / 2017-09-10
 
 * Catch synchronous exceptions thrown when calling an extension

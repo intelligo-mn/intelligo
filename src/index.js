@@ -10,8 +10,7 @@ const express = require( 'express'),
       request = require( 'request'),
       session = require( 'express-session'),
       synaptic = require( 'synaptic'),
-      NaturalSynaptic = require( 'natural-synaptic'),
-      limdu = require('limdu');
+      TechstarAI = require('techstar-ai');
 
 const app = express();
 
@@ -30,7 +29,7 @@ var Neuron = synaptic.Neuron,
   	Network = synaptic.Network,
   	Trainer = synaptic.Trainer,
   	Architect = synaptic.Architect;
-var limduClassifier; //limdu classifier
+var techstarClassifier; //TechstarAI classifier
 var network; //synaptic network
 
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
@@ -335,8 +334,8 @@ function learnAI(json){
   console.log("AI суралцаж эхэллээ...");
   var startedTime = new Date().getTime();
   // Repeat multiple levels
-  var TextClassifier = limdu.classifiers.multilabel.BinaryRelevance.bind(0, {
-  	binaryClassifierType: limdu.classifiers.Winnow.bind(0, {retrain_count: 100})
+  var TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
+  	binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
   });
   
   // Unblock the words in the sentence with spaces and create attributes
@@ -346,19 +345,19 @@ function learnAI(json){
   	});
   };
   
-  limduClassifier = new limdu.classifiers.EnhancedClassifier({
+  techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
   	classifierType: TextClassifier,
   	featureExtractor: WordExtractor
   });
   
-  limduClassifier.trainBatch(json);
+  techstarClassifier.trainBatch(json);
   console.log("AI суралцаж дууслаа. \n Нийт "+json.length + " ширхэг өгөдлийг " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
 }
 
 function answerAI(question){
   var startedTime = new Date().getTime();
   console.log("AI хариултыг хайж байна...");
-  var result =  limduClassifier.classify(question);
+  var result =  techstarClassifier.classify(question);
   console.log("AI хариултыг оллоо.  \n " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
   return result;
 }
