@@ -1,22 +1,46 @@
 'use strict';
 
 const express = require( 'express'),
-      path = require( 'path'),
-      morgan = require( 'morgan'),
-      bodyParser = require( 'body-parser'), 
-      config = require( 'config'),
-      crypto = require( 'crypto'),
-      https = require( 'https'),
-      request = require( 'request'),
-      session = require( 'express-session'),
-      TechstarAI = require('techstar-ai');
+      port           = process.env.PORT || 8080,
+      expressLayouts = require('express-ejs-layouts'),
+      path           = require( 'path'),
+      morgan         = require( 'morgan'),
+      bodyParser     = require( 'body-parser'), 
+      mongoose       = require('mongoose'),
+      cookieParser   = require('cookie-parser'),
+      config         = require( 'config'),
+      crypto         = require( 'crypto'),
+      https          = require( 'https'),
+      request        = require( 'request'),
+      session        = require( 'express-session'),
+      flash          = require('connect-flash'),
+      expressValidator = require('express-validator'),
+      TechstarAI     = require('techstar-ai');
 
 const app = express();
 
+// CONFIGURATION TECHSTAR BOT APPLICATION 
+
 app.set('port', process.env.PORT || 5000);
 app.use(morgan('dev'));
+app.use(cookieParser());
+app.use(session({
+  secret: process.env.SECRET, 
+  cookie: { maxAge: 60000 },
+  resave: false,    // forces the session to be saved back to the store
+  saveUninitialized: false  // dont save unmodified
+}));
+app.use(flash());
 app.use(bodyParser.json({ verify: verifyRequestSignature }));               
 app.use('/', express.static(path.join(__dirname, './../public')));
+
+app.set('view engine', 'ejs');
+app.use(expressLayouts);
+
+// Connect to database
+mongoose.connect(process.env.DB_URI, { useMongoClient: true });
+
+app.use(expressValidator());
 
 app.use(function(err, req, res, next) {
   console.error(err.stack);
