@@ -1,1 +1,42 @@
-demo
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot App</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <!-- header -->
+    <header id="site-header">
+        <div class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="/" class="navbar-brand">Training datas</a>
+                </div>
+
+                <ul class="nav navbar-nav">
+                    <li><a href="/datas">Datas</a></li>
+                    <li><a href="/datas/create">Create an Data</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- main -->
+    <main id="site-main">
+    <div class="container">
+        <%- body %>
+    </div>
+    </main>
+
+    <!-- footer -->
+    <footer id="site-footer">
+        Copyright &copy; 2017 Techstar, Inc.
+    </footer>
+    
+</body>
+</html>
