@@ -9,7 +9,6 @@ const express = require( 'express'),
       https = require( 'https'),
       request = require( 'request'),
       session = require( 'express-session'),
-      synaptic = require( 'synaptic'),
       TechstarAI = require('techstar-ai');
 
 const app = express();
@@ -24,13 +23,7 @@ app.use(function(err, req, res, next) {
   res.status(500).send('Something broke!');
 });
 
-var Neuron = synaptic.Neuron,
-  	Layer = synaptic.Layer,
-  	Network = synaptic.Network,
-  	Trainer = synaptic.Trainer,
-  	Architect = synaptic.Architect;
 var techstarClassifier; //TechstarAI classifier
-var network; //synaptic network
 
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
   process.env.MESSENGER_APP_SECRET :
