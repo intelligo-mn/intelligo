@@ -19,36 +19,6 @@ const express = require( 'express'),
 
 const app = express();
 
-// CONFIGURATION TECHSTAR BOT APPLICATION 
-
-app.set('port', process.env.PORT || 5000);
-app.use(morgan('dev'));
-app.use(cookieParser());
-app.use(session({
-  secret: process.env.SECRET, 
-  cookie: { maxAge: 60000 },
-  resave: false,    // forces the session to be saved back to the store
-  saveUninitialized: false  // dont save unmodified
-}));
-app.use(flash());
-app.use(bodyParser.json({ verify: verifyRequestSignature }));               
-app.use('/', express.static(path.join(__dirname, './../public')));
-
-app.set('view engine', 'ejs');
-app.use(expressLayouts);
-
-// Connect to database
-mongoose.connect(process.env.DB_URI, { useMongoClient: true });
-
-app.use(expressValidator());
-
-app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
-
-var techstarClassifier; //TechstarAI classifier
-
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
   process.env.MESSENGER_APP_SECRET :
   config.get('appSecret');
@@ -65,10 +35,46 @@ const SERVER_URL = (process.env.SERVER_URL) ?
   (process.env.SERVER_URL) :
   config.get('serverURL');
   
+const DB_URI = (process.env.DB_URI) ?
+  (process.env.DB_URI) :
+  config.get('DB_URI');
+  
+const SECRET = (process.env.SECRET) ?
+  (process.env.SECRET) :
+  config.get('SECRET');
+  
 if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   console.error("Missing config values");
   process.exit(1);
 }
+
+// CONFIGURATION TECHSTAR BOT APPLICATION 
+
+app.set('port', process.env.PORT || 5000);
+app.use(morgan('dev'));
+app.use(cookieParser());
+app.use(session({
+  secret: SECRET, 
+  cookie: { maxAge: 60000 },
+  resave: false,    // forces the session to be saved back to the store
+  saveUninitialized: false  // dont save unmodified
+}));
+app.use(flash());
+app.use(bodyParser.json({ verify: verifyRequestSignature }));               
+app.use(express.static(__dirname + '/public'));
+
+app.set('view engine', 'ejs');
+app.use(expressLayouts);
+
+// Connect to database
+mongoose.connect(DB_URI, { useMongoClient: true });
+
+app.use(expressValidator());
+
+// set the routes =============================
+app.use(require('./routes/routes'));
+
+var techstarClassifier; //TechstarAI classifier
 
 request({
   url: 'https://graph.facebook.com/v2.9/me/thread_settings',

@@ -3,5 +3,7 @@
     "pageAccessToken": "",
     "validationToken": "",
     "serverURL": "",
-    "webhookURL": ""
+    "webhookURL": "",
+    "SECRET": "",
+    "DB_URI": ""
 }
