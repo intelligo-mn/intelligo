@@ -1,4 +1,4 @@
-const Data = require('../models/data');
+const Data = require('../models/Data');
 
 module.exports = {
   showDatas: showDatas,
@@ -23,7 +23,7 @@ function showDatas(req, res) {
     }
 
     // return a view with data
-    res.render('pages/datas', { 
+    res.render('datas', { 
       datas: datas,
       success: req.flash('success')
     });
@@ -41,7 +41,7 @@ function showSingle(req, res) {
       res.send('Data not found!');
     }
 
-    res.render('pages/single', { 
+    res.render('single', { 
       data: data,
       success: req.flash('success')
     });
@@ -74,7 +74,7 @@ function seedDatas(req, res) {
  * Show the create form
  */
 function showCreate(req, res) {
-  res.render('pages/create', {
+  res.render('create', {
     errors: req.flash('errors')
   });
 }
@@ -118,7 +118,7 @@ function processCreate(req, res) {
  */
 function showEdit(req, res) {
   Data.findOne({ slug: req.params.slug }, (err, data) => {
-    res.render('pages/edit', {
+    res.render('edit', {
       data: data,
       errors: req.flash('errors')
     });
