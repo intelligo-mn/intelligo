@@ -15,7 +15,9 @@ const express = require( 'express'),
       session        = require( 'express-session'),
       flash          = require('connect-flash'),
       expressValidator = require('express-validator'),
-      TechstarAI     = require('techstar-ai');
+      TechstarAI     = require('techstar-ai'),
+      
+      passport       = require("passport");
 
 const app = express();
 
@@ -60,6 +62,7 @@ app.use(session({
   saveUninitialized: false  // dont save unmodified
 }));
 app.use(flash());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));             
 app.use(express.static(__dirname + '/public'));
 
@@ -71,8 +74,10 @@ mongoose.connect(DB_URI, { useMongoClient: true });
 
 app.use(expressValidator());
 
+app.use(passport.initialize());
+app.use(passport.session());
 // set the routes =============================
-app.use(require('./routes/routes'));
+require('./routes/routes.js')(app, passport);
 
 var techstarClassifier; //TechstarAI classifier
 
