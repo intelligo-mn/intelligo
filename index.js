@@ -60,7 +60,7 @@ app.use(session({
   saveUninitialized: false  // dont save unmodified
 }));
 app.use(flash());
-app.use(bodyParser.json({ verify: verifyRequestSignature }));               
+app.use(bodyParser.urlencoded({ extended: true }));             
 app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs');
