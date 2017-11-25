@@ -9,19 +9,19 @@ module.exports = function(app, passport) {
 		});
 	});
 	
-    app.get('/datas',       dataController.showDatas);
+    app.get('/datas', isLoggedIn, dataController.showDatas);
     
-    app.get('/datas/seed',  dataController.seedDatas);
+    app.get('/datas/seed', isLoggedIn, dataController.seedDatas);
     
-    app.get('/datas/create',  dataController.showCreate);
-    app.post('/datas/create', dataController.processCreate);
+    app.get('/datas/create', isLoggedIn, dataController.showCreate);
+    app.post('/datas/create', isLoggedIn, dataController.processCreate);
     
-    app.get('/datas/:slug/edit', dataController.showEdit);
-    app.post('/datas/:slug',     dataController.processEdit);
+    app.get('/datas/:slug/edit', isLoggedIn, dataController.showEdit);
+    app.post('/datas/:slug', isLoggedIn, dataController.processEdit);
     
-    app.get('/datas/:slug/delete', dataController.deleteData);
+    app.get('/datas/:slug/delete', isLoggedIn, dataController.deleteData);
     
-    app.get('/datas/:slug', dataController.showSingle);
+    app.get('/datas/:slug', isLoggedIn, dataController.showSingle);
 
     app.get('/login', function(req, res) {
         res.render('login.ejs', { message: req.flash('loginMessage') }); 
@@ -32,10 +32,10 @@ module.exports = function(app, passport) {
         failureFlash : true // allow flash messages
     }));
     
-    app.get('/signup', function(req, res) {
+    app.get('/signup', isLoggedIn, function(req, res) {
         res.render('signup.ejs', { message: req.flash('signupMessage') });
     });
-    app.post('/signup', passport.authenticate('local-signup', {
+    app.post('/signup', isLoggedIn, passport.authenticate('local-signup', {
         successRedirect : '/', // redirect to the secure profile section
         failureRedirect : '/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
