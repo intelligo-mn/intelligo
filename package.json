@@ -1,0 +1,20 @@
+{
+  "name": "techstar-bot",
+  "version": "0.0.4",
+  "description": "Techstar AI ChatBot",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/techstar-inc/intelligo.git"
+  },
+  "author": "Tortuvshin Byambaa",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "config": "^1.24.0",
+    "express": "^4.14.0",
+    "express-session": "^1.14.2",
+    "techstar-ai": "^1.0.0",
+    "request": "^2.79.0"
+  }
+}
