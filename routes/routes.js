@@ -3,8 +3,12 @@ const mainController   = require('../app/MainController'),
 
 module.exports = function(app, passport) {
 
-    app.get('/', mainController.showHome);
-    
+    app.get('/', isLoggedIn, function(req, res) {
+		res.render('home.ejs', {
+			user : req.user 
+		});
+	});
+	
     app.get('/datas',       dataController.showDatas);
     
     app.get('/datas/seed',  dataController.seedDatas);
@@ -39,12 +43,12 @@ module.exports = function(app, passport) {
 
     app.get('/logout', function(req, res) {
         req.logout();
-        res.redirect('/');
+        res.redirect('/login');
     });
 };
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
         return next();
-    res.redirect('/');
+    res.redirect('/login');
 }
