@@ -1,7 +1,7 @@
 {
   "name": "techstar-bot",
   "version": "0.0.4",
-  "description": "Techstar AI ChatBot",
+  "description": "Intelligo AI ChatBot Framework",
   "main": "index.js",
   "repository": {
     "type": "git",
