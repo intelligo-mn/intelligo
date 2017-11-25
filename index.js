@@ -74,11 +74,11 @@ mongoose.connect(DB_URI, { useMongoClient: true });
 
 app.use(expressValidator());
 
+require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 // set the routes =============================
 require('./routes/routes.js')(app, passport);
-
 var techstarClassifier; //TechstarAI classifier
 
 request({
