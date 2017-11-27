@@ -58,7 +58,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(session({
   secret: SECRET, 
-  cookie: { maxAge: 60000 },
+  cookie: { maxAge: 604800000 }, // 7 day 
   resave: false,    // forces the session to be saved back to the store
   saveUninitialized: false  // dont save unmodified
 }));

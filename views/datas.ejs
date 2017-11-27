@@ -1,56 +1,86 @@
-<div class="container-fluid">
-    <!-- Striped Rows -->
-    <div class="row clearfix">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="card">
-                <div class="header">
-                    <h2>
-                        TRAINING DATAS
-                        <% if (success.length > 0) { %>
-                            <small>Message <code> <%= success %></code></small>
-                        <% } %>
-                    </h2>
-                    <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <i class="material-icons">more_vert</i>
-                            </a>
-                            <ul class="dropdown-menu pull-right">
-                                <li><a href="javascript:void(0);">Action</a></li>
-                                
-                            </ul>
-                        </li>
-                    </ul>
+
+<%- include partial/header.ejs %>
+<body class="theme-white">
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="preloader">
+            <div class="spinner-layer pl-red">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
                 </div>
-                <div class="body table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>FIRST NAME</th>
-                                <th>LAST NAME</th>
-                                <th>USERNAME</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% for (var data of datas) { %>
-                                <tr>
-                                
-                                    <th></th>
-                                    <td><%= data.name %></td>
-                                    <td><%= data.description %></td>
-                                    <td>
-                                        <a href="/datas/<%= data.slug %>" class="btn btn-sm btn-primary">View</a>
-                                        <a href="/datas/<%= data.slug %>/edit" class="btn btn-sm btn-primary">Edit</a>
-                                        <a href="/datas/<%= data.slug %>/delete" class="btn btn-sm btn-danger">Delete</a>
-                                    </td>
-                                </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
                 </div>
             </div>
         </div>
+        <p>Please wait...</p>
     </div>
-    <!-- #END# Striped Rows -->
 </div>
+<!-- #END# Page Loader -->
+<%- include partial/navbar.ejs %>
+<!-- #Top Bar -->
+<%- include partial/sidebar.ejs %>
+
+<section class="content">
+ 
+    <div class="container-fluid">
+        <!-- Striped Rows -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            TRAINING DATAS
+                            <% if (success.length > 0) { %>
+                                <small>Message <code> <%= success %></code></small>
+                            <% } %>
+                        </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                    
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>FIRST NAME</th>
+                                    <th>LAST NAME</th>
+                                    <th>USERNAME</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for (var data of datas) { %>
+                                    <tr>
+                                    
+                                        <th></th>
+                                        <td><%= data.name %></td>
+                                        <td><%= data.description %></td>
+                                        <td>
+                                            <a href="/datas/<%= data.slug %>" class="btn btn-sm btn-primary">View</a>
+                                            <a href="/datas/<%= data.slug %>/edit" class="btn btn-sm btn-primary">Edit</a>
+                                            <a href="/datas/<%= data.slug %>/delete" class="btn btn-sm btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Striped Rows -->
+    </div>
+
+</section>
+
+<%- include partial/footer.ejs %>

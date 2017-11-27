@@ -26,6 +26,7 @@ function showDatas(req, res) {
     // return a view with data
     res.render('datas', { 
       datas: datas,
+      user : req.user,
       success: req.flash('success')
     });
   });
@@ -53,6 +54,7 @@ function showSingle(req, res) {
 
     res.render('single', { 
       data: data,
+      user : req.user,
       success: req.flash('success')
     });
   });
@@ -85,6 +87,7 @@ function seedDatas(req, res) {
  */
 function showCreate(req, res) {
   res.render('create', {
+    user : req.user,
     errors: req.flash('errors')
   });
 }
@@ -130,6 +133,7 @@ function showEdit(req, res) {
   Data.findOne({ slug: req.params.slug }, (err, data) => {
     res.render('edit', {
       data: data,
+      user : req.user,
       errors: req.flash('errors')
     });
   });

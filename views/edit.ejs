@@ -1,48 +1,77 @@
-<div class="container-fluid">
-    <div class="row clearfix">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="card">
-                <div class="header">
-                    <h2>Editing <%= data.name %></h2>
-                    <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <i class="material-icons">more_vert</i>
-                            </a>
-                            <ul class="dropdown-menu pull-right">
-                                <li><a href="javascript:void(0);">Action</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+  
+<%- include partial/header.ejs %>
+<body class="theme-white">
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="preloader">
+            <div class="spinner-layer pl-red">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
                 </div>
-                <% if (errors.length > 0) { %>
-                    <div class="alert alert-danger">
-                        <% for (error of errors) { %>
-                            <%= error %><br>
-                        <% } %>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+        <p>Please wait...</p>
+    </div>
+</div>
+<!-- #END# Page Loader -->
+<%- include partial/navbar.ejs %>
+<!-- #Top Bar -->
+<%- include partial/sidebar.ejs %>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>Editing <%= data.name %></h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
-                <% } %>
-                
-                <div class="body">
-                    <form id="form_validation" action="/datas/<%= data.slug %>" method="POST">
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input type="text" class="form-control" name="name" value="<%= data.description %>" required>
-                                <label class="form-label">Question</label>
-                            </div>
+                    <% if (errors.length > 0) { %>
+                        <div class="alert alert-danger">
+                            <% for (error of errors) { %>
+                                <%= error %><br>
+                            <% } %>
                         </div>
-                        
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <textarea name="description" cols="30" rows="5" class="form-control no-resize" required><%= data.description %></textarea>
-                                <label class="form-label">Answer</label>
+                    <% } %>
+                    
+                    <div class="body">
+                        <form id="form_validation" action="/datas/<%= data.slug %>" method="POST">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" name="name" value="<%= data.description %>" required>
+                                    <label class="form-label">Question</label>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <button class="btn btn-primary waves-effect" type="submit">Update</button>
-                    </form>
+                            
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <textarea name="description" cols="30" rows="5" class="form-control no-resize" required><%= data.description %></textarea>
+                                    <label class="form-label">Answer</label>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-primary waves-effect" type="submit">Update</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    
+
+</section>
+
+<%- include partial/footer.ejs %>
