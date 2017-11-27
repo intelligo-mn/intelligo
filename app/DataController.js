@@ -8,6 +8,7 @@ module.exports = {
   processCreate: processCreate,
   showEdit: showEdit,
   processEdit: processEdit,
+  retDatas: retDatas,
   deleteData: deleteData
 }
 
@@ -30,6 +31,15 @@ function showDatas(req, res) {
   });
 }
 
+function retDatas(req, res) {
+  // get all datas   
+  return Data.find({}, (err, datas) => {
+    if (err) {
+      res.status(404);
+      res.send('Datas not found!');
+    }
+  });
+}
 /**
  * Show a single data
  */

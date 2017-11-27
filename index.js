@@ -16,7 +16,7 @@ const express = require( 'express'),
       flash          = require('connect-flash'),
       expressValidator = require('express-validator'),
       TechstarAI     = require('techstar-ai'),
-      
+      datas          = require('./app/DataController'),
       passport       = require("passport");
 
 const app = express();
@@ -50,6 +50,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   process.exit(1);
 }
 
+console.log(datas.retDatas());
 // CONFIGURATION TECHSTAR BOT APPLICATION 
 
 app.set('port', process.env.PORT || 5000);

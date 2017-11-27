@@ -1,16 +1,15 @@
 <body class="login-page">
 <div class="login-box">
     <div class="logo">
-        <a href="javascript:void(0);">Admin<b>BSB</b></a>
-        <small>Admin BootStrap Based - Material Design</small>
+        <a href="javascript:void(0);">Techstar <b>Bot</b></a>
+        <small>Techstar, Inc</small>
         
     </div>
     <div class="card">
         <div class="body">
             <form id="sign_in" action="/login" method="POST">
-                <div class="msg">Sign in to start your session</div>
                 <% if (message.length > 0) { %>
-                    <div class="alert alert-danger"><%= message %></div>
+                    <div class="msg"><%= message %></div>
                 <% } %>
                 <div class="input-group">
                     <span class="input-group-addon">
