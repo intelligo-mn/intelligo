@@ -1991,7 +1991,7 @@
   color: #fff; }
   .bg-white .content .text,
   .bg-white .content .number {
-    color: #fff !important; }
+    color: #777777 !important; }
 
 .col-red {
   color: #F44336 !important; }
@@ -2454,17 +2454,17 @@ section.content {
 
 .btn-link {
   font-weight: bold;
-  color: #333;
+  color: #777777;
   -moz-transition: 0.5s;
   -o-transition: 0.5s;
   -webkit-transition: 0.5s;
   transition: 0.5s; }
   .btn-link:active, .btn-link:focus {
     text-decoration: none;
-    color: #333; }
+    color: #777777; }
   .btn-link:hover {
     text-decoration: none;
-    color: #333;
+    color: #777777;
     background-color: #ddd; }
 
 .btn-circle-lg {
@@ -4067,7 +4067,7 @@ section.content {
     color: #555 !important; }
   .bootstrap-select .dropdown-menu .active a {
     background-color: transparent;
-    color: #333 !important; }
+    color: #777777 !important; }
   .bootstrap-select .dropdown-menu .notify {
     background-color: #F44336 !important;
     color: #fff !important;
@@ -5922,7 +5922,7 @@ fieldset[disabled] .form-control {
     .media .media-body .media-heading {
       font-size: 16px;
       font-weight: bold;
-      color: #333; }
+      color: #777777; }
 
 /* Form Wizard ================================= */
 .wizard,
@@ -6460,10 +6460,10 @@ fieldset[disabled] .form-control {
     -ms-transform: rotate(129deg);
     -o-transform: rotate(129deg);
     transform: rotate(129deg);
-    -webkit-animation: left-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-    -moz-animation: left-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-    -o-animation: left-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-    animation: left-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both; }
+    -webkit-animation: left-spin 1777777ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+    -moz-animation: left-spin 1777777ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+    -o-animation: left-spin 1777777ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+    animation: left-spin 1777777ms cubic-bezier(0.4, 0, 0.2, 1) infinite both; }
   .circle-clipper.right .circle {
     left: -100%;
     border-left-color: transparent !important;
@@ -6472,10 +6472,10 @@ fieldset[disabled] .form-control {
     -ms-transform: rotate(-129deg);
     -o-transform: rotate(-129deg);
     transform: rotate(-129deg);
-    -webkit-animation: right-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-    -moz-animation: right-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-    -o-animation: right-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-    animation: right-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both; }
+    -webkit-animation: right-spin 1777777ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+    -moz-animation: right-spin 1777777ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+    -o-animation: right-spin 1777777ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+    animation: right-spin 1777777ms cubic-bezier(0.4, 0, 0.2, 1) infinite both; }
 
 @-webkit-keyframes container-rotate {
   to {
@@ -7368,7 +7368,7 @@ fieldset[disabled] .form-control {
   .dropdown-menu ul.menu {
     padding-left: 0; }
     .dropdown-menu ul.menu.tasks h4 {
-      color: #333;
+      color: #777777;
       font-size: 13px;
       margin: 0 0 8px 0; }
       .dropdown-menu ul.menu.tasks h4 small {
@@ -7411,7 +7411,7 @@ fieldset[disabled] .form-control {
       .dropdown-menu ul.menu .menu-info h4 {
         margin: 0;
         font-size: 13px;
-        color: #333; }
+        color: #777777; }
       .dropdown-menu ul.menu .menu-info p {
         margin: 0;
         font-size: 11px;
@@ -7632,7 +7632,7 @@ fieldset[disabled] .form-control {
           right: 15px; }
         .sidebar .menu .list a span {
           margin: 7px 0 7px 12px;
-          color: #333;
+          color: #777777;
           font-weight: bold;
           font-size: 14px;
           overflow: hidden; }
@@ -7817,7 +7817,7 @@ fieldset[disabled] .form-control {
     font-size: 160px; }
   .four-zero-four .four-zero-four-container .error-message {
     font-size: 26px;
-    color: #333;
+    color: #777777;
     font-weight: bold;
     margin-top: -40px; }
   .four-zero-four .four-zero-four-container .button-place {
@@ -7832,7 +7832,7 @@ fieldset[disabled] .form-control {
     font-size: 160px; }
   .five-zero-zero .five-zero-zero-container .error-message {
     font-size: 27px;
-    color: #333;
+    color: #777777;
     font-weight: bold;
     margin-top: -40px; }
   .five-zero-zero .five-zero-zero-container .button-place {
