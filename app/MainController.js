@@ -1,8 +1,16 @@
 module.exports = {
-
-  // show the home page
-  showHome: (req, res) => {
-    res.render('home');
-  }
-
+  showHome: showHome,
+  showDashboard: showDashboard
 };
+
+function showHome(req, res) {
+    res.render('dashboard.ejs', {
+		user : req.user 
+	});
+}
+
+function showDashboard(req, res) {
+    res.render('dashboard.ejs', {
+    	user : req.user 
+    });
+}

@@ -3,11 +3,9 @@ const mainController   = require('../app/MainController'),
 
 module.exports = function(app, passport) {
 
-    app.get('/', isLoggedIn, function(req, res) {
-		res.render('home.ejs', {
-			user : req.user 
-		});
-	});
+    app.get('/', isLoggedIn, mainController.showHome);
+	
+    app.get('/console', isLoggedIn, mainController.showDashboard);
 	
     app.get('/datas', isLoggedIn, dataController.showDatas);
     
