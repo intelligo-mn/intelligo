@@ -3,12 +3,12 @@ const mongoose = require('mongoose'),
 
 // create a schema
 const dataSchema = new Schema({
-  name: String,
+  input: String,
   slug: {
     type: String,
     unique: true
   },
-  description: String
+  output: String
 });
 
 dataSchema.pre('save', function(next) {

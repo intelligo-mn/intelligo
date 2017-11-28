@@ -66,8 +66,8 @@ function showSingle(req, res) {
 function seedDatas(req, res) {
   // create some datas
   const datas = [
-    { name: 'Data1', description: 'Data1' },
-    { name: 'Data2', description: 'Data2' }
+    { input: 'Data1', output: 'Data1' },
+    { input: 'Data2', output: 'Data2' }
   ];
 
   // use the Data model to insert/save
@@ -97,8 +97,8 @@ function showCreate(req, res) {
  */
 function processCreate(req, res) {
   // validate information
-  req.checkBody('name', 'Name is required.').notEmpty();
-  req.checkBody('description', 'Description is required.').notEmpty();
+  req.checkBody('input', 'Input is required.').notEmpty();
+  req.checkBody('output', 'Output is required.').notEmpty();
 
   // if there are errors, redirect and save errors to flash
   const errors = req.validationErrors();
@@ -109,8 +109,8 @@ function processCreate(req, res) {
 
   // create a new data
   const data = new Data({
-    name: req.body.name,
-    description: req.body.description
+    input: req.body.input,
+    output: req.body.output
   });
 
   // save data
@@ -144,8 +144,8 @@ function showEdit(req, res) {
  */
 function processEdit(req, res) {
   // validate information
-  req.checkBody('name', 'Name is required.').notEmpty();
-  req.checkBody('description', 'Description is required.').notEmpty();
+  req.checkBody('input', 'Input is required.').notEmpty();
+  req.checkBody('output', 'Output is required.').notEmpty();
 
   // if there are errors, redirect and save errors to flash
   const errors = req.validationErrors();
@@ -157,8 +157,8 @@ function processEdit(req, res) {
   // finding a current data
   Data.findOne({ slug: req.params.slug }, (err, data) => {
     // updating that data
-    data.name        = req.body.name;
-    data.description = req.body.description;
+    data.input        = req.body.input;
+    data.output       = req.body.output;
 
     data.save((err) => {
       if (err)
