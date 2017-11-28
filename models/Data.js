@@ -16,7 +16,7 @@ dataSchema.pre('save', function(next) {
   next();
 });
 
-const dataModel = mongoose.model('Data', dataSchema);
+const dataModel = mongoose.model('TrainData', dataSchema);
 
 module.exports = dataModel;
 
