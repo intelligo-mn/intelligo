@@ -12,7 +12,7 @@ const dataSchema = new Schema({
 });
 
 dataSchema.pre('save', function(next) {
-  this.slug = slugify(this.name);
+  this.slug = slugify(this.input);
   next();
 });
 
