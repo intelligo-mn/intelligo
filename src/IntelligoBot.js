@@ -2,15 +2,10 @@
 
 const EventEmitter = require('eventemitter3'),
       express = require( 'express'),
-      path = require( 'path'),
-      morgan = require( 'morgan'),
       bodyParser = require( 'body-parser'), 
-      config = require( 'config'),
-      crypto = require( 'crypto'),
-      https = require( 'https'),
+      crypto = require( 'crypto'), 
       request = require( 'request'),
-      session = require( 'express-session'),
-      synaptic = require( 'synaptic'),
+      fs = require('fs'),
       TechstarAI = require('techstar-ai');
       
 var techstarClassifier;
@@ -158,7 +153,9 @@ class IntelligoBot extends EventEmitter {
     //Send neighboring words to arrays as an option
     var similarQuestions = new Array();
     var sum = "";
-    this.readJSON().forEach(function(data){
+    
+    var json = JSON.parse(fs.readFileSync('./data/training_data.json', 'utf8'));
+    json.forEach(function(data){
       var words = data.input.split(" ");
       //Start a given keyword or locate neighbor words
       if(words.indexOf(keyword) != -1){
@@ -186,11 +183,6 @@ class IntelligoBot extends EventEmitter {
     };
   
     this.callSendAPI(messageData);
-  }
-  //Read the data from the json file
-  readJSON(){
-    var fs = require('fs');
-    return JSON.parse(fs.readFileSync('data/training_data.json', 'utf8'));
   }
   
   //clear more characters
@@ -220,8 +212,8 @@ class IntelligoBot extends EventEmitter {
     	featureExtractor: WordExtractor
     });
     
-    techstarClassifier.trainBatch(json);
-    console.log("AI суралцаж дууслаа. \n Нийт "+json.length + " ширхэг өгөдлийг " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
+    techstarClassifier.trainBatch(JSON.parse(fs.readFileSync('../data/training_data.json', 'utf8')));
+    console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
   }
   
   answerAI(question){
