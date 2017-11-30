@@ -51,6 +51,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
 }
 
 console.log(datas.retDatas());
+
 // CONFIGURATION TECHSTAR BOT APPLICATION 
 
 app.set('port', process.env.PORT || 5000);
@@ -517,7 +518,6 @@ function receivedAccountLink(event) {
 }
 
 function sendImageMessage(recipientId) {
-  sendTypingOn(receiptId);
   var messageData = {
     recipient: {
       id: recipientId
@@ -533,7 +533,6 @@ function sendImageMessage(recipientId) {
   };
 
   callSendAPI(messageData);
-  sendTypingOff(recipientId);
 }
 
 function sendGifMessage(recipientId) {
@@ -553,7 +552,6 @@ function sendGifMessage(recipientId) {
   };
 
   callSendAPI(messageData);
-  sendTypingoff(recipientId);
 }
 
 function sendAudioMessage(recipientId) {
@@ -573,7 +571,6 @@ function sendAudioMessage(recipientId) {
   };
 
   callSendAPI(messageData);
-  sendTypingOff(receiptId);
 }
 
 function sendVideoMessage(recipientId) {
@@ -825,7 +822,7 @@ function sendQuickReply(recipientId) {
       id: recipientId
     },
     message: {
-      text: "What's your favorite movie genre?",
+      text: "Select cryptocurrency?",
       quick_replies: [
         {
           "content_type":"text",
