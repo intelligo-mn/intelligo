@@ -12,7 +12,8 @@ const EventEmitter = require('eventemitter3'),
       session = require( 'express-session'),
       synaptic = require( 'synaptic'),
       TechstarAI = require('techstar-ai');
-
+      
+var techstarClassifier;
 
 class IntelligoBot extends EventEmitter {
   constructor(options) {
@@ -27,17 +28,17 @@ class IntelligoBot extends EventEmitter {
   }
   
   start(port) {
-    this._initWebhook();
+    this.initWebhook();
     this.app.set('port', port || 3000);
     this.server = this.app.listen(this.app.get('port'), () => {
       console.log('IntelligoBot server is running on port', this.app.get('port'));
     });
   }
   
-  webhook() {
+  initWebhook() {
     this.app.get(this.webhook, function(req, res) {
       if (req.query['hub.mode'] === 'subscribe' &&
-          req.query['hub.verify_token'] === VALIDATION_TOKEN) {
+          req.query['hub.verify_token'] === this.verifyToken) {
         console.log("Validating webhook");
         res.status(200).send(req.query['hub.challenge']);
       } else {
@@ -58,14 +59,6 @@ class IntelligoBot extends EventEmitter {
           pageEntry.messaging.forEach(function(messagingEvent) {
             if (messagingEvent.message) {
               this.receivedMessage(messagingEvent);
-            } else if (messagingEvent.delivery) {
-              receivedDeliveryConfirmation(messagingEvent);
-            } else if (messagingEvent.postback) {
-              receivedPostback(messagingEvent);
-            } else if (messagingEvent.read) {
-              receivedMessageRead(messagingEvent);
-            } else if (messagingEvent.account_linking) {
-              receivedAccountLink(messagingEvent);
             }else {
               console.log("Webhook received unknown messagingEvent: ", messagingEvent);
             }
@@ -105,62 +98,28 @@ class IntelligoBot extends EventEmitter {
       console.log("Quick reply for message %s with payload %s",
         messageId, quickReplyPayload);
   
-      sendTextMessage(senderID, "Quick reply tapped");
+      this.sendTextMessage(senderID, "Quick reply tapped");
       return;
     }
   
     if (messageText) {
       
-      var result = answerAI(messageText);
-      
+      var result = this.answerAI(messageText);
       
       if (messageText == "update")
-        sendTextMessage(senderID, updateJSON());    
-      else if (textMatches(messageText, "зураг")) 
-        sendImageMessage(senderID);
-      else if (textMatches(messageText, "gif")) 
-          sendGifMessage(senderID);
-      else if (textMatches(messageText, "get started")) 
-          sendWelcome(senderID);
-      else if (textMatches(messageText, "дуу")) 
-          sendAudioMessage(senderID);
-      else if (textMatches(messageText, "бичлэг")) 
-          sendVideoMessage(senderID);
-      else if (textMatches(messageText, "файл")) 
-          sendFileMessage(senderID);
-      else if (textMatches(messageText, "товч")) 
-          sendButtonMessage(senderID);
-      else if (textMatches(messageText, "вэб")) 
-          sendWebUrl(senderID);
-      else if (textMatches(messageText, "утас")) 
-          sendPhoneNumber(senderID);
-      else if (textMatches(messageText, "судалгаа")) 
-          sendFormUrl(senderID);
-      else if (textMatches(messageText, "quick reply")) 
-        sendQuickReply(senderID);
-      else if (textMatches(messageText, "read receipt")) 
-        sendReadReceipt(senderID);
-      else if (textMatches(messageText, "typing on")) 
-        sendTypingOn(senderID);
-      else if (textMatches(messageText, "typing off")) 
-        sendTypingOff(senderID);
-      else if (textMatches(messageText, "сургалт")) 
-        sendGenericMessage(senderID);
-      else if (textMatches(messageText, "хичээл")) 
-        sendReceiptMessage(senderID);
-      else if (textMatches(messageText, "тусламж")) 
-        sendHelp(senderID);
+        this.sendTextMessage(senderID, this.updateJSON());
+      else if (this.textMatches(messageText, "get started")) 
+        this.sendWelcome(senderID);
+      else if (this.textMatches(messageText, "help")) 
+        this.sendHelp(senderID);
       else if(result == null || result == '')
-        sendTextMessage(senderID, "Уучлаарай, та асуултаа тодорхтой оруулна уу.");
+        this.sendTextMessage(senderID, "Уучлаарай, та асуултаа тодорхтой оруулна уу.");
       else
-        sendTextMessage(senderID, result+"");
-        
-      
+        this.sendTextMessage(senderID, result+"");
     } else if (messageAttachments) {
-      sendTextMessage(senderID, "Message with attachment received");
+        this.sendTextMessage(senderID, "Message with attachment received");
     }
   }
-  
   
   verifyRequestSignature(req, res, buf) {
     var signature = req.headers["x-hub-signature"];
@@ -181,6 +140,243 @@ class IntelligoBot extends EventEmitter {
       }
     }
   }
+  
+  //to find clarification and search for user search data
+  askMore(senderID, messageText){
+    var similarWords = this.findSimilarKeyword(messageText);
+    if(similarWords.length != 0){
+      this.sendTextMessage(senderID, "Дараах түлхүүр үгүүдээс сонгоно уу");
+      this.sendTextMessage(senderID, similarWords);
+      // askSimilarOptions(senderID, similarWords);
+    }
+    else
+      this.sendTextMessage(senderID, "Таны хайсан өгөгдөл олдсонгүй!");
+  }
+  
+  //find similar questions when searching for a findable data
+  findSimilarKeyword(keyword){
+    //Send neighboring words to arrays as an option
+    var similarQuestions = new Array();
+    var sum = "";
+    this.readJSON().forEach(function(data){
+      var words = data.input.split(" ");
+      //Start a given keyword or locate neighbor words
+      if(words.indexOf(keyword) != -1){
+        var index = words.indexOf(keyword);
+        //to get the word neighbor with the word
+        var neighborWord = index == words.length ? words[index-1]+" "+keyword : keyword+" "+words[index+1];
+        //the word has not been registered before
+        if(sum.indexOf(neighborWord)==-1)
+          sum+= sum=="" ? neighborWord : ","+neighborWord;
+        similarQuestions.push({"content_type":"text","title":neighborWord});
+      }
+    });
+    return sum;
+  }
+  //ask questions from similar words
+  askSimilarOptions(recipientId, words){
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        text: "Since your search is too general, select from the following options",
+        quick_replies: words
+      }
+    };
+  
+    this.callSendAPI(messageData);
+  }
+  //Read the data from the json file
+  readJSON(){
+    var fs = require('fs');
+    return JSON.parse(fs.readFileSync('data/training_data.json', 'utf8'));
+  }
+  
+  //clear more characters
+  cleanJSON(json){
+    for(var i=0; i<json.length; i++){
+      json[i].input = json[i].input.replace("/[\?\,\:]/", "");
+    }
+  }
+  
+  learnAI(json){
+    console.log("AI суралцаж эхэллээ...");
+    var startedTime = new Date().getTime();
+    // Repeat multiple levels
+    var TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
+    	binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
+    });
+    
+    // Unblock the words in the sentence with spaces and create attributes
+    var WordExtractor = function(input, features) {
+    	input.split(" ").forEach(function(word) {
+    		features[word]=1;
+    	});
+    };
+    
+    techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
+    	classifierType: TextClassifier,
+    	featureExtractor: WordExtractor
+    });
+    
+    techstarClassifier.trainBatch(json);
+    console.log("AI суралцаж дууслаа. \n Нийт "+json.length + " ширхэг өгөдлийг " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
+  }
+  
+  answerAI(question){
+    var startedTime = new Date().getTime();
+    console.log("AI хариултыг хайж байна...");
+    var result =  techstarClassifier.classify(question);
+    console.log("AI хариултыг оллоо.  \n " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
+    return result;
+  }
+  
+  // текст илгээх
+  sendTextMessage(recipientId, messageText) {
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        text: messageText
+      }
+    };
+  
+    this.callSendAPI(messageData);
+  }
+  
+  callSendAPI(messageData) {
+    request({
+      uri: 'https://graph.facebook.com/v2.9/me/messages',
+      qs: { access_token: this.accessToken },
+      method: 'POST',
+      json: messageData
+  
+    }, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        var recipientId = body.recipient_id;
+        var messageId = body.message_id;
+  
+        if (messageId) {
+          console.log("Successfully sent message with id %s to recipient %s", 
+            messageId, recipientId);
+        } else {
+        console.log("Successfully called Send API for recipient %s", 
+          recipientId);
+        }
+      } else {
+        console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+      }
+    });  
+  }
+  
+  sendWelcome(recipientId) {
+    request({
+        url: 'https://graph.facebook.com/v2.8/' + recipientId 
+          + '?access_token=' + this.accessToken
+      },
+      function (error, response, body) {
+        if (error || response.statusCode != 200) return;
+      
+        var fbProfileBody = JSON.parse(body);
+        var userName = fbProfileBody["first_name"];
+        var greetings = ["Hey", "Hello", "Good Evening", "Good Morning", "What's up"];
+        var randomGreeting = this.getRandomItemFromArray(greetings);
+        var welcomeMsg = `${randomGreeting} ${userName}, 
+  I am Techstar AI bot.
+  ¯\\_(ツ)_/¯ .
+        `;
+        this.sendTextMessage(recipientId, welcomeMsg);
+      }
+    );
+  }
+  
+  
+  sendHelp(recipientId) {
+    var Desc = `
+    🤖 Help 👉
+    
+    Help = this...
+    why = ??
+    how = source code link
+    `;
+    this.sendTextMessage(recipientId, Desc);
+  }
+  
+  receivedPostback(event) {
+    var senderID = event.sender.id;
+    var recipientID = event.recipient.id;
+    var timeOfPostback = event.timestamp;
+  
+    var payload = event.postback.payload;
+  
+    console.log("Received postback for user %d and page %d with payload '%s' " + 
+      "at %d", senderID, recipientID, payload, timeOfPostback);
+  
+    this.sendTextMessage(senderID, "Postback called");
+  }
+ 
+  sendReadReceipt(recipientId) {
+    console.log("Sending a read receipt to mark message as seen");
+  
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      sender_action: "mark_seen"
+    };
+  
+    this.callSendAPI(messageData);
+  }
+  
+  sendTypingOn(recipientId) {
+    console.log("Turning typing indicator on");
+  
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      sender_action: "typing_on"
+    };
+  
+    this.callSendAPI(messageData);
+  }
+  
+  sendTypingOff(recipientId) {
+    console.log("Turning typing indicator off");
+  
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      sender_action: "typing_off"
+    };
+  
+    this.callSendAPI(messageData);
+  }
+  
+  getRandomNumber(minimum, maxmimum) {
+    return Math.floor(Math.exp(Math.random()*Math.log(maxmimum-minimum+1)))+minimum;
+  }
+  
+  randomIntFromInterval(min,max) {
+    return this.getRandomNumber(min, max);
+  }
+  
+  textMatches(message, matchString) {
+    return message.toLowerCase().indexOf(matchString) != -1;
+  }
+  
+  getRandomItemFromArray(items) {
+    var random_item = items[this.getRandomNumber(0, items.length - 1)];
+    return random_item;
+  }
+  
+  logObject(obj) {
+    console.log(JSON.stringify(obj, null, 2));
+  }
+
 }
 
 module.exports = IntelligoBot;
