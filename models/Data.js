@@ -1,6 +1,7 @@
 const mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
-
+  Schema = mongoose.Schema,
+  slugutf = require('slug');
+  
 // create a schema
 const dataSchema = new Schema({
   input: String,
@@ -12,20 +13,17 @@ const dataSchema = new Schema({
 });
 
 dataSchema.pre('save', function(next) {
-  this.slug = slugify(this.input);
+  this.slug = slugutf(this.input, slugutf.defaults.modes['rfc3986'] = {
+      replacement: '-',      // replace spaces with replacement 
+      symbols: true,         // replace unicode symbols or not 
+      remove: null,          // (optional) regex to remove characters 
+      lower: true,           // result in lower case 
+      charmap: slugutf.charmap, // replace special characters 
+      multicharmap: slugutf.multicharmap // replace multi-characters 
+  });
   next();
 });
 
 const dataModel = mongoose.model('TrainData', dataSchema);
 
 module.exports = dataModel;
-
-// function to slugify a name
-function slugify(text) {
-  return text.toString().toLowerCase()
-    .replace(/\s+/g, '-')           // Replace spaces with -
-    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-    .replace(/^-+/, '')             // Trim - from start of text
-    .replace(/-+$/, '');            // Trim - from end of text
-}
