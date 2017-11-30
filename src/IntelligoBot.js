@@ -136,6 +136,26 @@ class IntelligoBot extends EventEmitter {
     }
   }
   
+  setGreeting(){
+    request({
+      url: 'https://graph.facebook.com/v2.9/me/thread_settings',
+      qs: {access_token: this.accessToken},
+      method: 'POST',
+      json: {
+        "setting_type":"greeting",
+        "greeting":{
+          "text": "Hi i am techstar AI bot."
+          }
+        }
+      }, function(error, response, body) {
+        if (error) {
+          console.log('Error sending message: ', error);
+        } else if (response.body.error) {
+          console.log('Error: ', response.body.error);
+      }
+    });
+  
+  }
   //to find clarification and search for user search data
   askMore(senderID, messageText){
     var similarWords = this.findSimilarKeyword(messageText);
