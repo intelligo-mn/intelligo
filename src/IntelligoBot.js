@@ -1,7 +1,6 @@
 'use strict';
 
-const EventEmitter = require('eventemitter3'),
-      express = require( 'express'),
+const express = require( 'express'),
       bodyParser = require( 'body-parser'), 
       crypto = require( 'crypto'), 
       request = require( 'request'),
@@ -10,9 +9,8 @@ const EventEmitter = require('eventemitter3'),
       
 var techstarClassifier;
 
-class IntelligoBot extends EventEmitter {
+class IntelligoBot {
   constructor(options) {
-    super();
     this.accessToken = options.accessToken;
     this.verifyToken = options.verifyToken;
     this.appSecret = options.appSecret;
@@ -136,7 +134,7 @@ class IntelligoBot extends EventEmitter {
     }
   }
   
-  setGreeting(){
+  setGreeting(text){
     request({
       url: 'https://graph.facebook.com/v2.9/me/thread_settings',
       qs: {access_token: this.accessToken},
@@ -144,7 +142,7 @@ class IntelligoBot extends EventEmitter {
       json: {
         "setting_type":"greeting",
         "greeting":{
-          "text": "Hi i am techstar AI bot."
+          "text": text
           }
         }
       }, function(error, response, body) {
