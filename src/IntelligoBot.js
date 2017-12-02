@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require( 'express'),
+      EventEmitter = require('eventemitter3'),
       bodyParser = require( 'body-parser'), 
       crypto = require( 'crypto'), 
       request = require( 'request'),
@@ -9,8 +10,9 @@ const express = require( 'express'),
       
 var techstarClassifier;
 
-class IntelligoBot {
+class IntelligoBot extends EventEmitter{
   constructor(options) {
+    super();
     this.accessToken = options.accessToken;
     this.verifyToken = options.verifyToken;
     this.appSecret = options.appSecret;
@@ -19,7 +21,7 @@ class IntelligoBot {
     this.webhook = this.webhook.charAt(0) !== '/' ? `/${this.webhook}` : this.webhook;
     this.app.use(bodyParser.json({ verify: this.verifyRequestSignature.bind(this) }));
   }
-  
+    
   start(port) {
     this.initWebhook();
     this.app.set('port', port || 3000);
