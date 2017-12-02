@@ -27,7 +27,6 @@ class IntelligoBot extends EventEmitter{
       console.log('IntelligoBot server is running on port', this.app.get('port'));
     });
     this.initWebhook();
-    this.ai();
   }
   
   initWebhook() {
@@ -99,7 +98,9 @@ class IntelligoBot extends EventEmitter{
   
     if (messageText) {
       
-      var result = this.answerAI(messageText);
+      var result = this.ai({
+        question: messageText
+      });
       
       if (messageText == "update")
         this.sendTextMessage(senderID, this.updateJSON());
@@ -213,7 +214,7 @@ class IntelligoBot extends EventEmitter{
   }
   
   ai(opt){
-    if(!opt) {
+    if(opt.json) {
       console.log("AI суралцаж эхэллээ...");
       var startedTime = new Date().getTime();
       // Repeat multiple levels
@@ -233,10 +234,10 @@ class IntelligoBot extends EventEmitter{
       	featureExtractor: WordExtractor
       });
       
-      this.techstarClassifier.trainBatch(JSON.parse(fs.readFileSync('../data/training_data.json', 'utf8')));
+      this.techstarClassifier.trainBatch(JSON.parse(fs.readFileSync(opt.json, 'utf8')));
       console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
         
-    } else {
+    } else if (opt.question) {
       var startedTime = new Date().getTime();
       console.log("AI хариултыг хайж байна...");
       var result =  this.techstarClassifier.classify(opt.question);
