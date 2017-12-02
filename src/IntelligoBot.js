@@ -23,11 +23,14 @@ class IntelligoBot extends EventEmitter{
   }
     
   start(port) {
-    this.initWebhook();
-    this.app.set('port', port || 3000);
-    this.server = this.app.listen(this.app.get('port'), () => {
+    this.app.set('port', process.env.PORT || port);
+    // this.server = this.app.listen(this.app.get('port'), () => {
+    //   console.log('IntelligoBot server is running on port', this.app.get('port'));
+    // });
+    this.app.listen(this.app.get('port'), () => {
       console.log('IntelligoBot server is running on port', this.app.get('port'));
     });
+    this.initWebhook();
   }
   
   initWebhook() {
