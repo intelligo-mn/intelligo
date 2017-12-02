@@ -8,8 +8,6 @@ const express = require( 'express'),
       fs = require('fs'),
       TechstarAI = require('techstar-ai');
       
-var techstarClassifier;
-
 class IntelligoBot extends EventEmitter{
   constructor(options) {
     super();
@@ -20,21 +18,20 @@ class IntelligoBot extends EventEmitter{
     this.webhook = options.webhook || '/webhook';
     this.webhook = this.webhook.charAt(0) !== '/' ? `/${this.webhook}` : this.webhook;
     this.app.use(bodyParser.json({ verify: this.verifyRequestSignature.bind(this) }));
+    this.techstarClassifier;
   }
     
   start(port) {
     this.app.set('port', process.env.PORT || port);
-    // this.server = this.app.listen(this.app.get('port'), () => {
-    //   console.log('IntelligoBot server is running on port', this.app.get('port'));
-    // });
     this.app.listen(this.app.get('port'), () => {
       console.log('IntelligoBot server is running on port', this.app.get('port'));
     });
     this.initWebhook();
+    this.ai();
   }
   
   initWebhook() {
-    this.app.get(this.webhook, function(req, res) {
+    this.app.get(this.webhook, (req, res) => {
       if (req.query['hub.mode'] === 'subscribe' &&
           req.query['hub.verify_token'] === this.verifyToken) {
         console.log("Validating webhook");
@@ -45,16 +42,16 @@ class IntelligoBot extends EventEmitter{
       }  
     });
     
-    this.app.post(this.webhook, function (req, res) {
+    this.app.post(this.webhook, (req, res) => {
       var data = req.body;
     
       if (data.object == 'page') {
        
-        data.entry.forEach(function(pageEntry) {
+        data.entry.forEach((pageEntry) => {
           var pageID = pageEntry.id;
           var timeOfEvent = pageEntry.time;
     
-          pageEntry.messaging.forEach(function(messagingEvent) {
+          pageEntry.messaging.forEach((messagingEvent) => {
             if (messagingEvent.message) {
               this.receivedMessage(messagingEvent);
             }else {
@@ -215,36 +212,37 @@ class IntelligoBot extends EventEmitter{
     }
   }
   
-  learnAI(json){
-    console.log("AI суралцаж эхэллээ...");
-    var startedTime = new Date().getTime();
-    // Repeat multiple levels
-    var TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
-    	binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
-    });
-    
-    // Unblock the words in the sentence with spaces and create attributes
-    var WordExtractor = function(input, features) {
-    	input.split(" ").forEach(function(word) {
-    		features[word]=1;
-    	});
-    };
-    
-    techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
-    	classifierType: TextClassifier,
-    	featureExtractor: WordExtractor
-    });
-    
-    techstarClassifier.trainBatch(JSON.parse(fs.readFileSync('../data/training_data.json', 'utf8')));
-    console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
-  }
-  
-  answerAI(question){
-    var startedTime = new Date().getTime();
-    console.log("AI хариултыг хайж байна...");
-    var result =  techstarClassifier.classify(question);
-    console.log("AI хариултыг оллоо.  \n " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
-    return result;
+  ai(opt){
+    if(!opt) {
+      console.log("AI суралцаж эхэллээ...");
+      var startedTime = new Date().getTime();
+      // Repeat multiple levels
+      var TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
+      	binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
+      });
+      
+      // Unblock the words in the sentence with spaces and create attributes
+      var WordExtractor = function(input, features) {
+      	input.split(" ").forEach(function(word) {
+      		features[word]=1;
+      	});
+      };
+      
+      this.techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
+      	classifierType: TextClassifier,
+      	featureExtractor: WordExtractor
+      });
+      
+      this.techstarClassifier.trainBatch(JSON.parse(fs.readFileSync('../data/training_data.json', 'utf8')));
+      console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
+        
+    } else {
+      var startedTime = new Date().getTime();
+      console.log("AI хариултыг хайж байна...");
+      var result =  this.techstarClassifier.classify(opt.question);
+      console.log("AI хариултыг оллоо.  \n " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
+      return result;
+    }
   }
   
   // текст илгээх
