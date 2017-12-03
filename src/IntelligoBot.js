@@ -98,9 +98,7 @@ class IntelligoBot extends EventEmitter{
   
     if (messageText) {
       
-      var result = this.ai({
-        question: messageText
-      });
+      var result = this.answer(messageText);
       
       if (messageText == "update")
         this.sendTextMessage(senderID, this.updateJSON());
@@ -244,6 +242,38 @@ class IntelligoBot extends EventEmitter{
       console.log("AI хариултыг оллоо.  \n " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
       return result;
     }
+  }
+  
+  learn (json){
+    console.log("AI суралцаж эхэллээ...");
+    var startedTime = new Date().getTime();
+    // Repeat multiple levels
+    var TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
+    	binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
+    });
+    
+    // Unblock the words in the sentence with spaces and create attributes
+    var WordExtractor = function(input, features) {
+    	input.split(" ").forEach(function(word) {
+    		features[word]=1;
+    	});
+    };
+    
+    this.techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
+    	classifierType: TextClassifier,
+    	featureExtractor: WordExtractor
+    });
+    
+    this.techstarClassifier.trainBatch(JSON.parse(fs.readFileSync(json, 'utf8')));
+    console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");  
+  }
+  
+  answer (question) {
+    var startedTime = new Date().getTime();
+    console.log("AI хариултыг хайж байна...");
+    var result =  this.techstarClassifier.classify(question);
+    console.log("AI хариултыг оллоо.  \n " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
+    return result;
   }
   
   // текст илгээх
