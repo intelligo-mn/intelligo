@@ -11,6 +11,9 @@ const express = require( 'express'),
 class IntelligoBot extends EventEmitter{
   constructor(options) {
     super();
+    if (!options || (options && (!options.accessToken || !options.verifyToken || !options.appSecret))) {
+      throw new Error('You need to specify an accessToken, verifyToken and appSecret');
+    }
     this.accessToken = options.accessToken;
     this.verifyToken = options.verifyToken;
     this.appSecret = options.appSecret;
