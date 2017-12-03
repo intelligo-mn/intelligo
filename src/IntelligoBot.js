@@ -211,39 +211,6 @@ class IntelligoBot extends EventEmitter{
     }
   }
   
-  ai(opt){
-    if(opt.json) {
-      console.log("AI суралцаж эхэллээ...");
-      var startedTime = new Date().getTime();
-      // Repeat multiple levels
-      var TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
-      	binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
-      });
-      
-      // Unblock the words in the sentence with spaces and create attributes
-      var WordExtractor = function(input, features) {
-      	input.split(" ").forEach(function(word) {
-      		features[word]=1;
-      	});
-      };
-      
-      this.techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
-      	classifierType: TextClassifier,
-      	featureExtractor: WordExtractor
-      });
-      
-      this.techstarClassifier.trainBatch(JSON.parse(fs.readFileSync(opt.json, 'utf8')));
-      console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
-        
-    } else if (opt.question) {
-      var startedTime = new Date().getTime();
-      console.log("AI хариултыг хайж байна...");
-      var result =  this.techstarClassifier.classify(opt.question);
-      console.log("AI хариултыг оллоо.  \n " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
-      return result;
-    }
-  }
-  
   learn (json){
     console.log("AI суралцаж эхэллээ...");
     var startedTime = new Date().getTime();
@@ -276,7 +243,6 @@ class IntelligoBot extends EventEmitter{
     return result;
   }
   
-  // текст илгээх
   sendTextMessage(recipientId, messageText) {
     var messageData = {
       recipient: {
@@ -335,7 +301,6 @@ class IntelligoBot extends EventEmitter{
       }
     );
   }
-  
   
   sendHelp(recipientId) {
     var Desc = `
