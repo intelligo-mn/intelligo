@@ -1,5 +1,11 @@
 const mainController   = require('../app/MainController'),
       dataController   = require('../app/DataController');
+      
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated())
+        return next();
+    res.redirect('/login');
+}
 
 module.exports = function(app, passport) {
     
@@ -44,9 +50,3 @@ module.exports = function(app, passport) {
         res.redirect('/login');
     });
 };
-
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated())
-        return next();
-    res.redirect('/login');
-}
