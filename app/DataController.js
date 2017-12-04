@@ -93,7 +93,7 @@ function processCreate(req, res) {
     if (err)
       throw err;
     req.flash('success', 'Successfuly created data!');
-    res.redirect(`/datas/${data.slug}`);
+    res.redirect(`/datas`);
   });
 }
 

@@ -2,7 +2,7 @@ const mainController   = require('../app/MainController'),
       dataController   = require('../app/DataController');
 
 module.exports = function(app, passport) {
-
+    
     app.get('/', isLoggedIn, mainController.showHome);
 	
     app.get('/console', isLoggedIn, mainController.showDashboard);
