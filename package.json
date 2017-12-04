@@ -1,6 +1,6 @@
 {
   "name": "intelligo",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Intelligo AI ChatBot Framework",
   "main": "index.js",
   "repository": {
@@ -14,7 +14,7 @@
     "config": "^1.24.0",
     "express": "^4.14.0",
     "eventemitter3": "^1.2.0",
-    "techstar-ai": "^1.0.0",
+    "techstar-ai": "^1.0.3",
     "request": "^2.79.0"
   }
 }
