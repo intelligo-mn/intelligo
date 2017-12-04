@@ -12,7 +12,7 @@ class IntelligoBot extends EventEmitter{
   constructor(options) {
     super();
     if (!options || (options && (!options.accessToken || !options.verifyToken || !options.appSecret))) {
-      throw new Error('You need to specify an accessToken, verifyToken and appSecret');
+      throw new Error("You need to specify an accessToken, verifyToken and appSecret");
     }
     this.accessToken = options.accessToken;
     this.verifyToken = options.verifyToken;
@@ -176,7 +176,7 @@ class IntelligoBot extends EventEmitter{
     var similarQuestions = new Array();
     var sum = "";
     
-    var json = JSON.parse(fs.readFileSync('./data/training_data.json', 'utf8'));
+    var json = JSON.parse(fs.readFileSync("./data/training_data.json", "utf8"));
     json.forEach(function(data){
       var words = data.input.split(" ");
       //Start a given keyword or locate neighbor words

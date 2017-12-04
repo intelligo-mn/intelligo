@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/techstar-inc/intelligo.git"
+    "url": "https://github.com/techstar-inc/intelligo.git"
   },
   "author": "Tortuvshin Byambaa",
   "license": "MIT",
