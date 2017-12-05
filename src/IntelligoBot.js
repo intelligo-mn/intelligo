@@ -27,7 +27,7 @@ class IntelligoBot extends EventEmitter{
   start(port) {
     this.app.set('port', process.env.PORT || port);
     this.app.listen(this.app.get('port'), () => {
-      console.log('IntelligoBot server is running on port', this.app.get('port'));
+      console.log("IntelligoBot server is running on port", this.app.get('port'));
     });
     this.initWebhook();
   }
@@ -47,12 +47,9 @@ class IntelligoBot extends EventEmitter{
     this.app.post(this.webhook, (req, res) => {
       var data = req.body;
     
-      if (data.object == 'page') {
+      if (data.object === 'page') {
        
         data.entry.forEach((pageEntry) => {
-          var pageID = pageEntry.id;
-          var timeOfEvent = pageEntry.time;
-    
           pageEntry.messaging.forEach((messagingEvent) => {
             if (messagingEvent.message) {
               this.receivedMessage(messagingEvent);
