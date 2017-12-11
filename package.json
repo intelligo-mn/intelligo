@@ -27,6 +27,7 @@
     "express": "^4.14.0",
     "express-ejs-layouts": "^2.2.0",
     "express-session": "^1.14.2",
+    "express-status-monitor": "^1.0.1",
     "express-validator": "^2.20.8",
     "intelligo": "^0.1.6",
     "method-override": "~2.3.6",
