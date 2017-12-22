@@ -9,7 +9,7 @@ function isLoggedIn(req, res, next) {
 
 module.exports = function(app, passport) {
     
-    app.get('/', isLoggedIn, mainController.showHome);
+    app.get('/', mainController.showHome);
 	
     app.get('/console', isLoggedIn, mainController.showDashboard);
 	
