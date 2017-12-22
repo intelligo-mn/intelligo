@@ -34,16 +34,22 @@
 <body class="login-page">
     <div class="login-box">
         <div class="logo">
-            <a href="javascript:void(0);">Techstar <b>Bot</b></a>
-            <small>Techstar, Inc</small>
+            <a href="javascript:void(0);">Techstar <b>Platform</b></a>
             
         </div>
         <div class="card">
             <div class="body">
                 <form id="sign_in" action="/login" method="POST">
-                    <% if (message.length > 0) { %>
-                        <div class="msg"><%= message %></div>
-                    <% } %>
+                
+                        <div class="msg">
+                        
+                        <p><strong>Нэвтрэх хэсэг</strong></p>
+                        
+                        <% if (message.length > 0) { %>
+                            <%= message %>
+                        <% } %>
+                        </div>
+                    
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>
@@ -67,11 +73,6 @@
                         </div>
                         <div class="col-xs-4">
                             <button class="btn btn-block bg-pink waves-effect" type="submit">SIGN IN</button>
-                        </div>
-                    </div>
-                    <div class="row m-t-15 m-b--20">
-                        <div class="col-xs-6">
-                            <a href="/dashboard/signup">Register Now!</a>
                         </div>
                     </div>
                 </form>

@@ -7721,7 +7721,7 @@ fieldset[disabled] .form-control {
 
 /* Login Page ================================== */
 .login-page {
-  background-color: #00BCD4;
+  background-color: #11172e;
   padding-left: 0;
   max-width: 360px;
   margin: 5% auto;
@@ -7733,7 +7733,7 @@ fieldset[disabled] .form-control {
   .login-page .login-box a {
     font-size: 14px;
     text-decoration: none;
-    color: #00BCD4; }
+    color: #11172e; }
   .login-page .login-box .logo {
     margin-bottom: 20px; }
     .login-page .login-box .logo a {
@@ -7778,7 +7778,12 @@ fieldset[disabled] .form-control {
       text-align: center;
       color: #fff;
       margin-top: -5px; }
-
+.login-page .login-box p {
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+    color: #00BCD4;
+}
 /* Forgot Password Page ======================== */
 .fp-page {
   background-color: #00BCD4;
