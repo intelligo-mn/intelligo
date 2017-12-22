@@ -639,7 +639,6 @@ html.no-touchevents .techstar-menu-trigger:hover:not(.is-active) .techstar-menu-
     text-align: center;
     padding-right: 30px;
     font-size: 14px;
-    letter-spacing: 1.2px;
     font-family: Teko;
     font-weight: 400;
     text-transform: uppercase
@@ -704,7 +703,6 @@ html.no-touchevents .techstar-menu-trigger:hover:not(.is-active) .techstar-menu-
     margin-left: -75px;
     text-align: center;
     font-size: 14px;
-    letter-spacing: 2px;
     font-family: Teko;
     font-weight: 400;
     text-transform: uppercase;
@@ -850,7 +848,6 @@ html.no-touchevents .techstar-home-button:hover .techstar-home-button__border {
     font-size: 12px;
     font-family: Teko;
     font-weight: 400;
-    letter-spacing: 2.5px;
     text-transform: uppercase;
     color: #fff;
     white-space: nowrap
@@ -1098,3 +1095,4 @@ html.no-touchevents .techstar-more__terms:hover {
     position: absolute;
     z-index: -1; 
 }
+
