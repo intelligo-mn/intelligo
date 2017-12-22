@@ -1,6 +1,6 @@
 module.exports = {
     showHome(req, res) {
-        res.render("index.ejs", {
+        res.render("home.ejs", {
     		user : req.user 
     	});
     },
