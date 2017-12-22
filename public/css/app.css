@@ -18,22 +18,6 @@ a {
     background: #d06984
 }
 
-@font-face {
-    font-family: Graphik;
-    src: url(/assets/fonts/Graphik-Medium.eot);
-    src: url(/assets/fonts/Graphik-Medium.eot?#iefix) format("embedded-opentype"), url(/assets/fonts/Graphik-Medium.woff2) format("woff2"), url(/assets/fonts/Graphik-Medium.woff) format("woff"), url(/assets/fonts/Graphik-Medium.ttf) format("truetype");
-    font-weight: 500;
-    font-style: normal
-}
-
-@font-face {
-    font-family: Graphik;
-    src: url(/assets/fonts/Graphik-Regular.eot);
-    src: url(/assets/fonts/Graphik-Regular.eot?#iefix) format("embedded-opentype"), url(/assets/fonts/Graphik-Regular.woff2) format("woff2"), url(/assets/fonts/Graphik-Regular.woff) format("woff"), url(/assets/fonts/Graphik-Regular.ttf) format("truetype");
-    font-weight: 400;
-    font-style: normal
-}
-
 a,
 body,
 div,
@@ -1108,4 +1092,9 @@ html.no-touchevents .techstar-more__terms:hover {
     to {
         transform: scaleY(1)
     }
+}
+
+#particles-js .particles-js-canvas-el {
+    position: absolute;
+    z-index: -1; 
 }

@@ -39,7 +39,7 @@
         <div class="techstar-main__pages u-absolute u-pos-tl u-fit js-main-pages is-visible">
             <div class="techstar-pages u-absolute u-fit u-pos-tl" style="transform: translateX(-17.1px) translateY(2.1px) translateZ(0px);">
                 <!---->
-                <div class="techstar-page techstar-home u-absolute u-fit u-pos-tl is-page-active">
+                <div class="techstar-page techstar-home u-absolute u-fit u-pos-tl is-page-active"  id="particles-js">
                     <div class="techstar-page__inner">
                         <div class="techstar-title techstar-home__title u-uppercase u-align-center is-visible is-optimized">Techstar bot platform.</div>
                         <div class="techstar-paragraph techstar-home__description u-align-center is-visible has-translate-y">
@@ -74,10 +74,16 @@
                 </span> <span class="techstar-more__icon u-inline-block u-absolute"><span class="techstar-more__icon-bar has-index-0 u-absolute u-block"></span> <span class="techstar-more__icon-bar has-index-1 u-absolute u-block"></span></span>
             </div>
             </span>
-        </div> <a href="#" class="techstar-audio u-absolute u-inline-block is-active is-visible has-theme-light"><span class="techstar-audio__inner u-absolute u-block u-fit u-pos-tl"><span class="techstar-audio__bar has-index-0 u-block u-absolute"></span> <span class="techstar-audio__bar has-index-1 u-block u-absolute"></span> <span class="techstar-audio__bar has-index-2 u-block u-absolute"></span> <span class="techstar-audio__bar has-index-3 u-block u-absolute"></span> <span class="techstar-audio__bar has-index-4 u-block u-absolute"></span></span><audio src="assets/audio/background-tunnel.mp3" loop="" autoplay=""></audio><audio src="assets/audio/background-default.mp3" loop="" autoplay=""></audio></a></div>
+        </div> <a href="#" class="techstar-audio u-absolute u-inline-block is-active is-visible has-theme-light"><span class="techstar-audio__inner u-absolute u-block u-fit u-pos-tl"><span class="techstar-audio__bar has-index-0 u-block u-absolute"></span> <span class="techstar-audio__bar has-index-1 u-block u-absolute"></span> <span class="techstar-audio__bar has-index-2 u-block u-absolute"></span> <span class="techstar-audio__bar has-index-3 u-block u-absolute"></span> <span class="techstar-audio__bar has-index-4 u-block u-absolute"></span></span></a></div>
 
     </main>
 
 </body>
-
+<script src="js/particles.js"></script>
+<script>
+    /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+    particlesJS.load('particles-js', 'js/particles.json', function() {
+      console.log('callback - particles.js config loaded');
+    });
+</script>
 </html>
