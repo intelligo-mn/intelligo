@@ -79,7 +79,7 @@ const pingService = (url, cb) => {
       // the service until the first byte is received
       cb(res.timingPhases.firstByte)
     } else {
-      cb('OUTAGE')
+      cb('ДОГОЛДСОН')
     }
   })
 }
@@ -89,16 +89,16 @@ let serviceStatus = {}
 
 services.forEach(service => {
   serviceStatus[service.url] = {
-    status: 'OPERATIONAL', // initialize all services as operational when we start
+    status: 'ХЭВИЙН', // initialize all services as operational when we start
     responseTimes: [], // array containing the responses times for last 3 pings
     timeout: service.timeout // load up the timout from the config
   }
 
   setInterval(() => {
     pingService(service.url, (serviceResponse) => {
-      if (serviceResponse === 'OUTAGE' && serviceStatus[service.url].status !== 'OUTAGE') {
+      if (serviceResponse === 'ДОГОЛДСОН' && serviceStatus[service.url].status !== 'ДОГОЛДСОН') {
         // only update and post to Slack on state change
-        serviceStatus[service.url].status = 'ажиллагаа доголдсон'
+        serviceStatus[service.url].status = 'ДОГОЛДСОН'
         postToSlack(service.url)
       } else {
         let responseTimes = serviceStatus[service.url].responseTimes
@@ -113,11 +113,11 @@ services.forEach(service => {
           let avgResTime = responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length
           let currService = serviceStatus[service.url]
 
-          if (avgResTime > currService.timeout && currService.status !== 'DEGRADED') {
-            currService.status = ' сэрвэр унасан байна !!!'
+          if (avgResTime > currService.timeout && currService.status !== 'УНАСАН') {
+            currService.status = 'УНАСАН'
             postToSlack(service.url)
-          } else if (avgResTime < currService.timeout && currService.status !== 'OPERATIONAL') {
-            currService.status = ' ажиллагаа хэвийн байна'
+          } else if (avgResTime < currService.timeout && currService.status !== 'ХЭВИЙН') {
+            currService.status = 'ХЭВИЙН'
             postToSlack(service.url)
           }
         }
@@ -129,7 +129,7 @@ services.forEach(service => {
 
 const postToSlack = (serviceUrl) => {
   let slackPayload = {
-    text: `*Систем ${serviceStatus[serviceUrl].status}*\n${serviceUrl}`
+    text: `*Системийн ажиллагаа ${serviceStatus[serviceUrl].status}* байна \n${serviceUrl}`
   }
 
   request({
