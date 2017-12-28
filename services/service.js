@@ -4,7 +4,7 @@ module.exports = [
     timeout: 200 // threshold in milliseconds above which is considered degraded performance
   },
   {
-    url: 'http://www.techstar.cloud/console',
+    url: 'http://www.techstar.cloud/status',
     timeout: 300
   },
   {

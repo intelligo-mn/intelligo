@@ -98,7 +98,7 @@ services.forEach(service => {
     pingService(service.url, (serviceResponse) => {
       if (serviceResponse === 'OUTAGE' && serviceStatus[service.url].status !== 'OUTAGE') {
         // only update and post to Slack on state change
-        serviceStatus[service.url].status = 'OUTAGE'
+        serviceStatus[service.url].status = 'ажиллагаа доголдсон'
         postToSlack(service.url)
       } else {
         let responseTimes = serviceStatus[service.url].responseTimes
@@ -114,10 +114,10 @@ services.forEach(service => {
           let currService = serviceStatus[service.url]
 
           if (avgResTime > currService.timeout && currService.status !== 'DEGRADED') {
-            currService.status = 'DEGRADED'
+            currService.status = ' сэрвэр унасан байна !!!'
             postToSlack(service.url)
           } else if (avgResTime < currService.timeout && currService.status !== 'OPERATIONAL') {
-            currService.status = 'OPERATIONAL'
+            currService.status = ' ажиллагаа хэвийн байна'
             postToSlack(service.url)
           }
         }
@@ -129,7 +129,7 @@ services.forEach(service => {
 
 const postToSlack = (serviceUrl) => {
   let slackPayload = {
-    text: `*www.techstar.cloud ажиллагаа ${serviceStatus[serviceUrl].status}*\n${serviceUrl}`
+    text: `*Систем ${serviceStatus[serviceUrl].status}*\n${serviceUrl}`
   }
 
   request({
