@@ -6,5 +6,9 @@ module.exports = [
   {
     url: 'http://www.techstar.cloud/console',
     timeout: 300
+  },
+  {
+    url: 'https://techstar-bot-tortuvshin.c9users.io',
+    timeout: 300
   }
 ]

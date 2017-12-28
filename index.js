@@ -84,7 +84,7 @@ const pingService = (url, cb) => {
   })
 }
 
-const pingInterval = 1*1000*60 // 5 minutes
+const pingInterval = 1*1000*60 // 1 minutes
 let serviceStatus = {}
 
 services.forEach(service => {
@@ -129,7 +129,7 @@ services.forEach(service => {
 
 const postToSlack = (serviceUrl) => {
   let slackPayload = {
-    text: `*Service ${serviceStatus[serviceUrl].status}*\n${serviceUrl}`
+    text: `*www.techstar.cloud ажиллагаа ${serviceStatus[serviceUrl].status}*\n${serviceUrl}`
   }
 
   request({
