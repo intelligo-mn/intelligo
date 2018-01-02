@@ -41,6 +41,7 @@
     "path": "^0.12.7",
     "request": "^2.79.0",
     "slug": "^0.9.1",
+    "socket.io": "^2.0.4",
     "techstar-ai": "^1.0.0"
   },
   "devDependencies": {
