@@ -22,8 +22,6 @@
   "author": "Tortuvshin Byambaa",
   "license": "MIT",
   "dependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-polyfill": "^6.20.0",
     "bcrypt-nodejs": "latest",
     "body-parser": "^1.15.2",
     "config": "^1.24.0",
