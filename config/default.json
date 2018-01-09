@@ -1,0 +1,10 @@
+{
+    "appSecret": "897920d83cfc1c9a75c6cb769df37374",
+    "pageAccessToken": "EAAbZCCExjtgYBAA4zXmpZA8NpcVRyHRusHOtK6FcaetolEn5A3jMMZBSV2j7oEDImfZAoteZAVU8GKDcwcF3RjZCmyyPsB1I75wFU6GZBMcBaInsFku1P6rMV0v4ohrkOMmNgCKCPMc2haUfdM12ys4o6j6VtrGI18MY2J8rQgY8gZDZD",
+    "validationToken": "my_voice_is_my_password_verify_me",
+    "serverURL": "https://techstar-bot-tortuvshin.c9users.io/",
+    "webhookURL": "https://techstar-bot-tortuvshin.c9users.io/webhook",
+    "SECRET": "my-super-secret",
+    "DB_URI": "mongodb://toroo:toroo@ds117136.mlab.com:17136/techstar-bot",
+    "SLACK_WEBHOOK_URL": "https://hooks.slack.com/services/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"
+}

@@ -22,6 +22,8 @@ const express = require( 'express'),
 
 const app = express();
 
+app.set('base', '/console');
+
 const DB_URI = (process.env.DB_URI) ?
   (process.env.DB_URI) :
   config.get('DB_URI');
@@ -35,8 +37,6 @@ const SLACK_WEBHOOK_URL = (process.env.SLACK_WEBHOOK_URL) ?
   (process.env.SLACK_WEBHOOK_URL) :
   config.get('SLACK_WEBHOOK_URL');
   
-console.log(datas.retDatas());
-
 // CONFIGURATION TECHSTAR BOT APPLICATION 
 
 app.set('port', process.env.PORT || 5000);
@@ -50,9 +50,10 @@ app.use(session({
 }));
 app.use(flash());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));             
-app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: false }));     
+app.use(express.static(path.join(__dirname, "public")));
 app.use(require('express-status-monitor')());
+app.set("views", path.join(__dirname, "views"));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 
@@ -141,9 +142,5 @@ const postToSlack = (serviceUrl) => {
     if (err) console.log(`Error posting to Slack: ${err}`)
   })
 }
-
-app.listen(app.get('port'), function() {
-  console.log('Bot server is running on port', app.get('port'));
-});
 
 module.exports = app;
