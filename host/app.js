@@ -10,10 +10,12 @@ var app = express();
 var api = require("../api/app");
 var console = require("../console/app");
 var tersely = require("../tersely/app");
+var traffic = require("../traffic/server/server");
 
 app.use("/", console);
 app.use("/api", api);
 app.use("/tersely", tersely);
+app.use("/traffic", traffic);
 // Exports
 // -------
 

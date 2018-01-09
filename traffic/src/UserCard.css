@@ -1,0 +1,62 @@
+.UserCard {
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 0;
+    border: 1px solid #ccc;
+    width: 80%;
+}
+
+.UserCard-title {
+    background-color: #f6f8fa;
+    color: #123;
+    padding: 10px;
+    border: 1px solid #dfe2e5;
+    font-weight: bold;
+}
+
+.UserCard main {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0 0 15px 15px;
+    margin-top: 15px;
+}
+
+.sectionPadding {
+    margin: 10px;
+}
+
+/* Avartar */
+.UserCard main > section:first-child {
+    padding-right: 15px;
+}
+
+/* content section
+.UserCard main > section:nth-child(2) {
+    padding-right: 15px;
+    margin: -3px;
+} */
+
+.UserCard-bio {
+    padding: 0 20px 0 0;
+}
+
+.UserCard-location {
+    margin: 5px 0;
+}
+
+.UserCard-bio_location-separator {
+    width: 95%;
+    margin-left: 0;
+    border-color: #eaecef;
+}
+
+.UserCard img {
+    width: 125px;
+    height: auto;
+    border-radius: 6px;
+}
+
+svg {
+    margin-right: 5px;
+}

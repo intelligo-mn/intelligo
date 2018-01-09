@@ -1,0 +1,33 @@
+{
+  "name": "github-traffic",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "8.3.0",
+    "yarn": "0.24.6"
+  },
+  "dependencies": {
+    "axios": "^0.16.2",
+    "cors": "^2.8.4",
+    "express": "^4.15.4",
+    "lodash": "^4.17.4",
+    "promise": "^8.0.1",
+    "prop-type": "^0.0.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-google-charts": "^1.5.5",
+    "react-scripts": "1.0.13",
+    "short-id": "^0.1.0-1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "heroku-prebuild": "echo ---------- This runs before Heroku installs your dependencies.-------- ",
+    "heroku-postbuild": "yarn && yarn run build"
+  },
+  "cacheDirectories": [
+    "node_modules"
+  ]
+}

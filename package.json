@@ -4,14 +4,20 @@
   "description": "Techstar AI ChatBot",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf build public/bundle.js",
-    "build": "babel server --out-dir build --presets=es2015 && webpack",
-    "start": "cross-env NODE_ENV=production node ./build/index.js",
-    "development": "cross-env NODE_ENV=development nodemon --exec babel-node --presets=es2015 ./server/index.js --watch server"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "heroku-prebuild": "echo ---------- This runs before Heroku installs your dependencies.-------- ",
+    "heroku-postbuild": "yarn && yarn run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/techstar-inc/techstar-bot.git"
+  }, 
+  "engines": {
+    "node": "8.3.0",
+    "yarn": "0.24.6"
   },
   "author": "Tortuvshin Byambaa",
   "license": "MIT",
@@ -25,7 +31,7 @@
     "cookie-parser": "^1.4.3",
     "debug": "~2.2.0",
     "ejs": "^2.5.1",
-    "express": "^4.14.0",
+    "express": "^4.15.5",
     "express-ejs-layouts": "^2.2.0",
     "express-session": "^1.14.2",
     "express-status-monitor": "^1.0.1",
@@ -43,7 +49,18 @@
     "request": "^2.79.0",
     "slug": "^0.9.1",
     "socket.io": "^2.0.4",
-    "techstar-ai": "^1.0.0"
+    "techstar-ai": "^1.0.0",
+    
+    "axios": "^0.16.2",
+    "cors": "^2.8.4",
+    "lodash": "^4.17.4",
+    "promise": "^8.0.1",
+    "prop-type": "^0.0.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-google-charts": "^1.5.5",
+    "react-scripts": "1.0.13",
+    "short-id": "^0.1.0-1"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -53,5 +70,8 @@
     "css-loader": "^0.26.1",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2"
-  }
+  },
+  "cacheDirectories": [
+    "node_modules"
+  ]
 }
