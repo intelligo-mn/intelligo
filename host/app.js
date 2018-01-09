@@ -10,12 +10,12 @@ var app = express();
 var api     = require("../api/app");
 var console = require("../console/app");
 var url     = require("../shorter/app");
-var uptime  = require("../uptime/app");
+// var uptime  = require("../uptime/app");
 
 app.use("/", console);
 app.use("/api", api);
 app.use("/url", url);
-app.use("/uptime", uptime);
+// app.use("/uptime", uptime);
 // Exports
 // -------
 

@@ -1,9 +1,9 @@
 'use strict';
 
-const config   = require('config'),
+const express = require("express"),
+      config   = require('config'),
       request  = require('request'),
       services = require('./service');
-
 
 const SLACK_WEBHOOK_URL = (process.env.SLACK_WEBHOOK_URL) ?
   (process.env.SLACK_WEBHOOK_URL) :
