@@ -7,9 +7,11 @@ var app = express();
 
 // Sub-Apps
 // --------
-var console = require("../console/index");
+var api = require("../api/app");
+var console = require("../console/app");
 
 app.use("/", console);
+app.use("/api", api);
 // Exports
 // -------
 
