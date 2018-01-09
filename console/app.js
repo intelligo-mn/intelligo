@@ -50,7 +50,35 @@ app.use(flash());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));     
 app.use(express.static(path.join(__dirname, "public")));
-app.use(require('express-status-monitor')());
+app.use(require('express-status-monitor')({
+    title: 'Techstar Cloud Status',  
+    path: '/status',
+    spans: [{
+      interval: 1,      
+      retention: 60  
+    }, {
+      interval: 5,          
+      retention: 60
+    }, {
+      interval: 15,          
+      retention: 60
+    }, {
+      interval: 60,          
+      retention: 60
+    }, {
+      interval: 1440,          
+      retention: 60
+    }],
+    chartVisibility: {
+      cpu: true,
+      mem: true,
+      load: true,
+      responseTime: true,
+      rps: true,
+      statusCodes: true
+    }
+  }
+));
 app.set("views", path.join(__dirname, "views"));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);

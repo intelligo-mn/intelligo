@@ -1,6 +1,6 @@
 {
-  "name": "techstar-bot",
-  "version": "0.0.4",
+  "name": "techstar-platform",
+  "version": "0.0.47",
   "description": "Techstar AI ChatBot",
   "main": "index.js",
   "scripts": {
