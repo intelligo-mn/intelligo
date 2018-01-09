@@ -74,7 +74,7 @@ app.use(require('express-status-monitor')({
 app.set("views", path.join(__dirname, "views"));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
-
+    
 mongoose.connect(DB_URI, { useMongoClient: true });
 
 app.use(expressValidator());

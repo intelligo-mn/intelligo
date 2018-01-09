@@ -51,4 +51,7 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/login');
     });
+    
+    app.get('*', mainController.show404);
+
 };
