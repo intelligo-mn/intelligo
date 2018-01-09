@@ -9,12 +9,6 @@ module.exports = {
         res.render("dashboard.ejs", {
         	user : req.user 
         });
-    },
-    
-    show404(req, res) {
-        res.render("error/404.ejs", {
-        	user : req.user 
-        });
     }
 };
 
