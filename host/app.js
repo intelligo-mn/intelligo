@@ -9,9 +9,11 @@ var app = express();
 // --------
 var api = require("../api/app");
 var console = require("../console/app");
+var tersely = require("../tersely/app");
 
 app.use("/", console);
 app.use("/api", api);
+app.use("/tersely", tersely);
 // Exports
 // -------
 

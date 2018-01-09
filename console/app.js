@@ -22,8 +22,6 @@ const express = require( 'express'),
 
 const app = express();
 
-app.set('base', '/console');
-
 const DB_URI = (process.env.DB_URI) ?
   (process.env.DB_URI) :
   config.get('DB_URI');
@@ -50,7 +48,7 @@ app.use(session({
 }));
 app.use(flash());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));     
+app.use(bodyParser.urlencoded({ extended: true }));     
 app.use(express.static(path.join(__dirname, "public")));
 app.use(require('express-status-monitor')());
 app.set("views", path.join(__dirname, "views"));
