@@ -5,6 +5,8 @@ const express = require("express"),
       request  = require('request'),
       services = require('./service');
 
+const app = express();
+
 const SLACK_WEBHOOK_URL = (process.env.SLACK_WEBHOOK_URL) ?
   (process.env.SLACK_WEBHOOK_URL) :
   config.get('SLACK_WEBHOOK_URL');
@@ -82,3 +84,5 @@ const postToSlack = (serviceUrl) => {
     if (err) console.log(`Error posting to Slack: ${err}`)
   })
 }
+
+module.exports = app;
