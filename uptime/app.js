@@ -73,14 +73,14 @@ services.forEach(service => {
 const postToSlack = (serviceUrl) => {
   var message = "";
   if (serviceStatus[serviceUrl].status == 'DEGRADED'){
-      message = "`СИСТЕМИЙН АЖИЛЛАГАА УНАСАН !!!` :skull: ";
+      message = "СИСТЕМИЙН АЖИЛЛАГАА УНАСАН !!! :skull: ";
   } else if (serviceStatus[serviceUrl].status == 'OPERATIONAL') {
      message = "СИСТЕМИЙН АЖИЛЛАГАА ХЭВИЙН БАЙНА :robot_face:";
   } else if (serviceStatus[serviceUrl].status == 'OUTAGE') {
      message = "СИСТЕМИЙН АЖИЛЛАГАА ДОГОЛДЛОО :zzz:";
   }
   let slackPayload = {
-    text: `*${message}*\n_${serviceUrl}_`
+    text: `*${message}*\n${serviceUrl}`
   }
 
   request({
