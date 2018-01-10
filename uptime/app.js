@@ -80,7 +80,7 @@ const postToSlack = (serviceUrl) => {
      message = "СИСТЕМИЙН АЖИЛЛАГАА ДОГОЛДЛОО :zzz:";
   }
   let slackPayload = {
-    text: `*${message}*\n${serviceUrl}`
+    text: `*${message}*\n_${serviceUrl}_`
   }
 
   request({
