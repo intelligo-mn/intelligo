@@ -1,3 +1,4 @@
+var subdomain = require("express-subdomain");
 var express = require("express");
 
 // Root Express App
@@ -15,7 +16,7 @@ var errors  = require("../errors/app");
 
 app.use("/", console);
 app.use("/api", api);
-app.use("/url", url);
+app.use(subdomain("/url", url));
 app.use("/uptime", uptime);
 app.use(errors);
 // Exports
