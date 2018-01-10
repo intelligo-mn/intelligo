@@ -1,0 +1,33 @@
+body {
+  background-color: #F2F2F0;
+  padding-top: 80px;
+}
+
+.navbar {
+  background-color: #373737;
+  padding: 5px;
+}
+
+.navbar a {
+  color: #8C8C8C;
+  font-size: 1.5em;
+}
+
+.coligo {
+  color: #D0D0D0;
+  font-size: 0.8em;
+}
+
+.well {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.dash-red {
+  color: #DD6161;
+}
+
+.sub-header{
+  color: #777779;
+  font-weight: 300;
+}
