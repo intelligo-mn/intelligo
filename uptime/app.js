@@ -71,8 +71,14 @@ services.forEach(service => {
 })
 
 const postToSlack = (serviceUrl) => {
+  var status = "";
+  if (serviceStatus[serviceUrl].status == 'DEGRADED'){
+      status = "унасан";
+  }  else if (serviceStatus[serviceUrl].status == 'OPERATIONAL') {
+     status = "хэвийн боллоо";
+  }
   let slackPayload = {
-    text: `*Системийн ажиллагаа ${serviceStatus[serviceUrl].status}*\n${serviceUrl}`
+    text: `*Системийн ажиллагаа ${status}*\n${serviceUrl}`
   }
 
   request({
