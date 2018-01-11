@@ -31,7 +31,8 @@ const bot = new TechstarBot({
   app: app
 });
 bot.initWebhook();
-bot.setGreeting("Hi I am CryptoBot")
+bot.learn('data/training_data.json');
+bot.setGreeting("Hi I am Techstar AI Bot")
 
 app.set('port', process.env.PORT || 5000);
 app.use(morgan('dev'));
