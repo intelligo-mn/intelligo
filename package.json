@@ -1,11 +1,11 @@
 {
   "name": "intelligo",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Intelligo AI ChatBot Framework",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/techstar-inc/intelligo.git"
+    "url": "https://github.com/techstar-cloud/intelligo.git"
   },
   "author": "Tortuvshin Byambaa",
   "license": "MIT",

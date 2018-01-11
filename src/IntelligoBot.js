@@ -17,19 +17,11 @@ class IntelligoBot extends EventEmitter{
     this.accessToken = options.accessToken;
     this.verifyToken = options.verifyToken;
     this.appSecret = options.appSecret;
-    this.app = express();
+    this.app = options.app || express();
     this.webhook = options.webhook || '/webhook';
     this.webhook = this.webhook.charAt(0) !== '/' ? `/${this.webhook}` : this.webhook;
     this.app.use(bodyParser.json({ verify: this.verifyRequestSignature.bind(this) }));
     this.techstarClassifier;
-  }
-    
-  start(port) {
-    this.app.set('port', process.env.PORT || port);
-    this.app.listen(this.app.get('port'), () => {
-      console.log("IntelligoBot server is running on port", this.app.get('port'));
-    });
-    this.initWebhook();
   }
   
   initWebhook() {
