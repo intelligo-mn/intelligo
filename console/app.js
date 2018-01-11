@@ -31,7 +31,7 @@ const bot = new TechstarBot({
   app: app
 });
 bot.initWebhook();
-bot.learn('data/training_data.json');
+bot.learn('training_data.json');
 bot.setGreeting("Hi I am Techstar AI Bot")
 
 app.set('port', process.env.PORT || 5000);
