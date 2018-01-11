@@ -1,7 +1,6 @@
 'use strict';
 
 const express = require( 'express'),
-      port           = process.env.PORT || 8080,
       expressLayouts = require('express-ejs-layouts'),
       path           = require('path'),
       morgan         = require('morgan'),
@@ -9,14 +8,10 @@ const express = require( 'express'),
       mongoose       = require('mongoose'),
       cookieParser   = require('cookie-parser'),
       config         = require('config'),
-      crypto         = require('crypto'),
-      https          = require('https'),
-      request        = require('request'),
       session        = require('express-session'),
       flash          = require('connect-flash'),
       expressValidator = require('express-validator'),
-      TechstarAI     = require('techstar-ai'),
-      datas          = require('./app/DataController'),
+      TechstarBot      = require('intelligo'),
       passport       = require("passport");
 
 const app = express();
@@ -28,6 +23,14 @@ const DB_URI = (process.env.DB_URI) ?
 const SECRET = (process.env.SECRET) ?
   (process.env.SECRET) :
   config.get('SECRET');
+  
+const bot = new TechstarBot({
+  accessToken: config.get('PAGE_ACCESS_TOKEN'),
+  verifyToken: config.get('VALIDATION_TOKEN'),
+  appSecret: config.get('APP_SECRET')
+});
+
+bot.setGreeting("Hi I am CryptoBot")
 
 app.set('port', process.env.PORT || 5000);
 app.use(morgan('dev'));
@@ -71,6 +74,7 @@ app.use(require('express-status-monitor')({
     }
   }
 ));
+
 app.set("views", path.join(__dirname, "views"));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
