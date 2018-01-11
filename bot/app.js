@@ -13,7 +13,7 @@ const bot = new TechstarBot({
   app: app
 });
 bot.initWebhook();
-bot.learn('training_dataa.json');
+bot.learn('training_data.json');
 bot.setGreeting("Hi I am Techstar AI Bot")
 
 
