@@ -9,7 +9,8 @@ Intelligo is a JavaScript Framework to build Facebook Messenger's Chat bots.
 [![npm](https://img.shields.io/npm/dt/intelligo.svg?style=plastic)](https://www.npmjs.com/package/intelligo)
 [![GitHub license](https://img.shields.io/github/license/techstar-inc/intelligo.svg)](https://github.com/techstar-inc/intelligo/blob/master/LICENSE)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/techstar-inc/intelligo.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Ftechstar-inc%2Fintelligo)
-# Installation 
+
+# Installation
 
 ```
 npm install intelligo --save
@@ -31,5 +32,7 @@ const bot = new Intelligo({
 });
 
 bot.start(8000);
-
 ```
+
+
+
