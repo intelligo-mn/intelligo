@@ -11,7 +11,6 @@ const express = require( 'express'),
       session        = require('express-session'),
       flash          = require('connect-flash'),
       expressValidator = require('express-validator'),
-      TechstarBot      = require('intelligo'),
       passport       = require("passport");
 
 const app = express();
@@ -23,16 +22,6 @@ const DB_URI = (process.env.DB_URI) ?
 const SECRET = (process.env.SECRET) ?
   (process.env.SECRET) :
   config.get('SECRET');
-  
-const bot = new TechstarBot({
-  accessToken: config.get('PAGE_ACCESS_TOKEN'),
-  verifyToken: config.get('VALIDATION_TOKEN'),
-  appSecret: config.get('APP_SECRET'),
-  app: app
-});
-bot.initWebhook();
-bot.learn('training_data.json');
-bot.setGreeting("Hi I am Techstar AI Bot")
 
 app.set('port', process.env.PORT || 5000);
 app.use(morgan('dev'));
