@@ -27,9 +27,10 @@ const SECRET = (process.env.SECRET) ?
 const bot = new TechstarBot({
   accessToken: config.get('PAGE_ACCESS_TOKEN'),
   verifyToken: config.get('VALIDATION_TOKEN'),
-  appSecret: config.get('APP_SECRET')
+  appSecret: config.get('APP_SECRET'),
+  app: app
 });
-
+bot.initWebhook();
 bot.setGreeting("Hi I am CryptoBot")
 
 app.set('port', process.env.PORT || 5000);

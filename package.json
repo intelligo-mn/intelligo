@@ -26,7 +26,7 @@
     "express-status-monitor": "^1.0.1",
     "express-subdomain": "^1.0.5",
     "express-validator": "^2.20.8",
-    "intelligo": "^0.1.6",
+    "intelligo": "^0.1.7",
     "method-override": "~2.3.6",
     "mongoose": "^4.13.0",
     "morgan": "^1.7.0",
