@@ -14,6 +14,7 @@ module.exports = {
         user : req.user,
         success: req.flash('success')
       });
+      res.send(datas);
     });
   },
   
