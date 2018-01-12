@@ -21,18 +21,23 @@ npm install intelligo --save
 ```js
 'use strict';
 
-const Intelligo = require('intelligo'),
+const express = require('express'),
+      Intelligo = require('intelligo'),
       config = require( 'config'),
       request = require( 'request');
+      
+const app = express();
 
 const bot = new Intelligo({
   accessToken: config.get('pageAccessToken'),
   verifyToken: config.get('validationToken'),
-  appSecret: config.get('appSecret')
+  appSecret: config.get('appSecret'),
+  app: app
 });
 
-bot.start(8000);
-```
-
+app.set('port', process.env.PORT || 5000);
+app.listen(app.get('port'), function() {
+  console.log('Server is running on port', app.get('port'));
+});
 
 
