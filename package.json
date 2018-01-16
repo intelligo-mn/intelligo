@@ -8,13 +8,6 @@
   "license": "MIT",
   "main": "index.js",
   "private": true,
-  "scripts": {
-    "start": "node host/bin/www"
-    "dev": "webpack -d --progress --watch --profile --json > compilation-stats.json --env.dev",
-    "start": "webpack-dev-server --progress --colors --inline --env.dev",
-    "build": "webpack -p --progress --env.prod",
-    "clean": "rimraf ./console/build"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/techstar-inc/techstar-bot.git"
@@ -81,6 +74,13 @@
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
     "webpack-dev-server": "2.9.4"
+  },
+  "scripts": {
+    "server": "node server/bin/www",
+    "dev": "webpack -d --progress --watch --profile --json > compilation-stats.json --env.dev",
+    "start": "webpack-dev-server --progress --colors --inline --env.dev",
+    "build": "webpack -p --progress --env.prod",
+    "clean": "rimraf ./console/build"
   },
   "cacheDirectories": [
     "node_modules"
