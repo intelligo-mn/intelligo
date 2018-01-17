@@ -22,7 +22,11 @@ const DB_URI = (process.env.DB_URI) ?
 const SECRET = (process.env.SECRET) ?
   (process.env.SECRET) :
   config.get('SECRET');
-
+  
+const SLACK_WEBHOOK_URL = (process.env.SLACK_WEBHOOK_URL) ?
+  (process.env.SLACK_WEBHOOK_URL) :
+  config.get('SLACK_WEBHOOK_URL');
+  
 app.set('port', process.env.PORT || 5000);
 app.use(morgan('dev'));
 app.use(cookieParser());
@@ -63,6 +67,13 @@ app.use(require('express-status-monitor')({
       rps: true,
       statusCodes: true
     }
+  }
+));
+
+app.use("/uptime", require('techstar-uptime')({
+    url: 'https://www.techstar.cloud', // URL of service we'll be pining
+    timeout: 20, // threshold in milliseconds above which is considered degraded performance
+    SLACK_WEBHOOK_URL: SLACK_WEBHOOK_URL
   }
 ));
 
