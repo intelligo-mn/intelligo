@@ -70,7 +70,7 @@ app.use(require('express-status-monitor')({
   }
 ));
 
-app.use("/uptime", require('techstar-uptime')({
+app.use(require('techstar-uptime')({
     url: 'https://www.techstar.cloud', // URL of service we'll be pining
     timeout: 20, // threshold in milliseconds above which is considered degraded performance
     SLACK_WEBHOOK_URL: SLACK_WEBHOOK_URL
