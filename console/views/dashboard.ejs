@@ -1,60 +1,209 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
-    <meta name="author" content="Łukasz Holeczek">
-    <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,Angular 2,Angular4,Angular 4,jQuery,CSS,HTML,RWD,Dashboard,React,React.js,Vue,Vue.js">
-    <link rel="shortcut icon" href="img/favicon.png">
-    <link rel="stylesheet" href="build/index.fonts.css">
-    <link rel="stylesheet" href="build/index.styles.css">
-    <link rel="shortcut icon" href="img/favicon.png">
-    <title>CoreUI - Open Source Bootstrap Admin Template</title>
-  </head>
 
-  <!-- BODY options, add following classes to body to change options
+<%- include partial/header.ejs %>
+<!-- #END# Page Loader -->
+<%- include partial/navbar.ejs %>
+<!-- #Top Bar -->
+<%- include partial/sidebar.ejs %>
 
-  // Header options
-  1. '.header-fixed'					- Fixed Header
+<section class="content">
+    
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>DASHBOARD</h2>
+        </div>
+    
+        <!-- Widgets -->
+        <div class="row clearfix">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box hover-expand-effect">
+                    <div class="icon bg-pink">
+                        <i class="material-icons">touch_app</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TOTAL CONVERSATION</div>
+                        <div class="number count-to" data-from="0" data-to="1368" data-speed="10" data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box hover-expand-effect">
+                    <div class="icon bg-indigo">
+                        <i class="material-icons">bubble_chart</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TODAY CONVERSATION</div>
+                        <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box hover-expand-effect">
+                    <div class="icon bg-teal">
+                        <i class="material-icons">person_add</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TOTAL USER</div>
+                        <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Widgets -->
+        <!-- CPU Usage -->
+        <div class="row clearfix">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="header">
+                        <div class="row clearfix">
+                            <div class="col-xs-12 col-sm-6">
+                                <h2>TOTAL USER</h2>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 align-right">
+                                <div class="switch panel-switch-btn">
+                                    <span class="m-r-10 font-12">REAL TIME</span>
+                                    <label>OFF<input type="checkbox" id="realtime" checked><span class="lever switch-col-cyan"></span>ON</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="body">
+                        <div id="real_time_chart" class="dashboard-flot-chart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row clearfix">
+            <!-- Visitors -->
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="card">
+                    <div class="body bg-pink">
+                        <div class="sparkline" data-type="line" data-spot-Radius="4" data-highlight-Spot-Color="rgb(233, 30, 99)" data-highlight-Line-Color="#fff"
+                             data-min-Spot-Color="rgb(255,255,255)" data-max-Spot-Color="rgb(255,255,255)" data-spot-Color="rgb(255,255,255)"
+                             data-offset="90" data-width="100%" data-height="92px" data-line-Width="2" data-line-Color="rgba(255,255,255,0.7)"
+                             data-fill-Color="rgba(0, 188, 212, 0)">
+                            12,10,9,6,5,6,10,5,7,5,12,13,7,12,11
+                        </div>
+                        <ul class="dashboard-stat-list">
+                            <li>
+                                TODAY
+                                <span class="pull-right"><b>1 200</b> <small>USERS</small></span>
+                            </li>
+                            <li>
+                                YESTERDAY
+                                <span class="pull-right"><b>3 872</b> <small>USERS</small></span>
+                            </li>
+                            <li>
+                                LAST WEEK
+                                <span class="pull-right"><b>26 582</b> <small>USERS</small></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Visitors -->
+            <!-- Latest Social Trends -->
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="card">
+                    <div class="body bg-cyan">
+                        <div class="m-b--35 font-bold">POPULAR USER INPUTS</div>
+                        <ul class="dashboard-stat-list">
+                            <li>
+                                Hi
+                                <span class="pull-right">
+                                    <i class="material-icons">trending_up</i>
+                                </span>
+                            </li>
+                            <li>
+                                Hello 
+                                <span class="pull-right">
+                                    <i class="material-icons">trending_up</i>
+                                </span>
+                            </li>
+                            <li>How are you?</li>
+                            <li>Sup</li>
+                            <li>Lol</li>
+                            <li>
+                                Hello bot
+                                <span class="pull-right">
+                                    <i class="material-icons">trending_up</i>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Latest Social Trends -->
+            <!-- Answered Tickets -->
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="card">
+                    <div class="body bg-teal">
+                        <div class="font-bold m-b--35">User Activity</div>
+                        <ul class="dashboard-stat-list">
+                            <li>
+                                TODAY
+                                <span class="pull-right"><b>12</b> <small>Conversation</small></span>
+                            </li>
+                            <li>
+                                YESTERDAY
+                                <span class="pull-right"><b>15</b> <small>Conversation</small></span>
+                            </li>
+                            <li>
+                                LAST WEEK
+                                <span class="pull-right"><b>90</b> <small>Conversation</small></span>
+                            </li>
+                            <li>
+                                LAST MONTH
+                                <span class="pull-right"><b>342</b> <small>Conversation</small></span>
+                            </li>
+                            <li>
+                                LAST YEAR
+                                <span class="pull-right"><b>4 225</b> <small>Conversation</small></span>
+                            </li>
+                            <li>
+                                ALL
+                                <span class="pull-right"><b>8 752</b> <small>Conversation</small></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Answered Tickets -->
+        </div>
 
-  // Brand options
-  1. '.brand-minimized'       - Minimized brand (Only symbol)
+        <div class="row clearfix">
+            <!-- Task Info -->
+          
+            <!-- #END# Task Info -->
+            <!-- Browser Usage -->
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="card">
+                    <div class="header">
+                        <h2>Users age</h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                    <li><a href="javascript:void(0);">Another action</a></li>
+                                    <li><a href="javascript:void(0);">Something else here</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div id="donut_chart" class="dashboard-donut-chart"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Browser Usage -->
+        </div>
+    </div>
 
-  // Sidebar options
-  1. '.sidebar-fixed'					- Fixed Sidebar
-  2. '.sidebar-hidden'				- Hidden Sidebar
-  3. '.sidebar-off-canvas'		- Off Canvas Sidebar
-  4. '.sidebar-minimized'			- Minimized Sidebar (Only icons)
-  5. '.sidebar-compact'			  - Compact Sidebar
+</section>
 
-  // Aside options
-  1. '.aside-menu-fixed'			- Fixed Aside Menu
-  2. '.aside-menu-hidden'			- Hidden Aside Menu
-  3. '.aside-menu-off-canvas'	- Off Canvas Aside Menu
 
-  // Breadcrumb options
-  1. '.breadcrumb-fixed'			- Fixed Breadcrumb
-
-  // Footer options
-  1. '.footer-fixed'					- Fixed footer
-
-  -->
-
-  <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start`.
-      To create a production bundle, use `npm run build`.
-    -->
-  </body>
-  <script src="build/index.bundle.js"></script>
-
-</html>
+<%- include partial/footer.ejs %>
