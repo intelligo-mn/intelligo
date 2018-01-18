@@ -39,5 +39,14 @@ app.set('port', process.env.PORT || 5000);
 app.listen(app.get('port'), function() {
   console.log('Server is running on port', app.get('port'));
 });
+```
 
+## Contributors
 
+You may contribute in several ways like creating new features, fixing bugs, improving documentation and examples
+or translating any document here to your language. [Find more information in CONTRIBUTING.md](CONTRIBUTING.md).
+<a href="https://github.com/techstar-cloud/techstar-uptime/graphs/contributors">Contributors</a>
+
+## License
+
+[MIT](LICENSE).
