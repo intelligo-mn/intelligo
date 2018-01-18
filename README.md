@@ -45,7 +45,7 @@ app.listen(app.get('port'), function() {
 
 You may contribute in several ways like creating new features, fixing bugs, improving documentation and examples
 or translating any document here to your language. [Find more information in CONTRIBUTING.md](CONTRIBUTING.md).
-<a href="https://github.com/techstar-cloud/techstar-uptime/graphs/contributors">Contributors</a>
+<a href="https://github.com/techstar-cloud/intelligo/graphs/contributors">Contributors</a>
 
 ## License
 
