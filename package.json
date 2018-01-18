@@ -51,7 +51,7 @@
     "slug": "^0.9.1",
     "socket.io": "^2.0.4",
     "techstar-ai": "^1.0.0",
-    "techstar-uptime": "^1.0.5"
+    "techstar-uptime": "1.1.0"
   },
   "devDependencies": {
     "babel-core": "6.26.0",

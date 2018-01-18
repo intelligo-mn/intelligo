@@ -70,12 +70,13 @@ app.use(require('express-status-monitor')({
   }
 ));
 
-app.use(require('techstar-uptime')({
-    url: 'https://www.techstar.cloud', // URL of service we'll be pining
-    timeout: 20, // threshold in milliseconds above which is considered degraded performance
-    SLACK_WEBHOOK_URL: SLACK_WEBHOOK_URL
-  }
-));
+// app.use(require('techstar-uptime')({
+  
+//     url: 'https://www.techstar.cloud', // URL of service we'll be pining
+//     timeout: 200, // threshold in milliseconds above which is considered degraded performance
+//     SLACK_WEBHOOK_URL: SLACK_WEBHOOK_URL
+//   }
+// ));
 
 app.set("views", path.join(__dirname, "views"));
 app.set('view engine', 'ejs');
