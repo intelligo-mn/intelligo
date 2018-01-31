@@ -39,7 +39,7 @@ app.use(session({
 app.use(flash());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));     
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public/build")));
 app.use(require('express-status-monitor')({
     title: 'Techstar Cloud Status',  
     path: '/status',

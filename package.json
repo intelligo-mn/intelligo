@@ -6,7 +6,7 @@
   "homepage": "https://www.techstar.cloud",
   "copyright": "Copyright 2018 Techstar, Inc.",
   "license": "MIT",
-  "main": "index.js",
+  "main": "node server/bin/www",
   "private": true,
   "repository": {
     "type": "git",
@@ -81,7 +81,7 @@
     "dev": "webpack -d --progress --watch --profile --json > compilation-stats.json --env.dev",
     "start": "webpack-dev-server --progress --colors --inline --env.dev",
     "build": "webpack -p --progress --env.prod",
-    "clean": "rimraf ./console/build"
+    "clean": "rimraf ./console/public/build"
   },
   "cacheDirectories": [
     "node_modules"

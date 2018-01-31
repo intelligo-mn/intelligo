@@ -12,7 +12,7 @@ var console = require("../console/app");
 var url     = require("../shorter/app");
 var errors  = require("../errors/app");
 var analytic  = require("../analytic/app");
-var uptime  = require("../uptime/app");
+var uptime  = require("./uptime/app");
 
 app.use("/", console);
 app.use("/bot", bot);

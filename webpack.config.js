@@ -77,7 +77,7 @@ module.exports = (env = {}) => {
               // loader: 'url-loader'
               loader: 'file-loader',
               options: {
-                name: './console/img/[name].[hash].[ext]'
+                name: './img/[name].[hash].[ext]'
               }
             }
           ]
@@ -86,7 +86,7 @@ module.exports = (env = {}) => {
           test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
           loader: 'file-loader',
           options: {
-            name: './console/fonts/[name].[hash].[ext]'
+            name: './fonts/[name].[hash].[ext]'
           }
         }]
     },

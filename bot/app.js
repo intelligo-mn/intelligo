@@ -16,5 +16,4 @@ bot.initWebhook();
 bot.learn('training_data.json');
 bot.setGreeting("Hi I am Techstar AI Bot")
 
-
 module.exports = app;
