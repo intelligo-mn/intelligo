@@ -77,7 +77,7 @@
     "webpack-dev-server": "2.9.4"
   },
   "scripts": {
-    "server": "node server/bin/www",
+    "server": "node techstar-server/bin/www",
     "dev": "webpack -d --progress --watch --profile --json > compilation-stats.json --env.dev",
     "start": "webpack-dev-server --progress --colors --inline --env.dev",
     "build": "webpack -p --progress --env.prod",
