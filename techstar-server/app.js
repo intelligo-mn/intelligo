@@ -15,11 +15,13 @@ var analytic  = require("../techstar-analytic/app");
 var uptime  = require("./uptime/app");
 
 app.use("/", console);
-app.use("/bot", bot);
 app.use("/api", api);
 app.use("/url", url);
 app.use("/analytic", analytic);
 app.use("/uptime", uptime);
+setTimeout(function() {
+    app.use("/bot", bot);
+}, 5000);
 app.use(errors);
 
 module.exports = app;
