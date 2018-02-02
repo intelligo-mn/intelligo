@@ -1,14 +1,21 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+
+const Data = require('../../techstar-console/models/Data');
 
 // Basic Route Demos
 // -----------------
 
-router.get('/', function(req, res, next) {
-  res.json({
-    foo: "bar",
-    baz: "quux"
-  });
+router.get('/data', function(req, res, next) {
+  Data.find({}, { _id : 0, input : 1, output : 1 }, function(err, datas){
+      if (err) {
+        res.status(404);
+        res.send('Datas not found!');
+      }
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(datas, null, " "));
+    });
 });
 
 router.get("/err", function(req, res, next){

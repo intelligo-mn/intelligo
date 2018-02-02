@@ -14,10 +14,9 @@ module.exports = {
         user : req.user,
         success: req.flash('success')
       });
-      res.send(datas);
     });
   },
-  
+
   retDatas(req, res) {
     return Data.find({}, (err, datas) => {
       if (err) {

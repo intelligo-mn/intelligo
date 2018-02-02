@@ -1,5 +1,4 @@
 const mainController   = require('../app/MainController'),
-      api   = require('../api/data'),
       dataController   = require('../app/DataController');
       
 function isLoggedIn(req, res, next) {
@@ -10,8 +9,6 @@ function isLoggedIn(req, res, next) {
 
 module.exports = function(app, passport) {
     
-    app.get('/api', api.showDatas);
-	
     app.get('/', mainController.showHome);
 	
     app.get('/console', isLoggedIn, mainController.showDashboard);
@@ -54,6 +51,4 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/login');
     });
-    
-    
 };
