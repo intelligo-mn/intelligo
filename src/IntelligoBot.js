@@ -11,11 +11,11 @@ const express = require( 'express'),
 class IntelligoBot extends EventEmitter{
   constructor(options) {
     super();
-    if (!options || (options && (!options.ACCESS_TOKEN || !options.VERIFY_TOKEN || !options.APP_SECRET))) {
-      throw new Error("You need to specify an ACCESS_TOKEN, VERIFY_TOKEN and APP_SECRET");
+    if (!options || (options && (!options.PAGE_ACCESS_TOKEN || !options.VALIDATION_TOKEN || !options.APP_SECRET))) {
+      throw new Error("You need to specify an PAGE_ACCESS_TOKEN, VALIDATION_TOKEN and APP_SECRET");
     }
-    this.ACCESS_TOKEN = options.ACCESS_TOKEN;
-    this.VERIFY_TOKEN = options.VERIFY_TOKEN;
+    this.PAGE_ACCESS_TOKEN = options.PAGE_ACCESS_TOKEN;
+    this.VALIDATION_TOKEN = options.VALIDATION_TOKEN;
     this.APP_SECRET = options.APP_SECRET;
     this.api = options.api;
     this.app = options.app || express();
@@ -28,7 +28,7 @@ class IntelligoBot extends EventEmitter{
   initWebhook() {
     this.app.get(this.webhook, (req, res) => {
       if (req.query['hub.mode'] === 'subscribe' &&
-          req.query['hub.verify_token'] === this.VERIFY_TOKEN) {
+          req.query['hub.VALIDATION_TOKEN'] === this.VALIDATION_TOKEN) {
         console.log("Validating webhook");
         res.status(200).send(req.query['hub.challenge']);
       } else {
@@ -133,7 +133,7 @@ class IntelligoBot extends EventEmitter{
   setGreeting(text){
     request({
       url: 'https://graph.facebook.com/v2.9/me/thread_settings',
-      qs: {access_token: this.ACCESS_TOKEN},
+      qs: {PAGE_ACCESS_TOKEN: this.PAGE_ACCESS_TOKEN},
       method: 'POST',
       json: {
         "setting_type":"greeting",
@@ -283,7 +283,7 @@ class IntelligoBot extends EventEmitter{
   callSendAPI(messageData) {
     request({
       uri: 'https://graph.facebook.com/v2.9/me/messages',
-      qs: { access_token: this.ACCESS_TOKEN },
+      qs: { PAGE_ACCESS_TOKEN: this.PAGE_ACCESS_TOKEN },
       method: 'POST',
       json: messageData
   
@@ -308,7 +308,7 @@ class IntelligoBot extends EventEmitter{
   sendWelcome(recipientId) {
     request({
         url: 'https://graph.facebook.com/v2.8/' + recipientId 
-          + '?access_token=' + this.ACCESS_TOKEN
+          + '?PAGE_ACCESS_TOKEN=' + this.PAGE_ACCESS_TOKEN
       },
       function (error, response, body) {
         if (error || response.statusCode != 200) return;
