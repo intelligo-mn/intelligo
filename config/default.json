@@ -6,5 +6,5 @@
     "SECRET": "my-super-secret",
     "DB_URI": "mongodb://toroo:toroo@ds117136.mlab.com:17136/techstar-bot",
     "SLACK_WEBHOOK_URL": "https://hooks.slack.com/services/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",
-    "api": "https://techstar-bot-tortuvshin.c9users.io/api/data"
+    "api": "https://techstar.cloud/api/data"
 }
