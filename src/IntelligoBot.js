@@ -11,12 +11,12 @@ const express = require( 'express'),
 class IntelligoBot extends EventEmitter{
   constructor(options) {
     super();
-    if (!options || (options && (!options.accessToken || !options.verifyToken || !options.appSecret))) {
-      throw new Error("You need to specify an accessToken, verifyToken and appSecret");
+    if (!options || (options && (!options.ACCESS_TOKEN || !options.VERIFY_TOKEN || !options.APP_SECRET))) {
+      throw new Error("You need to specify an ACCESS_TOKEN, VERIFY_TOKEN and APP_SECRET");
     }
-    this.accessToken = options.accessToken;
-    this.verifyToken = options.verifyToken;
-    this.appSecret = options.appSecret;
+    this.ACCESS_TOKEN = options.ACCESS_TOKEN;
+    this.VERIFY_TOKEN = options.VERIFY_TOKEN;
+    this.APP_SECRET = options.APP_SECRET;
     this.api = options.api;
     this.app = options.app || express();
     this.webhook = options.webhook || '/webhook';
@@ -28,7 +28,7 @@ class IntelligoBot extends EventEmitter{
   initWebhook() {
     this.app.get(this.webhook, (req, res) => {
       if (req.query['hub.mode'] === 'subscribe' &&
-          req.query['hub.verify_token'] === this.verifyToken) {
+          req.query['hub.verify_token'] === this.VERIFY_TOKEN) {
         console.log("Validating webhook");
         res.status(200).send(req.query['hub.challenge']);
       } else {
@@ -120,7 +120,7 @@ class IntelligoBot extends EventEmitter{
       var method = elements[0];
       var signatureHash = elements[1];
   
-      var expectedHash = crypto.createHmac('sha1', this.appSecret)
+      var expectedHash = crypto.createHmac('sha1', this.APP_SECRET)
                           .update(buf)
                           .digest('hex');
   
@@ -133,7 +133,7 @@ class IntelligoBot extends EventEmitter{
   setGreeting(text){
     request({
       url: 'https://graph.facebook.com/v2.9/me/thread_settings',
-      qs: {access_token: this.accessToken},
+      qs: {access_token: this.ACCESS_TOKEN},
       method: 'POST',
       json: {
         "setting_type":"greeting",
@@ -283,7 +283,7 @@ class IntelligoBot extends EventEmitter{
   callSendAPI(messageData) {
     request({
       uri: 'https://graph.facebook.com/v2.9/me/messages',
-      qs: { access_token: this.accessToken },
+      qs: { access_token: this.ACCESS_TOKEN },
       method: 'POST',
       json: messageData
   
@@ -308,7 +308,7 @@ class IntelligoBot extends EventEmitter{
   sendWelcome(recipientId) {
     request({
         url: 'https://graph.facebook.com/v2.8/' + recipientId 
-          + '?access_token=' + this.accessToken
+          + '?access_token=' + this.ACCESS_TOKEN
       },
       function (error, response, body) {
         if (error || response.statusCode != 200) return;
