@@ -17,6 +17,7 @@ class IntelligoBot extends EventEmitter{
     this.accessToken = options.accessToken;
     this.verifyToken = options.verifyToken;
     this.appSecret = options.appSecret;
+    this.api = options.api;
     this.app = options.app || express();
     this.webhook = options.webhook || '/webhook';
     this.webhook = this.webhook.charAt(0) !== '/' ? `/${this.webhook}` : this.webhook;
@@ -96,6 +97,8 @@ class IntelligoBot extends EventEmitter{
         this.sendTextMessage(senderID, this.updateJSON());
       else if (this.textMatches(messageText, "get started")) 
         this.sendWelcome(senderID);
+      else if (this.textMatches(messageText, "learn")) 
+        this.learnRequest();
       else if (this.textMatches(messageText, "help")) 
         this.sendHelp(senderID);
       else if(result == null || result == '')
@@ -225,6 +228,35 @@ class IntelligoBot extends EventEmitter{
     
     this.techstarClassifier.trainBatch(JSON.parse(fs.readFileSync(json, 'utf8')));
     console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");  
+  }
+  
+  learnRequest(){
+    request(this.api, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        
+        console.log("AI суралцаж эхэллээ...");
+        var startedTime = new Date().getTime();
+        // Repeat multiple levels
+        var TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
+        	binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
+        });
+        
+        // Unblock the words in the sentence with spaces and create attributes
+        var WordExtractor = function(input, features) {
+        	input.split(" ").forEach(function(word) {
+        		features[word]=1;
+        	});
+        };
+        
+        this.techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
+        	classifierType: TextClassifier,
+        	featureExtractor: WordExtractor
+        });
+        
+        this.techstarClassifier.trainBatch(JSON.parse(body));
+        console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");  
+      }
+    })  
   }
   
   answer (question) {
