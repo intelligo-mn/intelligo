@@ -15,6 +15,6 @@ const bot = new TechstarBot({
 });
 bot.initWebhook();
 
-bot.setGreeting("Hi I am Techstar AI Bot")
+bot.setGreeting("Hi I am Techstar AI Bot Test")
 
 module.exports = app;
