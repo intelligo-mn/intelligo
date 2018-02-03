@@ -97,8 +97,6 @@ class IntelligoBot extends EventEmitter{
         this.sendTextMessage(senderID, this.updateJSON());
       else if (this.textMatches(messageText, "get started")) 
         this.sendWelcome(senderID);
-      else if (this.textMatches(messageText, "learn")) 
-        this.learnRequest(senderID);
       else if (this.textMatches(messageText, "help")) 
         this.sendHelp(senderID);
       else if(result == null || result == '')
@@ -230,13 +228,12 @@ class IntelligoBot extends EventEmitter{
     console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");  
   }
   
-  learnRequest(recipientId){
-    request(this.api, function (error, response, body) {
+  learnRequest(url){
+    request(url, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         
         console.log("AI суралцаж эхэллээ...");
         
-        this.sendTextMessage(recipientId, "AI суралцаж эхэллээ...");
         var startedTime = new Date().getTime();
         // Repeat multiple levels
         var TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
@@ -257,7 +254,6 @@ class IntelligoBot extends EventEmitter{
         
         this.techstarClassifier.trainBatch(JSON.parse(body));
         console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");  
-        this.sendTextMessage(recipientId, "AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
       }
     })  
   }
