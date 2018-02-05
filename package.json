@@ -1,6 +1,6 @@
 {
   "name": "intelligo",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Intelligo AI ChatBot Framework",
   "main": "index.js",
   "repository": {

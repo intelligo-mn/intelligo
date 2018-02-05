@@ -28,7 +28,7 @@ class IntelligoBot extends EventEmitter{
   initWebhook() {
     this.app.get(this.webhook, (req, res) => {
       if (req.query['hub.mode'] === 'subscribe' &&
-          req.query['hub.VALIDATION_TOKEN'] === this.VALIDATION_TOKEN) {
+          req.query['hub.verify_token'] === this.VALIDATION_TOKEN) {
         console.log("Validating webhook");
         res.status(200).send(req.query['hub.challenge']);
       } else {
@@ -131,7 +131,7 @@ class IntelligoBot extends EventEmitter{
   setGreeting(text){
     request({
       url: 'https://graph.facebook.com/v2.9/me/thread_settings',
-      qs: {PAGE_ACCESS_TOKEN: this.PAGE_ACCESS_TOKEN},
+      qs: {access_token: this.PAGE_ACCESS_TOKEN},
       method: 'POST',
       json: {
         "setting_type":"greeting",
@@ -282,7 +282,7 @@ class IntelligoBot extends EventEmitter{
   callSendAPI(messageData) {
     request({
       uri: 'https://graph.facebook.com/v2.9/me/messages',
-      qs: { PAGE_ACCESS_TOKEN: this.PAGE_ACCESS_TOKEN },
+      qs: { access_token: this.PAGE_ACCESS_TOKEN },
       method: 'POST',
       json: messageData
   
@@ -307,7 +307,7 @@ class IntelligoBot extends EventEmitter{
   sendWelcome(recipientId) {
     request({
         url: 'https://graph.facebook.com/v2.8/' + recipientId 
-          + '?PAGE_ACCESS_TOKEN=' + this.PAGE_ACCESS_TOKEN
+          + '?access_token=' + this.PAGE_ACCESS_TOKEN
       },
       function (error, response, body) {
         if (error || response.statusCode != 200) return;
