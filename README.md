@@ -22,16 +22,14 @@ npm install intelligo --save
 'use strict';
 
 const express = require('express'),
-      Intelligo = require('intelligo'),
-      config = require( 'config'),
-      request = require( 'request');
+      Intelligo = require('intelligo');
       
 const app = express();
 
 const bot = new Intelligo({
-  accessToken: config.get('pageAccessToken'),
-  verifyToken: config.get('validationToken'),
-  appSecret: config.get('appSecret'),
+  PAGE_ACCESS_TOKEN: 'PAGE_ACCESS_TOKEN',
+  VALIDATION_TOKEN: 'VALIDATION_TOKEN',
+  APP_SECRET: 'appSecret',
   app: app
 });
 
