@@ -1,14 +1,28 @@
 {
   "name": "intelligo",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Intelligo AI ChatBot Framework",
   "main": "index.js",
+  "author": "Turtuvshin Byambaa",
+  "homepage": "https://www.techstar.cloud",
+  "copyright": "Copyright 2018 Techstar, Inc.",
   "repository": {
     "type": "git",
     "url": "https://github.com/techstar-cloud/intelligo.git"
   },
-  "author": "Tortuvshin Byambaa",
   "license": "MIT",
+  "keywords": [
+    "bot",
+    "ai",
+    "chatbot",
+    "messenger-bot",
+    "chat",
+    "messenger",
+    "facebook",
+    "framework",
+    "builder",
+    "conversation"
+  ],
   "dependencies": {
     "body-parser": "^1.15.2",
     "config": "^1.24.0",
