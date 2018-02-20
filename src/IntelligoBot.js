@@ -25,6 +25,124 @@ class IntelligoBot extends EventEmitter{
     this.techstarClassifier;
   }
   
+  //to find clarification and search for user search data
+  askMore(senderID, messageText){
+    var similarWords = this.findSimilarKeyword(messageText);
+    if(similarWords.length != 0){
+      this.sendTextMessage(senderID, "Дараах түлхүүр үгүүдээс сонгоно уу");
+      this.sendTextMessage(senderID, similarWords);
+      // askSimilarOptions(senderID, similarWords);
+    }
+    else
+      this.sendTextMessage(senderID, "Таны хайсан өгөгдөл олдсонгүй!");
+  }
+  
+  //find similar questions when searching for a findable data
+  findSimilarKeyword(keyword){
+    //Send neighboring words to arrays as an option
+    var similarQuestions = new Array();
+    var sum = "";
+    
+    var json = JSON.parse(fs.readFileSync("./data/training_data.json", "utf8"));
+    json.forEach(function(data){
+      var words = data.input.split(" ");
+      //Start a given keyword or locate neighbor words
+      if(words.indexOf(keyword) != -1){
+        var index = words.indexOf(keyword);
+        //to get the word neighbor with the word
+        var neighborWord = index == words.length ? words[index-1]+" "+keyword : keyword+" "+words[index+1];
+        //the word has not been registered before
+        if(sum.indexOf(neighborWord)==-1)
+          sum+= sum=="" ? neighborWord : ","+neighborWord;
+        similarQuestions.push({"content_type":"text","title":neighborWord});
+      }
+    });
+    return sum;
+  }
+  //ask questions from similar words
+  askSimilarOptions(recipientId, words){
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        text: "Since your search is too general, select from the following options",
+        quick_replies: words
+      }
+    };
+  
+    this.callSendAPI(messageData);
+  }
+  
+  //clear more characters
+  cleanJSON(json){
+    for(var i=0; i<json.length; i++){
+      json[i].input = json[i].input.replace("/[\?\,\:]/", "");
+    }
+  }
+  
+  learn (json){
+    console.log("AI суралцаж эхэллээ...");
+    var startedTime = new Date().getTime();
+    // Repeat multiple levels
+    var TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
+    	binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
+    });
+    
+    // Unblock the words in the sentence with spaces and create attributes
+    var WordExtractor = function(input, features) {
+    	input.split(" ").forEach(function(word) {
+    		features[word]=1;
+    	});
+    };
+    
+    this.techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
+    	classifierType: TextClassifier,
+    	featureExtractor: WordExtractor
+    });
+    
+    this.techstarClassifier.trainBatch(JSON.parse(fs.readFileSync(json, 'utf8')));
+    console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");  
+  }
+  
+  learnRequest(url){
+    request(url, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        
+        console.log("AI суралцаж эхэллээ...");
+        
+        var startedTime = new Date().getTime();
+        // Repeat multiple levels
+        var TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
+        	binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
+        });
+        
+        // Unblock the words in the sentence with spaces and create attributes
+        var WordExtractor = function(input, features) {
+        	input.split(" ").forEach(function(word) {
+        		features[word]=1;
+        	});
+        };
+        
+        this.techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
+        	classifierType: TextClassifier,
+        	featureExtractor: WordExtractor
+        });
+        
+        this.techstarClassifier.trainBatch(JSON.parse(body));
+        console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");  
+      }
+    })  
+  }
+  
+  answer (question) {
+    var startedTime = new Date().getTime();
+    console.log("AI хариултыг хайж байна...");
+    var result =  this.techstarClassifier.classify(question);
+    console.log("AI хариултыг оллоо.  \n " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
+    return result;
+  }
+  
   initWebhook() {
     this.app.get(this.webhook, (req, res) => {
       if (req.query['hub.mode'] === 'subscribe' &&
@@ -148,123 +266,6 @@ class IntelligoBot extends EventEmitter{
     });
   
   }
-  //to find clarification and search for user search data
-  askMore(senderID, messageText){
-    var similarWords = this.findSimilarKeyword(messageText);
-    if(similarWords.length != 0){
-      this.sendTextMessage(senderID, "Дараах түлхүүр үгүүдээс сонгоно уу");
-      this.sendTextMessage(senderID, similarWords);
-      // askSimilarOptions(senderID, similarWords);
-    }
-    else
-      this.sendTextMessage(senderID, "Таны хайсан өгөгдөл олдсонгүй!");
-  }
-  
-  //find similar questions when searching for a findable data
-  findSimilarKeyword(keyword){
-    //Send neighboring words to arrays as an option
-    var similarQuestions = new Array();
-    var sum = "";
-    
-    var json = JSON.parse(fs.readFileSync("./data/training_data.json", "utf8"));
-    json.forEach(function(data){
-      var words = data.input.split(" ");
-      //Start a given keyword or locate neighbor words
-      if(words.indexOf(keyword) != -1){
-        var index = words.indexOf(keyword);
-        //to get the word neighbor with the word
-        var neighborWord = index == words.length ? words[index-1]+" "+keyword : keyword+" "+words[index+1];
-        //the word has not been registered before
-        if(sum.indexOf(neighborWord)==-1)
-          sum+= sum=="" ? neighborWord : ","+neighborWord;
-        similarQuestions.push({"content_type":"text","title":neighborWord});
-      }
-    });
-    return sum;
-  }
-  //ask questions from similar words
-  askSimilarOptions(recipientId, words){
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        text: "Since your search is too general, select from the following options",
-        quick_replies: words
-      }
-    };
-  
-    this.callSendAPI(messageData);
-  }
-  
-  //clear more characters
-  cleanJSON(json){
-    for(var i=0; i<json.length; i++){
-      json[i].input = json[i].input.replace("/[\?\,\:]/", "");
-    }
-  }
-  
-  learn (json){
-    console.log("AI суралцаж эхэллээ...");
-    var startedTime = new Date().getTime();
-    // Repeat multiple levels
-    var TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
-    	binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
-    });
-    
-    // Unblock the words in the sentence with spaces and create attributes
-    var WordExtractor = function(input, features) {
-    	input.split(" ").forEach(function(word) {
-    		features[word]=1;
-    	});
-    };
-    
-    this.techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
-    	classifierType: TextClassifier,
-    	featureExtractor: WordExtractor
-    });
-    
-    this.techstarClassifier.trainBatch(JSON.parse(fs.readFileSync(json, 'utf8')));
-    console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");  
-  }
-  
-  learnRequest(url){
-    request(url, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        
-        console.log("AI суралцаж эхэллээ...");
-        
-        var startedTime = new Date().getTime();
-        // Repeat multiple levels
-        var TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
-        	binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
-        });
-        
-        // Unblock the words in the sentence with spaces and create attributes
-        var WordExtractor = function(input, features) {
-        	input.split(" ").forEach(function(word) {
-        		features[word]=1;
-        	});
-        };
-        
-        this.techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
-        	classifierType: TextClassifier,
-        	featureExtractor: WordExtractor
-        });
-        
-        this.techstarClassifier.trainBatch(JSON.parse(body));
-        console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");  
-      }
-    })  
-  }
-  
-  answer (question) {
-    var startedTime = new Date().getTime();
-    console.log("AI хариултыг хайж байна...");
-    var result =  this.techstarClassifier.classify(question);
-    console.log("AI хариултыг оллоо.  \n " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
-    return result;
-  }
   
   sendTextMessage(recipientId, messageText) {
     var messageData = {
@@ -273,6 +274,96 @@ class IntelligoBot extends EventEmitter{
       },
       message: {
         text: messageText
+      }
+    };
+  
+    this.callSendAPI(messageData);
+  }
+  
+  sendImageMessage(recipientId, imageUrl) {
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        attachment: {
+          type: "image",
+          payload: {
+            url:  imageUrl
+          }
+        }
+      }
+    };
+  
+    this.callSendAPI(messageData);
+  }
+  
+  sendGifMessage(recipientId, gifUrl) {
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        attachment: {
+          type: "image",
+          payload: {
+            url: gifUrl
+          }
+        }
+      }
+    };
+  
+    this.callSendAPI(messageData);
+  }
+  
+  sendAudioMessage(recipientId, audioUrl) {
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        attachment: {
+          type: "audio",
+          payload: {
+            url: audioUrl
+          }
+        }
+      }
+    };
+  
+    this.callSendAPI(messageData);
+  }
+  
+  sendVideoMessage(recipientId, videoUrl) {
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        attachment: {
+          type: "video",
+          payload: {
+            url: videoUrl
+          }
+        }
+      }
+    };
+  
+    this.callSendAPI(messageData);
+  }
+  
+  sendFileMessage(recipientId, fileUrl) {
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        attachment: {
+          type: "file",
+          payload: {
+            url: fileUrl
+          }
+        }
       }
     };
   
