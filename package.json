@@ -1,6 +1,6 @@
 {
   "name": "intelligo",
-  "version": "0.2.5",
+  "version": "0.2.9",
   "description": "Intelligo AI ChatBot Framework",
   "main": "index.js",
   "author": "Turtuvshin Byambaa",
@@ -21,7 +21,18 @@
     "facebook",
     "framework",
     "builder",
-    "conversation"
+    "conversation",
+    "techstar",
+    "ai-bot",
+    "intelligo",
+    "intelligence",
+    "artificial-intelligence", 
+    "neural network", 
+    "classifier", 
+    "neural", 
+    "network", 
+    "neural-networks", 
+    "machine-learning"
   ],
   "dependencies": {
     "body-parser": "^1.15.2",
