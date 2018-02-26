@@ -26,11 +26,10 @@ const bot = new TechstarBot({
   PAGE_ACCESS_TOKEN: PAGE_ACCESS_TOKEN,
   VALIDATION_TOKEN: VALIDATION_TOKEN,
   APP_SECRET: APP_SECRET,
-  api: api,
   app: app
 });
 bot.initWebhook();
-bot.learnRequest(api);
-bot.setGreeting("Hi I am Techstar AI Bot Test")
+bot.learnRequest("https://techstar.cloud/api/data");
+bot.setGreeting("Hi I am Techstar AI Bot")
 
 module.exports = app;
