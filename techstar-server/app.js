@@ -13,6 +13,7 @@ var console = require("../techstar-console/app");
 var errors  = require("../techstar-handler/app");
 var analytic  = require("../techstar-analytic/app");
 var uptime  = require("./uptime");
+var markdown  = require("../techstar-markdown/app");
 
 app.use("/", console);
 app.use("/api", api);
@@ -20,6 +21,7 @@ app.use("/api", api);
 app.use("/analytic", analytic);
 app.use("/uptime", uptime);
 app.use("/bot", bot);
+app.use("/markdown", markdown);
 app.use(errors);
 
 module.exports = app;
