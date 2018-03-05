@@ -29,28 +29,56 @@ class IntelligoBot extends EventEmitter{
   	return this._techstarClassifier;
   }
   
+  set techstarClassifier(value){
+  	this._techstarClassifier = value;
+  }
+  
   get webhook(){
   	return this._webhook;
+  }
+  
+  set webhook(value){
+  	this._webhook = value;
   }
   
   get app(){
   	return this._app;
   }
   
+  set app(value){
+  	this._app = value;
+  }
+  
   get api(){
   	return this._api;
+  }
+  
+  set api(value){
+  	this._api = value;
   }
   
   get APP_SECRET(){
   	return this._APP_SECRET;
   }
   
+  set APP_SECRET(value){
+  	this._APP_SECRET = value;
+  }
+  
   get VALIDATION_TOKEN(){
   	return this._VALIDATION_TOKEN;
   }
   
+  set VALIDATION_TOKEN(value){
+  	this._VALIDATION_TOKEN = value;
+  }
+  
   get PAGE_ACCESS_TOKEN(){
   	return this._PAGE_ACCESS_TOKEN;
+  }
+  
+  set PAGE_ACCESS_TOKEN(value){
+  	this._PAGE_ACCESS_TOKEN = value;
   }
   
   //to find clarification and search for user search data
