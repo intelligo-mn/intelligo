@@ -14,15 +14,43 @@ class IntelligoBot extends EventEmitter{
     if (!options || (options && (!options.PAGE_ACCESS_TOKEN || !options.VALIDATION_TOKEN || !options.APP_SECRET))) {
       throw new Error("You need to specify an PAGE_ACCESS_TOKEN, VALIDATION_TOKEN and APP_SECRET");
     }
-    this.PAGE_ACCESS_TOKEN = options.PAGE_ACCESS_TOKEN;
-    this.VALIDATION_TOKEN = options.VALIDATION_TOKEN;
-    this.APP_SECRET = options.APP_SECRET;
-    this.api = options.api;
-    this.app = options.app || express();
-    this.webhook = options.webhook || '/webhook';
-    this.webhook = this.webhook.charAt(0) !== '/' ? `/${this.webhook}` : this.webhook;
+    this._PAGE_ACCESS_TOKEN = options.PAGE_ACCESS_TOKEN;
+    this._VALIDATION_TOKEN = options.VALIDATION_TOKEN;
+    this._APP_SECRET = options.APP_SECRET;
+    this._api = options.api;
+    this._app = options.app || express();
+    this._webhook = options.webhook || '/webhook';
+    this._webhook = this._webhook.charAt(0) !== '/' ? `/${this._webhook}` : this._webhook;
     this.app.use(bodyParser.json({ verify: this.verifyRequestSignature.bind(this) }));
-    this.techstarClassifier;
+    this._techstarClassifier;
+  }
+  
+  get techstarClassifier(){
+  	return this._techstarClassifier;
+  }
+  
+  get webhook(){
+  	return this._webhook;
+  }
+  
+  get app(){
+  	return this._app;
+  }
+  
+  get api(){
+  	return this._api;
+  }
+  
+  get APP_SECRET(){
+  	return this._APP_SECRET;
+  }
+  
+  get VALIDATION_TOKEN(){
+  	return this._VALIDATION_TOKEN;
+  }
+  
+  get PAGE_ACCESS_TOKEN(){
+  	return this._PAGE_ACCESS_TOKEN;
   }
   
   //to find clarification and search for user search data
