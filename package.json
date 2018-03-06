@@ -14,12 +14,12 @@
   "keywords": [
     "ai",
     "ai-bot",
-    "artificial-intelligence", 
+    "artificial-intelligence",
     "bot",
     "builder",
     "chat",
     "chatbot",
-    "classifier", 
+    "classifier",
     "conversation",
     "messenger-bot",
     "messenger",
@@ -28,10 +28,10 @@
     "techstar",
     "intelligo",
     "intelligence",
-    "neural network", 
-    "neural", 
-    "network", 
-    "neural-networks", 
+    "neural network",
+    "neural",
+    "network",
+    "neural-networks",
     "machine-learning"
   ],
   "dependencies": {
@@ -41,5 +41,8 @@
     "eventemitter3": "^1.2.0",
     "techstar-ai": "^1.0.6",
     "request": "^2.79.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.2"
   }
 }
