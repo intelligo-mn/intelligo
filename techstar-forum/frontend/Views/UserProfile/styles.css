@@ -1,0 +1,20 @@
+@value largeBP from 'SharedStyles/globalStyles';
+
+.container {
+  margin-top: 20px;
+  display: flex;
+  @media largeBP { flex-flow: row nowrap; }
+}
+
+.loadingMsg {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.errorMsg {
+  margin-top: 20px;
+  color: rgba(231, 76, 60,1.0);
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}

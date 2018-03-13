@@ -1,0 +1,84 @@
+@value primaryFontColor, secondaryFontColor, borderColor, backShade from 'SharedStyles/globalStyles';
+@value smallBP from 'SharedStyles/globalStyles';
+
+/**
+ * PostBox styles
+ */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-bottom: 1px solid borderColor;
+  &:last-child { border-bottom: none; }
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 300;
+
+  & a {
+    text-decoration: none;
+    color: primaryFontColor;
+  }
+}
+
+.titleBottomMargin { margin-bottom: 10px; }
+
+.posterInfo {
+  margin-top: 10px;
+  font-size: 13px;
+  & .name {
+    font-weight: 700;
+    color: secondaryFontColor;
+    text-decoration: none;
+    transition: color 0.3s;
+
+    &:hover { color: primaryFontColor; }
+  }
+  & .gitHandler {
+    margin-left: 5px;
+    text-decoration: none;
+    color: secondaryFontColor;
+    transition: color 0.3s;
+
+    & .gitIcon {
+      font-size: 16px;
+      padding: 0 5px;
+    }
+
+    &:hover { color: primaryFontColor; }
+  }
+}
+
+.boxFooter {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media smallBP {
+    margin-top: 0px;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+}
+
+.tagsArea {
+  display: flex;
+  align-items: center;
+
+  @media smallBP { margin-top: 5px; }
+}
+
+.postInfo {
+  & .info {
+    margin-left: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: lowercase;
+    color: secondaryFontColor;
+
+    &:first-child { margin-left: 0px; }
+  }
+}
