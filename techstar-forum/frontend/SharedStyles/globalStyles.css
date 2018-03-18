@@ -1,0 +1,30 @@
+/**
+ * color variables
+ */
+@value themeColor: #F1C40F;
+@value primaryFontColor: #000;
+@value secondaryFontColor: #999;
+@value borderColor: #e8e8e8;
+@value backShade: #f9f9f9;
+
+/**
+ * media query breakpoints
+ */
+@value largeBP: (min-width: 1100px);
+@value mediumBP: (min-width: 769px) and (max-width: 1099px);
+@value smallBP: (max-width: 768px);
+
+/**
+ * global stylings
+ */
+
+* { box-sizing: border-box; }
+
+/**
+ * typography
+ */
+body {
+  font-size: 14px;
+  line-height: 22px;
+  font-family: 'Lato', helvetica, arial, sans-serif;
+}

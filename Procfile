@@ -1,1 +1,1 @@
-web: node server/bin/www
+web: node techstar-server/bin/www

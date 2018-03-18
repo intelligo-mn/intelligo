@@ -8,7 +8,7 @@ Clone the repository, then
 
 * `npm install` from the root folder
 * `npm start` from the root folder
-  * alternatively: run `node server/bin/www` 
+  * alternatively: run `node techstar-server/bin/www` 
 
 ## Project Structure
 
@@ -17,15 +17,18 @@ each of which handles a specific portion of the over-all web application.
 
 The primary application is:
 
-* [`server`](/server): The root express app and the actual web server into which the other apps are mounted
+* [`techstar-server`](/): The root express app and the actual web server into which the other apps are mounted
 
 The sub-application instances include:
 
-* [`api`](/api): Mounted at `/api`, handles the JSON based API access for the app
-* [`console`](/console): Mounted at `/console`, Techstar Cloud Platform dashboard
-* [`errors`](/errors): Mounted in the root express app, handles root level 404 and route / middleware errors
-* [`shorter`](/shorter): Mounted at `/url`, Nodejs based url shortener
-* [`uptime`](/uptime):  Uptime monitor with Node.js to Monitor your services and send alerts to Slack
+* [`techstar-api`](/api): Mounted at `/api`, handles the JSON based API access for the app
+* [`techstar-analytic`](/analytic): Mounted at `/analytic`, Real time analytic
+* [`techstar-bot`](/bot): Mounted at `/bot`, Ai chatbot
+* [`techstar-console`](/console): Mounted at `/console`, Techstar Cloud Platform dashboard
+* [`techstar-errors`](/errors): Mounted in the root express app, handles root level 404 and route / middleware errors
+* [`techstar-shortener`](/shorter): Mounted at `/url`, Nodejs based url shortener
+* [`techstar-uptime`](/uptime): Mounted at `/uptime`, Uptime monitor with Node.js to Monitor your services and send alerts to Slack
+* [`techstar-markdown`](/markdown): Mounted at `/markdown`, Real time markdown editor
 
 ## Copyright
 

@@ -1,0 +1,109 @@
+@value borderColor, secondaryFontColor, primaryFontColor from 'SharedStyles/globalStyles.css';
+@value smallBP from 'SharedStyles/globalStyles.css';
+
+/**
+ * Opinion styles
+ */
+
+.container {
+  position: relative;
+  margin-bottom: 10px;
+  padding: 0px 10px 0px 10px;
+  border: 1px solid borderColor;
+  /*border-bottom: none;
+
+  &:last-child { border-bottom: 1px solid borderColor; }*/
+
+  & .deletingOpinion {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.infoContainer {
+  padding: 5px 0px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid borderColor;
+
+  & .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+  }
+
+  & .userInfo {
+    margin-left: 10px;
+    flex: 1;
+    display: flex;
+
+    & .name {
+      font-weight: 700;
+      color: primaryFontColor;
+      text-decoration: none;
+    }
+
+    & .gitHandler {
+      margin-left: 15px;
+      text-decoration: none;
+      color: secondaryFontColor;
+      transition: color 0.3s;
+      &:hover { color: primaryFontColor; }
+
+      & .gitIcon { margin-right: 5px; }
+    }
+  }
+
+  & .dateInfo {
+    font-size: 13px;
+    line-height: 13px;
+    color: secondaryFontColor;
+    @media smallBP { margin-left: 10px; }
+  }
+
+  & .deleteButton {
+    padding: 5px 10px;
+    font-weight: normal;
+
+    & .trashIcon {
+      margin-right: 5px;
+      font-size: 16px;
+    }
+  }
+}
+
+.opContent {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  min-height: 60px;
+  font-size: 15px;
+  line-height: 26px;
+}
+
+.commentFooter {
+  display: flex;
+  align-items: center;
+
+  & .favoriteButton {
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    color: secondaryFontColor;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.3s;
+    &:hover { color: primaryFontColor; }
+
+    & i {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+  }
+}

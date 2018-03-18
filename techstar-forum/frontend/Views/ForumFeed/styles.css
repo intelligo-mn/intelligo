@@ -1,0 +1,22 @@
+@value largeBP from 'SharedStyles/globalStyles';
+
+/**
+ * Forum view styles
+ */
+.contentArea {
+  display: flex;
+  margin-top: 15px;
+  @media largeBP { flex-flow: row nowrap; }
+}
+
+.newDiscussionBtn {
+  margin-top: 20px;
+}
+
+.errorMsg {
+  margin-top: 20px;
+  color: rgba(231, 76, 60,1.0);
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+}

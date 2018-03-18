@@ -1,9 +1,10 @@
 {
     "APP_SECRET": "6499eddb55f3b71eefc9e608ef04c229",
-    "PAGE_ACCESS_TOKEN": "EAADZCWSBNbd4BAG53ty71ZBYVidVuna8veIWt23yOBf8I6V2HvK8tn0bFr9eO8zGZCS5bemx5LHcHtZABmb7GlqKzRBHMh0ZC34KsLHfsw5VPGLQFt5ymNRF8EBHpmwZBgPtpucsRCZBCoSqZAImwFTKjo6UOz3csfMTO6nYviMPDgZDZD",
+    "PAGE_ACCESS_TOKEN": "EAADZCWSBNbd4BACyjyWZBZAjAPoGrrYYNJuu6pxASYaVHSZAnHClbK6GJsCSCg9c0DFm1KRbvDgxKD1YfGaJqJSeyAuofuQclFfHoq8Xh9822vZCNU9zgFGZCu8JVhy2Y53YswEKGqeWFRN2iK9E7AjFFF6ekG1lA55iogDH4UdMdgIP34tNvz",
     "VALIDATION_TOKEN": "my_voice_is_my_password_verify_me",
     "SERVER_URL": "https://techstar.cloud/bot",
     "SECRET": "my-super-secret",
     "DB_URI": "mongodb://toroo:toroo@ds117136.mlab.com:17136/techstar-bot",
-    "SLACK_WEBHOOK_URL": "https://hooks.slack.com/services/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"
+    "SLACK_WEBHOOK_URL": "https://hooks.slack.com/services/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",
+    "api": "https://techstar.cloud/api/data"
 }
