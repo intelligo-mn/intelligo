@@ -12,6 +12,32 @@
     "type": "git",
     "url": "git+https://github.com/techstar-inc/techstar-bot.git"
   },
+    
+  "main": "server.js",
+  
+  "scripts": {
+    "test": "jest",
+    "start": "better-npm-run start",
+    "start:dev": "better-npm-run start:dev",
+    "build": "webpack --config config/webpack.prod.config.js"
+  },
+  "betterScripts": {
+    "start": {
+      "command": "node techstar-server/bin/www",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 8080
+      }
+    },
+    "start:dev": {
+      "command": "node techstar-server/bin/www",
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": 8080
+      }
+    }
+  },
+  
   "dependencies": {
     "bcrypt-nodejs": "latest",
     "better-npm-run": "^0.0.13",
@@ -95,31 +121,6 @@
     "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-hot-middleware": "^2.13.2"
-  },
-  
-  "main": "server.js",
-  
-  "scripts": {
-    "test": "jest",
-    "start": "better-npm-run start",
-    "start:dev": "better-npm-run start:dev",
-    "build": "webpack --config config/webpack.prod.config.js"
-  },
-  "betterScripts": {
-    "start": {
-      "command": "node techstar-server/bin/www",
-      "env": {
-        "NODE_ENV": "production",
-        "PORT": 8080
-      }
-    },
-    "start:dev": {
-      "command": "node techstar-server/bin/www",
-      "env": {
-        "NODE_ENV": "development",
-        "PORT": 8080
-      }
-    }
   },
   "cacheDirectories": [
     "node_modules"

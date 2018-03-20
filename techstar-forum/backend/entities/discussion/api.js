@@ -9,7 +9,7 @@ const deleteDiscussion = require('./controller').deleteDiscussion;
  */
 const discussionAPI = (app) => {
   // get signle discussion
-  app.get('/api/discussion/:discussion_slug', (req, res) => {
+  app.get('/forum/api/discussion/:discussion_slug', (req, res) => {
     const { discussion_slug } = req.params;
     getDiscussion(discussion_slug).then(
       (result) => { res.send(result); },
@@ -18,7 +18,7 @@ const discussionAPI = (app) => {
   });
 
   // toggle favorite to the discussion
-  app.put('/api/discussion/toggleFavorite/:discussion_id', (req, res) => {
+  app.put('/forum/api/discussion/toggleFavorite/:discussion_id', (req, res) => {
     const { discussion_id } = req.params;
     if (req.user) {
       // TODO: describe the toggle process with comments
@@ -37,7 +37,7 @@ const discussionAPI = (app) => {
   });
 
   // create a new discussion
-  app.post('/api/discussion/newDiscussion', (req, res) => {
+  app.post('/forum/api/discussion/newDiscussion', (req, res) => {
     if (req.user) {
       createDiscussion(req.body).then(
         (result) => { res.send(Object.assign({}, result._doc, { postCreated: true })); },
@@ -49,7 +49,7 @@ const discussionAPI = (app) => {
   });
 
   // delete a discussion
-  app.delete('/api/discussion/deleteDiscussion/:discussion_slug', (req, res) => {
+  app.delete('/forum/api/discussion/deleteDiscussion/:discussion_slug', (req, res) => {
     if (req.user) {
       deleteDiscussion(req.params.discussion_slug).then(
         (result) => { res.send({ deleted: true }); },

@@ -11,7 +11,7 @@ const deleteDiscussion = require('./controller').deleteDiscussion;
  */
 const adminAPI = (app) => {
   // get all info for admin dashboard
-  app.get('/api/admin/admin_dashboard_info', (req, res) => {
+  app.get('/forum/api/admin/admin_dashboard_info', (req, res) => {
     if (req.user && req.user.role === 'admin') {
       getAdminDashInfo().then(
         (data) => { res.send(data); },
@@ -22,7 +22,7 @@ const adminAPI = (app) => {
   });
 
   // create a forum
-  app.post('/api/admin/create_forum', (req, res) => {
+  app.post('/forum/api/admin/create_forum', (req, res) => {
     if (req.user && req.user.role === 'admin') {
       const {
         title,
@@ -38,7 +38,7 @@ const adminAPI = (app) => {
   });
 
   // delete a forum
-  app.post('/api/admin/delete_forum', (req, res) => {
+  app.post('/forum/api/admin/delete_forum', (req, res) => {
     if (req.user && req.user.role === 'admin') {
       deleteForum(req.body).then(
         (data) => { res.send(data); },
@@ -49,7 +49,7 @@ const adminAPI = (app) => {
   });
 
   // delete an user
-  app.post('/api/admin/delete_user', (req, res) => {
+  app.post('/forum/api/admin/delete_user', (req, res) => {
     if (req.user && req.user.role === 'admin') {
       deleteUser(req.body).then(
         (data) => { res.send(data); },
@@ -60,7 +60,7 @@ const adminAPI = (app) => {
   });
 
   // delete a forum
-  app.post('/api/admin/delete_user', (req, res) => {
+  app.post('/forum/api/admin/delete_user', (req, res) => {
     if (req.user && req.user.role === 'admin') {
       deleteDiscussion(req.body).then(
         (data) => { res.send(data); },

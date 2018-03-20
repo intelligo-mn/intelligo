@@ -16,8 +16,8 @@ const express = require( 'express'),
 const app = express();
 
 const DB_URI = (process.env.DB_URI) ?
-  (process.env.DB_URI) :
-  config.get('DB_URI');
+  (process.env.DB_CONSOLE) :
+  config.get('DB_CONSOLE');
   
 const SECRET = (process.env.SECRET) ?
   (process.env.SECRET) :
