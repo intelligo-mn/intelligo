@@ -15,7 +15,7 @@ var errors  = require('../techstar-handler/app');
 var analytic  = require('../techstar-analytic/app');
 var uptime  = require('./uptime');
 var markdown  = require('../techstar-markdown/app');
-var forum  = require('../techstar-forum/server');
+// var forum  = require('../techstar-forum/server');
 
 app.use('/', console);
 app.use('/blog', blog);
@@ -25,7 +25,7 @@ app.use('/analytic', analytic);
 app.use('/uptime', uptime);
 app.use('/bot', bot);
 app.use('/markdown', markdown);
-app.use('/forum', forum);
+// app.use('/forum', forum);
 app.use(errors);
 
 module.exports = app;

@@ -15,18 +15,14 @@ const express = require( 'express'),
 
 const app = express();
 
-const DB_URI = (process.env.DB_URI) ?
+const DB_BLOG = (process.env.DB_BLOG) ?
   (process.env.DB_BLOG) :
   config.get('DB_BLOG');
   
 const SECRET = (process.env.SECRET) ?
   (process.env.SECRET) :
   config.get('SECRET');
-  
-const SLACK_WEBHOOK_URL = (process.env.SLACK_WEBHOOK_URL) ?
-  (process.env.SLACK_WEBHOOK_URL) :
-  config.get('SLACK_WEBHOOK_URL');
-  
+
 app.set('port', process.env.PORT || 5000);
 app.use(morgan('dev'));
 app.use(cookieParser());
@@ -40,41 +36,12 @@ app.use(flash());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));     
 app.use(express.static(path.join(__dirname, "public")));
-app.use(require('express-status-monitor')({
-    title: 'Techstar Cloud Status',  
-    path: '/status',
-    spans: [{
-      interval: 1,      
-      retention: 60  
-    }, {
-      interval: 5,          
-      retention: 60
-    }, {
-      interval: 15,          
-      retention: 60
-    }, {
-      interval: 60,          
-      retention: 60
-    }, {
-      interval: 1440,          
-      retention: 60
-    }],
-    chartVisibility: {
-      cpu: true,
-      mem: true,
-      load: true,
-      responseTime: true,
-      rps: true,
-      statusCodes: true
-    }
-  }
-));
 
 app.set("views", path.join(__dirname, "views"));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
     
-mongoose.connect(DB_URI, { useMongoClient: true });
+mongoose.connect(DB_BLOG, { useMongoClient: true });
 
 app.use(expressValidator());
 
