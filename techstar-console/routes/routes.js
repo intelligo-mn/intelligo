@@ -1,4 +1,5 @@
 const mainController   = require('../app/MainController'),
+      wordController   = require('../app/WordController'),
       dataController   = require('../app/DataController');
       
 function isLoggedIn(req, res, next) {
@@ -26,6 +27,20 @@ module.exports = function(app, passport) {
     app.get('/datas/:slug/delete', isLoggedIn, dataController.deleteData);
     
     app.get('/datas/:slug', isLoggedIn, dataController.showSingle);
+    
+    app.get('/words', isLoggedIn, wordController.showWords);
+    
+    app.get('/words/seed', isLoggedIn, wordController.seedWords);
+    
+    app.get('/words/create', isLoggedIn, wordController.showCreate);
+    app.post('/words/create', isLoggedIn, wordController.processCreate);
+    
+    app.get('/words/:slug/edit', isLoggedIn, wordController.showEdit);
+    app.post('/words/:slug', isLoggedIn, wordController.processEdit);
+    
+    app.get('/words/:slug/delete', isLoggedIn, wordController.deleteWord);
+    
+    app.get('/words/:slug', isLoggedIn, wordController.showSingle);
 
     app.get('/login', function(req, res) {
         res.render('login.ejs', { message: req.flash('loginMessage') }); 
