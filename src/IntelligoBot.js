@@ -402,113 +402,105 @@ class IntelligoBot extends EventEmitter{
     }
   
   callSendAPI(messageData) {
-    request({
-      uri: 'https://graph.facebook.com/v2.9/me/messages',
-      qs: { access_token: this.PAGE_ACCESS_TOKEN },
-      method: 'POST',
-      json: messageData
-  
-    }, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        var recipientId = body.recipient_id;
-        var messageId = body.message_id;
-  
-        if (messageId) {
-          console.log("Successfully sent message with id %s to recipient %s", 
-            messageId, recipientId);
-        } else {
-        console.log("Successfully called Send API for recipient %s", 
-          recipientId);
-        }
-      } else {
-        console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
-      }
-    });  
-  }
+        request({
+            uri: 'https://graph.facebook.com/v2.9/me/messages',
+            qs: { access_token: this.PAGE_ACCESS_TOKEN },
+            method: 'POST',
+            json: messageData
+
+        }, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                const recipientId = body.recipient_id,
+                    messageId = body.message_id;
+
+                if (messageId) {
+                    console.log("Successfully sent message with id %s to recipient %s",
+                        messageId, recipientId);
+                } else {
+                    console.log("Successfully called Send API for recipient %s",
+                        recipientId);
+                }
+            } else {
+                console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+            }
+        });
+    }
   
   sendWelcome(recipientId) {
-    request({
-        url: 'https://graph.facebook.com/v2.8/' + recipientId 
-          + '?access_token=' + this.PAGE_ACCESS_TOKEN
-      },
-      function (error, response, body) {
-        if (error || response.statusCode != 200) return;
-      
-        var fbProfileBody = JSON.parse(body);
-        var userName = fbProfileBody["first_name"];
-        var greetings = ["Hey", "Hello", "Good Evening", "Good Morning", "What's up"];
-        var randomGreeting = this.getRandomItemFromArray(greetings);
-        var welcomeMsg = `${randomGreeting} ${userName}, 
+        request({
+                url: 'https://graph.facebook.com/v2.8/' + recipientId
+                + '?access_token=' + this.PAGE_ACCESS_TOKEN
+            },
+            function (error, response, body) {
+                if (error || response.statusCode != 200) return;
+
+                const fbProfileBody = JSON.parse(body),
+                    userName = fbProfileBody["first_name"],
+                    greetings = ["Hey", "Hello", "Good Evening", "Good Morning", "What's up"],
+                    randomGreeting = this.getRandomItemFromArray(greetings),
+                    welcomeMsg = `${randomGreeting} ${userName}, 
   I am Techstar AI bot.
   ¯\\_(ツ)_/¯ .
         `;
-        this.sendTextMessage(recipientId, welcomeMsg);
-      }
-    );
-  }
+                this.sendTextMessage(recipientId, welcomeMsg);
+            }
+        );
+    }
   
   sendHelp(recipientId) {
-    var Desc = `
+        this.sendTextMessage(recipientId, `
     🤖 Help 👉
     
     Help = this...
     why = ??
     how = source code link
-    `;
-    this.sendTextMessage(recipientId, Desc);
-  }
+    `);
+    }
   
   receivedPostback(event) {
-    var senderID = event.sender.id;
-    var recipientID = event.recipient.id;
-    var timeOfPostback = event.timestamp;
-  
-    var payload = event.postback.payload;
-  
-    console.log("Received postback for user %d and page %d with payload '%s' " + 
-      "at %d", senderID, recipientID, payload, timeOfPostback);
-  
-    this.sendTextMessage(senderID, "Postback called");
-  }
+        const senderID = event.sender.id,
+            recipientID = event.recipient.id,
+            timeOfPostback = event.timestamp,
+            payload = event.postback.payload;
+
+        console.log("Received postback for user %d and page %d with payload '%s' " +
+            "at %d", senderID, recipientID, payload, timeOfPostback);
+
+        this.sendTextMessage(senderID, "Postback called");
+    }
  
   sendReadReceipt(recipientId) {
-    console.log("Sending a read receipt to mark message as seen");
+        console.log("Sending a read receipt to mark message as seen");
+
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            sender_action: "mark_seen"
+        });
+    }
   
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      sender_action: "mark_seen"
-    };
-  
-    this.callSendAPI(messageData);
-  }
-  
-  sendTypingOn(recipientId) {
-    console.log("Turning typing indicator on");
-  
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      sender_action: "typing_on"
-    };
-  
-    this.callSendAPI(messageData);
-  }
-  
-  sendTypingOff(recipientId) {
-    console.log("Turning typing indicator off");
-  
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      sender_action: "typing_off"
-    };
-  
-    this.callSendAPI(messageData);
-  }
+   sendTypingOn(recipientId) {
+        console.log("Turning typing indicator on");
+
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            sender_action: "typing_on"
+        });
+    }
+
+    sendTypingOff(recipientId) {
+        console.log("Turning typing indicator off");
+
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            sender_action: "typing_off"
+        });
+    }
   
   getRandomNumber(minimum, maxmimum) {
     return Math.floor(Math.exp(Math.random()*Math.log(maxmimum-minimum+1)))+minimum;
