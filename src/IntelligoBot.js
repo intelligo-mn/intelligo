@@ -192,36 +192,32 @@ class IntelligoBot extends EventEmitter{
     }
   
   initWebhook() {
-    this.app.get(this.webhook, (req, res) => {
-      if (req.query['hub.mode'] === 'subscribe' &&
-          req.query['hub.verify_token'] === this.VALIDATION_TOKEN) {
-        console.log("Validating webhook");
-        res.status(200).send(req.query['hub.challenge']);
-      } else {
-        console.error("Failed validation. Make sure the validation tokens match.");
-        res.sendStatus(403);          
-      }  
-    });
-    
-    this.app.post(this.webhook, (req, res) => {
-      var data = req.body;
-    
-      if (data.object === 'page') {
-       
-        data.entry.forEach((pageEntry) => {
-          pageEntry.messaging.forEach((messagingEvent) => {
-            if (messagingEvent.message) {
-              this.receivedMessage(messagingEvent);
-            }else {
-              console.log("Webhook received unknown messagingEvent: ", messagingEvent);
+        this.app.get(this.webhook, (req, res) => {
+            if (req.query['hub.mode'] === 'subscribe' &&
+                req.query['hub.verify_token'] === this.VALIDATION_TOKEN) {
+                console.log("Validating webhook");
+                res.status(200).send(req.query['hub.challenge']);
+            } else {
+                console.error("Failed validation. Make sure the validation tokens match.");
+                res.sendStatus(403);
             }
-          });
         });
-    
-        res.sendStatus(200);
-      }
-    });
-  }
+
+        this.app.post(this.webhook, (req, res) => {
+            var data = req.body;
+
+            if (data.object === 'page') {
+                for(const pageEntry of data.entry){
+                    for(const messagingEvent of pageEntry.messaging){
+                        if(messagingEvent.message) this.receivedMessage(messagingEvent);
+                        else console.log("Webhook received unknown messagingEvent: ", messagingEvent);
+                    }
+                }
+
+                res.sendStatus(200);
+            }
+        });
+    }
   
   receivedMessage(event) {
     var senderID = event.sender.id;
