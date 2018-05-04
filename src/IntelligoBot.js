@@ -184,12 +184,12 @@ class IntelligoBot extends EventEmitter{
     }
   
   answer (question) {
-    var startedTime = new Date().getTime();
-    console.log("AI хариултыг хайж байна...");
-    var result =  this.techstarClassifier.classify(question);
-    console.log("AI хариултыг оллоо.  \n " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
-    return result;
-  }
+        const startedTime = new Date().getTime();
+        console.log("AI хариултыг хайж байна...");
+        const result =  this.techstarClassifier.classify(question);
+        console.log("AI хариултыг оллоо.  \n " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
+        return result;
+    }
   
   initWebhook() {
     this.app.get(this.webhook, (req, res) => {
