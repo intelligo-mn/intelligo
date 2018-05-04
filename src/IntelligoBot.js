@@ -135,28 +135,25 @@ class IntelligoBot extends EventEmitter{
     }
   
   learn (json){
-    console.log("AI суралцаж эхэллээ...");
-    var startedTime = new Date().getTime();
-    // Repeat multiple levels
-    var TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
-    	binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
-    });
-    
-    // Unblock the words in the sentence with spaces and create attributes
-    var WordExtractor = function(input, features) {
-    	input.split(" ").forEach(function(word) {
-    		features[word]=1;
-    	});
-    };
-    
-    this.techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
-    	classifierType: TextClassifier,
-    	featureExtractor: WordExtractor
-    });
-    
-    this.techstarClassifier.trainBatch(JSON.parse(fs.readFileSync(json, 'utf8')));
-    console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");  
-  }
+        console.log("AI суралцаж эхэллээ...");
+        const startedTime = new Date().getTime();
+        // Repeat multiple levels
+        const TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
+            binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
+        });
+        
+        const WordExtractor = (input, features) => {
+            return input.split(" ").map(word => features[word] = 1);
+        };
+
+        this.techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
+            classifierType: TextClassifier,
+            featureExtractor: WordExtractor
+        });
+
+        this.techstarClassifier.trainBatch(JSON.parse(fs.readFileSync(json, 'utf8')));
+        console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
+    }
   
   learnRequest(url){
     request(url, function (error, response, body) {
