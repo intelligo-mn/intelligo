@@ -310,107 +310,96 @@ class IntelligoBot extends EventEmitter{
   }
   
   sendTextMessage(recipientId, messageText) {
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        text: messageText
-      }
-    };
-  
-    this.callSendAPI(messageData);
-  }
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            message: {
+                text: messageText
+            }
+        });
+    }
+
   
   sendImageMessage(recipientId, imageUrl) {
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        attachment: {
-          type: "image",
-          payload: {
-            url:  imageUrl
-          }
-        }
-      }
-    };
-  
-    this.callSendAPI(messageData);
-  }
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            message: {
+                attachment: {
+                    type: "image",
+                    payload: {
+                        url:  imageUrl
+                    }
+                }
+            }
+        });
+    }
   
   sendGifMessage(recipientId, gifUrl) {
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        attachment: {
-          type: "image",
-          payload: {
-            url: gifUrl
-          }
-        }
-      }
-    };
-  
-    this.callSendAPI(messageData);
-  }
-  
-  sendAudioMessage(recipientId, audioUrl) {
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        attachment: {
-          type: "audio",
-          payload: {
-            url: audioUrl
-          }
-        }
-      }
-    };
-  
-    this.callSendAPI(messageData);
-  }
-  
-  sendVideoMessage(recipientId, videoUrl) {
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        attachment: {
-          type: "video",
-          payload: {
-            url: videoUrl
-          }
-        }
-      }
-    };
-  
-    this.callSendAPI(messageData);
-  }
-  
-  sendFileMessage(recipientId, fileUrl) {
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        attachment: {
-          type: "file",
-          payload: {
-            url: fileUrl
-          }
-        }
-      }
-    };
-  
-    this.callSendAPI(messageData);
-  }
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            message: {
+                attachment: {
+                    type: "image",
+                    payload: {
+                        url: gifUrl
+                    }
+                }
+            }
+        });
+    }
+
+    sendAudioMessage(recipientId, audioUrl) {
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            message: {
+                attachment: {
+                    type: "audio",
+                    payload: {
+                        url: audioUrl
+                    }
+                }
+            }
+        });
+    }
+
+    sendVideoMessage(recipientId, videoUrl) {
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            message: {
+                attachment: {
+                    type: "video",
+                    payload: {
+                        url: videoUrl
+                    }
+                }
+            }
+        });
+    }
+
+    sendFileMessage(recipientId, fileUrl) {
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            message: {
+                attachment: {
+                    type: "file",
+                    payload: {
+                        url: fileUrl
+                    }
+                }
+            }
+        });
+    }
   
   callSendAPI(messageData) {
     request({
