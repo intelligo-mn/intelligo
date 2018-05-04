@@ -115,18 +115,16 @@ class IntelligoBot extends EventEmitter{
     }
   //ask questions from similar words
   askSimilarOptions(recipientId, words){
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        text: "Since your search is too general, select from the following options",
-        quick_replies: words
-      }
-    };
-  
-    this.callSendAPI(messageData);
-  }
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            message: {
+                text: "Since your search is too general, select from the following options",
+                quick_replies: words
+            }
+        });
+    }
   
   //clear more characters
   cleanJSON(json){
