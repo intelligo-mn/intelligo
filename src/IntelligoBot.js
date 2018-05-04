@@ -127,11 +127,12 @@ class IntelligoBot extends EventEmitter{
     }
   
   //clear more characters
-  cleanJSON(json){
-    for(var i=0; i<json.length; i++){
-      json[i].input = json[i].input.replace("/[\?\,\:]/", "");
+    cleanJSON(json){
+        for(var i=0; i<json.length; i++){
+            json[i].input = json[i].input.replace("/[\?\,\:]/", "");
+        }
+        return json;
     }
-  }
   
   learn (json){
     console.log("AI суралцаж эхэллээ...");
