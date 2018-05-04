@@ -95,26 +95,24 @@ class IntelligoBot extends EventEmitter{
   
   //find similar questions when searching for a findable data
   findSimilarKeyword(keyword){
-    //Send neighboring words to arrays as an option
-    var similarQuestions = new Array();
-    var sum = "";
-    
-    var json = JSON.parse(fs.readFileSync("./data/training_data.json", "utf8"));
-    json.forEach(function(data){
-      var words = data.input.split(" ");
-      //Start a given keyword or locate neighbor words
-      if(words.indexOf(keyword) != -1){
-        var index = words.indexOf(keyword);
-        //to get the word neighbor with the word
-        var neighborWord = index == words.length ? words[index-1]+" "+keyword : keyword+" "+words[index+1];
-        //the word has not been registered before
-        if(sum.indexOf(neighborWord)==-1)
-          sum+= sum=="" ? neighborWord : ","+neighborWord;
-        similarQuestions.push({"content_type":"text","title":neighborWord});
-      }
-    });
-    return sum;
-  }
+        //Send neighboring words to arrays as an option
+        let similarQuestions = new Array();
+        let sum = "";
+        
+        var json = JSON.parse(fs.readFileSync("./data/training_data.json", "utf8"));
+        for(const data of json){
+            const words = data.input.split(" ");
+            if(words.includes(keyword)){
+                const index = words.indexOf(keyword);
+                const neighborWord = index === words.length ? words[index-1] + " " + keyword : keyword + " " + words[index+1];
+                if(!sum.includes(neighborWord)){
+                    sum += sum == '' ? neighborWord : ',' + neighborWord;
+                    similarQuestions.push({ "content_type": "text", "title": neighborWord });
+                }
+            }
+        }
+        return sum;
+    }
   //ask questions from similar words
   askSimilarOptions(recipientId, words){
     var messageData = {
