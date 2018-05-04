@@ -220,55 +220,53 @@ class IntelligoBot extends EventEmitter{
     }
   
   receivedMessage(event) {
-    var senderID = event.sender.id;
-    var recipientID = event.recipient.id;
-    var timeOfMessage = event.timestamp;
-    var message = event.message;
-  
-    console.log("Received message for user %d and page %d at %d with message:", 
-      senderID, recipientID, timeOfMessage);
-    console.log(JSON.stringify(message));
-  
-    var isEcho = message.is_echo;
-    var messageId = message.mid;
-    var appId = message.app_id;
-    var metadata = message.metadata;
-  
-    var messageText = message.text;
-    var messageAttachments = message.attachments;
-    var quickReply = message.quick_reply;
-  
-    if (isEcho) {
-      console.log("Received echo for message %s and app %d with metadata %s", 
-        messageId, appId, metadata);
-      return;
-    } else if (quickReply) {
-      var quickReplyPayload = quickReply.payload;
-      console.log("Quick reply for message %s with payload %s",
-        messageId, quickReplyPayload);
-  
-      this.sendTextMessage(senderID, "Quick reply tapped");
-      return;
+        const senderID = event.sender.id,
+            recipientID = event.recipient.id,
+            timeOfMessage = event.timestamp,
+            message = event.message;
+
+        console.log("Received message for user %d and page %d at %d with message:",
+            senderID, recipientID, timeOfMessage);
+        console.log(JSON.stringify(message));
+
+        const isEcho = message.is_echo,
+            messageId = message.mid,
+            appId = message.app_id,
+            metadata = message.metadata,
+            messageText = message.text,
+            messageAttachments = message.attachments,
+            quickReply = message.quick_reply;
+
+        if (isEcho) {
+            console.log("Received echo for message %s and app %d with metadata %s",
+                messageId, appId, metadata);
+            return;
+        } else if (quickReply) {
+            console.log("Quick reply for message %s with payload %s",
+                messageId, quickReply.payload);
+
+            this.sendTextMessage(senderID, "Quick reply tapped");
+            return;
+        }
+
+        if (messageText) {
+
+            const result = this.answer(messageText);
+
+            if (messageText == "update")
+                this.sendTextMessage(senderID, this.updateJSON());
+            else if (this.textMatches(messageText, "get started"))
+                this.sendWelcome(senderID);
+            else if (this.textMatches(messageText, "help"))
+                this.sendHelp(senderID);
+            else if(result == null || result == '')
+                this.sendTextMessage(senderID, "Уучлаарай, та асуултаа тодорхтой оруулна уу.");
+            else
+                this.sendTextMessage(senderID, result+"");
+        } else if (messageAttachments) {
+            this.sendTextMessage(senderID, "Message with attachment received");
+        }
     }
-  
-    if (messageText) {
-      
-      var result = this.answer(messageText);
-      
-      if (messageText == "update")
-        this.sendTextMessage(senderID, this.updateJSON());
-      else if (this.textMatches(messageText, "get started")) 
-        this.sendWelcome(senderID);
-      else if (this.textMatches(messageText, "help")) 
-        this.sendHelp(senderID);
-      else if(result == null || result == '')
-        this.sendTextMessage(senderID, "Уучлаарай, та асуултаа тодорхтой оруулна уу.");
-      else
-        this.sendTextMessage(senderID, result+"");
-    } else if (messageAttachments) {
-        this.sendTextMessage(senderID, "Message with attachment received");
-    }
-  }
   
   verifyRequestSignature(req, res, buf) {
     var signature = req.headers["x-hub-signature"];
