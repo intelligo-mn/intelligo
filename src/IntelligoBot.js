@@ -95,212 +95,198 @@ class IntelligoBot extends EventEmitter{
   
   //find similar questions when searching for a findable data
   findSimilarKeyword(keyword){
-    //Send neighboring words to arrays as an option
-    var similarQuestions = new Array();
-    var sum = "";
-    
-    var json = JSON.parse(fs.readFileSync("./data/training_data.json", "utf8"));
-    json.forEach(function(data){
-      var words = data.input.split(" ");
-      //Start a given keyword or locate neighbor words
-      if(words.indexOf(keyword) != -1){
-        var index = words.indexOf(keyword);
-        //to get the word neighbor with the word
-        var neighborWord = index == words.length ? words[index-1]+" "+keyword : keyword+" "+words[index+1];
-        //the word has not been registered before
-        if(sum.indexOf(neighborWord)==-1)
-          sum+= sum=="" ? neighborWord : ","+neighborWord;
-        similarQuestions.push({"content_type":"text","title":neighborWord});
-      }
-    });
-    return sum;
-  }
+        //Send neighboring words to arrays as an option
+        let similarQuestions = new Array();
+        let sum = "";
+        
+        var json = JSON.parse(fs.readFileSync("./data/training_data.json", "utf8"));
+        for(const data of json){
+            const words = data.input.split(" ");
+            if(words.includes(keyword)){
+                const index = words.indexOf(keyword);
+                const neighborWord = index === words.length ? words[index-1] + " " + keyword : keyword + " " + words[index+1];
+                if(!sum.includes(neighborWord)){
+                    sum += sum == '' ? neighborWord : ',' + neighborWord;
+                    similarQuestions.push({ "content_type": "text", "title": neighborWord });
+                }
+            }
+        }
+        return sum;
+    }
   //ask questions from similar words
   askSimilarOptions(recipientId, words){
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        text: "Since your search is too general, select from the following options",
-        quick_replies: words
-      }
-    };
-  
-    this.callSendAPI(messageData);
-  }
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            message: {
+                text: "Since your search is too general, select from the following options",
+                quick_replies: words
+            }
+        });
+    }
   
   //clear more characters
-  cleanJSON(json){
-    for(var i=0; i<json.length; i++){
-      json[i].input = json[i].input.replace("/[\?\,\:]/", "");
+    cleanJSON(json){
+        for(var i=0; i<json.length; i++){
+            json[i].input = json[i].input.replace("/[\?\,\:]/", "");
+        }
+        return json;
     }
-  }
   
   learn (json){
-    console.log("AI суралцаж эхэллээ...");
-    var startedTime = new Date().getTime();
-    // Repeat multiple levels
-    var TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
-    	binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
-    });
-    
-    // Unblock the words in the sentence with spaces and create attributes
-    var WordExtractor = function(input, features) {
-    	input.split(" ").forEach(function(word) {
-    		features[word]=1;
-    	});
-    };
-    
-    this.techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
-    	classifierType: TextClassifier,
-    	featureExtractor: WordExtractor
-    });
-    
-    this.techstarClassifier.trainBatch(JSON.parse(fs.readFileSync(json, 'utf8')));
-    console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");  
-  }
+        console.log("AI суралцаж эхэллээ...");
+        const startedTime = new Date().getTime();
+        // Repeat multiple levels
+        const TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
+            binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
+        });
+        
+        const WordExtractor = (input, features) => {
+            return input.split(" ").map(word => features[word] = 1);
+        };
+
+        this.techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
+            classifierType: TextClassifier,
+            featureExtractor: WordExtractor
+        });
+
+        this.techstarClassifier.trainBatch(JSON.parse(fs.readFileSync(json, 'utf8')));
+        console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
+    }
   
   learnRequest(url){
-    request(url, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        
-        console.log("AI суралцаж эхэллээ...");
-        
-        var startedTime = new Date().getTime();
-        // Repeat multiple levels
-        var TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
-        	binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
-        });
-        
-        // Unblock the words in the sentence with spaces and create attributes
-        var WordExtractor = function(input, features) {
-        	input.split(" ").forEach(function(word) {
-        		features[word]=1;
-        	});
-        };
-        
-        this.techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
-        	classifierType: TextClassifier,
-        	featureExtractor: WordExtractor
-        });
-        
-        this.techstarClassifier.trainBatch(JSON.parse(body));
-        console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");  
-      }
-    })  
-  }
+        request(url, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+
+                console.log("AI суралцаж эхэллээ...");
+
+                const startedTime = new Date().getTime();
+                // Repeat multiple levels
+                const TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
+                    binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
+                });
+
+                // Unblock the words in the sentence with spaces and create attributes
+                const WordExtractor = (input, features) => {
+                    return input.split(" ").map(word => features[word] = 1);
+                };
+
+                this.techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
+                    classifierType: TextClassifier,
+                    featureExtractor: WordExtractor
+                });
+
+                this.techstarClassifier.trainBatch(JSON.parse(body));
+                console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
+            }
+        })
+    }
   
   answer (question) {
-    var startedTime = new Date().getTime();
-    console.log("AI хариултыг хайж байна...");
-    var result =  this.techstarClassifier.classify(question);
-    console.log("AI хариултыг оллоо.  \n " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
-    return result;
-  }
+        const startedTime = new Date().getTime();
+        console.log("AI хариултыг хайж байна...");
+        const result =  this.techstarClassifier.classify(question);
+        console.log("AI хариултыг оллоо.  \n " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
+        return result;
+    }
   
   initWebhook() {
-    this.app.get(this.webhook, (req, res) => {
-      if (req.query['hub.mode'] === 'subscribe' &&
-          req.query['hub.verify_token'] === this.VALIDATION_TOKEN) {
-        console.log("Validating webhook");
-        res.status(200).send(req.query['hub.challenge']);
-      } else {
-        console.error("Failed validation. Make sure the validation tokens match.");
-        res.sendStatus(403);          
-      }  
-    });
-    
-    this.app.post(this.webhook, (req, res) => {
-      var data = req.body;
-    
-      if (data.object === 'page') {
-       
-        data.entry.forEach((pageEntry) => {
-          pageEntry.messaging.forEach((messagingEvent) => {
-            if (messagingEvent.message) {
-              this.receivedMessage(messagingEvent);
-            }else {
-              console.log("Webhook received unknown messagingEvent: ", messagingEvent);
+        this.app.get(this.webhook, (req, res) => {
+            if (req.query['hub.mode'] === 'subscribe' &&
+                req.query['hub.verify_token'] === this.VALIDATION_TOKEN) {
+                console.log("Validating webhook");
+                res.status(200).send(req.query['hub.challenge']);
+            } else {
+                console.error("Failed validation. Make sure the validation tokens match.");
+                res.sendStatus(403);
             }
-          });
         });
-    
-        res.sendStatus(200);
-      }
-    });
-  }
+
+        this.app.post(this.webhook, (req, res) => {
+            var data = req.body;
+
+            if (data.object === 'page') {
+                for(const pageEntry of data.entry){
+                    for(const messagingEvent of pageEntry.messaging){
+                        if(messagingEvent.message) this.receivedMessage(messagingEvent);
+                        else console.log("Webhook received unknown messagingEvent: ", messagingEvent);
+                    }
+                }
+
+                res.sendStatus(200);
+            }
+        });
+    }
   
   receivedMessage(event) {
-    var senderID = event.sender.id;
-    var recipientID = event.recipient.id;
-    var timeOfMessage = event.timestamp;
-    var message = event.message;
-  
-    console.log("Received message for user %d and page %d at %d with message:", 
-      senderID, recipientID, timeOfMessage);
-    console.log(JSON.stringify(message));
-  
-    var isEcho = message.is_echo;
-    var messageId = message.mid;
-    var appId = message.app_id;
-    var metadata = message.metadata;
-  
-    var messageText = message.text;
-    var messageAttachments = message.attachments;
-    var quickReply = message.quick_reply;
-  
-    if (isEcho) {
-      console.log("Received echo for message %s and app %d with metadata %s", 
-        messageId, appId, metadata);
-      return;
-    } else if (quickReply) {
-      var quickReplyPayload = quickReply.payload;
-      console.log("Quick reply for message %s with payload %s",
-        messageId, quickReplyPayload);
-  
-      this.sendTextMessage(senderID, "Quick reply tapped");
-      return;
+        const senderID = event.sender.id,
+            recipientID = event.recipient.id,
+            timeOfMessage = event.timestamp,
+            message = event.message;
+
+        console.log("Received message for user %d and page %d at %d with message:",
+            senderID, recipientID, timeOfMessage);
+        console.log(JSON.stringify(message));
+
+        const isEcho = message.is_echo,
+            messageId = message.mid,
+            appId = message.app_id,
+            metadata = message.metadata,
+            messageText = message.text,
+            messageAttachments = message.attachments,
+            quickReply = message.quick_reply;
+
+        if (isEcho) {
+            console.log("Received echo for message %s and app %d with metadata %s",
+                messageId, appId, metadata);
+            return;
+        } else if (quickReply) {
+            console.log("Quick reply for message %s with payload %s",
+                messageId, quickReply.payload);
+
+            this.sendTextMessage(senderID, "Quick reply tapped");
+            return;
+        }
+
+        if (messageText) {
+
+            const result = this.answer(messageText);
+
+            if (messageText == "update")
+                this.sendTextMessage(senderID, this.updateJSON());
+            else if (this.textMatches(messageText, "get started"))
+                this.sendWelcome(senderID);
+            else if (this.textMatches(messageText, "help"))
+                this.sendHelp(senderID);
+            else if(result == null || result == '')
+                this.sendTextMessage(senderID, "Уучлаарай, та асуултаа тодорхтой оруулна уу.");
+            else
+                this.sendTextMessage(senderID, result+"");
+        } else if (messageAttachments) {
+            this.sendTextMessage(senderID, "Message with attachment received");
+        }
     }
-  
-    if (messageText) {
-      
-      var result = this.answer(messageText);
-      
-      if (messageText == "update")
-        this.sendTextMessage(senderID, this.updateJSON());
-      else if (this.textMatches(messageText, "get started")) 
-        this.sendWelcome(senderID);
-      else if (this.textMatches(messageText, "help")) 
-        this.sendHelp(senderID);
-      else if(result == null || result == '')
-        this.sendTextMessage(senderID, "Уучлаарай, та асуултаа тодорхтой оруулна уу.");
-      else
-        this.sendTextMessage(senderID, result+"");
-    } else if (messageAttachments) {
-        this.sendTextMessage(senderID, "Message with attachment received");
-    }
-  }
   
   verifyRequestSignature(req, res, buf) {
-    var signature = req.headers["x-hub-signature"];
-  
-    if (!signature) {
-      console.error("Couldn't validate the signature.");
-    } else {
-      var elements = signature.split('=');
-      var method = elements[0];
-      var signatureHash = elements[1];
-  
-      var expectedHash = crypto.createHmac('sha1', this.APP_SECRET)
-                          .update(buf)
-                          .digest('hex');
-  
-      if (signatureHash != expectedHash) {
-        throw new Error("Couldn't validate the request signature.");
-      }
+        const signature = req.headers["x-hub-signature"];
+
+        if (!signature) {
+            console.error("Couldn't validate the signature.");
+        } else {
+            const elements = signature.split('='),
+                method = elements[0],
+                signatureHash = elements[1];
+
+            const expectedHash = crypto.createHmac('sha1', this.APP_SECRET)
+                .update(buf)
+                .digest('hex');
+
+            if (signatureHash != expectedHash) {
+                throw new Error("Couldn't validate the request signature.");
+            }
+        }
     }
-  }
   
   setGreeting(text){
     request({
@@ -324,216 +310,197 @@ class IntelligoBot extends EventEmitter{
   }
   
   sendTextMessage(recipientId, messageText) {
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        text: messageText
-      }
-    };
-  
-    this.callSendAPI(messageData);
-  }
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            message: {
+                text: messageText
+            }
+        });
+    }
+
   
   sendImageMessage(recipientId, imageUrl) {
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        attachment: {
-          type: "image",
-          payload: {
-            url:  imageUrl
-          }
-        }
-      }
-    };
-  
-    this.callSendAPI(messageData);
-  }
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            message: {
+                attachment: {
+                    type: "image",
+                    payload: {
+                        url:  imageUrl
+                    }
+                }
+            }
+        });
+    }
   
   sendGifMessage(recipientId, gifUrl) {
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        attachment: {
-          type: "image",
-          payload: {
-            url: gifUrl
-          }
-        }
-      }
-    };
-  
-    this.callSendAPI(messageData);
-  }
-  
-  sendAudioMessage(recipientId, audioUrl) {
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        attachment: {
-          type: "audio",
-          payload: {
-            url: audioUrl
-          }
-        }
-      }
-    };
-  
-    this.callSendAPI(messageData);
-  }
-  
-  sendVideoMessage(recipientId, videoUrl) {
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        attachment: {
-          type: "video",
-          payload: {
-            url: videoUrl
-          }
-        }
-      }
-    };
-  
-    this.callSendAPI(messageData);
-  }
-  
-  sendFileMessage(recipientId, fileUrl) {
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      message: {
-        attachment: {
-          type: "file",
-          payload: {
-            url: fileUrl
-          }
-        }
-      }
-    };
-  
-    this.callSendAPI(messageData);
-  }
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            message: {
+                attachment: {
+                    type: "image",
+                    payload: {
+                        url: gifUrl
+                    }
+                }
+            }
+        });
+    }
+
+    sendAudioMessage(recipientId, audioUrl) {
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            message: {
+                attachment: {
+                    type: "audio",
+                    payload: {
+                        url: audioUrl
+                    }
+                }
+            }
+        });
+    }
+
+    sendVideoMessage(recipientId, videoUrl) {
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            message: {
+                attachment: {
+                    type: "video",
+                    payload: {
+                        url: videoUrl
+                    }
+                }
+            }
+        });
+    }
+
+    sendFileMessage(recipientId, fileUrl) {
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            message: {
+                attachment: {
+                    type: "file",
+                    payload: {
+                        url: fileUrl
+                    }
+                }
+            }
+        });
+    }
   
   callSendAPI(messageData) {
-    request({
-      uri: 'https://graph.facebook.com/v2.9/me/messages',
-      qs: { access_token: this.PAGE_ACCESS_TOKEN },
-      method: 'POST',
-      json: messageData
-  
-    }, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        var recipientId = body.recipient_id;
-        var messageId = body.message_id;
-  
-        if (messageId) {
-          console.log("Successfully sent message with id %s to recipient %s", 
-            messageId, recipientId);
-        } else {
-        console.log("Successfully called Send API for recipient %s", 
-          recipientId);
-        }
-      } else {
-        console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
-      }
-    });  
-  }
+        request({
+            uri: 'https://graph.facebook.com/v2.9/me/messages',
+            qs: { access_token: this.PAGE_ACCESS_TOKEN },
+            method: 'POST',
+            json: messageData
+
+        }, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                const recipientId = body.recipient_id,
+                    messageId = body.message_id;
+
+                if (messageId) {
+                    console.log("Successfully sent message with id %s to recipient %s",
+                        messageId, recipientId);
+                } else {
+                    console.log("Successfully called Send API for recipient %s",
+                        recipientId);
+                }
+            } else {
+                console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+            }
+        });
+    }
   
   sendWelcome(recipientId) {
-    request({
-        url: 'https://graph.facebook.com/v2.8/' + recipientId 
-          + '?access_token=' + this.PAGE_ACCESS_TOKEN
-      },
-      function (error, response, body) {
-        if (error || response.statusCode != 200) return;
-      
-        var fbProfileBody = JSON.parse(body);
-        var userName = fbProfileBody["first_name"];
-        var greetings = ["Hey", "Hello", "Good Evening", "Good Morning", "What's up"];
-        var randomGreeting = this.getRandomItemFromArray(greetings);
-        var welcomeMsg = `${randomGreeting} ${userName}, 
+        request({
+                url: 'https://graph.facebook.com/v2.8/' + recipientId
+                + '?access_token=' + this.PAGE_ACCESS_TOKEN
+            },
+            function (error, response, body) {
+                if (error || response.statusCode != 200) return;
+
+                const fbProfileBody = JSON.parse(body),
+                    userName = fbProfileBody["first_name"],
+                    greetings = ["Hey", "Hello", "Good Evening", "Good Morning", "What's up"],
+                    randomGreeting = this.getRandomItemFromArray(greetings),
+                    welcomeMsg = `${randomGreeting} ${userName}, 
   I am Techstar AI bot.
   ¯\\_(ツ)_/¯ .
         `;
-        this.sendTextMessage(recipientId, welcomeMsg);
-      }
-    );
-  }
+                this.sendTextMessage(recipientId, welcomeMsg);
+            }
+        );
+    }
   
   sendHelp(recipientId) {
-    var Desc = `
+        this.sendTextMessage(recipientId, `
     🤖 Help 👉
     
     Help = this...
     why = ??
     how = source code link
-    `;
-    this.sendTextMessage(recipientId, Desc);
-  }
+    `);
+    }
   
   receivedPostback(event) {
-    var senderID = event.sender.id;
-    var recipientID = event.recipient.id;
-    var timeOfPostback = event.timestamp;
-  
-    var payload = event.postback.payload;
-  
-    console.log("Received postback for user %d and page %d with payload '%s' " + 
-      "at %d", senderID, recipientID, payload, timeOfPostback);
-  
-    this.sendTextMessage(senderID, "Postback called");
-  }
+        const senderID = event.sender.id,
+            recipientID = event.recipient.id,
+            timeOfPostback = event.timestamp,
+            payload = event.postback.payload;
+
+        console.log("Received postback for user %d and page %d with payload '%s' " +
+            "at %d", senderID, recipientID, payload, timeOfPostback);
+
+        this.sendTextMessage(senderID, "Postback called");
+    }
  
   sendReadReceipt(recipientId) {
-    console.log("Sending a read receipt to mark message as seen");
+        console.log("Sending a read receipt to mark message as seen");
+
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            sender_action: "mark_seen"
+        });
+    }
   
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      sender_action: "mark_seen"
-    };
-  
-    this.callSendAPI(messageData);
-  }
-  
-  sendTypingOn(recipientId) {
-    console.log("Turning typing indicator on");
-  
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      sender_action: "typing_on"
-    };
-  
-    this.callSendAPI(messageData);
-  }
-  
-  sendTypingOff(recipientId) {
-    console.log("Turning typing indicator off");
-  
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      sender_action: "typing_off"
-    };
-  
-    this.callSendAPI(messageData);
-  }
+   sendTypingOn(recipientId) {
+        console.log("Turning typing indicator on");
+
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            sender_action: "typing_on"
+        });
+    }
+
+    sendTypingOff(recipientId) {
+        console.log("Turning typing indicator off");
+
+        this.callSendAPI({
+            recipient: {
+                id: recipientId
+            },
+            sender_action: "typing_off"
+        });
+    }
   
   getRandomNumber(minimum, maxmimum) {
     return Math.floor(Math.exp(Math.random()*Math.log(maxmimum-minimum+1)))+minimum;
