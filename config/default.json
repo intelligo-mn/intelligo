@@ -4,7 +4,12 @@
     "VALIDATION_TOKEN": "my_voice_is_my_password_verify_me",
     "SERVER_URL": "https://techstar.cloud/bot",
     "SECRET": "my-super-secret",
-    "DB_URI": "mongodb://toroo:toroo@ds117136.mlab.com:17136/techstar-bot",
+    "DB_JISHO": "mongodb://toroo:toroo@ds125368.mlab.com:25368/techstar-jisho",
+    "DB_BLOG": "mongodb://toroo:toroo@ds117469.mlab.com:17469/techstar-blog",
+    "DB_CONSOLE": "mongodb://toroo:toroo@ds119129.mlab.com:19129/techstar-console",
+    "DB_FORUM": "mongodb://toroo:toroo@ds213229.mlab.com:13229/techstar-forum",
+    "DB_MARKDOWN": "mongodb://toroo:toroo@ds213229.mlab.com:13229/techstar-markdown",
+    "DB_SHORT_URL": "mongodb://toroo:toroo@ds119129.mlab.com:19129/techstar-url",
     "SLACK_WEBHOOK_URL": "https://hooks.slack.com/services/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",
     "api": "https://techstar.cloud/api/data"
 }

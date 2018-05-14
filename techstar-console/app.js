@@ -15,9 +15,9 @@ const express = require( 'express'),
 
 const app = express();
 
-const DB_URI = (process.env.DB_URI) ?
-  (process.env.DB_URI) :
-  config.get('DB_URI');
+const DB_CONSOLE = (process.env.DB_CONSOLE) ?
+  (process.env.DB_CONSOLE) :
+  config.get('DB_CONSOLE');
   
 const SECRET = (process.env.SECRET) ?
   (process.env.SECRET) :
@@ -74,7 +74,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
     
-mongoose.connect(DB_URI, { useMongoClient: true });
+mongoose.connect(DB_CONSOLE, { useMongoClient: true });
 
 app.use(expressValidator());
 

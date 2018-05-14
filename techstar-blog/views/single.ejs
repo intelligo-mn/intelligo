@@ -1,0 +1,19 @@
+<%- include partial/header.ejs %>
+<!-- #END# Page Loader -->
+<%- include partial/navbar.ejs %>
+<!-- #Top Bar -->
+<%- include partial/sidebar.ejs %>
+<section class="content">
+
+    <% if (success.length > 0) { %>
+        <div class="alert alert-success"><%= success %></div>
+    <% } %>
+    
+    <div class="jumbotron text-center">
+        <h1><%= data.input %></h1>
+        <p><%= data.output %></p>
+    </div>
+
+</section>
+
+<%- include partial/footer.ejs %>

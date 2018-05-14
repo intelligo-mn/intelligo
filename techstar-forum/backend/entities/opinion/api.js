@@ -8,7 +8,7 @@ const deleteOpinion = require('./controller').deleteOpinion;
  */
 const opinionAPI = (app) => {
   // create an opinion
-  app.post('/api/opinion/newOpinion', (req, res) => {
+  app.post('/forum/forum/api/opinion/newOpinion', (req, res) => {
     if(req.user) {
       createOpinion(req.body).then(
         (result) => { res.send(result); },
@@ -20,7 +20,7 @@ const opinionAPI = (app) => {
   });
 
   // remove an opinion
-  app.delete('/api/opinion/deleteOpinion/:opinion_id', (req, res) => {
+  app.delete('/forum/api/opinion/deleteOpinion/:opinion_id', (req, res) => {
     if(req.user) {
       deleteOpinion(req.params.opinion_id).then(
         (result) => { res.send({ deleted: true }); },
