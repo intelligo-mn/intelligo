@@ -39,6 +39,10 @@ app.listen(app.get('port'), function() {
 });
 ```
 
+# Usage
+
+#### Coming soon ...
+
 ## Contributors
 
 You may contribute in several ways like creating new features, fixing bugs, improving documentation and examples
