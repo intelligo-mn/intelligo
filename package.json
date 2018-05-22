@@ -39,7 +39,7 @@
     "config": "^1.30.0",
     "express": "^4.16.3",
     "eventemitter3": "^3.1.0",
-    "techstar-ai": "^1.0.7",
+    "techstar-ai": "^1.0.6",
     "request": "^2.87.0"
   },
   "devDependencies": {
