@@ -39,7 +39,7 @@ app.listen(app.get('port'), function() {
 });
 ```
 
-# Usage
+# Docs
 
 #### Coming soon ...
 

@@ -113,8 +113,8 @@ class IntelligoBot extends EventEmitter{
         }
         return sum;
     }
-  //ask questions from similar words
-  askSimilarOptions(recipientId, words){
+    //ask questions from similar words
+    askSimilarOptions(recipientId, words){
         this.callSendAPI({
             recipient: {
                 id: recipientId
@@ -126,7 +126,7 @@ class IntelligoBot extends EventEmitter{
         });
     }
   
-  //clear more characters
+    //clear more characters
     cleanJSON(json){
         for(var i=0; i<json.length; i++){
             json[i].input = json[i].input.replace("/[\?\,\:]/", "");
@@ -134,7 +134,7 @@ class IntelligoBot extends EventEmitter{
         return json;
     }
   
-  learn (json){
+    learn (json){
         console.log("AI суралцаж эхэллээ...");
         const startedTime = new Date().getTime();
         // Repeat multiple levels
@@ -155,7 +155,7 @@ class IntelligoBot extends EventEmitter{
         console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
     }
   
-  learnRequest(url){
+    learnRequest(url){
         request(url, function (error, response, body) {
             if (!error && response.statusCode == 200) {
 
@@ -183,7 +183,7 @@ class IntelligoBot extends EventEmitter{
         })
     }
   
-  answer (question) {
+    answer (question) {
         const startedTime = new Date().getTime();
         console.log("AI хариултыг хайж байна...");
         const result =  this.techstarClassifier.classify(question);
@@ -191,7 +191,7 @@ class IntelligoBot extends EventEmitter{
         return result;
     }
   
-  initWebhook() {
+    initWebhook() {
         this.app.get(this.webhook, (req, res) => {
             if (req.query['hub.mode'] === 'subscribe' &&
                 req.query['hub.verify_token'] === this.VALIDATION_TOKEN) {
@@ -219,7 +219,7 @@ class IntelligoBot extends EventEmitter{
         });
     }
   
-  receivedMessage(event) {
+    receivedMessage(event) {
         const senderID = event.sender.id,
             recipientID = event.recipient.id,
             timeOfMessage = event.timestamp,
@@ -522,7 +522,6 @@ class IntelligoBot extends EventEmitter{
   logObject(obj) {
     console.log(JSON.stringify(obj, null, 2));
   }
-
 }
 
 module.exports = IntelligoBot;
