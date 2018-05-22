@@ -1,0 +1,106 @@
+
+<%- include partial/header.ejs %>
+<!-- #END# Page Loader -->
+<%- include partial/navbar.ejs %>
+<!-- #Top Bar -->
+<%- include partial/sidebar.ejs %>
+
+<section class="content">
+    
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>DASHBOARD</h2>
+        </div>
+    
+        <!-- Widgets -->
+        <div class="row clearfix">
+           
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box hover-expand-effect">
+                    <div class="icon bg-indigo">
+                        <i class="material-icons">bubble_chart</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TOTAL WORD</div>
+                        <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box hover-expand-effect">
+                    <div class="icon bg-teal">
+                        <i class="material-icons">person_add</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TOTAL USER</div>
+                        <div class="number count-to" data-from="0" data-to="1" data-speed="1000" data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            Words
+                            <% if (success.length > 0) { %>
+                                <small>Message <code> <%= success %></code></small>
+                            <% } %>
+                        </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                    
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Japan character</th>
+                                    <th>English</th>
+                                    <th>Mongolia</th>
+                                    <th>Part of speech</th>
+                                    <th>Kanji</th>
+                                    <th>Level</th>
+                                    <th>Control</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for (var word of words) { %>
+                                    <tr>
+                                    
+                                        <th></th>
+                                        <td><%= word.character%></td>
+                                        <td><%= word.meanings %></td>
+                                        <td><%= word.meaningsMongolia %></td>
+                                        <td><%= word.partOfSpeech %></td>
+                                        <td><%= word.kanji %></td>
+                                        <td><%= word.level %></td>
+                                        <td>
+                                            <a href="/words/<%= word.slug %>/edit" class="btn btn-sm btn-primary">Edit</a>
+                                            <a href="/words/<%= word.slug %>/delete" class="btn btn-sm btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<%- include partial/footer.ejs %>

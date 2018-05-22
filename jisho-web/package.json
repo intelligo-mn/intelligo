@@ -1,0 +1,48 @@
+{
+  "name": "techstar-jisho",
+  "version": "1.0.2",
+  "description": "Jisho",
+  "author": "Tortuvshin Byambaa",
+  "homepage": "https://jisho.techstar.cloud",
+  "copyright": "Copyright 2018 Techstar, Inc.",
+  "license": "MIT",
+  "main": "node app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/techstar-cloud/jisho-web.git"
+  },
+    
+  "main": "jisho.js",
+  
+  "scripts": {
+    "start": "node app.js"
+  },
+  
+  "dependencies": {
+    "bcrypt-nodejs": "latest",
+    "body-parser": "^1.15.2",
+    "config": "^1.24.0",
+    "cookie-parser": "^1.4.3",
+    "connect-flash": "^0.1.1",
+    "ejs": "^2.5.1",
+    "express": "^4.15.5",
+    "express-ejs-layouts": "^2.2.0",
+    "express-session": "^1.14.2",
+    "express-validator": "^2.20.8",
+    "mongoose": "^4.13.0",
+    "morgan": "^1.7.0",
+    "lodash": "^4.17.4",
+    "passport-github": "^1.1.0",
+    "passport": "~0.3.2",
+    "passport-facebook": "~2.1.1",
+    "passport-google-oauth": "~1.0.0",
+    "passport-local": "~1.0.0",
+    "passport-twitter": "~1.0.4",
+    "path": "^0.12.7",
+    "request": "^2.79.0",
+    "slug": "^0.9.1"
+  },
+  "cacheDirectories": [
+    "node_modules"
+  ]
+}

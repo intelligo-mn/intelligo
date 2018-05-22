@@ -1,0 +1,40 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/nix/store/ajr6i77s89gjfjm59aazc16b5rvb39n7-nodejs-4.3.1/bin/node',
+1 verbose cli   '/mnt/shared/sbin/npm',
+1 verbose cli   'run',
+1 verbose cli   'start' ]
+2 info using npm@2.14.12
+3 info using node@v4.3.1
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info prestart techstar-platform@0.5.5
+6 info start techstar-platform@0.5.5
+7 verbose unsafe-perm in lifecycle true
+8 info techstar-platform@0.5.5 Failed to exec start script
+9 verbose stack Error: techstar-platform@0.5.5 start: `node techstar-server/bin/www`
+9 verbose stack Exit status 1
+9 verbose stack     at EventEmitter.<anonymous> (/nix/store/ajr6i77s89gjfjm59aazc16b5rvb39n7-nodejs-4.3.1/lib/node_modules/npm/lib/utils/lifecycle.js:214:16)
+9 verbose stack     at emitTwo (events.js:87:13)
+9 verbose stack     at EventEmitter.emit (events.js:172:7)
+9 verbose stack     at ChildProcess.<anonymous> (/nix/store/ajr6i77s89gjfjm59aazc16b5rvb39n7-nodejs-4.3.1/lib/node_modules/npm/lib/utils/spawn.js:24:14)
+9 verbose stack     at emitTwo (events.js:87:13)
+9 verbose stack     at ChildProcess.emit (events.js:172:7)
+9 verbose stack     at maybeClose (internal/child_process.js:821:16)
+9 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+10 verbose pkgid techstar-platform@0.5.5
+11 verbose cwd /home/ubuntu/workspace
+12 error Linux 4.9.80-c9
+13 error argv "/nix/store/ajr6i77s89gjfjm59aazc16b5rvb39n7-nodejs-4.3.1/bin/node" "/mnt/shared/sbin/npm" "run" "start"
+14 error node v4.3.1
+15 error npm  v2.14.12
+16 error code ELIFECYCLE
+17 error techstar-platform@0.5.5 start: `node techstar-server/bin/www`
+17 error Exit status 1
+18 error Failed at the techstar-platform@0.5.5 start script 'node techstar-server/bin/www'.
+18 error This is most likely a problem with the techstar-platform package,
+18 error not with npm itself.
+18 error Tell the author that this fails on your system:
+18 error     node techstar-server/bin/www
+18 error You can get their info via:
+18 error     npm owner ls techstar-platform
+18 error There is likely additional logging output above.
+19 verbose exit [ 1, true ]
