@@ -56,7 +56,7 @@
     "socket.io": "^2.0.4",
     "share": "0.6.3",
     "techstar-ai": "^1.0.0",
-    "techstar-uptime": "1.2.8",
+    "techstar-uptime": "^1.2.9",
     "techstar-jisho": "1.0.0"
   },
   "cacheDirectories": [
