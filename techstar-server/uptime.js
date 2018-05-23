@@ -1,6 +1,6 @@
 'use strict';
 
-const express  = require( 'express'),
+const express  = require('express'),
       config   = require('config'),
       Uptime   = require('techstar-uptime');
 
@@ -9,6 +9,7 @@ const app = express();
 const bot = new Uptime({
   SLACK_WEBHOOK_URL: config.get('SLACK_WEBHOOK_URL')
 });
+
 bot.monitor([
   {
     url: 'https://www.techstar.cloud', // URL of service we'll be pining
