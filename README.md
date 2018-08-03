@@ -10,13 +10,13 @@ Intelligo is a JavaScript Framework to build Facebook Messenger's Chat bots.
 [![GitHub license](https://img.shields.io/github/license/techstar-cloud/intelligo.svg)](https://github.com/techstar-cloud/intelligo/blob/master/LICENSE)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/techstar-cloud/intelligo.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Ftechstar-cloud%2Fintelligo)
 
-# Installation
+## Installation
 
 ```
 npm install intelligo --save
 ```
 
-# Usage
+## Usage
 
 ```js
 'use strict';
@@ -56,7 +56,9 @@ app.listen(app.get('port'), function() {
 });
 ```
 
-# Documentation
+## Documentation
+
+### Training
 
 Use `bot.learn()` to train the neural network with an array of training data. The network has to be trained with all the data in bulk in one call to `bot.learn()`. More training patterns will probably take longer to train, but will usually result in a network better at classifying new patterns.
 
@@ -71,19 +73,41 @@ bot.learn([
 var result = bot.answer('I feel great about the world!');  // 'happy'
 ```
 
+#### `bot.learn(data);`
+
+#### `bot.answer(text);`
+
+#### `sendTextMessage(senderId, message);`
+
+#### `setGreeting(text);`
+
+### Events
+
+#### `bot.on('message', (event));`
+
+Triggered when a message is sent to the bot.
 
 ```js
 bot.on('message', (event) => {
    
-  const senderID = event.sender.id,
-        message = event.message;
-      
   if (message.text) {
       const result = bot.answer(message.text);
-      bot.sendTextMessage(senderID, result);
+      bot.sendTextMessage(event.sender.id, event.message);
   } 
 });
 ```
+
+#### `bot.on('optin', (senderId, message, actions));`
+
+#### `bot.on('postback', (senderId, message, actions));`
+
+#### `bot.on('delivery', (senderId, message, actions));`
+
+#### `bot.on('authentication', (senderId, message, actions));`
+
+#### `bot.on('referral', (senderId, message, actions));`
+
+#### `bot.on('account_link', (senderId, message, actions));`
 
 ## Contributors
 
