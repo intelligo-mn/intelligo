@@ -14,15 +14,14 @@ class IntelligoBot extends EventEmitter{
     if (!options || (options && (!options.PAGE_ACCESS_TOKEN || !options.VALIDATION_TOKEN || !options.APP_SECRET))) {
       throw new Error("You need to specify an PAGE_ACCESS_TOKEN, VALIDATION_TOKEN and APP_SECRET");
     }
-    this._PAGE_ACCESS_TOKEN = options.PAGE_ACCESS_TOKEN;
-    this._VALIDATION_TOKEN = options.VALIDATION_TOKEN;
-    this._APP_SECRET = options.APP_SECRET;
-    this._api = options.api;
-    this._app = options.app || express();
-    this._webhook = options.webhook || '/webhook';
-    this._webhook = this._webhook.charAt(0) !== '/' ? `/${this._webhook}` : this._webhook;
+    this.PAGE_ACCESS_TOKEN = options.PAGE_ACCESS_TOKEN;
+    this.VALIDATION_TOKEN = options.VALIDATION_TOKEN;
+    this.APP_SECRET = options.APP_SECRET;
+    this.api = options.api;
+    this.app = options.app || express();
+    this.webhook = options.webhook || '/webhook';
     this.app.use(bodyParser.json({ verify: this.verifyRequestSignature.bind(this) }));
-    this._techstarClassifier;
+    this.techstarClassifier;
   }
 
   //to find clarification and search for user search data
@@ -153,8 +152,7 @@ class IntelligoBot extends EventEmitter{
           if (data.object === 'page') {
               for(const pageEntry of data.entry){
                   for(const messagingEvent of pageEntry.messaging){
-                      if(messagingEvent.message) this.receivedMessage(messagingEvent);
-                      else console.log("Webhook received unknown messagingEvent: ", messagingEvent);
+                    this.handleEvent(messagingEvent);
                   }
               }
 
@@ -162,54 +160,30 @@ class IntelligoBot extends EventEmitter{
           }
       });
   }
-
-  receivedMessage(event) {
-      const senderID = event.sender.id,
-          recipientID = event.recipient.id,
-          timeOfMessage = event.timestamp,
-          message = event.message;
-
-      console.log("Received message for user %d and page %d at %d with message:",
-          senderID, recipientID, timeOfMessage);
-      console.log(JSON.stringify(message));
-
-      const isEcho = message.is_echo,
-          messageId = message.mid,
-          appId = message.app_id,
-          metadata = message.metadata,
-          messageText = message.text,
-          messageAttachments = message.attachments,
-          quickReply = message.quick_reply;
-
-      if (isEcho) {
-          console.log("Received echo for message %s and app %d with metadata %s",
-              messageId, appId, metadata);
-          return;
-      } else if (quickReply) {
-          console.log("Quick reply for message %s with payload %s",
-              messageId, quickReply.payload);
-
-          this.sendTextMessage(senderID, "Quick reply tapped");
-          return;
-      }
-
-      if (messageText) {
-
-          const result = this.answer(messageText);
-
-          if (messageText == "update")
-              this.sendTextMessage(senderID, this.updateJSON());
-          else if (this.textMatches(messageText, "get started"))
-              this.sendWelcome(senderID);
-          else if (this.textMatches(messageText, "help"))
-              this.sendHelp(senderID);
-          else if(result == null || result == '')
-              this.sendTextMessage(senderID, "Уучлаарай, та асуултаа тодорхтой оруулна уу.");
-          else
-              this.sendTextMessage(senderID, result+"");
-      } else if (messageAttachments) {
-          this.sendTextMessage(senderID, "Message with attachment received");
-      }
+  
+  handleEvent(message) { 
+    if (message.optin) {
+        let optin = message.optin.ref;
+        this.emit('optin', message.sender.id, message, optin);
+    } else if (message.message) {
+         this.emit('message', message);
+    } else if (message.delivery) {
+        let mids = message.delivery.mids;
+        this.emit('delivery', message.sender.id, message, mids);
+    } else if (message.read) {
+        let recipient = message.recipient.id;
+        this.emit('read', message.sender.id, recipient, message.read);
+    } else if (message.postback || (message.message && !message.message.is_echo && message.message.quick_reply)) {
+        let postback = (message.postback && message.postback.payload) || message.message.quick_reply.payload;
+        let ref = message.postback && message.postback.referral && message.postback.referral.ref;
+        this.emit('postback', message.sender.id, message, postback, ref);
+    } else if (message.referral) {
+        let ref = message.referral.ref;
+        this.emit('referral', message.sender.id, message, ref);
+    } else if (message.account_linking) {
+        let link = message.account_linking;
+        this.emit('account_link', message.sender.id, message, link);
+    }
   }
 
   verifyRequestSignature(req, res, buf) {
@@ -369,7 +343,10 @@ class IntelligoBot extends EventEmitter{
       });
   }
 
-  sendWelcome(recipientId, text) {
+  sendWelcome(recipientId, greetings, text) {
+      // this (aka "the context") is a special keyword inside each function and its value only depends on how the function was called, 
+      // not how/when/where it was defined. It is not affected by lexical scopes, like other variables
+      const self = this;
       request({
               url: 'https://graph.facebook.com/v2.11/' + recipientId
               + '?access_token=' + this.PAGE_ACCESS_TOKEN
@@ -379,22 +356,11 @@ class IntelligoBot extends EventEmitter{
 
               const fbProfileBody = JSON.parse(body),
                   userName = fbProfileBody["first_name"],
-                  greetings = ["Hey", "Hello", "Good Evening", "Good Morning", "What's up"],
-                  randomGreeting = this.getRandomItemFromArray(greetings),
+                  randomGreeting = greetings[self.getRandomNumber(0, greetings.length - 1)],
                   welcomeMsg = `${randomGreeting} ${userName} ${text}`;
-              this.sendTextMessage(recipientId, welcomeMsg);
+              self.sendTextMessage(recipientId, welcomeMsg);
           }
       );
-  }
-
-  sendHelp(recipientId) {
-        this.sendTextMessage(recipientId, `
-    🤖 Help 👉
-
-    Help = this...
-    why = ??
-    how = source code link
-    `);
   }
 
   receivedPostback(event) {
@@ -448,11 +414,6 @@ class IntelligoBot extends EventEmitter{
 
   textMatches(message, matchString) {
     return message.toLowerCase().indexOf(matchString) != -1;
-  }
-
-  getRandomItemFromArray(items) {
-    var random_item = items[this.getRandomNumber(0, items.length - 1)];
-    return random_item;
   }
 
   logObject(obj) {
