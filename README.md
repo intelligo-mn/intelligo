@@ -73,16 +73,6 @@ bot.learn([
 var result = bot.answer('I feel great about the world!');  // 'happy'
 ```
 
-#### `bot.learn(data);`
-
-#### `bot.answer(text);`
-
-#### `sendTextMessage(senderId, message);`
-
-#### `setGreeting(text);`
-
-### Events
-
 #### `bot.on('message', (event));`
 
 Triggered when a message is sent to the bot.
@@ -96,18 +86,6 @@ bot.on('message', (event) => {
   } 
 });
 ```
-
-#### `bot.on('optin', (senderId, message, actions));`
-
-#### `bot.on('postback', (senderId, message, actions));`
-
-#### `bot.on('delivery', (senderId, message, actions));`
-
-#### `bot.on('authentication', (senderId, message, actions));`
-
-#### `bot.on('referral', (senderId, message, actions));`
-
-#### `bot.on('account_link', (senderId, message, actions));`
 
 ## Contributors
 
