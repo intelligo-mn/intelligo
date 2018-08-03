@@ -16,7 +16,7 @@ Intelligo is a JavaScript Framework to build Facebook Messenger's Chat bots.
 npm install intelligo --save
 ```
 
-## Usage
+## Example
 
 ```js
 'use strict';
@@ -56,8 +56,6 @@ app.listen(app.get('port'), function() {
 });
 ```
 
-## Documentation
-
 ### Training
 
 Use `bot.learn()` to train the neural network with an array of training data. The network has to be trained with all the data in bulk in one call to `bot.learn()`. More training patterns will probably take longer to train, but will usually result in a network better at classifying new patterns.
@@ -86,6 +84,10 @@ bot.on('message', (event) => {
   } 
 });
 ```
+
+## Docs
+
+#### Coming soon ...
 
 ## Contributors
 
