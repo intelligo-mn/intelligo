@@ -5,7 +5,6 @@ const express = require( 'express'),
       bodyParser = require( 'body-parser'),
       crypto = require( 'crypto'),
       request = require( 'request'),
-      fs = require('fs'),
       TechstarAI = require('techstar-ai');
 
 class IntelligoBot extends EventEmitter{
@@ -24,60 +23,7 @@ class IntelligoBot extends EventEmitter{
     this.techstarClassifier;
   }
 
-  //to find clarification and search for user search data
-  askMore(senderID, messageText){
-    var similarWords = this.findSimilarKeyword(messageText);
-    if(similarWords.length != 0){
-      this.sendTextMessage(senderID, "Дараах түлхүүр үгүүдээс сонгоно уу");
-      this.sendTextMessage(senderID, similarWords);
-      // askSimilarOptions(senderID, similarWords);
-    }
-    else
-      this.sendTextMessage(senderID, "Таны хайсан өгөгдөл олдсонгүй!");
-  }
-
-  //find similar questions when searching for a findable data
-  findSimilarKeyword(keyword){
-      //Send neighboring words to arrays as an option
-      let similarQuestions = new Array();
-      let sum = "";
-
-      var json = JSON.parse(fs.readFileSync("./data/training_data.json", "utf8"));
-      for(const data of json){
-          const words = data.input.split(" ");
-          if(words.includes(keyword)){
-              const index = words.indexOf(keyword);
-              const neighborWord = index === words.length ? words[index-1] + " " + keyword : keyword + " " + words[index+1];
-              if(!sum.includes(neighborWord)){
-                  sum += sum == '' ? neighborWord : ',' + neighborWord;
-                  similarQuestions.push({ "content_type": "text", "title": neighborWord });
-              }
-          }
-      }
-      return sum;
-  }
-  //ask questions from similar words
-  askSimilarOptions(recipientId, words){
-      this.callSendAPI({
-          recipient: {
-              id: recipientId
-          },
-          message: {
-              text: "Since your search is too general, select from the following options",
-              quick_replies: words
-          }
-      });
-  }
-
-  //clear more characters
-  cleanJSON(json){
-      for(var i=0; i<json.length; i++){
-          json[i].input = json[i].input.replace("/[\?\,\:]/", "");
-      }
-      return json;
-  }
-
-  learn (json){
+  learn (data){
       console.log("AI суралцаж эхэллээ...");
       const startedTime = new Date().getTime();
       // Repeat multiple levels
@@ -94,7 +40,7 @@ class IntelligoBot extends EventEmitter{
           featureExtractor: WordExtractor
       });
 
-      this.techstarClassifier.trainBatch(JSON.parse(fs.readFileSync(json, 'utf8')));
+      this.techstarClassifier.trainBatch(data);
       console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
   }
 
