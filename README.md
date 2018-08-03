@@ -33,21 +33,56 @@ const bot = new Intelligo({
   app: app
 });
 
+//Train the neural network with an array of training data.
+bot.learn([
+  { input: 'I feel great about the world!', output: 'happy' },
+  { input: 'The world is a terrible place!', output: 'sad' },
+]);
+
+//Subscribe to messages sent by the user with the bot.on() method.
+bot.on('message', (event) => {
+   
+  const senderID = event.sender.id,
+        message = event.message;
+      
+  if (message.text) {
+      const result = bot.answer(message.text);
+      bot.sendTextMessage(senderID, result);
+  } 
+});
 app.set('port', process.env.PORT || 5000);
 app.listen(app.get('port'), function() {
   console.log('Server is running on port', app.get('port'));
 });
 ```
 
-# Training
+# Documentation
 
-Learn from an array of input-output pairs
+Use `bot.learn()` to train the neural network with an array of training data. The network has to be trained with all the data in bulk in one call to `bot.learn()`. More training patterns will probably take longer to train, but will usually result in a network better at classifying new patterns.
 
-```
+Example using strings with inputs and outputs:
+
+```js
 bot.learn([
     { input: 'I feel great about the world!', output: 'happy' },
     { input: 'The world is a terrible place!', output: 'sad' },
   ]);
+  
+var result = bot.answer('I feel great about the world!');  // 'happy'
+```
+
+
+```js
+bot.on('message', (event) => {
+   
+  const senderID = event.sender.id,
+        message = event.message;
+      
+  if (message.text) {
+      const result = bot.answer(message.text);
+      bot.sendTextMessage(senderID, result);
+  } 
+});
 ```
 
 ## Contributors
