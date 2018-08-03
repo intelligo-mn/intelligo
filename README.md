@@ -39,9 +39,16 @@ app.listen(app.get('port'), function() {
 });
 ```
 
-# Docs
+# Training
 
-#### Coming soon ...
+Learn from an array of input-output pairs
+
+```
+bot.learn([
+    { input: 'I feel great about the world!', output: 'happy' },
+    { input: 'The world is a terrible place!', output: 'sad' },
+  ]);
+```
 
 ## Contributors
 
