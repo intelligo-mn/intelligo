@@ -234,7 +234,7 @@ class IntelligoBot extends EventEmitter{
 
   setGreeting(text){
     request({
-      url: 'https://graph.facebook.com/v2.9/me/thread_settings',
+      url: 'https://graph.facebook.com/v2.11/me/thread_settings',
       qs: {access_token: this.PAGE_ACCESS_TOKEN},
       method: 'POST',
       json: {
@@ -346,7 +346,7 @@ class IntelligoBot extends EventEmitter{
 
   callSendAPI(messageData) {
       request({
-          uri: 'https://graph.facebook.com/v2.9/me/messages',
+          uri: 'https://graph.facebook.com/v2.11/me/messages',
           qs: { access_token: this.PAGE_ACCESS_TOKEN },
           method: 'POST',
           json: messageData
@@ -369,9 +369,9 @@ class IntelligoBot extends EventEmitter{
       });
   }
 
-  sendWelcome(recipientId) {
+  sendWelcome(recipientId, text) {
       request({
-              url: 'https://graph.facebook.com/v2.8/' + recipientId
+              url: 'https://graph.facebook.com/v2.11/' + recipientId
               + '?access_token=' + this.PAGE_ACCESS_TOKEN
           },
           function (error, response, body) {
@@ -381,10 +381,7 @@ class IntelligoBot extends EventEmitter{
                   userName = fbProfileBody["first_name"],
                   greetings = ["Hey", "Hello", "Good Evening", "Good Morning", "What's up"],
                   randomGreeting = this.getRandomItemFromArray(greetings),
-                  welcomeMsg = `${randomGreeting} ${userName},
-I am Techstar AI bot.
-¯\\_(ツ)_/¯ .
-      `;
+                  welcomeMsg = `${randomGreeting} ${userName} ${text}`;
               this.sendTextMessage(recipientId, welcomeMsg);
           }
       );
@@ -413,7 +410,6 @@ I am Techstar AI bot.
   }
 
   sendReadReceipt(recipientId) {
-      console.log("Sending a read receipt to mark message as seen");
 
       this.callSendAPI({
           recipient: {
@@ -424,7 +420,6 @@ I am Techstar AI bot.
   }
 
   sendTypingOn(recipientId) {
-      console.log("Turning typing indicator on");
 
       this.callSendAPI({
           recipient: {
@@ -435,8 +430,6 @@ I am Techstar AI bot.
   }
 
   sendTypingOff(recipientId) {
-      console.log("Turning typing indicator off");
-
       this.callSendAPI({
           recipient: {
               id: recipientId
