@@ -112,7 +112,7 @@ class IntelligoBot extends EventEmitter{
     if (message.optin) {
         let optin = message.optin.ref;
         this.emit('optin', message.sender.id, message, optin);
-    } else if (message.message) {
+    } else if (message.message && !event.message.is_echo) {
          this.emit('message', message);
     } else if (message.delivery) {
         let mids = message.delivery.mids;
