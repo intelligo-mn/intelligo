@@ -16,6 +16,7 @@ class IntelligoBot extends EventEmitter{
     this.PAGE_ACCESS_TOKEN = options.PAGE_ACCESS_TOKEN;
     this.VALIDATION_TOKEN = options.VALIDATION_TOKEN;
     this.APP_SECRET = options.APP_SECRET;
+    this.FB_URL = options.FB_URL || 'https://graph.facebook.com/v2.12/';
     this.api = options.api;
     this.app = options.app || express();
     this.webhook = options.webhook || '/webhook';
@@ -154,7 +155,7 @@ class IntelligoBot extends EventEmitter{
 
   setGreeting(text){
     request({
-      url: 'https://graph.facebook.com/v2.11/me/thread_settings',
+      url: `${this.FB_URL}me/thread_settings`,
       qs: {access_token: this.PAGE_ACCESS_TOKEN},
       method: 'POST',
       json: {
@@ -266,7 +267,7 @@ class IntelligoBot extends EventEmitter{
 
   callSendAPI(messageData) {
       request({
-          uri: 'https://graph.facebook.com/v2.11/me/messages',
+          uri: `${this.FB_URL}me/messages`,
           qs: { access_token: this.PAGE_ACCESS_TOKEN },
           method: 'POST',
           json: messageData
@@ -294,8 +295,8 @@ class IntelligoBot extends EventEmitter{
       // not how/when/where it was defined. It is not affected by lexical scopes, like other variables
       const self = this;
       request({
-              url: 'https://graph.facebook.com/v2.11/' + recipientId
-              + '?access_token=' + this.PAGE_ACCESS_TOKEN
+              url: `${this.FB_URL}` + recipientId
+              + `?access_token=` + this.PAGE_ACCESS_TOKEN
           },
           function (error, response, body) {
               if (error || response.statusCode != 200) return;
