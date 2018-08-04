@@ -108,28 +108,28 @@ class IntelligoBot extends EventEmitter{
       });
   }
   
-  handleEvent(message) { 
-    if (message.optin) {
-        let optin = message.optin.ref;
-        this.emit('optin', message.sender.id, message, optin);
-    } else if (message.message && !event.message.is_echo) {
-         this.emit('message', message);
-    } else if (message.delivery) {
-        let mids = message.delivery.mids;
-        this.emit('delivery', message.sender.id, message, mids);
-    } else if (message.read) {
-        let recipient = message.recipient.id;
-        this.emit('read', message.sender.id, recipient, message.read);
-    } else if (message.postback || (message.message && !message.message.is_echo && message.message.quick_reply)) {
-        let postback = (message.postback && message.postback.payload) || message.message.quick_reply.payload;
-        let ref = message.postback && message.postback.referral && message.postback.referral.ref;
-        this.emit('postback', message.sender.id, message, postback, ref);
-    } else if (message.referral) {
-        let ref = message.referral.ref;
-        this.emit('referral', message.sender.id, message, ref);
-    } else if (message.account_linking) {
-        let link = message.account_linking;
-        this.emit('account_link', message.sender.id, message, link);
+  handleEvent(event) { 
+    if (event.optin) {
+        let optin = event.optin.ref;
+        this.emit('optin', event.sender.id, event, optin);
+    } else if (event.message && !event.message.is_echo) {
+         this.emit('message', event);
+    } else if (event.delivery) {
+        let mids = event.delivery.mids;
+        this.emit('delivery', event.sender.id, event, mids);
+    } else if (event.read) {
+        let recipient = event.recipient.id;
+        this.emit('read', event.sender.id, recipient, event.read);
+    } else if (event.postback || (event.message && !event.message.is_echo && event.message.quick_reply)) {
+        let postback = (event.postback && event.postback.payload) || event.message.quick_reply.payload;
+        let ref = event.postback && event.postback.referral && event.postback.referral.ref;
+        this.emit('postback', event.sender.id, event, postback, ref);
+    } else if (event.referral) {
+        let ref = event.referral.ref;
+        this.emit('referral', event.sender.id, event, ref);
+    } else if (event.account_linking) {
+        let link = event.account_linking;
+        this.emit('account_link', event.sender.id, event, link);
     }
   }
 
