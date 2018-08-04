@@ -33,6 +33,8 @@ const bot = new Intelligo({
   app: app
 });
 
+bot.initWebhook();
+
 //Train the neural network with an array of training data.
 bot.learn([
   { input: 'I feel great about the world!', output: 'happy' },
