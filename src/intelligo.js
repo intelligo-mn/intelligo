@@ -125,7 +125,7 @@ class IntelligoBot extends EventEmitter{
       }
   }
 
-  setGreeting(text){
+  addGreeting(text){
     request({
       url: `${this.FB_URL}me/thread_settings`,
       qs: {access_token: this.PAGE_ACCESS_TOKEN},
@@ -143,7 +143,64 @@ class IntelligoBot extends EventEmitter{
           console.log('Error: ', response.body.error);
       }
     });
-
+  }
+  
+  addGetStartedButton(){
+    request({
+        url: `${this.FB_URL}me/messenger_profile`,
+        qs: { access_token: this.PAGE_ACCESS_TOKEN },
+        method: 'POST',
+        json:{
+      "get_started":{
+        "payload":"GET_STARTED_PAYLOAD"
+       }
+     }
+    }, function(error, response, body) {
+        
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+  }
+  
+  addPersistentMenu(persistent_menu){
+    request({
+      url: `${this.FB_URL}me/messenger_profile`,
+      qs: {access_token: this.PAGE_ACCESS_TOKEN},
+      method: 'POST',
+      json: {
+        "persistent_menu": persistent_menu
+      }
+    }, function(error, response, body) {
+      if (error) {
+        console.log('Error sending message: ', error);
+      } else if (response.body.error) {
+        console.log('Error: ', response.body.error);
+      }
+    });
+  }
+  
+  removePersistentMenu(){
+    request({
+        url: `${this.FB_URL}me/thread_settings`,
+        qs: { access_token: this.PAGE_ACCESS_TOKEN },
+        method: 'POST',
+        json:{
+            setting_type : "call_to_actions",
+            thread_state : "existing_thread",
+            call_to_actions:[ ]
+        }
+    
+    }, function(error, response, body) {
+        console.log(response)
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
   }
 
   sendTextMessage(recipientId, messageText) {
