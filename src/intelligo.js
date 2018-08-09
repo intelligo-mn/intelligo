@@ -82,6 +82,7 @@ class IntelligoBot extends EventEmitter{
   
   handleEvent(event) { 
     if (event.optin) {
+        this.receivedAuthentication(event);
         let optin = event.optin.ref;
         this.emit('optin', event.sender.id, event, optin);
     } else if (event.message && !event.message.is_echo) {
@@ -95,7 +96,7 @@ class IntelligoBot extends EventEmitter{
     } else if (event.postback || (event.message && !event.message.is_echo && event.message.quick_reply)) {
         let postback = (event.postback && event.postback.payload) || event.message.quick_reply.payload;
         let ref = event.postback && event.postback.referral && event.postback.referral.ref;
-        this.emit('postback', event.sender.id, event, postback, ref);
+        this.emit('postback', event.sender.id, postback);
     } else if (event.referral) {
         let ref = event.referral.ref;
         this.emit('referral', event.sender.id, event, ref);
@@ -123,6 +124,27 @@ class IntelligoBot extends EventEmitter{
               throw new Error("Couldn't validate the request signature.");
           }
       }
+  }
+  
+  receivedAuthentication(event) {
+    const senderID = event.sender.id;
+    const recipientID = event.recipient.id;
+    const timeOfAuth = event.timestamp;
+  
+    // The 'ref' field is set in the 'Send to Messenger' plugin, in the 'data-ref'
+    // The developer can set this to an arbitrary value to associate the 
+    // authentication callback with the 'Send to Messenger' click event. This is
+    // a way to do account linking when the user clicks the 'Send to Messenger' 
+    // plugin.
+    const passThroughParam = event.optin.ref;
+  
+    console.log("Received authentication for user %d and page %d with pass " +
+      "through param '%s' at %d", senderID, recipientID, passThroughParam, 
+      timeOfAuth);
+  
+    // When an authentication is received, we'll send a message back to the sender
+    // to let them know it was successful.
+    this.sendTextMessage(senderID, "Authentication successful");
   }
 
   addGreeting(text){
@@ -213,81 +235,21 @@ class IntelligoBot extends EventEmitter{
           }
       });
   }
-
-  sendImageMessage(recipientId, imageUrl) {
-      this.callSendAPI({
+  /**
+   * @param {Recipient|String} recipientId
+   * @param {String} type Must be 'image', 'audio', 'video' or 'file'.
+   * @param {String} url URL of the attachment.
+   */
+  sendAttachment(recipientId, type, url){
+    this.callSendAPI({
           recipient: {
               id: recipientId
           },
           message: {
               attachment: {
-                  type: "image",
+                  type: type,
                   payload: {
-                      url:  imageUrl
-                  }
-              }
-          }
-      });
-  }
-
-  sendGifMessage(recipientId, gifUrl) {
-      this.callSendAPI({
-          recipient: {
-              id: recipientId
-          },
-          message: {
-              attachment: {
-                  type: "image",
-                  payload: {
-                      url: gifUrl
-                  }
-              }
-          }
-      });
-  }
-
-  sendAudioMessage(recipientId, audioUrl) {
-      this.callSendAPI({
-          recipient: {
-              id: recipientId
-          },
-          message: {
-              attachment: {
-                  type: "audio",
-                  payload: {
-                      url: audioUrl
-                  }
-              }
-          }
-      });
-  }
-
-  sendVideoMessage(recipientId, videoUrl) {
-      this.callSendAPI({
-          recipient: {
-              id: recipientId
-          },
-          message: {
-              attachment: {
-                  type: "video",
-                  payload: {
-                      url: videoUrl
-                  }
-              }
-          }
-      });
-  }
-
-  sendFileMessage(recipientId, fileUrl) {
-      this.callSendAPI({
-          recipient: {
-              id: recipientId
-          },
-          message: {
-              attachment: {
-                  type: "file",
-                  payload: {
-                      url: fileUrl
+                      url:  url
                   }
               }
           }
