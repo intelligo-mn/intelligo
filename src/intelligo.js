@@ -82,7 +82,6 @@ class IntelligoBot extends EventEmitter{
   
   handleEvent(event) { 
     if (event.optin) {
-        this.receivedAuthentication(event);
         let optin = event.optin.ref;
         this.emit('optin', event.sender.id, event, optin);
     } else if (event.message && !event.message.is_echo) {
@@ -126,27 +125,6 @@ class IntelligoBot extends EventEmitter{
       }
   }
   
-  receivedAuthentication(event) {
-    const senderID = event.sender.id;
-    const recipientID = event.recipient.id;
-    const timeOfAuth = event.timestamp;
-  
-    // The 'ref' field is set in the 'Send to Messenger' plugin, in the 'data-ref'
-    // The developer can set this to an arbitrary value to associate the 
-    // authentication callback with the 'Send to Messenger' click event. This is
-    // a way to do account linking when the user clicks the 'Send to Messenger' 
-    // plugin.
-    const passThroughParam = event.optin.ref;
-  
-    console.log("Received authentication for user %d and page %d with pass " +
-      "through param '%s' at %d", senderID, recipientID, passThroughParam, 
-      timeOfAuth);
-  
-    // When an authentication is received, we'll send a message back to the sender
-    // to let them know it was successful.
-    this.sendTextMessage(senderID, "Authentication successful");
-  }
-
   addGreeting(text){
     request({
       url: `${this.FB_URL}me/thread_settings`,
@@ -254,6 +232,26 @@ class IntelligoBot extends EventEmitter{
               }
           }
       });
+  }
+  
+  sendButtonMessage(recipientId, text, buttons) {
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "button",
+            text: text,
+            buttons: buttons
+          }
+        }
+      }
+    };  
+  
+    this.callSendAPI(messageData);
   }
 
   callSendAPI(messageData) {
