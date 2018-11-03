@@ -9,6 +9,8 @@ Intelligo is a JavaScript Framework to build Facebook Messenger's Chat bots.
 [![npm](https://img.shields.io/npm/dt/intelligo.svg?style=plastic)](https://www.npmjs.com/package/intelligo)
 [![GitHub license](https://img.shields.io/github/license/techstar-cloud/intelligo.svg)](https://github.com/techstar-cloud/intelligo/blob/master/LICENSE)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/techstar-cloud/intelligo.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Ftechstar-cloud%2Fintelligo)
+[![Backers on Open Collective](https://opencollective.com/intelligo/backers/badge.svg)](#backers) 
+[![Sponsors on Open Collective](https://opencollective.com/intelligo/sponsors/badge.svg)](#sponsors) 
 
 ## Installation
 
@@ -96,6 +98,34 @@ bot.on('message', (event) => {
 You may contribute in several ways like creating new features, fixing bugs, improving documentation and examples
 or translating any document here to your language. [Find more information in CONTRIBUTING.md](CONTRIBUTING.md).
 <a href="https://github.com/techstar-cloud/intelligo/graphs/contributors">Contributors</a>
+
+This project exists thanks to all the people who contribute. 
+<a href="https://github.com/techstar-cloud/intelligo/contributors"><img src="https://opencollective.com/intelligo/contributors.svg?width=890&button=false" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/intelligo#backer)]
+
+<a href="https://opencollective.com/intelligo#backers" target="_blank"><img src="https://opencollective.com/intelligo/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/intelligo#sponsor)]
+
+<a href="https://opencollective.com/intelligo/sponsor/0/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/intelligo/sponsor/1/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/intelligo/sponsor/2/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/intelligo/sponsor/3/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/intelligo/sponsor/4/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/intelligo/sponsor/5/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/intelligo/sponsor/6/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/intelligo/sponsor/7/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/intelligo/sponsor/8/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/intelligo/sponsor/9/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/9/avatar.svg"></a>
+
+
 
 ## License
 
