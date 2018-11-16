@@ -17,7 +17,6 @@ class IntelligoBot extends EventEmitter{
     this.VALIDATION_TOKEN = options.VALIDATION_TOKEN;
     this.APP_SECRET = options.APP_SECRET;
     this.FB_URL = options.FB_URL || 'https://graph.facebook.com/v2.12/';
-    this.api = options.api;
     this.app = options.app || express();
     this.webhook = options.webhook || '/webhook';
     this.app.use(bodyParser.json({ verify: this.verifyRequestSignature.bind(this) }));
@@ -25,8 +24,6 @@ class IntelligoBot extends EventEmitter{
   }
 
   learn (data){
-      console.log("AI суралцаж эхэллээ...");
-      const startedTime = new Date().getTime();
       // Repeat multiple levels
       const TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
           binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
@@ -42,14 +39,10 @@ class IntelligoBot extends EventEmitter{
       });
 
       this.techstarClassifier.trainBatch(data);
-      console.log("AI суралцаж дууслаа." + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
   }
 
   answer (question) {
-      const startedTime = new Date().getTime();
-      console.log("AI хариултыг хайж байна...");
       const result =  this.techstarClassifier.classify(question);
-      console.log("AI хариултыг оллоо.  \n " + (new Date().getTime()-startedTime)/1000+" секундэд уншиж дууслаа.");
       return result;
   }
 
