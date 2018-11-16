@@ -95,6 +95,8 @@ class IntelligoBot extends EventEmitter{
     } else if (event.account_linking) {
         let link = event.account_linking;
         this.emit('account_link', event.sender.id, event, link);
+    } else {
+       throw new Error("Webhook received unknown event");
     }
   }
 
