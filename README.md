@@ -91,7 +91,7 @@ bot.on('message', (event) => {
 
 ## Docs
 
-#### Coming soon ...
+https://code.techstar.cloud/intelligo/
 
 ## Contributors
 
