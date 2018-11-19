@@ -1,6 +1,6 @@
 # Intelligo AI chatbot framework
 
-[![NPM](https://nodei.co/npm/intelligo.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/intelligo/)
+[![NPM](https://nodei.co/npm/intelligo.png?compact=true)](https://nodei.co/npm/intelligo/)
 
 Intelligo is a JavaScript Framework to build Facebook Messenger's Chat bots.
 
