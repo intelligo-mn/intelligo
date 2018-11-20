@@ -1,6 +1,6 @@
 {
   "name": "intelligo",
-  "version": "0.7.0",
+  "version": "0.7.2",
   "description": "AI Chatbot Framework for Node.js",
   "main": "index.js",
   "author": "Turtuvshin Byambaa",
@@ -42,7 +42,17 @@
     "opencollective": "^1.0.3",
     "opencollective-postinstall": "^2.0.1",
     "request": "^2.87.0",
-    "techstar-ai": "^1.0.6"
+    "techstar-ai": "^1.0.8",
+    
+    "async": "*",
+    "brain.js": "^1.0.5",
+    "graph-paths": "latest",
+    "languagemodel": "latest",
+    "sprintf": "*",
+    "svm": "*",
+    "temp": "*",
+    "underscore": "*",
+    "wordsworth": "*"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
