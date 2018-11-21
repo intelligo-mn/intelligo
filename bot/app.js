@@ -18,10 +18,6 @@ const APP_SECRET = (process.env.APP_SECRET) ?
   (process.env.APP_SECRET) :
   config.get('APP_SECRET');
   
-const api = (process.env.api) ?
-  (process.env.api) :
-  config.get('api');
-  
 const bot = new TechstarBot({
   PAGE_ACCESS_TOKEN: PAGE_ACCESS_TOKEN,
   VALIDATION_TOKEN: VALIDATION_TOKEN,
@@ -29,7 +25,6 @@ const bot = new TechstarBot({
   app: app
 });
 bot.initWebhook();
-bot.learnRequest("https://techstar.cloud/api/data");
-bot.setGreeting("Hi I am Techstar AI Bot")
+bot.addGreeting("Hi I am Techstar AI Bot")
 
 module.exports = app;

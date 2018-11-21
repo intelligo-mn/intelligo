@@ -6,9 +6,9 @@ var app = express();
 
 // Sub-Apps
 
-var bot     = require('../techstar-bot/app');
-var console = require('../techstar-console/app');
-var errors  = require('../techstar-handler/app');
+var bot     = require('../bot/app');
+var console = require('../console/app');
+var errors  = require('../handler/app');
 var uptime  = require('./uptime');
 
 app.use('/', console);

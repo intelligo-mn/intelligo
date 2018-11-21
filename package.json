@@ -1,19 +1,18 @@
 {
   "name": "techstar-platform",
   "version": "0.5.5",
-  "description": "Techstar AI ChatBot",
+  "description": "Techstar chatbot platform",
   "author": "Tortuvshin Byambaa",
   "homepage": "https://www.techstar.cloud",
   "copyright": "Copyright 2018 Techstar, Inc.",
   "license": "MIT",
-  "main": "server.js",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/techstar-inc/techstar-bot.git"
+    "url": "git+https://github.com/techstar-cloud/techstar-cloud.git"
   },
   "scripts": {
-    "start": "node techstar-server/bin/www"
+    "start": "node server/bin/www"
   },
   "dependencies": {
     "bcrypt-nodejs": "latest",
