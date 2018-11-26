@@ -229,6 +229,25 @@ class IntelligoBot extends EventEmitter{
       });
   }
   
+  sendGenericMessage(recipientId, elements) {
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "generic",
+            elements: elements
+        }
+        }
+      }
+    };
+
+    this.callSendAPI(messageData);
+  }
+  
   sendButtonMessage(recipientId, text, buttons) {
     var messageData = {
       recipient: {
