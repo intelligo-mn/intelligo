@@ -77,8 +77,12 @@ class IntelligoBot extends EventEmitter{
     if (event.optin) {
         let optin = event.optin.ref;
         this.emit('optin', event.sender.id, event, optin);
+    } else if (typeof event.message === 'string') {
+        this.emit('message', event);
     } else if (event.message && !event.message.is_echo) {
-         this.emit('message', event);
+        this.emit('message', event);
+    } else if (event.message && event.message.attachment) {
+        this.emit('attachment', event.sender.id, event.message.attachment, event.message.url, event.message.quickReplies);
     } else if (event.delivery) {
         let mids = event.delivery.mids;
         this.emit('delivery', event.sender.id, event, mids);
@@ -96,7 +100,7 @@ class IntelligoBot extends EventEmitter{
         let link = event.account_linking;
         this.emit('account_link', event.sender.id, event, link);
     } else {
-       throw new Error("Webhook received unknown event");
+       console.error('Invalid format for message.');
     }
   }
 
