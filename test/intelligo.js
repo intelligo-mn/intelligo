@@ -61,7 +61,6 @@ describe('Intelligo Tests', () => {
         expect(intelligo.answer('The world is a terrible place!').toString()).to.equal('sad');
     });
     
-    
     it('Subscribe to messages sent by the user with the bot.on() method', () => {
     
         
