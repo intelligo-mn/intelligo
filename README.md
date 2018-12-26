@@ -89,10 +89,6 @@ bot.on('message', (event) => {
 });
 ```
 
-## Docs
-
-https://code.techstar.cloud/intelligo/
-
 ## Contributors
 
 You may contribute in several ways like creating new features, fixing bugs, improving documentation and examples
