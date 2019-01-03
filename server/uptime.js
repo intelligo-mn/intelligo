@@ -12,10 +12,10 @@ const bot = new Uptime({
 
 bot.monitor([
   {
-    url: 'https://www.techstar.cloud', // URL of service we'll be pining
+    url: 'https://www.intelligo.systems', // URL of service we'll be pining
     timeout: 200 // threshold in milliseconds above which is considered degraded performance
   }
-  
+
 ]);
 
 module.exports = app;
