@@ -1,14 +1,14 @@
 {
   "name": "intelligo",
-  "version": "0.7.5",
+  "version": "0.7.9",
   "description": "AI Chatbot Framework for Node.js",
   "main": "index.js",
   "author": "Turtuvshin Byambaa",
-  "homepage": "https://www.techstar.cloud",
-  "copyright": "Copyright 2018 Techstar, Inc.",
+  "homepage": "https://github.com/opengineer/intelligo",
+  "copyright": "Copyright 2019 Opengineer.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/techstar-cloud/intelligo.git"
+    "url": "https://github.com/opengineer/intelligo.git"
   },
   "license": "MIT",
   "keywords": [
@@ -43,7 +43,6 @@
     "opencollective-postinstall": "^2.0.1",
     "request": "^2.87.0",
     "techstar-ai": "^1.0.8",
-    
     "async": "*",
     "brain.js": "^1.0.5",
     "graph-paths": "latest",
