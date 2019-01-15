@@ -5,7 +5,7 @@ This directory contains several examples of Intelligo AI chatbot framework.
 Have a look at the [Introduction section](https://developers.facebook.com/docs/messenger-platform/getting-started) of the docs.
 
 For additional samples, see the
-[`intelligo/samples`](https://github.com/intelligo/samples) repo.
+[`intelligo/samples`](https://github.com/opengineer/intelligo/samples) repo.
 
 Available examples include:
 
