@@ -26,7 +26,7 @@ class IntelligoBot extends EventEmitter{
   learn (data){
       // Repeat multiple levels
       const TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
-          binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 100})
+          binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 10})
       });
 
       const WordExtractor = (input, features) => {
