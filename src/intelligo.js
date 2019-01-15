@@ -47,6 +47,10 @@ class IntelligoBot extends EventEmitter{
   }
 
   initWebhook() {
+      /*
+       * Use your own validation token. Check that the token used in the Webhook 
+       * setup is the same token used here.
+       */
       this.app.get(this.webhook, (req, res) => {
           if (req.query['hub.mode'] === 'subscribe' &&
               req.query['hub.verify_token'] === this.VALIDATION_TOKEN) {
@@ -57,7 +61,12 @@ class IntelligoBot extends EventEmitter{
               res.sendStatus(403);
           }
       });
-
+      /*
+       * All callbacks for Messenger are POST-ed. They will be sent to the same
+       * webhook. Be sure to subscribe your app to your page to receive callbacks
+       * for your page. 
+       * https://developers.facebook.com/docs/messenger-platform/product-overview/setup#subscribe_app
+       */
       this.app.post(this.webhook, (req, res) => {
           var data = req.body;
 
@@ -73,6 +82,7 @@ class IntelligoBot extends EventEmitter{
       });
   }
   
+  // Iterate over each messaging event
   handleEvent(event) { 
     if (event.optin) {
         let optin = event.optin.ref;
@@ -103,11 +113,21 @@ class IntelligoBot extends EventEmitter{
        console.error('Invalid format for message.');
     }
   }
-
+  
+  /*
+   * Verify that the callback came from Facebook. Using the App Secret from 
+   * the App Dashboard, we can verify the signature that is sent with each 
+   * callback in the x-hub-signature field, located in the header.
+   *
+   * https://developers.facebook.com/docs/graph-api/webhooks#setup
+   *
+   */
   verifyRequestSignature(req, res, buf) {
       const signature = req.headers["x-hub-signature"];
 
       if (!signature) {
+        // For testing, let's log an error. In production, you should throw an 
+        // error.
           console.error("Couldn't validate the signature.");
       } else {
           const elements = signature.split('='),
@@ -328,7 +348,11 @@ class IntelligoBot extends EventEmitter{
 
       this.sendTextMessage(senderID, "Postback called");
   }
-
+  
+  /*
+   * Send a read receipt to indicate the message has been read
+   *
+   */
   sendReadReceipt(recipientId) {
 
       this.callSendAPI({
