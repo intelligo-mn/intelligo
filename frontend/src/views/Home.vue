@@ -10,9 +10,9 @@
                                 <card class="border-0" hover shadow body-classes="py-5">
                                     <icon name="ni ni-check-bold" type="primary" rounded class="mb-4">
                                     </icon>
-                                    <h6 class="text-primary text-uppercase">Download Argon</h6>
-                                    <p class="description mt-3">Argon is a great free UI package based on Bootstrap 4
-                                        that includes the most important components and features.</p>
+                                    <h6 class="text-primary text-uppercase">Create your chatbot</h6>
+                                    <p class="description mt-3">Choose how you want to interact with your customers.
+                                      You can choose one platform or make yourself available on all.</p>
                                     <div>
                                         <badge type="primary" rounded>design</badge>
                                         <badge type="primary" rounded>system</badge>
@@ -27,9 +27,9 @@
                                 <card class="border-0" hover shadow body-classes="py-5">
                                     <icon name="ni ni-istanbul" type="success" rounded class="mb-4">
                                     </icon>
-                                    <h6 class="text-success text-uppercase">Build Something</h6>
-                                    <p class="description mt-3">Argon is a great free UI package based on Bootstrap
-                                        4 that includes the most important components and features.</p>
+                                    <h6 class="text-success text-uppercase">Build your workflows</h6>
+                                    <p class="description mt-3">Using our drag and drop editor,
+                                      you build your workflow and then connect it to one or more of your platforms..</p>
                                     <div>
                                         <badge type="success" rounded>business</badge>
                                         <badge type="success" rounded>vision</badge>
@@ -44,9 +44,9 @@
                                 <card class="border-0" hover shadow body-classes="py-5">
                                     <icon name="ni ni-planet" type="warning" rounded class="mb-4">
                                     </icon>
-                                    <h6 class="text-warning text-uppercase">Prepare Launch</h6>
-                                    <p class="description mt-3">Argon is a great free UI package based on Bootstrap
-                                        4 that includes the most important components and features.</p>
+                                    <h6 class="text-warning text-uppercase">Integrate your bots</h6>
+                                    <p class="description mt-3">Connect your exisiting backend APIs with our chat-bot
+                                      platform for easy and seamless integration..</p>
                                     <div>
                                         <badge type="warning" rounded>marketing</badge>
                                         <badge type="warning" rounded>product</badge>
