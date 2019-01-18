@@ -68,15 +68,6 @@ export default new Router({
         default: Register,
         footer: AppFooter
       }
-    },
-    {
-      path: "/profile",
-      name: "profile",
-      components: {
-        header: AppHeader,
-        default: Profile,
-        footer: AppFooter
-      }
     }
   ],
   scrollBehavior: to => {
