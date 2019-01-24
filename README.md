@@ -1,22 +1,41 @@
-# Intelligo AI chatbot framework
+<p align="center">
+	<img src="/.github/intelligo-logo.png" width="200"/>
+<br>
+	<b>Intelligo AI chatbot framework</b>
+</p>
+<p align="center">
+    <a class="badge-align" href="https://www.codacy.com/app/tortuvshin/intelligo?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=techstar-inc/intelligo&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/c7f41b9927fe4d2a9b18e564e23294cc"/></a>
+   <a href="https://www.npmjs.com/package/intelligo">
+      <img alt="npm downloads" src="https://img.shields.io/npm/dt/intelligo.svg?style=flat-square">
+    </a>
+    <a href="https://www.npmjs.com/package/intelligo">
+        <img alt="undefined" src="https://img.shields.io/npm/v/intelligo.svg?style=flat-square">
+        </a>
+    <a href="https://github.com/tortuvshin/">
+        <img src="https://img.shields.io/github/followers/tortuvshin.svg?style=social&label=Follow"
+            alt="Followers"></a>
+    <a href="https://github.com/opengineer/intelligo/blob/master/LICENSE">
+            <img alt="License" src="https://img.shields.io/github/license/opengineer/intelligo.svg?colorB=blue&style=flat-square">
+           </a>
+      <a href="https://opencollective.com/intelligo">
+           <img alt="Backers on Open Collective" src="https://opencollective.com/intelligo/backers/badge.svg">
+           </a>
+      <a href="https://opencollective.com/intelligo">
+     <img alt="Sponsors on Open Collective" src="https://opencollective.com/intelligo/sponsors/badge.svg">
+     </a>
+      <a href="https://twitter.com/intent/tweet?text=Wow:&url=https://github.com/opengineer/intelligo">
+     <img alt="Tweet" src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social">
+     </a>
+      
+</p>
 
-[![NPM](https://nodei.co/npm/intelligo.png?compact=true)](https://nodei.co/npm/intelligo/)
 
 Intelligo is a JavaScript Framework to build Facebook Messenger's Chat bots.
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c7f41b9927fe4d2a9b18e564e23294cc)](https://www.codacy.com/app/tortuvshin/intelligo?utm_source=github.com&utm_medium=referral&utm_content=techstar-cloud/intelligo&utm_campaign=badger)
-[![npm](https://img.shields.io/npm/v/intelligo.svg?style=plastic)](https://www.npmjs.com/package/intelligo)
-[![npm](https://img.shields.io/npm/dt/intelligo.svg?style=plastic)](https://www.npmjs.com/package/intelligo)
-[![GitHub license](https://img.shields.io/github/license/techstar-cloud/intelligo.svg)](https://github.com/techstar-cloud/intelligo/blob/master/LICENSE)
-[![Twitter](https://img.shields.io/twitter/url/https/github.com/techstar-cloud/intelligo.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Ftechstar-cloud%2Fintelligo)
-[![Backers on Open Collective](https://opencollective.com/intelligo/backers/badge.svg)](#backers) 
-[![Sponsors on Open Collective](https://opencollective.com/intelligo/sponsors/badge.svg)](#sponsors) 
 
 ## Installation
 
-```
-npm install intelligo --save
-```
+[![NPM](https://nodei.co/npm/intelligo.png?compact=true)](https://nodei.co/npm/intelligo/)
 
 ## Example
 
