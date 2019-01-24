@@ -17,12 +17,6 @@
     <a href="https://github.com/opengineer/intelligo/blob/master/LICENSE">
             <img alt="License" src="https://img.shields.io/github/license/opengineer/intelligo.svg?colorB=blue&style=flat-square">
            </a>
-      <a href="https://opencollective.com/intelligo">
-           <img alt="Backers on Open Collective" src="https://opencollective.com/intelligo/backers/badge.svg">
-           </a>
-      <a href="https://opencollective.com/intelligo">
-     <img alt="Sponsors on Open Collective" src="https://opencollective.com/intelligo/sponsors/badge.svg">
-     </a>
       <a href="https://twitter.com/intent/tweet?text=Wow:&url=https://github.com/opengineer/intelligo">
      <img alt="Tweet" src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social">
      </a>
