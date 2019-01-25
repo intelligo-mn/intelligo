@@ -16,7 +16,7 @@ class IntelligoBot extends EventEmitter{
     this.PAGE_ACCESS_TOKEN = options.PAGE_ACCESS_TOKEN;
     this.VALIDATION_TOKEN = options.VALIDATION_TOKEN;
     this.APP_SECRET = options.APP_SECRET;
-    this.FB_URL = options.FB_URL || 'https://graph.facebook.com/v2.12/';
+    this.FB_URL = options.FB_URL || 'https://graph.facebook.com/v3.1/';
     this.app = options.app || express();
     this.webhook = options.webhook || '/webhook';
     this.app.use(bodyParser.json({ verify: this.verifyRequestSignature.bind(this) }));
