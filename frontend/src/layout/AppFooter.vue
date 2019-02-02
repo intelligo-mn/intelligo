@@ -16,14 +16,14 @@
                             <a href="https://www.intelligo.systems/" class="nav-link" target="_blank">Intelligo Systems</a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About
+                            <a href="https://www.intelligo.systems" class="nav-link" target="_blank">About
                                 Us</a>
                         </li>
                         <li class="nav-item">
-                            <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+                            <a href="http://blog.intelligo.systems" class="nav-link" target="_blank">Blog</a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://github.com/creativetimofficial/argon-design-system/blob/master/LICENSE.md"
+                            <a href="https://github.com/intelligo.systems/"
                                class="nav-link" target="_blank">MIT License</a>
                         </li>
                     </ul>
