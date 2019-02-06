@@ -24,7 +24,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="https://github.com/intelligo.systems/"
-                               class="nav-link" target="_blank">MIT License</a>
+                               class="nav-link" target="_blank">Github</a>
                         </li>
                     </ul>
                 </div>
