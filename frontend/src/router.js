@@ -15,7 +15,9 @@ import Profile from "./views/Profile.vue";
 Vue.use(Router);
 
 export default new Router({
+  mode: 'history',
   linkExactActiveClass: "active",
+  linkActiveClass: 'active',
   routes: [
     {
       path: "/",
