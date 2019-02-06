@@ -68,7 +68,7 @@
 import Hero from "./components/Hero";
 
 export default {
-  name: "components",
+  name: "home",
   components: {
     Hero
   }
