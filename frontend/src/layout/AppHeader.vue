@@ -4,22 +4,19 @@
 
             <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"
-                       target="_blank" data-toggle="tooltip" title="Star us on Github">
+                    <a class="nav-link" href="#" data-toggle="tooltip" title="Star us on Github">
 
                         <span class="nav-link-inner--text">Home</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"
-                       target="_blank" data-toggle="tooltip" title="Star us on Github">
+                    <a class="nav-link" href="#" data-toggle="tooltip" title="Star us on Github">
 
                         <span class="nav-link-inner--text">Feature</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"
-                       target="_blank" data-toggle="tooltip" title="Star us on Github">
+                    <a class="nav-link" href="#" data-toggle="tooltip" title="Star us on Github">
 
                         <span class="nav-link-inner--text">Documentation</span>
                     </a>
