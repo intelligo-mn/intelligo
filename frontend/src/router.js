@@ -2,7 +2,10 @@ import Vue from "vue";
 import Router from "vue-router";
 import AppHeader from "./layout/AppHeader";
 import AppFooter from "./layout/AppFooter";
+import AdminHeader from "./layout/AdminHeader";
+import AdminFooter from "./layout/AdminFooter";
 import Components from "./views/Components.vue";
+import Admin from "./views/Admin.vue";
 import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
@@ -20,6 +23,14 @@ export default new Router({
         header: AppHeader,
         default: Components,
         footer: AppFooter
+      }
+    },{
+      path: "/admin",
+      name: "admin",
+      components: {
+        header: AdminHeader,
+        default: Admin,
+        footer: AdminFooter
       }
     },
     {

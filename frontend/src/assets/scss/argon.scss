@@ -18,16 +18,58 @@
 
 // Core
 
-@import "bootstrap/functions";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*!
+
+=========================================================
+* Argon Dashboard - v1.0.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard
+* Copyright 2018 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+
+// Core
+
 @import "custom/functions";
-
 @import "custom/variables";
-@import "bootstrap/variables";
-
-@import "bootstrap/mixins";
 @import "custom/mixins";
 
-// Bootstrap components
+// Bootstrap (4.1.3) components
 
 @import "bootstrap/root";
 @import "bootstrap/reboot";
@@ -62,39 +104,19 @@
 @import "bootstrap/utilities";
 @import "bootstrap/print";
 
-// Custom components
+// Argon utilities and components
 
-@import "custom/reboot.scss";
-@import "custom/global.scss";
-@import "custom/utilities.scss";
+@import "custom/reboot";
+@import "custom/utilities";
+@import "custom/components";
 
-@import "custom/accordion.scss";
-@import "custom/alerts.scss";
-@import "custom/avatars.scss";
-@import "custom/badge.scss";
-@import "custom/buttons.scss";
-@import "custom/card.scss";
-@import "custom/carousel.scss";
-@import "custom/close.scss";
-@import "custom/custom-forms.scss";
-@import "custom/dropdown.scss";
-@import "custom/footer.scss";
-@import "custom/forms.scss";
-@import "custom/grid.scss";
-@import "custom/icons.scss";
-@import "custom/input-group.scss";
-@import "custom/list-group.scss";
-@import "custom/modal.scss";
-@import "custom/nav.scss";
-@import "custom/navbar.scss";
-@import "custom/pagination.scss";
-@import "custom/popover.scss";
-@import "custom/progress.scss";
-@import "custom/section.scss";
-@import "custom/type.scss";
+// Vendor (Plugins)
 
-// Vendor
+@import "custom/vendors";
 
-@import "custom/vendor/flatpickr.scss";
-@import "custom/vendor/headroom.scss";
-@import "custom/vendor/nouislider.scss";
+
+.particles-js-canvas-el {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+}
