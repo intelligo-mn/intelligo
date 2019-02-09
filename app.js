@@ -45,8 +45,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(DB_CONSOLE, { useMongoClient: true });
 
 var routes = require('./routes/routes.js');
-app.use('/', routes);
-
+app.use('/api/console', routes);
 
 app.use(require('express-status-monitor')({
     title: 'Intelligo Platform Status',

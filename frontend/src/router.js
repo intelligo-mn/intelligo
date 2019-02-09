@@ -28,32 +28,32 @@ export default new Router({
         footer: AppFooter
       }
     },
-    // {
-    //   path: "/components",
-    //   name: "components",
-    //   components: {
-    //     header: AppHeader,
-    //     default: Components,
-    //     footer: AppFooter
-    //   }
-    // },{
-    //   path: "/admin",
-    //   name: "admin",
-    //   components: {
-    //     header: AdminHeader,
-    //     default: Admin,
-    //     footer: AdminFooter
-    //   }
-    // },
-    // {
-    //   path: "/landing",
-    //   name: "landing",
-    //   components: {
-    //     header: AppHeader,
-    //     default: Landing,
-    //     footer: AppFooter
-    //   }
-    // },
+    {
+      path: "/components",
+      name: "components",
+      components: {
+        header: AppHeader,
+        default: Components,
+        footer: AppFooter
+      }
+    },{
+      path: "/admin",
+      name: "admin",
+      components: {
+        header: AdminHeader,
+        default: Admin,
+        footer: AdminFooter
+      }
+    },
+    {
+      path: "/landing",
+      name: "landing",
+      components: {
+        header: AppHeader,
+        default: Landing,
+        footer: AppFooter
+      }
+    },
     {
       path: "/login",
       name: "login",
