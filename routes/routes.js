@@ -3,7 +3,7 @@ const User = require('../models/User')
 const router = express.Router()
 
 router.post('/login', function (req, res, next) {
-    User.authenticate(req.body.email, req.body.password, function (error, user) {
+    User.authenticate(req.body.username, req.body.password, function (error, user) {
       if (error || !user) {
         return res.json({
           status: false,

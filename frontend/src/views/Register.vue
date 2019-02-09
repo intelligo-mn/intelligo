@@ -115,7 +115,7 @@ export default {
       let valid = this.validate();
       if (valid) {
         const formData = {username: this.model.username, email:this.model.email, password:this.model.password};
-        console.log(this.model.username);
+
         this.loading = "Registering you, please wait";
         // Post to server
         axios.post("http://localhost:8080/api/console/register", formData).then(res => {
