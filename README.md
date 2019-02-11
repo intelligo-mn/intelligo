@@ -14,13 +14,13 @@
     <a href="https://github.com/tortuvshin/">
         <img src="https://img.shields.io/github/followers/tortuvshin.svg?style=social&label=Follow"
             alt="Followers"></a>
-    <a href="https://github.com/opengineer/intelligo/blob/master/LICENSE">
-            <img alt="License" src="https://img.shields.io/github/license/opengineer/intelligo.svg?colorB=blue&style=flat-square">
+    <a href="https://github.com/intelligo-systems/intelligo/blob/master/LICENSE">
+            <img alt="License" src="https://img.shields.io/github/license/intelligo-systems/intelligo.svg?colorB=blue&style=flat-square">
            </a>
-      <a href="https://twitter.com/intent/tweet?text=Wow:&url=https://github.com/opengineer/intelligo">
+      <a href="https://twitter.com/intent/tweet?text=Wow:&url=https://github.com/intelligo-systems/intelligo">
      <img alt="Tweet" src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social">
      </a>
-      
+
 </p>
 
 
@@ -38,7 +38,7 @@ Intelligo is a JavaScript Framework to build Facebook Messenger's Chat bots.
 
 const express = require('express'),
       Intelligo = require('intelligo');
-      
+
 const app = express();
 
 const bot = new Intelligo({
@@ -58,14 +58,14 @@ bot.learn([
 
 //Subscribe to messages sent by the user with the bot.on() method.
 bot.on('message', (event) => {
-   
+
   const senderID = event.sender.id,
         message = event.message;
-      
+
   if (message.text) {
       const result = bot.answer(message.text);
       bot.sendTextMessage(senderID, result);
-  } 
+  }
 });
 app.set('port', process.env.PORT || 5000);
 app.listen(app.get('port'), function() {
@@ -84,7 +84,7 @@ bot.learn([
     { input: 'I feel great about the world!', output: 'happy' },
     { input: 'The world is a terrible place!', output: 'sad' },
   ]);
-  
+
 var result = bot.answer('I feel great about the world!');  // 'happy'
 ```
 
@@ -94,11 +94,11 @@ Triggered when a message is sent to the bot.
 
 ```js
 bot.on('message', (event) => {
-   
+
   if (message.text) {
       const result = bot.answer(message.text);
       bot.sendTextMessage(event.sender.id, event.message);
-  } 
+  }
 });
 ```
 
@@ -106,10 +106,10 @@ bot.on('message', (event) => {
 
 You may contribute in several ways like creating new features, fixing bugs, improving documentation and examples
 or translating any document here to your language. [Find more information in CONTRIBUTING.md](CONTRIBUTING.md).
-<a href="https://github.com/techstar-cloud/intelligo/graphs/contributors">Contributors</a>
+<a href="https://github.com/intelligo-systems/intelligo/graphs/contributors">Contributors</a>
 
-This project exists thanks to all the people who contribute. 
-<a href="https://github.com/techstar-cloud/intelligo/contributors"><img src="https://opencollective.com/intelligo/contributors.svg?width=890&button=false" /></a>
+This project exists thanks to all the people who contribute.
+<a href="https://github.com/intelligo-systems/intelligo/contributors"><img src="https://opencollective.com/intelligo/contributors.svg?width=890&button=false" /></a>
 
 
 ## Backers
@@ -138,7 +138,6 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 ## License
 
-> Copyright (C) 2019 Opengineer.  
+> Copyright (C) 2019 Intelligo Systems.  
 > Intelligo framework is open-sourced software licensed under the [MIT](https://opensource.org/licenses/MIT) license.  
-> (See the [LICENSE](https://github.com/opengineer/intelligo/blob/master/LICENSE) file for the whole license text.)
-
+> (See the [LICENSE](https://github.com/intelligo-systems/intelligo/blob/master/LICENSE) file for the whole license text.)

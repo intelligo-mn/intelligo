@@ -1,14 +1,14 @@
 {
   "name": "intelligo",
-  "version": "0.8.1",
+  "version": "0.8.7",
   "description": "AI Chatbot Framework for Node.js",
   "main": "index.js",
   "author": "Turtuvshin Byambaa",
-  "homepage": "https://github.com/opengineer/intelligo",
-  "copyright": "Copyright 2019 Opengineer.",
+  "homepage": "https://github.com/intelligo-systems/intelligo",
+  "copyright": "Copyright 2019 Intelligo Systems.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/opengineer/intelligo.git"
+    "url": "https://github.com/intelligo-systems/intelligo.git"
   },
   "license": "MIT",
   "keywords": [
@@ -35,20 +35,21 @@
     "machine-learning"
   ],
   "dependencies": {
+    "async": "*",
     "body-parser": "^1.18.3",
+    "brain.js": "^1.0.5",
     "config": "^1.30.0",
     "eventemitter3": "^3.1.0",
     "express": "^4.16.3",
+    "graph-paths": "latest",
+    "languagemodel": "latest",
+    "npm": "^6.7.0",
     "opencollective": "^1.0.3",
     "opencollective-postinstall": "^2.0.1",
     "request": "^2.87.0",
-    "techstar-ai": "^1.0.8",
-    "async": "*",
-    "brain.js": "^1.0.5",
-    "graph-paths": "latest",
-    "languagemodel": "latest",
     "sprintf": "*",
     "svm": "*",
+    "techstar-ai": "^1.0.8",
     "temp": "*",
     "underscore": "*",
     "wordsworth": "*"
