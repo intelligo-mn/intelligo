@@ -9,7 +9,7 @@ For additional samples, see the
 
 Available examples include:
 
-- **Hello, world** The [hello world bot](hello-world) is a minimal Messenger bot.
+- **Hello, world** The [hello world bot](hello-bot) is a minimal Messenger bot.
 
 - **Jisho bot** The [jisho bot](jisho-bot) Japanese-English dictionary Messenger bot using [www.jisho.org](https://jisho.org/) public API.
 
