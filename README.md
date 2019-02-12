@@ -1,5 +1,5 @@
 <p align="center">
-	<img src="/.github/intelligo-logo.png" width="200"/>
+	<a href="https://intelligo.js.org/"><img src="https://raw.githubusercontent.com/intelligo-systems/intelligo/master/.github/intelligo-logo.png"/><a/>
 <br>
 	<b>Intelligo AI chatbot framework</b>
 </p>
