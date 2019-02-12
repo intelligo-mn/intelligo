@@ -136,6 +136,13 @@ Start your bot server:
 ```bash
 $ npm start
 ```
+## Examples
+
+Collection of examples for using Intelligo Framework.
+
+- **Hello, world** The [hello world bot](hello-bot) is a minimal Messenger bot.
+
+- **Jisho bot** The [jisho bot](jisho-bot) Japanese-English dictionary Messenger bot using [www.jisho.org](https://jisho.org/) public API.
 
 
 ## Contributors
