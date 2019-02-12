@@ -1,5 +1,5 @@
 <p align="center">
-	<a href="https://intelligo.js.org/"><img src="https://raw.githubusercontent.com/intelligo-systems/intelligo/master/.github/intelligo-logo.png"/><a/>
+	<img src="https://raw.githubusercontent.com/intelligo-systems/intelligo/master/.github/intelligo-logo.png"/>
 <br>
 	<b>Intelligo AI chatbot framework</b>
 </p>
@@ -140,9 +140,9 @@ $ npm start
 
 Collection of examples for using Intelligo Framework.
 
-- **Hello, world** The [hello world bot](hello-bot) is a minimal Messenger bot.
+- **Hello, world** The [hello world bot](https://github.com/intelligo-systems/intelligo/blob/master/samples/hello-bot) is a minimal Messenger bot.
 
-- **Jisho bot** The [jisho bot](jisho-bot) Japanese-English dictionary Messenger bot using [www.jisho.org](https://jisho.org/) public API.
+- **Jisho bot** The [jisho bot](https://github.com/intelligo-systems/intelligo/blob/master/samples/jisho-bot) Japanese-English dictionary Messenger bot using [www.jisho.org](https://jisho.org/) public API.
 
 
 ## Contributors
