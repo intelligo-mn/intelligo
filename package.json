@@ -1,10 +1,10 @@
 {
   "name": "intelligo",
-  "version": "0.8.7",
+  "version": "0.8.10",
   "description": "AI Chatbot Framework for Node.js",
   "main": "index.js",
   "author": "Turtuvshin Byambaa",
-  "homepage": "https://github.com/intelligo-systems/intelligo",
+  "homepage": "https://intelligo.js.org",
   "copyright": "Copyright 2019 Intelligo Systems.",
   "repository": {
     "type": "git",
