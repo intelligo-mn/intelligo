@@ -12,6 +12,8 @@
     "url": "git+https://github.com/techstar-cloud/techstar-cloud.git"
   },
   "scripts": {
+    "front": "cd frontend && npm run-script dev",
+    "build": "cd frontend && npm run-script build",
     "start": "node server/bin/www"
   },
   "dependencies": {
