@@ -125,11 +125,11 @@ module.exports = {
 			}
 		],
 		['link', { rel: 'manifest', href: '/manifest.json' }],
-		['meta', { name: 'msapplication-TileColor', content: '#ffffff' }],
+		['meta', { name: 'msapplication-TileColor', content: '#3e82f7' }],
 		[
 			'meta',
 			{ name: 'msapplication-TileImage', content: '/ms-icon-144x144.png' }
 		],
-		['meta', { name: 'theme-color', content: '#ffffff' }]
+		['meta', { name: 'theme-color', content: '#3e82f7' }]
 	]
 }
