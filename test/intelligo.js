@@ -32,7 +32,6 @@ describe('Intelligo Tests', () => {
         };
     
         intelligo = new Intelligo(options);
-        expect(intelligo).to.be.defined;
         expect(intelligo.PAGE_ACCESS_TOKEN).to.equal('page_access_token');
         expect(intelligo.VALIDATION_TOKEN).to.equal('validation_token');
         expect(intelligo.APP_SECRET).to.equal('app_secret');

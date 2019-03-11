@@ -1,6 +1,6 @@
 {
   "name": "intelligo",
-  "version": "0.8.10",
+  "version": "0.9.0",
   "description": "AI Chatbot Framework for Node.js",
   "main": "index.js",
   "author": "Turtuvshin Byambaa",
@@ -35,30 +35,23 @@
     "machine-learning"
   ],
   "dependencies": {
-    "async": "*",
+    "async": "2.6.2",
     "body-parser": "^1.18.3",
-    "brain.js": "^1.0.5",
-    "config": "^1.30.0",
+    "brain.js": "^1.6.1",
+    "config": "^3.0.1",
     "eventemitter3": "^3.1.0",
-    "express": "^4.16.3",
-    "graph-paths": "latest",
-    "languagemodel": "latest",
-    "npm": "^6.7.0",
+    "express": "^4.16.4",
     "opencollective": "^1.0.3",
-    "opencollective-postinstall": "^2.0.1",
-    "request": "^2.87.0",
-    "sprintf": "*",
-    "svm": "*",
+    "opencollective-postinstall": "^2.0.2",
+    "request": "^2.88.0",
     "techstar-ai": "^1.0.8",
-    "temp": "*",
-    "underscore": "*",
-    "wordsworth": "*"
+    "underscore": "1.9.1"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "chai": "^3.5.0",
-    "mocha": "^4.1.0",
-    "sinon": "^1.17.4"
+    "eslint": "^5.15.1",
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2",
+    "sinon": "^7.2.7"
   },
   "collective": {
     "type": "opencollective",
