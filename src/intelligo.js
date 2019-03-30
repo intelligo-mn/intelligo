@@ -5,7 +5,7 @@ const express = require( 'express'),
       bodyParser = require( 'body-parser'),
       crypto = require( 'crypto'),
       request = require( 'request'),
-      TechstarAI = require('techstar-ai');
+      IntelligoAI = require('intelligo.js');
 
 class IntelligoBot extends EventEmitter{
   constructor(options) {
@@ -20,29 +20,29 @@ class IntelligoBot extends EventEmitter{
     this.app = options.app || express();
     this.webhook = options.webhook || '/webhook';
     this.app.use(bodyParser.json({ verify: this.verifyRequestSignature.bind(this) }));
-    this.techstarClassifier;
+    this.intelligoClassifier;
   }
 
   learn (data){
       // Repeat multiple levels
-      const TextClassifier = TechstarAI.classifiers.multilabel.BinaryRelevance.bind(0, {
-          binaryClassifierType: TechstarAI.classifiers.Winnow.bind(0, {retrain_count: 10})
+      const TextClassifier = IntelligoAI.classifiers.multilabel.BinaryRelevance.bind(0, {
+          binaryClassifierType: IntelligoAI.classifiers.Winnow.bind(0, {retrain_count: 10})
       });
 
       const WordExtractor = (input, features) => {
           return input.split(" ").map(word => features[word] = 1);
       };
 
-      this.techstarClassifier = new TechstarAI.classifiers.EnhancedClassifier({
+      this.intelligoClassifier = new IntelligoAI.classifiers.EnhancedClassifier({
           classifierType: TextClassifier,
           featureExtractor: WordExtractor
       });
 
-      this.techstarClassifier.trainBatch(data);
+      this.intelligoClassifier.trainBatch(data);
   }
 
   answer (question) {
-      const result =  this.techstarClassifier.classify(question);
+      const result =  this.intelligoClassifier.classify(question);
       return result;
   }
 
