@@ -12,9 +12,15 @@ module.exports = {
 			{ text: 'Home', link: '/' }, 
 			{ text: 'Learn', link: '/learn/' }
 		],
-		version: '0.11.0-beta'
+		version: '1.0.0-alpha.30'
 	},
 	plugins: [
+		[
+			'@vuepress/pwa', {
+				serviceWorker: true,
+				updatePopup: true
+			}
+		],
 		[
 			'@vuepress/google-analytics',
 			{
@@ -24,7 +30,7 @@ module.exports = {
 		[
 			'vuepress-plugin-rss',
 			{
-				base_url: '/',
+				base_url: '/rss',
 				site_url: 'https://intelligo.js.org',
 				filter: frontmatter => frontmatter.date <= new Date(),
 				count: 20
@@ -125,6 +131,7 @@ module.exports = {
 			}
 		],
 		['link', { rel: 'manifest', href: '/manifest.json' }],
+		
 		['meta', { name: 'msapplication-TileColor', content: '#3e82f7' }],
 		[
 			'meta',

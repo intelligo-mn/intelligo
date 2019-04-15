@@ -1,5 +1,10 @@
 {
- "name": "App",
+ "name": "Intelligo",
+ "short_name": "Intelligo",
+ "theme_color": "#4fc08d",
+ "description": "Intelligo AI Chatbot Framework",
+ "display": "standalone",
+ "start_url": "/index.html",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",
