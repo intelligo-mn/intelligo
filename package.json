@@ -1,6 +1,6 @@
 {
   "name": "intelligo",
-  "version": "0.9.9",
+  "version": "0.9.10",
   "description": "AI Chatbot Framework for Node.js",
   "main": "index.js",
   "author": "Turtuvshin Byambaa",
