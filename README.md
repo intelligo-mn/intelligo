@@ -158,7 +158,7 @@ This project exists thanks to all the people who contribute.
 
 If you'd like to join them, please consider:
 
- <a href='ko-fi.com/turtuvshin' target='_blank'><img height='35' style='border:0px;height:46px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a> <a href='https://www.patreon.com/turtuvshin' target='_blank'><img height='35' src='https://c5.patreon.com/external/logo/become_a_patron_button@2x.png' border='0' alt='Become a Patron!' /></a>
+ <a href='https://www.ko-fi.com/turtuvshin' target='_blank'><img height='35' style='border:0px;height:46px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a> <a href='https://www.patreon.com/turtuvshin' target='_blank'><img height='35' src='https://c5.patreon.com/external/logo/become_a_patron_button@2x.png' border='0' alt='Become a Patron!' /></a>
  <a href="https://opencollective.com/webpack/donate" target="_blank">
   <img src="https://opencollective.com/intelligo/donate/button@2x.png?color=blue" height=35/>
 </a>
