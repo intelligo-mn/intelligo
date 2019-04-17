@@ -9,3 +9,6 @@ test/
 coverage/
 .github/
 .cache/
+app/
+docs/
+samples/

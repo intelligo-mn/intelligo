@@ -1,6 +1,6 @@
 {
   "name": "intelligo",
-  "version": "0.9.4",
+  "version": "0.9.9",
   "description": "AI Chatbot Framework for Node.js",
   "main": "index.js",
   "author": "Turtuvshin Byambaa",
@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@vuepress/plugin-google-analytics": "^1.0.0-alpha.0",
-    "@vuepress/plugin-pwa": "^1.0.0-alpha.0",
+    "@vuepress/plugin-pwa": "^1.0.0-alpha.47",
     "chai": "^4.2.0",
     "eslint": "^5.15.1",
     "mocha": "^6.0.2",
