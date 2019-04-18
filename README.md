@@ -17,10 +17,9 @@
     <a href="https://github.com/intelligo-systems/intelligo/blob/master/LICENSE">
             <img alt="License" src="https://img.shields.io/github/license/intelligo-systems/intelligo.svg?colorB=blue&style=flat-square">
            </a>
-      <a href="https://twitter.com/intent/tweet?text=Wow:&url=https://github.com/intelligo-systems/intelligo">
-     <img alt="Tweet" src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social">
+      <a href="http://hits.dwyl.io/intelligo-system/intelligo">
+     <img alt="Hits" src="http://hits.dwyl.io/intelligo-system/intelligo.svg">
      </a>
-
 </p>
 
 
