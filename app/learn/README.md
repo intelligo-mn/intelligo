@@ -25,7 +25,9 @@ type: guide
       <a href="https://twitter.com/intent/tweet?text=Wow:&url=https://github.com/intelligo-systems/intelligo">
      <img alt="Tweet" src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social">
      </a>
-
+    <a href="http://hits.dwyl.io/intelligo-system/intelligo">
+     <img alt="Hits" src="http://hits.dwyl.io/intelligo-system/intelligo.svg">
+     </a>
 </p>
 
 ## Introduction
