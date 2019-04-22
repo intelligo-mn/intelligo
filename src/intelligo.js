@@ -222,6 +222,10 @@ class IntelligoBot extends EventEmitter{
     })
   }
 
+  /**
+   * @param {Recipient|Object} recipientId Recipient object or ID.
+   * @param {String} messageText
+   */
   sendTextMessage(recipientId, messageText) {
       this.callSendAPI({
           recipient: {
@@ -252,7 +256,10 @@ class IntelligoBot extends EventEmitter{
           }
       });
   }
-  
+  /**
+   * @param {Recipient|String} recipientId
+   * @param {Array.<Element>} elements
+   */
   sendGenericMessage(recipientId, elements) {
     var messageData = {
       recipient: {
@@ -317,6 +324,11 @@ class IntelligoBot extends EventEmitter{
       });
   }
 
+  /**
+   * @param {Recipient|String} recipientId
+   * @param {Array.<String>} greetings
+   * @param {String>} text 
+   */
   sendWelcome(recipientId, greetings, text) {
       // this (aka "the context") is a special keyword inside each function and its value only depends on how the function was called, 
       // not how/when/where it was defined. It is not affected by lexical scopes, like other variables
@@ -337,6 +349,13 @@ class IntelligoBot extends EventEmitter{
       );
   }
 
+  /*
+  * Postback Event
+  *
+  * This event is called when a postback is tapped on a Structured Message. 
+  * https://developers.facebook.com/docs/messenger-platform/webhook-reference/postback-received
+  * 
+  */
   receivedPostback(event) {
       const senderID = event.sender.id,
           recipientID = event.recipient.id,
