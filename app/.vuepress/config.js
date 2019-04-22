@@ -12,7 +12,7 @@ module.exports = {
 			{ text: 'Home', link: '/' }, 
 			{ text: 'Learn', link: '/learn/' }
 		],
-		version: '1.0.0-alpha.30'
+		version: '1.0.0-alpha.47'
 	},
 	plugins: [
 		[

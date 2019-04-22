@@ -25,7 +25,9 @@ type: guide
       <a href="https://twitter.com/intent/tweet?text=Wow:&url=https://github.com/intelligo-systems/intelligo">
      <img alt="Tweet" src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social">
      </a>
-
+    <a href="http://hits.dwyl.io/intelligo-system/intelligo">
+     <img alt="Hits" src="http://hits.dwyl.io/intelligo-system/intelligo.svg">
+     </a>
 </p>
 
 ## Introduction
@@ -169,6 +171,19 @@ or translating any document here to your language. [Find more information in CON
 This project exists thanks to all the people who contribute.
 <a href="https://github.com/intelligo-systems/intelligo/contributors"><img src="https://opencollective.com/intelligo/contributors.svg?width=890&button=false" /></a>
 
+## Supporting
+
+If you'd like to join them, please consider:
+
+ <a href='https://www.ko-fi.com/turtuvshin' target="_blank">
+    <img src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0' height='35' alt='Buy Me a Coffee at ko-fi.com' />
+ </a> 
+ <a href='https://www.patreon.com/turtuvshin' target="_blank">
+    <img src='https://c5.patreon.com/external/logo/become_a_patron_button@2x.png' height='35' alt='Become a Patron!' />
+  </a>
+ <a href="https://opencollective.com/intelligo/donate" target="_blank">
+  <img src="https://opencollective.com/intelligo/donate/button@2x.png?color=blue" height='35'/>
+</a>
 
 ## Backers
 
