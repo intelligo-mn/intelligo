@@ -1,159 +1,61 @@
 <template>
-    <section class="section-hero section-shaped my-0" id="particles-js">
+    <section class="section-hero section-shaped my-0">
         <div class="shape shape-style-1 shape-primary">
-
+            <span class="span-150"></span>
+            <span class="span-50"></span>
+            <span class="span-50"></span>
+            <span class="span-75"></span>
+            <span class="span-100"></span>
+            <span class="span-75"></span>
+            <span class="span-50"></span>
+            <span class="span-100"></span>
+            <span class="span-50"></span>
+            <span class="span-100"></span>
         </div>
-
         <div class="container shape-container d-flex align-items-center">
             <div class="col px-0">
                 <div class="row justify-content-center align-items-center">
-                    <div class="col-lg-12 text-center pt-lg">
-                        <h1 class="display-1 text-white">INTELLIGO AI PLATFORM</h1>
-                        <p class="lead text-white mt-4 mb-5">Intelligo is a conversational AI platform powering virtual assistants and
-smart bots across mobile apps, web and messaging platforms.</p>
+                    <div class="col-lg-7 text-center pt-lg">
+                        <img src="img/brand/white.png" style="width: 200px;" class="img-fluid">
+                        <p class="lead text-white mt-4 mb-5">A beautiful Design System for Bootstrap 4. It's Free and Open Source.</p>
                         <div class="btn-wrapper">
                             <base-button tag="a"
-                                         href="login"
+                                         href="https://demos.creative-tim.com/vue-argon-design-system/documentation"
                                          class="mb-3 mb-sm-0"
-                                         type="primary"
-                                         icon="fa fa-user">
-                                Login
+                                         type="info"
+                                         icon="fa fa-code">
+                                Components
                             </base-button>
                             <base-button tag="a"
-                                         href="https://github.com/intelligo-systems"
+                                         href="https://www.creative-tim.com/product/vue-argon-design-system"
                                          class="mb-3 mb-sm-0"
                                          type="white"
-                                         icon="fa fa-github">
-                                Github
+                                         icon="ni ni-cloud-download-95">
+                                Download Vue
                             </base-button>
                         </div>
                     </div>
                 </div>
-
+                <div class="row align-items-center justify-content-around stars-and-coded">
+                    <div class="col-sm-4">
+                        <span class="text-white alpha-7 ml-3">Star us on</span>
+                        <a href="https://github.com/creativetimofficial/argon-design-system" target="_blank" title="Support us on Github">
+                            <img src="img/brand/github-white-slim.png" style="height: 22px; margin-top: -3px">
+                        </a>
+                    </div>
+                    <div class="col-sm-4 mt-4 mt-sm-0 text-right">
+                        <span class="text-white alpha-7">Coded by</span>
+                        <a href="https://www.creative-tim.com" target="_blank" title="Creative Tim - Premium Bootstrap Themes and Templates">
+                            <img src="img/brand/creativetim-white-slim.png" class="ml-3" style="height: 30px;">
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 </template>
 <script>
-
-import 'particles.js'
-export default {
-  mounted() {
-    this.initParticles()
-  },
-  methods: {
-    initParticles() {
-      window.particlesJS("particles-js", {
-        "particles": {
-          "number": {
-            "value": 160,
-            "density": {
-              "enable": true,
-              "value_area": 800
-            }
-          },
-          "color": {
-            "value": "#ffffff"
-          },
-          "shape": {
-            "type": "circle",
-            "stroke": {
-              "width": 0,
-              "color": "#000000"
-            },
-            "polygon": {
-              "nb_sides": 5
-            },
-            "image": {
-              "src": "img/github.svg",
-              "width": 100,
-              "height": 100
-            }
-          },
-          "opacity": {
-            "value": 1,
-            "random": true,
-            "anim": {
-              "enable": true,
-              "speed": 1,
-              "opacity_min": 0,
-              "sync": false
-            }
-          },
-          "size": {
-            "value": 3,
-            "random": true,
-            "anim": {
-              "enable": false,
-              "speed": 4,
-              "size_min": 0.3,
-              "sync": false
-            }
-          },
-          "line_linked": {
-            "enable": false,
-            "distance": 150,
-            "color": "#ffffff",
-            "opacity": 0.4,
-            "width": 1
-          },
-          "move": {
-            "enable": true,
-            "speed": 1,
-            "direction": "none",
-            "random": true,
-            "straight": false,
-            "out_mode": "out",
-            "bounce": false,
-            "attract": {
-              "enable": false,
-              "rotateX": 600,
-              "rotateY": 600
-            }
-          }
-        },
-        "interactivity": {
-          "detect_on": "canvas",
-          "events": {
-            "onhover": {
-              "enable": true,
-              "mode": "bubble"
-            },
-            "onclick": {
-              "enable": true,
-              "mode": "repulse"
-            },
-            "resize": true
-          },
-          "modes": {
-            "grab": {
-              "distance": 400,
-              "line_linked": {
-                "opacity": 1
-              }
-            },
-            "bubble": {
-              "distance": 250,
-              "size": 0,
-              "duration": 2,
-              "opacity": 0,
-              "speed": 3
-            },
-            "repulse": {
-              "distance": 400,
-              "duration": 0.4
-            },
-            "push": {
-              "particles_nb": 4
-            },
-            "remove": {
-              "particles_nb": 2
-            }
-          }
-        },
-        "retina_detect": true
-      })
-    }
-  }
-};
+export default {};
 </script>
+<style>
+</style>

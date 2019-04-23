@@ -18,12 +18,3 @@ export default {
   }
 };
 </script>
-
-<style>
-  @import "../node_modules/font-awesome/css/font-awesome.min.css";
-  @import "./assets/vendor/nucleo/css/nucleo.css";
-</style>
-
-<style lang="scss">
-@import "./assets/scss/argon";
-</style>

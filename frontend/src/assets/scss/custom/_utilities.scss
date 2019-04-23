@@ -1,16 +1,8 @@
-//
-// Utilities
-//
-
-@import "../core/utilities/backgrounds";
-@import "../core/utilities/floating";
-@import "../core/utilities/helper";
-@import "../core/utilities/image";
-@import "../core/utilities/opacity";
-@import "../core/utilities/overflow";
-@import "../core/utilities/position";
-@import "../core/utilities/sizing";
-@import "../core/utilities/spacing";
-@import "../core/utilities/shadows";
-@import "../core/utilities/text";
-@import "../core/utilities/transform";
+@import "custom/utilities/backgrounds.scss";
+@import "custom/utilities/floating.scss";
+@import "custom/utilities/helper.scss";
+@import "custom/utilities/sizing.scss";
+@import "custom/utilities/spacing.scss";
+@import "custom/utilities/shadows.scss";
+@import "custom/utilities/text.scss";
+@import "custom/utilities/transform.scss";

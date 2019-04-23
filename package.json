@@ -12,7 +12,7 @@
     "url": "git+https://github.com/intelligo-systems/intelligo-platform.git"
   },
   "scripts": {
-    "front": "cd frontend && npm run-script dev",
+    "front": "cd frontend && npm run-script serve",
     "build": "cd frontend && npm run-script build",
     "start": "node server/bin/www"
   },
@@ -39,7 +39,6 @@
     "node_modules"
   ],
   "engines": {
-    "node": "10.3.0",
-    "npm": "6.x"
+    "node": "10.15.3"
   }
 }

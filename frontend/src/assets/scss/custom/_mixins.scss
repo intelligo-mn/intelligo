@@ -1,19 +1,8 @@
-//
-// Mixins
-//
-
-// Bootstrap default mixins
-
-@import "../bootstrap/mixins";
-
-
-// Custom mixins
-
-@import "../core/mixins/alert";
-@import "../core/mixins/badge";
-@import "../core/mixins/background-variant";
-@import "../core/mixins/buttons";
-@import "../core/mixins/forms";
-@import "../core/mixins/icon";
-@import "../core/mixins/modals";
-@import "../core/mixins/popover";
+@import "./mixins/alert.scss";
+@import "./mixins/badge.scss";
+@import "./mixins/background-variant.scss";
+@import "./mixins/buttons.scss";
+@import "./mixins/forms.scss";
+@import "./mixins/icon.scss";
+@import "./mixins/modals.scss";
+@import "./mixins/popover.scss";
