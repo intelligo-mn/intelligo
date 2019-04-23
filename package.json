@@ -1,7 +1,7 @@
 {
-  "name": "techstar-platform",
+  "name": "intelligo-platform",
   "version": "0.5.5",
-  "description": "Techstar chatbot platform",
+  "description": "Intelligo chatbot platform",
   "author": "Tortuvshin Byambaa",
   "homepage": "https://www.techstar.cloud",
   "copyright": "Copyright 2018 Techstar, Inc.",
@@ -9,7 +9,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/techstar-cloud/techstar-cloud.git"
+    "url": "git+https://github.com/intelligo-systems/intelligo-platform.git"
   },
   "scripts": {
     "front": "cd frontend && npm run-script dev",
@@ -37,5 +37,8 @@
   },
   "cacheDirectories": [
     "node_modules"
-  ]
+  ],
+  "engines": {
+    "node": "10.3.0"
+  }
 }
