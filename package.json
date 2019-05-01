@@ -47,17 +47,10 @@
     "underscore": "1.9.1"
   },
   "devDependencies": {
-    "@vuepress/plugin-google-analytics": "^1.0.0-alpha.0",
-    "@vuepress/plugin-pwa": "^1.0.0-alpha.47",
     "chai": "^4.2.0",
     "eslint": "^5.15.1",
     "mocha": "^6.0.2",
-    "sinon": "^7.2.7",
-    "vuepress": "^1.0.0-alpha.30",
-    "vuepress-plugin-janitor": "^1.0.0",
-    "vuepress-plugin-reading-time": "^0.1.1",
-    "vuepress-plugin-rss": "^2.0.0",
-    "yaml-front-matter": "^4.0.0"
+    "sinon": "^7.2.7"
   },
   "collective": {
     "type": "opencollective",
@@ -66,8 +59,6 @@
   "scripts": {
     "postinstall": "opencollective-postinstall",
     "test": "mocha --recursive test/*",
-    "test:watch": "npm test -- --watch",
-    "dev": "vuepress dev app",
-    "build": "vuepress build app"
+    "test:watch": "npm test -- --watch"
   }
 }
