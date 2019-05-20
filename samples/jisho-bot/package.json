@@ -26,7 +26,7 @@
   "homepage": "https://github.com/techstar-cloud/jisho-bot#readme",
   "dependencies": {
     "async": "^2.6.1",
-    "config": "^2.0.1",
+    "config": "^3.0.0",
     "express": "^4.16.3",
     "intelligo": "^0.7.5",
     "request": "^2.87.0",
