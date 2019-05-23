@@ -21,7 +21,7 @@ bot.on('message', (event) => {
         message = event.message;
 
   if (message.text) {
-      bot.sendTextMessage(senderID, "Hello world");
+      bot.sendTextMessage(senderID, "Hello world. This is from me to you. I am chatbot code in a computer. You are a person. I don't have any feelings for you because I am software. What are you thinking?");
   }
 });
 app.set('port', process.env.PORT || 5000);
