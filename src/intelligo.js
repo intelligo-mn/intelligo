@@ -381,7 +381,9 @@ class IntelligoBot extends EventEmitter{
           sender_action: "mark_seen"
       });
   }
-
+  /**
+   * @param {Recipient|Object} recipientId Recipient object or ID.
+   */
   sendTypingOn(recipientId) {
 
       this.callSendAPI({
@@ -391,7 +393,9 @@ class IntelligoBot extends EventEmitter{
           sender_action: "typing_on"
       });
   }
-
+  /**
+   * @param {Recipient|Object} recipientId Recipient object or ID.
+   */
   sendTypingOff(recipientId) {
       this.callSendAPI({
           recipient: {
