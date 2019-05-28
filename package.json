@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "intelligo",
   "version": "1.0.1",
@@ -62,3 +63,69 @@
     "test:watch": "npm test -- --watch"
   }
 }
+=======
+{
+  "name": "intelligo",
+  "version": "1.0.2",
+  "description": "AI Chatbot Framework for Node.js",
+  "main": "index.js",
+  "author": "Turtuvshin Byambaa",
+  "homepage": "https://intelligo.js.org",
+  "copyright": "Copyright 2019 Intelligo Systems.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/intelligo-systems/intelligo.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ai",
+    "ai-bot",
+    "artificial-intelligence",
+    "bot",
+    "builder",
+    "chat",
+    "chatbot",
+    "classifier",
+    "conversation",
+    "messenger-bot",
+    "messenger",
+    "facebook",
+    "framework",
+    "intelligo",
+    "intelligence",
+    "neural network",
+    "neural",
+    "network",
+    "neural-networks",
+    "machine-learning"
+  ],
+  "dependencies": {
+    "async": "2.6.2",
+    "body-parser": "^1.19.0",
+    "brain.js": "^1.6.1",
+    "config": "^3.1.0",
+    "eventemitter3": "^3.1.2",
+    "express": "^4.16.4",
+    "intelligo.js": "^1.0.1",
+    "opencollective": "^1.0.3",
+    "opencollective-postinstall": "^2.0.2",
+    "request": "^2.88.0",
+    "underscore": "1.9.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "mocha": "^6.1.4",
+    "sinon": "^7.3.2"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/intelligo"
+  },
+  "scripts": {
+    "postinstall": "opencollective-postinstall",
+    "test": "mocha --recursive test/*",
+    "test:watch": "npm test -- --watch"
+  }
+}
+>>>>>>> fa8606786d0d9406e5f7e0c4938573792d260344
