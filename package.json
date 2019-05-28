@@ -34,7 +34,7 @@
     "machine-learning"
   ],
   "dependencies": {
-    "async": "2.6.2",
+    "async": "3.0.1",
     "body-parser": "^1.19.0",
     "brain.js": "^1.6.1",
     "config": "^3.1.0",

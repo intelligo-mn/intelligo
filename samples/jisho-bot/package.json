@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/intelligo-systems/jisho-bot#readme",
   "dependencies": {
-    "async": "^2.6.1",
+    "async": "^3.0.0",
     "config": "^2.0.1",
     "express": "^4.16.3",
     "intelligo": "^1.0.0",
