@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/techstar-cloud/jisho-bot.git"
+    "url": "git+https://github.com/intelligo-systems/jisho-bot.git"
   },
   "keywords": [
     "bot",
@@ -21,14 +21,14 @@
   "author": "Turtuvshin Byambaa",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/techstar-cloud/jisho-bot/issues"
+    "url": "https://github.com/intelligo-systems/jisho-bot/issues"
   },
-  "homepage": "https://github.com/techstar-cloud/jisho-bot#readme",
+  "homepage": "https://github.com/intelligo-systems/jisho-bot#readme",
   "dependencies": {
     "async": "^2.6.1",
     "config": "^2.0.1",
     "express": "^4.16.3",
-    "intelligo": "^0.7.5",
+    "intelligo": "^1.0.0",
     "request": "^2.87.0",
     "path": "^0.12.7"
   }
