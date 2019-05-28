@@ -48,7 +48,7 @@
     "extend": "^2.0.1",
     "lodash": "^4.17.2",
     "vow": "^0.4.9",
-    "ws": "^1.0.1",
+    "ws": "^7.0.0",
     "ws-heartbeat": "^1.0.4"
   },
   "devDependencies": {
