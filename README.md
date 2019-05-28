@@ -40,7 +40,7 @@ const express = require('express'),
 
 const app = express();
 
-const bot = new Intelligo({
+const bot = new Intelligo.MessengerBot({
   PAGE_ACCESS_TOKEN: 'PAGE_ACCESS_TOKEN',
   VALIDATION_TOKEN: 'VALIDATION_TOKEN',
   APP_SECRET: 'APP_SECRET',
@@ -188,7 +188,6 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 <a href="https://opencollective.com/intelligo/sponsor/7/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/7/avatar.svg"></a>
 <a href="https://opencollective.com/intelligo/sponsor/8/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/8/avatar.svg"></a>
 <a href="https://opencollective.com/intelligo/sponsor/9/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/9/avatar.svg"></a>
-
 
 
 ## License

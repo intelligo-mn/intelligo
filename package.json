@@ -44,7 +44,12 @@
     "opencollective": "^1.0.3",
     "opencollective-postinstall": "^2.0.2",
     "request": "^2.88.0",
-    "underscore": "1.9.1"
+    "underscore": "1.9.1",
+    "extend": "^2.0.1",
+    "lodash": "^4.17.2",
+    "vow": "^0.4.9",
+    "ws": "^1.0.1",
+    "ws-heartbeat": "^1.0.4"
   },
   "devDependencies": {
     "chai": "^4.2.0",

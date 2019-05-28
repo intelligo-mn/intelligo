@@ -1,5 +1,6 @@
 'use strict';
 
-const IntelligoBot = require('./src/intelligo');
-
-module.exports = IntelligoBot;
+module.exports = {
+	SlackBot: require('./src/slack'),
+	MessengerBot: require('./src/messenger'),
+}

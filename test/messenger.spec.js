@@ -1,13 +1,13 @@
 const expect = require('chai').expect;
 const sinon = require('sinon');
-const Intelligo = require('../src/intelligo');
+const Intelligo = require('../');
 
 let server;
 let intelligo;
 let USER_ID = '333';
 let PAGE_ID = '111';
 
-describe('Intelligo Tests', () => {
+describe('Intelligo Messenger Bot Tests', () => {
     beforeEach(() => {
         const options = {
           PAGE_ACCESS_TOKEN: 'page_access_token',
@@ -15,7 +15,7 @@ describe('Intelligo Tests', () => {
           APP_SECRET: 'app_secret'
         };
     
-        intelligo = new Intelligo(options);
+        intelligo = new Intelligo.MessengerBot(options);
         server = sinon.fakeServer.create();
         server.autoRespond = true;
     });
@@ -31,7 +31,7 @@ describe('Intelligo Tests', () => {
           APP_SECRET: 'app_secret'
         };
     
-        intelligo = new Intelligo(options);
+        intelligo = new Intelligo.MessengerBot(options);
         expect(intelligo.PAGE_ACCESS_TOKEN).to.equal('page_access_token');
         expect(intelligo.VALIDATION_TOKEN).to.equal('validation_token');
         expect(intelligo.APP_SECRET).to.equal('app_secret');
@@ -39,11 +39,11 @@ describe('Intelligo Tests', () => {
     });
 
     it('creates a bot instance', () => {
-        expect(intelligo instanceof Intelligo).to.equal(true);
+        expect(intelligo instanceof Intelligo.MessengerBot).to.equal(true);
     });
 
     it('throws an error if there are missing tokens', () => {
-        expect(() => new Intelligo()).to.throw(Error);
+        expect(() => new Intelligo.MessengerBot()).to.throw(Error);
     });
     
     it('Init webhook', () => {
@@ -62,7 +62,6 @@ describe('Intelligo Tests', () => {
     
     it('Subscribe to messages sent by the user with the bot.on() method', () => {
     
-        
     });
     
 });

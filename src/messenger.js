@@ -7,7 +7,7 @@ const express = require( 'express'),
       request = require( 'request'),
       IntelligoAI = require('intelligo.js');
 
-class IntelligoBot extends EventEmitter{
+class MessengerBot extends EventEmitter{
   constructor(options) {
     super();
     if (!options || (options && (!options.PAGE_ACCESS_TOKEN || !options.VALIDATION_TOKEN || !options.APP_SECRET))) {
@@ -422,4 +422,4 @@ class IntelligoBot extends EventEmitter{
   }
 }
 
-module.exports = IntelligoBot;
+module.exports = MessengerBot;
