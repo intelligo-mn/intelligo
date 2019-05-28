@@ -1,6 +1,6 @@
 {
   "name": "intelligo",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "AI Chatbot Framework for Node.js",
   "main": "index.js",
   "author": "Turtuvshin Byambaa",
@@ -40,13 +40,13 @@
     "config": "^3.1.0",
     "eventemitter3": "^3.1.2",
     "express": "^4.16.4",
+    "extend": "^2.0.1",
     "intelligo.js": "^1.0.1",
+    "lodash": "^4.17.2",
     "opencollective": "^1.0.3",
     "opencollective-postinstall": "^2.0.2",
     "request": "^2.88.0",
     "underscore": "1.9.1",
-    "extend": "^2.0.1",
-    "lodash": "^4.17.2",
     "vow": "^0.4.9",
     "ws": "^1.0.1",
     "ws-heartbeat": "^1.0.4"
