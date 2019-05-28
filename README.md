@@ -103,7 +103,7 @@ bot.on('message', (event) => {
 
 ## Quick Start
 
-The quickest way to get started with intelligo is to utilize the generator [`cli`](https://github.com/intelligo-systems/intelligo-cli) to generate an bot as shown below:
+The quickest way to get started with intelligo is to utilize the [`intelligo-cli`](https://github.com/intelligo-systems/intelligo-cli) to generate an bot as shown below:
 
 Install the command line tool
 
