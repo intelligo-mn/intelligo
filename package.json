@@ -36,7 +36,6 @@
   "dependencies": {
     "async": "2.6.2",
     "body-parser": "^1.19.0",
-    "brain.js": "^1.6.1",
     "config": "^3.1.0",
     "eventemitter3": "^3.1.2",
     "express": "^4.16.4",
@@ -46,7 +45,6 @@
     "opencollective": "^1.0.3",
     "opencollective-postinstall": "^2.0.2",
     "request": "^2.88.0",
-    "underscore": "1.9.1",
     "vow": "^0.4.9",
     "ws": "^1.0.1",
     "ws-heartbeat": "^1.0.4"
