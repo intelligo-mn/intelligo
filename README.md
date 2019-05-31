@@ -25,10 +25,17 @@
 
 Intelligo is a JavaScript Framework to build Facebook Messenger's Chat bots.
 
-
 ## Installation
 
 [![NPM](https://nodei.co/npm/intelligo.png?compact=true)](https://nodei.co/npm/intelligo/)
+
+## Related projects
+
+| Project | Build Status | NPM version |
+|-----------|--------------|---------------------------|
+| [neuro.js](https://github.com/intelligo-systems/neuro.js) | [![Build status](https://ci.appveyor.com/api/projects/status/eue1p0li7vf7hqt9?svg=true)](https://ci.appveyor.com/project/tortuvshin/intelligo-cli) | [![npm version](https://badgen.net/npm/v/neuro.js)](https://www.npmjs.com/package/neuro.js) |
+| [intelligo-cli](https://github.com/intelligo-systems/intelligo-cli) | [![Build status](https://ci.appveyor.com/api/projects/status/eue1p0li7vf7hqt9?svg=true)](https://ci.appveyor.com/project/tortuvshin/intelligo-cli) | [![npm version](https://badgen.net/npm/v/intelligo-cli)](https://www.npmjs.com/package/intelligo-cli) |
+
 
 ## Example
 
@@ -146,7 +153,8 @@ Collection of examples for using Intelligo Framework.
 
 ## Contributors
 
-You may contribute in several ways like creating new features, fixing bugs, improving documentation and examples
+- 📥 Pull requests and 🌟 Stars are always welcome. 
+- You may contribute in several ways like creating new features, fixing bugs, improving documentation and examples
 or translating any document here to your language. [Find more information in CONTRIBUTING.md](CONTRIBUTING.md).
 <a href="https://github.com/intelligo-systems/intelligo/graphs/contributors">Contributors</a>
 
