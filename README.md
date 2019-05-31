@@ -148,7 +148,7 @@ Collection of examples for using Intelligo Framework.
 
 - **Hello, world** The [hello world bot](https://github.com/intelligo-systems/intelligo/blob/master/samples/hello-bot) is a minimal Messenger bot.
 
-- **Jisho bot** The [jisho bot](https://github.com/intelligo-systems/intelligo/blob/master/samples/jisho-bot) Japanese-English dictionary Messenger bot using [www.jisho.org](https://jisho.org/) public API.
+- **Jisho bot** The [jisho bot](https://github.com/intelligo-systems/jisho-bot) Japanese-English dictionary Messenger bot using [www.jisho.org](https://jisho.org/) public API.
 
 
 ## Contributors
