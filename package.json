@@ -46,7 +46,7 @@
     "opencollective-postinstall": "^2.0.2",
     "request": "^2.88.0",
     "vow": "^0.4.9",
-    "ws": "^3.0.0",
+    "ws": "^3.3.1",
     "ws-heartbeat": "^1.0.4"
   },
   "devDependencies": {
