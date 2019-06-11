@@ -23,7 +23,7 @@
 </p>
 
 
-Intelligo is a JavaScript Framework to build Facebook Messenger's Chat bots.
+Intelligo is a JavaScript Framework to build AI Chat bots.
 
 ## Installation
 
