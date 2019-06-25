@@ -1,119 +1,123 @@
 'use strict';
 
-const express = require( 'express'),
-      EventEmitter = require('eventemitter3'),
-      bodyParser = require( 'body-parser'),
-      crypto = require( 'crypto'),
-      request = require( 'request'),
-      IntelligoAI = require('intelligo.js');
+const express = require('express'),
+  EventEmitter = require('eventemitter3'),
+  bodyParser = require('body-parser'),
+  crypto = require('crypto'),
+  request = require('request'),
+  IntelligoAI = require('intelligo.js');
 
-class MessengerBot extends EventEmitter{
-  constructor(options) {
+class MessengerBot extends EventEmitter {
+  /**
+     * @param {object} params
+     * @constructor
+     */
+  constructor(params) {
     super();
-    if (!options || (options && (!options.PAGE_ACCESS_TOKEN || !options.VALIDATION_TOKEN || !options.APP_SECRET))) {
+    if (!params || (params && (!params.PAGE_ACCESS_TOKEN || !params.VALIDATION_TOKEN || !params.APP_SECRET))) {
       throw new Error("You need to specify an PAGE_ACCESS_TOKEN, VALIDATION_TOKEN and APP_SECRET");
     }
-    this.PAGE_ACCESS_TOKEN = options.PAGE_ACCESS_TOKEN;
-    this.VALIDATION_TOKEN = options.VALIDATION_TOKEN;
-    this.APP_SECRET = options.APP_SECRET;
-    this.FB_URL = options.FB_URL || 'https://graph.facebook.com/v3.1/';
-    this.app = options.app || express();
-    this.webhook = options.webhook || '/webhook';
+    this.PAGE_ACCESS_TOKEN = params.PAGE_ACCESS_TOKEN;
+    this.VALIDATION_TOKEN = params.VALIDATION_TOKEN;
+    this.APP_SECRET = params.APP_SECRET;
+    this.FB_URL = params.FB_URL || 'https://graph.facebook.com/v3.1/';
+    this.app = params.app || express();
+    this.webhook = params.webhook || '/webhook';
     this.app.use(bodyParser.json({ verify: this.verifyRequestSignature.bind(this) }));
     this.intelligoClassifier;
   }
 
-  learn (data){
-      // Repeat multiple levels
-      const TextClassifier = IntelligoAI.classifiers.multilabel.BinaryRelevance.bind(0, {
-          binaryClassifierType: IntelligoAI.classifiers.Winnow.bind(0, {retrain_count: 10})
-      });
+  learn(data) {
+    // Repeat multiple levels
+    const TextClassifier = IntelligoAI.classifiers.multilabel.BinaryRelevance.bind(0, {
+      binaryClassifierType: IntelligoAI.classifiers.Winnow.bind(0, { retrain_count: 10 })
+    });
 
-      const WordExtractor = (input, features) => {
-          return input.split(" ").map(word => features[word] = 1);
-      };
+    const WordExtractor = (input, features) => {
+      return input.split(" ").map(word => features[word] = 1);
+    };
 
-      this.intelligoClassifier = new IntelligoAI.classifiers.EnhancedClassifier({
-          classifierType: TextClassifier,
-          featureExtractor: WordExtractor
-      });
+    this.intelligoClassifier = new IntelligoAI.classifiers.EnhancedClassifier({
+      classifierType: TextClassifier,
+      featureExtractor: WordExtractor
+    });
 
-      this.intelligoClassifier.trainBatch(data);
+    this.intelligoClassifier.trainBatch(data);
   }
 
-  answer (question) {
-      const result =  this.intelligoClassifier.classify(question);
-      return result;
+  answer(question) {
+    const result = this.intelligoClassifier.classify(question);
+    return result;
   }
 
   initWebhook() {
-      /*
-       * Use your own validation token. Check that the token used in the Webhook 
-       * setup is the same token used here.
-       */
-      this.app.get(this.webhook, (req, res) => {
-          if (req.query['hub.mode'] === 'subscribe' &&
-              req.query['hub.verify_token'] === this.VALIDATION_TOKEN) {
-              console.log("Validating webhook");
-              res.status(200).send(req.query['hub.challenge']);
-          } else {
-              console.error("Failed validation. Make sure the validation tokens match.");
-              res.sendStatus(403);
-          }
-      });
-      /*
-       * All callbacks for Messenger are POST-ed. They will be sent to the same
-       * webhook. Be sure to subscribe your app to your page to receive callbacks
-       * for your page. 
-       * https://developers.facebook.com/docs/messenger-platform/product-overview/setup#subscribe_app
-       */
-      this.app.post(this.webhook, (req, res) => {
-          var data = req.body;
+    /*
+     * Use your own validation token. Check that the token used in the Webhook 
+     * setup is the same token used here.
+     */
+    this.app.get(this.webhook, (req, res) => {
+      if (req.query['hub.mode'] === 'subscribe' &&
+        req.query['hub.verify_token'] === this.VALIDATION_TOKEN) {
+        console.log("Validating webhook");
+        res.status(200).send(req.query['hub.challenge']);
+      } else {
+        console.error("Failed validation. Make sure the validation tokens match.");
+        res.sendStatus(403);
+      }
+    });
+    /*
+     * All callbacks for Messenger are POST-ed. They will be sent to the same
+     * webhook. Be sure to subscribe your app to your page to receive callbacks
+     * for your page. 
+     * https://developers.facebook.com/docs/messenger-platform/product-overview/setup#subscribe_app
+     */
+    this.app.post(this.webhook, (req, res) => {
+      var data = req.body;
 
-          if (data.object === 'page') {
-              for(const pageEntry of data.entry){
-                  for(const messagingEvent of pageEntry.messaging){
-                    this.handleEvent(messagingEvent);
-                  }
-              }
-
-              res.sendStatus(200);
+      if (data.object === 'page') {
+        for (const pageEntry of data.entry) {
+          for (const messagingEvent of pageEntry.messaging) {
+            this.handleEvent(messagingEvent);
           }
-      });
+        }
+
+        res.sendStatus(200);
+      }
+    });
   }
-  
+
   // Iterate over each messaging event
-  handleEvent(event) { 
+  handleEvent(event) {
     if (event.optin) {
-        let optin = event.optin.ref;
-        this.emit('optin', event.sender.id, event, optin);
+      let optin = event.optin.ref;
+      this.emit('optin', event.sender.id, event, optin);
     } else if (typeof event.message === 'string') {
-        this.emit('message', event);
+      this.emit('message', event);
     } else if (event.message && !event.message.is_echo) {
-        this.emit('message', event);
+      this.emit('message', event);
     } else if (event.message && event.message.attachment) {
-        this.emit('attachment', event.sender.id, event.message.attachment, event.message.url, event.message.quickReplies);
+      this.emit('attachment', event.sender.id, event.message.attachment, event.message.url, event.message.quickReplies);
     } else if (event.delivery) {
-        let mids = event.delivery.mids;
-        this.emit('delivery', event.sender.id, event, mids);
+      let mids = event.delivery.mids;
+      this.emit('delivery', event.sender.id, event, mids);
     } else if (event.read) {
-        let recipient = event.recipient.id;
-        this.emit('read', event.sender.id, recipient, event.read);
+      let recipient = event.recipient.id;
+      this.emit('read', event.sender.id, recipient, event.read);
     } else if (event.postback || (event.message && !event.message.is_echo && event.message.quick_reply)) {
-        let postback = (event.postback && event.postback.payload) || event.message.quick_reply.payload;
-        let ref = event.postback && event.postback.referral && event.postback.referral.ref;
-        this.emit('postback', event.sender.id, postback);
+      let postback = (event.postback && event.postback.payload) || event.message.quick_reply.payload;
+      let ref = event.postback && event.postback.referral && event.postback.referral.ref;
+      this.emit('postback', event.sender.id, postback);
     } else if (event.referral) {
-        let ref = event.referral.ref;
-        this.emit('referral', event.sender.id, event, ref);
+      let ref = event.referral.ref;
+      this.emit('referral', event.sender.id, event, ref);
     } else if (event.account_linking) {
-        let link = event.account_linking;
-        this.emit('account_link', event.sender.id, event, link);
+      let link = event.account_linking;
+      this.emit('account_link', event.sender.id, event, link);
     } else {
-       console.error('Invalid format for message.');
+      console.error('Invalid format for message.');
     }
   }
-  
+
   /*
    * Verify that the callback came from Facebook. Using the App Secret from 
    * the App Dashboard, we can verify the signature that is sent with each 
@@ -123,76 +127,39 @@ class MessengerBot extends EventEmitter{
    *
    */
   verifyRequestSignature(req, res, buf) {
-      const signature = req.headers["x-hub-signature"];
+    const signature = req.headers["x-hub-signature"];
 
-      if (!signature) {
-        // For testing, let's log an error. In production, you should throw an 
-        // error.
-          console.error("Couldn't validate the signature.");
-      } else {
-          const elements = signature.split('='),
-              method = elements[0],
-              signatureHash = elements[1];
+    if (!signature) {
+      // For testing, let's log an error. In production, you should throw an 
+      // error.
+      console.error("Couldn't validate the signature.");
+    } else {
+      const elements = signature.split('='),
+        method = elements[0],
+        signatureHash = elements[1];
 
-          const expectedHash = crypto.createHmac('sha1', this.APP_SECRET)
-              .update(buf)
-              .digest('hex');
+      const expectedHash = crypto.createHmac('sha1', this.APP_SECRET)
+        .update(buf)
+        .digest('hex');
 
-          if (signatureHash != expectedHash) {
-              throw new Error("Couldn't validate the request signature.");
-          }
+      if (signatureHash != expectedHash) {
+        throw new Error("Couldn't validate the request signature.");
       }
+    }
   }
-  
-  addGreeting(text){
+
+  addGreeting(text) {
     request({
       url: `${this.FB_URL}me/thread_settings`,
-      qs: {access_token: this.PAGE_ACCESS_TOKEN},
+      qs: { access_token: this.PAGE_ACCESS_TOKEN },
       method: 'POST',
       json: {
-        "setting_type":"greeting",
-        "greeting":{
+        "setting_type": "greeting",
+        "greeting": {
           "text": text
-          }
         }
-      }, function(error, response, body) {
-        if (error) {
-          console.log('Error sending message: ', error);
-        } else if (response.body.error) {
-          console.log('Error: ', response.body.error);
       }
-    });
-  }
-  
-  addGetStartedButton(){
-    request({
-        url: `${this.FB_URL}me/messenger_profile`,
-        qs: { access_token: this.PAGE_ACCESS_TOKEN },
-        method: 'POST',
-        json:{
-      "get_started":{
-        "payload":"GET_STARTED_PAYLOAD"
-       }
-     }
-    }, function(error, response, body) {
-        
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
-  }
-  
-  addPersistentMenu(persistent_menu){
-    request({
-      url: `${this.FB_URL}me/messenger_profile`,
-      qs: {access_token: this.PAGE_ACCESS_TOKEN},
-      method: 'POST',
-      json: {
-        "persistent_menu": persistent_menu
-      }
-    }, function(error, response, body) {
+    }, function (error, response, body) {
       if (error) {
         console.log('Error sending message: ', error);
       } else if (response.body.error) {
@@ -200,25 +167,62 @@ class MessengerBot extends EventEmitter{
       }
     });
   }
-  
-  removePersistentMenu(){
+
+  addGetStartedButton() {
     request({
-        url: `${this.FB_URL}me/thread_settings`,
-        qs: { access_token: this.PAGE_ACCESS_TOKEN },
-        method: 'POST',
-        json:{
-            setting_type : "call_to_actions",
-            thread_state : "existing_thread",
-            call_to_actions:[ ]
+      url: `${this.FB_URL}me/messenger_profile`,
+      qs: { access_token: this.PAGE_ACCESS_TOKEN },
+      method: 'POST',
+      json: {
+        "get_started": {
+          "payload": "GET_STARTED_PAYLOAD"
         }
-    
-    }, function(error, response, body) {
-        console.log(response)
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
+      }
+    }, function (error, response, body) {
+
+      if (error) {
+        console.log('Error sending messages: ', error)
+      } else if (response.body.error) {
+        console.log('Error: ', response.body.error)
+      }
+    })
+  }
+
+  addPersistentMenu(persistent_menu) {
+    request({
+      url: `${this.FB_URL}me/messenger_profile`,
+      qs: { access_token: this.PAGE_ACCESS_TOKEN },
+      method: 'POST',
+      json: {
+        "persistent_menu": persistent_menu
+      }
+    }, function (error, response, body) {
+      if (error) {
+        console.log('Error sending message: ', error);
+      } else if (response.body.error) {
+        console.log('Error: ', response.body.error);
+      }
+    });
+  }
+
+  removePersistentMenu() {
+    request({
+      url: `${this.FB_URL}me/thread_settings`,
+      qs: { access_token: this.PAGE_ACCESS_TOKEN },
+      method: 'POST',
+      json: {
+        setting_type: "call_to_actions",
+        thread_state: "existing_thread",
+        call_to_actions: []
+      }
+
+    }, function (error, response, body) {
+      console.log(response)
+      if (error) {
+        console.log('Error sending messages: ', error)
+      } else if (response.body.error) {
+        console.log('Error: ', response.body.error)
+      }
     })
   }
 
@@ -227,34 +231,34 @@ class MessengerBot extends EventEmitter{
    * @param {String} messageText
    */
   sendTextMessage(recipientId, messageText) {
-      this.callSendAPI({
-          recipient: {
-              id: recipientId
-          },
-          message: {
-              text: messageText
-          }
-      });
+    this.callSendAPI({
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        text: messageText
+      }
+    });
   }
   /**
    * @param {Recipient|String} recipientId
    * @param {String} type Must be 'image', 'audio', 'video' or 'file'.
    * @param {String} url URL of the attachment.
    */
-  sendAttachment(recipientId, type, url){
+  sendAttachment(recipientId, type, url) {
     this.callSendAPI({
-          recipient: {
-              id: recipientId
-          },
-          message: {
-              attachment: {
-                  type: type,
-                  payload: {
-                      url:  url
-                  }
-              }
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        attachment: {
+          type: type,
+          payload: {
+            url: url
           }
-      });
+        }
+      }
+    });
   }
   /**
    * @param {Recipient|String} recipientId
@@ -271,14 +275,14 @@ class MessengerBot extends EventEmitter{
           payload: {
             template_type: "generic",
             elements: elements
-        }
+          }
         }
       }
     };
 
     this.callSendAPI(messageData);
   }
-  
+
   sendButtonMessage(recipientId, text, buttons) {
     var messageData = {
       recipient: {
@@ -294,34 +298,34 @@ class MessengerBot extends EventEmitter{
           }
         }
       }
-    };  
-  
+    };
+
     this.callSendAPI(messageData);
   }
 
   callSendAPI(messageData) {
-      request({
-          uri: `${this.FB_URL}me/messages`,
-          qs: { access_token: this.PAGE_ACCESS_TOKEN },
-          method: 'POST',
-          json: messageData
+    request({
+      uri: `${this.FB_URL}me/messages`,
+      qs: { access_token: this.PAGE_ACCESS_TOKEN },
+      method: 'POST',
+      json: messageData
 
-      }, function (error, response, body) {
-          if (!error && response.statusCode == 200) {
-              const recipientId = body.recipient_id,
-                  messageId = body.message_id;
+    }, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        const recipientId = body.recipient_id,
+          messageId = body.message_id;
 
-              if (messageId) {
-                  console.log("Successfully sent message with id %s to recipient %s",
-                      messageId, recipientId);
-              } else {
-                  console.log("Successfully called Send API for recipient %s",
-                      recipientId);
-              }
-          } else {
-              console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
-          }
-      });
+        if (messageId) {
+          console.log("Successfully sent message with id %s to recipient %s",
+            messageId, recipientId);
+        } else {
+          console.log("Successfully called Send API for recipient %s",
+            recipientId);
+        }
+      } else {
+        console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+      }
+    });
   }
 
   /**
@@ -330,23 +334,23 @@ class MessengerBot extends EventEmitter{
    * @param {String>} text 
    */
   sendWelcome(recipientId, greetings, text) {
-      // this (aka "the context") is a special keyword inside each function and its value only depends on how the function was called, 
-      // not how/when/where it was defined. It is not affected by lexical scopes, like other variables
-      const self = this;
-      request({
-              url: `${this.FB_URL}` + recipientId
-              + `?access_token=` + this.PAGE_ACCESS_TOKEN
-          },
-          function (error, response, body) {
-              if (error || response.statusCode != 200) return;
+    // this (aka "the context") is a special keyword inside each function and its value only depends on how the function was called, 
+    // not how/when/where it was defined. It is not affected by lexical scopes, like other variables
+    const self = this;
+    request({
+      url: `${this.FB_URL}` + recipientId
+        + `?access_token=` + this.PAGE_ACCESS_TOKEN
+    },
+      function (error, response, body) {
+        if (error || response.statusCode != 200) return;
 
-              const fbProfileBody = JSON.parse(body),
-                  userName = fbProfileBody["first_name"],
-                  randomGreeting = greetings[self.getRandomNumber(0, greetings.length - 1)],
-                  welcomeMsg = `${randomGreeting} ${userName} ${text}`;
-              self.sendTextMessage(recipientId, welcomeMsg);
-          }
-      );
+        const fbProfileBody = JSON.parse(body),
+          userName = fbProfileBody["first_name"],
+          randomGreeting = greetings[self.getRandomNumber(0, greetings.length - 1)],
+          welcomeMsg = `${randomGreeting} ${userName} ${text}`;
+        self.sendTextMessage(recipientId, welcomeMsg);
+      }
+    );
   }
 
   /*
@@ -357,59 +361,59 @@ class MessengerBot extends EventEmitter{
   * 
   */
   receivedPostback(event) {
-      const senderID = event.sender.id,
-          recipientID = event.recipient.id,
-          timeOfPostback = event.timestamp,
-          payload = event.postback.payload;
+    const senderID = event.sender.id,
+      recipientID = event.recipient.id,
+      timeOfPostback = event.timestamp,
+      payload = event.postback.payload;
 
-      console.log("Received postback for user %d and page %d with payload '%s' " +
-          "at %d", senderID, recipientID, payload, timeOfPostback);
+    console.log("Received postback for user %d and page %d with payload '%s' " +
+      "at %d", senderID, recipientID, payload, timeOfPostback);
 
-      this.sendTextMessage(senderID, "Postback called");
+    this.sendTextMessage(senderID, "Postback called");
   }
-  
+
   /*
    * Send a read receipt to indicate the message has been read
    *
    */
   sendReadReceipt(recipientId) {
 
-      this.callSendAPI({
-          recipient: {
-              id: recipientId
-          },
-          sender_action: "mark_seen"
-      });
+    this.callSendAPI({
+      recipient: {
+        id: recipientId
+      },
+      sender_action: "mark_seen"
+    });
   }
   /**
    * @param {Recipient|Object} recipientId Recipient object or ID.
    */
   sendTypingOn(recipientId) {
 
-      this.callSendAPI({
-          recipient: {
-              id: recipientId
-          },
-          sender_action: "typing_on"
-      });
+    this.callSendAPI({
+      recipient: {
+        id: recipientId
+      },
+      sender_action: "typing_on"
+    });
   }
   /**
    * @param {Recipient|Object} recipientId Recipient object or ID.
    */
   sendTypingOff(recipientId) {
-      this.callSendAPI({
-          recipient: {
-              id: recipientId
-          },
-          sender_action: "typing_off"
-      });
+    this.callSendAPI({
+      recipient: {
+        id: recipientId
+      },
+      sender_action: "typing_off"
+    });
   }
 
   getRandomNumber(minimum, maxmimum) {
-    return Math.floor(Math.exp(Math.random()*Math.log(maxmimum-minimum+1)))+minimum;
+    return Math.floor(Math.exp(Math.random() * Math.log(maxmimum - minimum + 1))) + minimum;
   }
 
-  randomIntFromInterval(min,max) {
+  randomIntFromInterval(min, max) {
     return this.getRandomNumber(min, max);
   }
 
