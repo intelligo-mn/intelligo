@@ -1,3 +1,212 @@
-<p>
-  chat-thread works!
-</p>
+<div class="root" [ngClass]="{'ana-min': isMin}">
+    <div class="content">
+        <div class="ana-title">
+            <div class="ana-logo">
+                <img [src]="settings.brandingConfig.logoUrl" class="ana-full" (click)="settings.brandingConfig.logoClickUrl?openWindow(settings.brandingConfig.logoClickUrl):null" [class.clickable]="settings.brandingConfig.logoClickUrl" />
+            </div>
+            <div class="ana-content">
+                <div class="title">{{settings.brandingConfig.agentName}}</div>
+                <div class="subtitle">
+                    <span *ngIf="settings.brandingConfig.agentDesc">
+                        <span *ngIf="connectionStatusMessage()!='Available'">
+                            {{settings.brandingConfig.agentDesc}} - <i *ngIf="connectionStatusMessage()=='Available'" [title]="connectionStatusMessage()" class="ana-online-dot"></i> {{ connectionStatusMessage()}}
+                        </span>
+                        <span *ngIf="connectionStatusMessage()=='Available'">
+                            {{settings.brandingConfig.agentDesc}} <i [title]="connectionStatusMessage()" class="ana-online-dot"></i>
+                        </span>
+                    </span>
+                    <span *ngIf="!settings.brandingConfig.agentDesc">
+                        <i *ngIf="connectionStatusMessage()=='Available'" [title]="connectionStatusMessage()" class="ana-online-dot"></i>{{connectionStatusMessage()}}
+                    </span>
+                </div>
+            </div>
+            <div class="ana-actions">
+                <div class="ana-action" title="Mute" (click)="isMute=!isMute" *ngIf="settings.appConfig.msgSounds">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" *ngIf="isMute">
+                        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+                    </svg>
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" *ngIf="!isMute">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+                    </svg>
+                </div>
+                <div class="ana-action refresh" title="Start a fresh chat" (click)="getStarted(true, true)" [hidden]="!settings.appConfig.allowFlowReset">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.279 15.279">
+                        <path d="M7.599 1.918v-1.8c0-.1.125-.154.209-.091l3.7 2.719a.114.114 0 0 1 0 .184l-3.7 2.719c-.084.062-.21.006-.21-.09V3.76A4.843 4.843 0 0 0 2.847 8.93c.159 2.4 2.115 4.347 4.515 4.5a4.849 4.849 0 0 0 5.094-4.06.92.92 0 0 1 .912-.771c.56 0 .994.497.907 1.047-.544 3.428-3.703 6-7.366 5.59-3.062-.343-5.522-2.793-5.869-5.856C.58 5.374 3.692 1.961 7.6 1.918z" />
+                    </svg>
+                </div>
+            </div>
+            <div class="chat-history-loading" [hidden]="!fetchingHistory">
+                <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
+            </div>
+        </div>
+        <div class="chat-thread scrollbar" #chatThreadView (scroll)="chatThreadOnScroll($event)">
+            <div class="chat-message" *ngFor="let msg of chatThread.messages">
+                <div [ngSwitch]="msg.messageData.type">
+                    <ng-container *ngSwitchCase="MH.MessageType.SIMPLE">
+                        <div class="chat-message-item-container">
+                            <div class="chat-message-item" [ngClass]="{'media': msg.getMessageContentType()==MH.MessageContentType.Media, 'text':msg.getMessageContentType()==MH.MessageContentType.Text, 'typing':msg.getMessageContentType()==MH.MessageContentType.Typing, 'incoming':msg.direction==MH.Direction.Incoming, 'outgoing':msg.direction==MH.Direction.Outgoing, 'chat-message-last': isLastInMessageGroup(msg)}">
+                                <div [ngSwitch]="msg.getMessageContentType()">
+                                    <ng-container *ngSwitchCase="MH.MessageContentType.Text">
+                                        <span class="chat-text" *ngIf="!settings.appConfig.htmlMessages">{{msg.messageData.content.text}}</span>
+                                        <span class="chat-text" *ngIf="settings.appConfig.htmlMessages" [innerHTML]="msg.messageData.content.text"></span>
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="MH.MessageContentType.Typing">
+                                        <div class="typing-indicator-container">
+                                            <div class="typing-indicator">
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="MH.MessageContentType.Media">
+                                        <div [ngSwitch]="msg.messageData.content.media.type">
+                                            <ng-container *ngSwitchCase="MH.MediaType.IMAGE">
+                                                <img [src]="msg.messageData.content.media.url" class="chat-media" (click)="viewImage(msg.messageData.content.media.url)" [class.clickable]="msg.messageData.content.media.url" />
+                                                <span class="chat-bottom-overlay">
+                                                    <img src="assets/svg/picture.svg" />&nbsp; {{msg.messageData.content.text||'Photo'}}
+                                                </span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="MH.MediaType.VIDEO">
+                                                <video controls="controls" class="chat-media" (click)="viewVideo(msg.messageData.content.media.url)" [class.clickable]="msg.messageData.content.media.url">
+                                                    <source [src]="msg.messageData.content.media.url" />
+                                                </video>
+                                                <span class="chat-bottom-overlay">
+                                                    <img src="assets/svg/video-from-gallery.svg" />&nbsp; {{msg.messageData.content.text||'Video'}}
+                                                </span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="MH.MediaType.AUDIO">
+                                                <div class="chat-media">
+                                                    <audio controls="controls">
+                                                        <source [src]="msg.messageData.content.media.url" />
+                                                    </audio>
+                                                </div>
+                                                <span class="chat-bottom-overlay">
+                                                    <img src="assets/svg/record-voice.svg" />&nbsp; {{msg.messageData.content.text||'Audio'}}
+                                                </span>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="MH.MediaType.FILE">
+                                                <img src="assets/svg/attachment.svg" class="chat-media chat-file-attachment" />
+                                                <span class="chat-bottom-overlay">
+                                                    <img src="assets/svg/attachment-white.svg" />&nbsp; {{msg.messageData.content.text||'File'}}
+                                                </span>
+                                            </ng-container>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <span class="chat-time" [hidden]="msg.getMessageContentType()==MH.MessageContentType.Typing">
+                                    <span *ngIf="msg.direction==MH.Direction.Outgoing && msg.status==MH.MessageStatus.SentTimeout"><a href="javascript:;" (click)="msg.executeRetry()" class="ana-link ana-btn-retry">Retry</a></span>
+                                    <span *ngIf="!msg.isToday()">
+                                        {{msg.time | date:'MMM d, h:mm a'}}
+                                    </span>
+                                    <span *ngIf="msg.isToday()">
+                                        {{msg.time | date:'shortTime'}}
+                                    </span>
+                                    <svg class="ana-sent-tick" *ngIf="msg.direction==MH.Direction.Outgoing && msg.status==MH.MessageStatus.ReceivedAtServer" xmlns="http://www.w3.org/2000/svg" width="10" height="10">
+                                        <path d="M9.887 1.475a.385.385 0 0 0-.544 0L3.11 7.709.657 5.257a.385.385 0 1 0-.544.544l2.724 2.724c.15.15.394.15.544 0L9.887 2.02a.385.385 0 0 0 0-.544z" />
+                                    </svg>
+                                    <svg class="ana-delivered-tick" *ngIf="msg.direction==MH.Direction.Outgoing && msg.status==MH.MessageStatus.DelieveredToTarget" xmlns="http://www.w3.org/2000/svg" width="10" height="10">
+                                        <path d="M7.554 2.725l-.601-.6-2.704 2.703.6.601 2.705-2.704zm1.802-.6L4.85 6.673 3.047 4.87l-.6.601L4.85 7.876 10 2.726l-.644-.602zM0 5.471l2.403 2.404.601-.601L.601 4.87 0 5.472z" />
+                                    </svg>
+                                </span>
+                                <span class="chat-stub"></span>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="MH.MessageType.CAROUSEL">
+                        <div class="carousel-wrapper">
+                            <div #carouselContainer class="carousel-container scrollbar" [ngClass]="msg.meta.id">
+                                <div *ngFor="let carItem of msg.messageData.content.items" class="carousel-item-container">
+                                    <div class="carousel-item">
+                                        <div class="carousel-item-content" [class.no-media]="!carouselItemHasMedia(carItem)">
+                                            <div *ngIf="carouselItemHasMedia(carItem)">
+                                                <div [ngSwitch]="carItem.media.type" class="carousel-item-media">
+                                                    <ng-container *ngSwitchCase="MH.MediaType.IMAGE">
+                                                        <img [src]="carItem.media.url" (click)="viewImage(carItem.media.url)" [class.clickable]="carItem.media.url" />
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="MH.MediaType.VIDEO" (click)="viewVideo(carItem.media.url)" [class.clickable]="carItem.media.url">
+                                                        <video controls [src]="carItem.media.url"></video>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="MH.MediaType.AUDIO">
+                                                        <audio controls [src]="carItem.media.url"></audio>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item-title text-wrap">
+                                                {{carItem.title}}
+                                            </div>
+                                            <div class="carousel-item-desc text-wrap" [innerHTML]="carItem.desc"></div>
+                                        </div>
+                                        <div class="carousel-item-button-container">
+                                            <div class="carousel-item-button" *ngFor="let carBtn of carItem.options">
+                                                <button mat-button (click)="handleCarouselClick(msg, carBtn)" [disabled]="!isLastMessage(msg)">{{carBtn.title}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-arrow right" (click)="scrollCarousel(msg.meta.id, 'right')" [hidden]="!canScrollCarousel(msg.meta.id,'right')">
+                                <svg>
+                                    <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path>
+                                </svg>
+                            </div>
+                            <div class="carousel-arrow left" (click)="scrollCarousel(msg.meta.id, 'left')" [hidden]="!canScrollCarousel(msg.meta.id,'left')">
+                                <svg>
+                                    <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input-container" #inputContainer>
+            <div *ngIf="chatInput.clickInput">
+                <div [ngSwitch]="chatInput.clickInput.content.inputType">
+                    <ng-container *ngSwitchCase="MH.InputType.OPTIONS">
+                        <div class="chat-input-click-container">
+                            <div *ngFor="let option of chatInput.clickInput.content.options" class="chat-input click">
+                                <button type="button" class="btn-click" (click)="chatInput.handleBtnOptionClick(chatInput.clickInput, option.value)">{{option.title}}</button>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                        <div class="chat-input-click-container">
+                            <div class="chat-input click">
+                                <button type="button" class="btn-click" (click)="chatInput.handleClick(chatInput.clickInput)">{{chatInput.clickInputTitle()}}</button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div class="chat-input text" *ngIf="chatInput.textInput">
+                <input [type]="chatInput.htmlInputType(chatInput.textInput)" [readonly]="chatInput.textInput.disabled" (keypress)="chatInput.handleKeyPress(chatInput.textInput, $event)" name="chat-text" id="chat-text" class="chat-text-input" [(ngModel)]="chatInput.textInput.content.input.val" [placeholder]="((chatInput.textInput.disabled? 'Waiting for response':(chatInput.textInput.content.textInputAttr?(chatInput.textInput.content.textInputAttr.placeHolder?chatInput.textInput.content.textInputAttr.placeHolder:''):'')))" [maxlength]="(chatInput.textInput.content.textInputAttr?chatInput.textInput.content.textInputAttr.maxLength:'')" (focus)="chatTextInputOnFocus()" />
+                <button type="button" class="btn-icon" [disabled]="!chatInput.textInput.content.input.val" (click)="chatInput.handleClick(chatInput.textInput)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path class="send-button" d="M23.878.983a.359.359 0 0 0-.388-.056L.208 11.745a.359.359 0 0 0-.007.647l6.589 3.234c.12.06.265.046.372-.035l6.407-4.788-5.03 5.173a.359.359 0 0 0-.1.278l.5 6.52a.359.359 0 0 0 .63.208l3.497-4.053 4.323 2.066a.358.358 0 0 0 .497-.217L23.983 1.36a.359.359 0 0 0-.105-.377z" /></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="image-viewer-container" [hidden]="!fullScreenImage">
+    <ngx-image-viewer #imageViewer [src]="[fullScreenImage]"></ngx-image-viewer>
+    <button mat-icon-button (click)="closeImageViewer()" class="btn-close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3.748 3.748">
+            <path d="M2.205 1.874L3.68.4A.234.234 0 1 0 3.348.07L1.874 1.543.4.069A.234.234 0 1 0 .07.4l1.473 1.474L.07 3.348a.234.234 0 1 0 .331.331l1.474-1.474L3.348 3.68a.234.234 0 0 0 .331 0 .234.234 0 0 0 0-.331L2.205 1.874z" />
+        </svg>
+    </button>
+</div>
+<div class="video-viewer-container" *ngIf="fullScreenVideo">
+    <div class="video-container">
+        <video controls="controls">
+            <source [src]="fullScreenVideo" />
+        </video>
+    </div>
+    <button mat-icon-button (click)="closeVideoViewer()" class="btn-close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3.748 3.748">
+            <path d="M2.205 1.874L3.68.4A.234.234 0 1 0 3.348.07L1.874 1.543.4.069A.234.234 0 1 0 .07.4l1.473 1.474L.07 3.348a.234.234 0 1 0 .331.331l1.474-1.474L3.348 3.68a.234.234 0 0 0 .331 0 .234.234 0 0 0 0-.331L2.205 1.874z" />
+        </svg>
+    </button>
+</div>
