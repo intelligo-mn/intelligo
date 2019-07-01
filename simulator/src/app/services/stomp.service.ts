@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import * as SockJS from "sockjs-client";
-import * as StompJS from "stompjs";
+import * as StompJS from "@stomp/stompjs";
 import { ChatMessageVM, MessageStatus } from "../models/chat-vm.models";
 import {
   EventType,
