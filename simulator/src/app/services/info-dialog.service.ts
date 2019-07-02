@@ -6,7 +6,7 @@ import {
   InfoDialogType
 } from "../components/info-dialog/info-dialog.component";
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class InfoDialogService {
   constructor(private dialog: MatDialog) {}
 

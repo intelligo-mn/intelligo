@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 
 let MAT_CSS = require("../../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css");
-@Injectable()
+
+@Injectable({ providedIn: 'root' })
 export class MatCSSService {
   constructor() {}
 

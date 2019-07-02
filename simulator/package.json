@@ -28,9 +28,10 @@
     "jsonpath": "^1.0.2",
     "ngx-image-viewer": "^1.0.13",
     "rxjs": "~6.5.2",
-    "sockjs-client": "^1.3.0",
+    "sockjs-client": "1.3.0",
     "@stomp/stompjs": "5.4.2",
     "tslib": "^1.10.0",
+    "stompjs": "2.3.3",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {

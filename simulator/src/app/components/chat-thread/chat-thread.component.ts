@@ -1,26 +1,29 @@
 import {
-  AfterViewInit,
   Component,
-  ElementRef,
   OnInit,
   ViewChild,
+  ElementRef,
+  AfterViewInit,
   ViewChildren
 } from "@angular/core";
-import { MatDialog } from "@angular/material";
-import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+
 import * as hammer from "hammerjs";
-import * as vm from "../../models/chat-vm.models";
+
 import * as models from "../../models/chat.models";
 import * as config from "../../models/config.models";
-import { APIService } from "../../services/api.service";
-import { ChainDelayService } from "../../services/chain-delay.service";
-import { InfoDialogService } from "../../services/info-dialog.service";
-import { SimulatorService } from "../../services/simulator.service";
+import * as vm from "../../models/chat-vm.models";
 import {
-  StompConnectionStatus,
-  StompService
+  StompService,
+  StompConfig,
+  StompConnectionStatus
 } from "../../services/stomp.service";
-import { Config, UtilitiesService } from "../../services/utilities.service";
+import { SimulatorService } from "../../services/simulator.service";
+import { APIService } from "../../services/api.service";
+import { UtilitiesService, Config } from "../../services/utilities.service";
+import { ChainDelayService } from "../../services/chain-delay.service";
+import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import { InfoDialogService } from "../../services/info-dialog.service";
 
 @Component({
   selector: "app-chat-thread",
@@ -52,7 +55,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
       this.sanitizer
     );
   }
-  @ViewChild("inputContainer", null)
+  @ViewChild('inputContainer', null)
   inputContainerRef: ElementRef;
 
   @ViewChild("chatThreadView", null)
@@ -257,9 +260,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
     this.apiService.fetchHistory(oldMsgTimestamp).subscribe(
       resp => {
         try {
-          let chatMsgs = resp.content.map(
-            x => new models.IntelligoChatMessage(x)
-          );
+          let chatMsgs = resp.content.map(x => new models.IntelligoChatMessage(x));
           for (let i = 0; i < chatMsgs.length; i++) {
             let chatMsg = chatMsgs[i];
             let direction =

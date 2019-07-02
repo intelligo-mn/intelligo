@@ -4,7 +4,7 @@ import * as vm from "../models/chat-vm.models";
 import * as models from "../models/chat.models";
 import { UtilitiesService } from "../services/utilities.service";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class SimulatorService {
   private debug: boolean = true;
 
@@ -16,7 +16,9 @@ export class SimulatorService {
       if (msg.type == SimulatorMessageType.IntelligoChatMessage) {
         let cfMsg = msg as IntelligoChatSimulatorMessage;
         if (this.handleMessageReceived)
-          this.handleMessageReceived(new models.IntelligoChatMessage(cfMsg.data));
+          this.handleMessageReceived(
+            new models.IntelligoChatMessage(cfMsg.data)
+          );
       } else if (msg.type == SimulatorMessageType.IntelligoChatReset) {
         if (this.handleResetSignal) this.handleResetSignal();
       }
@@ -25,7 +27,10 @@ export class SimulatorService {
   private logDebug(msg: any) {
     if (this.debug) console.log(msg);
   }
-  sendMessage(message: models.IntelligoChatMessage, threadMsgRef: vm.ChatMessageVM) {
+  sendMessage(
+    message: models.IntelligoChatMessage,
+    threadMsgRef: vm.ChatMessageVM
+  ) {
     window.parent.postMessage(
       {
         data: message,

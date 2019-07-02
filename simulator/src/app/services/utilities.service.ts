@@ -11,7 +11,7 @@ import {
 import { AppSettings } from "../models/config.models";
 import { GoogleMapsConfig } from "../models/google-maps-config.model";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class UtilitiesService {
   static googleMapsConfigRef: GoogleMapsConfig = { apiKey: "" };
   static settings: AppSettings;

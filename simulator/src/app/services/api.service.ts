@@ -16,7 +16,7 @@ import {
 } from "../models/config.models";
 import { UtilitiesService } from "../services/utilities.service";
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class APIService {
   fileUploadEndpoint: string;
   apiEndpoint: string;

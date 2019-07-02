@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import * as SockJS from "sockjs-client";
-import * as StompJS from "@stomp/stompjs";
+import * as StompJS from "stompjs/lib/stomp.js";
 import { ChatMessageVM, MessageStatus } from "../models/chat-vm.models";
 import {
   EventType,
@@ -9,7 +9,7 @@ import {
 } from "../models/chat.models";
 import { Config, UtilitiesService } from "../services/utilities.service";
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class StompService {
   public config: StompConfig;
   private client: StompJS.Client;
