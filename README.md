@@ -117,11 +117,14 @@ Install the command line tool
 ```bash
 $ npm install intelligo-cli -g
 ```
-Create the your bot project:
 
-```bash
-$ intelligo mybot && cd mybot
-```
+### Messenger bot
+
+Generate the your messenger bot project:
+
+<p align="center">
+<img width="100%" src="https://github.com/intelligo-systems/intelligo-cli/blob/master/.github/intelligo-cli-messenger.gif">
+</p>
 
 Set the values in `config/default.json` before running the bot. Using your Facebook Page's / App's `ACCESS_TOKEN`, `VERIFY_TOKEN` and `APP_SECRET`
 
@@ -131,17 +134,30 @@ Set the values in `config/default.json` before running the bot. Using your Faceb
 
 **Note:** If you don't know how to get these tokens, take a look at Facebook's [Quick Start Guide](https://developers.facebook.com/docs/messenger-platform/guides/quick-start) .
 
-Install dependencies:
+### Slack bot
+
+Generate the your slack bot project:
+
+<p align="center">
+<img width="100%" src="https://github.com/intelligo-systems/intelligo-cli/blob/master/.github/intelligo-cli-slack.gif">
+</p>
+
+Before you start, you'll need a Slack App. If you don't already have one, click the following [link to create it](https://my.slack.com/services/new/bot) and put ```token``` in `index.js` file.
+
+## Install dependencies:
 
 ```bash
 $ npm install
 ```
 
-Start your bot server:
+## Run your bot
+
+Start your bot app:
 
 ```bash
 $ npm start
 ```
+
 ## Examples
 
 Collection of examples for using Intelligo Framework.
