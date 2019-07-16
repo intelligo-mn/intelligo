@@ -123,7 +123,7 @@ $ npm install intelligo-cli -g
 Generate the your messenger bot project:
 
 <p align="center">
-<img width="100%" src="https://github.com/intelligo-systems/intelligo-cli/blob/master/.github/intelligo-cli-messenger.gif">
+<img width="100%" src="https://raw.githubusercontent.com/intelligo-systems/intelligo-cli/master/.github/intelligo-cli-messenger.gif">
 </p>
 
 Set the values in `config/default.json` before running the bot. Using your Facebook Page's / App's `ACCESS_TOKEN`, `VERIFY_TOKEN` and `APP_SECRET`
@@ -139,7 +139,7 @@ Set the values in `config/default.json` before running the bot. Using your Faceb
 Generate the your slack bot project:
 
 <p align="center">
-<img width="100%" src="https://github.com/intelligo-systems/intelligo-cli/blob/master/.github/intelligo-cli-slack.gif">
+<img width="100%" src="https://raw.githubusercontent.com/intelligo-systems/intelligo-cli/master/.github/intelligo-cli-slack.gif">
 </p>
 
 Before you start, you'll need a Slack App. If you don't already have one, click the following [link to create it](https://my.slack.com/services/new/bot) and put ```token``` in `index.js` file.
