@@ -8,6 +8,6 @@
   "dependencies": {
     "config": "3.2.0",
     "express": "4.17.1",
-    "intelligo": "0.8.12"
+    "intelligo": "1.0.13"
   }
 }

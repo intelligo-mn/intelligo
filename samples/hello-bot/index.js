@@ -5,7 +5,7 @@ const express = require('express'),
 
 const app = express();
 
-const bot = new Intelligo({
+const bot = new Intelligo.MessengerBot({
   PAGE_ACCESS_TOKEN: config.get('PAGE_ACCESS_TOKEN'),
   VALIDATION_TOKEN: config.get('VALIDATION_TOKEN'),
   APP_SECRET: config.get('APP_SECRET'),
