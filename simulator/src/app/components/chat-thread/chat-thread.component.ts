@@ -36,6 +36,24 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
       this.chatThread.chatThreadView = this.chatThreadView.nativeElement;
   }
 
+  @ViewChild("inputContainer", null)
+  inputContainerRef: ElementRef;
+
+  @ViewChild("chatThreadView", null)
+  chatThreadView: ElementRef;
+
+  @ViewChildren("carouselContainer")
+  carouselContainers: ElementRef[];
+
+  chatThread: vm.ChatThreadVM;
+  chatInput: vm.ChatInputVM;
+  settings: config.AppSettings;
+  isMin: boolean = false;
+  isMute: boolean = false;
+
+  fullScreenImage: string | SafeUrl;
+  fullScreenVideo: string | SafeUrl;
+
   constructor(
     private stompService: StompService,
     private apiService: APIService,
@@ -55,24 +73,6 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
       this.sanitizer
     );
   }
-  @ViewChild('inputContainer', null)
-  inputContainerRef: ElementRef;
-
-  @ViewChild("chatThreadView", null)
-  chatThreadView: ElementRef;
-
-  @ViewChildren("carouselContainer")
-  carouselContainers: ElementRef[];
-
-  chatThread: vm.ChatThreadVM;
-  chatInput: vm.ChatInputVM;
-  settings: config.AppSettings;
-  isMin: boolean = false;
-  isMute: boolean = false;
-
-  fullScreenImage: string | SafeUrl;
-  fullScreenVideo: string | SafeUrl;
-
   connectionStatusMessage() {
     if (!this.stompService) return "";
     switch (this.stompService.connectionStatus) {
@@ -260,7 +260,9 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
     this.apiService.fetchHistory(oldMsgTimestamp).subscribe(
       resp => {
         try {
-          let chatMsgs = resp.content.map(x => new models.IntelligoChatMessage(x));
+          let chatMsgs = resp.content.map(
+            x => new models.IntelligoChatMessage(x)
+          );
           for (let i = 0; i < chatMsgs.length; i++) {
             let chatMsg = chatMsgs[i];
             let direction =

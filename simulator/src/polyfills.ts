@@ -57,7 +57,9 @@
  */
 import 'zone.js/dist/zone';  // Included with Angular CLI.
 
-(window as any).global = window;
+
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+(window as any).global = window;
+import 'core-js/proposals/reflect-metadata';

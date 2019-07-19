@@ -1,22 +1,9 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { map } from 'rxjs/operators';
-import {
-  IntelligoTime,
-  IntelligoDate,
-  IntelligoMeta,
-  SenderType
-} from "../models/chat.models";
-import { StompConfig } from "./stomp.service";
-import {
-  AppConfig,
-  AppSettings,
-  BrandingConfig,
-  ThirdPartyConfig
-} from "../models/config.models";
+import { map } from "rxjs/operators";
 import { UtilitiesService } from "../services/utilities.service";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class APIService {
   fileUploadEndpoint: string;
   apiEndpoint: string;
@@ -39,8 +26,8 @@ export class APIService {
     let formData = new FormData();
     formData.append("file", file);
     return this.http
-	  .post(this.fileUploadEndpoint, formData)
-	  .pipe(map(res => res as UploadFileResponse));
+      .post(this.fileUploadEndpoint, formData)
+      .pipe(map(res => res as UploadFileResponse));
   }
 
   fetchHistory(oldestMsgTimestamp: number, size: number = 20) {

@@ -1,0 +1,65 @@
+<!-- team section-->
+<section class="team-bg" id="team">
+   <div class="animation-circle-inverse">
+      <i></i>
+      <i></i>
+      <i></i>
+   </div>
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12 text-center">
+            <div class="section-title">
+               <h2>Our Work Place</h2>
+               <img src="assets/images/title-line.png" alt="title-line" class="img-fluid">
+            </div>
+         </div>
+         <div class="col-md-12">
+          <!-- If images array is dynamically changing pass this array to [items] input -->
+           <owl-carousel [options]="teamCarousel" [items]="team" [carouselClasses]="['team-slider owl-carousel owl-theme']">
+               <div class="item" *ngFor="let teams of team">
+                  <div class="team-box">
+                     <div class="team-under-box">
+                        <div class="team-under-box-button text-white">
+                           <i class="fa fa-plus" aria-hidden="true"></i>
+                        </div>
+                        <img [src]="teams.image" alt="1" class="img-fluid">
+                        <div class="team-overlay">
+                           <div class="social-icon">
+                              <ul [innerHTML]="teams.social"></ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+          </owl-carousel>
+         </div>
+
+         <div class="col-md-12">
+            <div class="team-hover">
+               <div class="row">
+                  <div class="col-md-4">
+                     <div  class="team-profile">
+                        <img src="assets/images/1.jpg" alt="1" class="img-fluid">
+                     </div>
+                  </div>
+                  <div class="col-md-8">
+                     <div class="d-flex-1">
+                        <div class="hover-text">
+                           <div class="team-close-btn">
+                              <a ><i class="fa fa-times" aria-hidden="true"></i></a>
+                           </div>
+                           <h3>Mark Jecno</h3>
+                           <h4 class="m-0 text-muted">Devloper & Designer</h4>
+                           <h5>PHP, Laravel, Cake , Wordpress, HTML5 </h5>
+                           <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text,</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         
+      </div>
+   </div>
+</section>
+<!-- end team section-->
