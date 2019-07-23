@@ -50,7 +50,7 @@
     "opencollective-postinstall": "2.0.2",
     "request": "2.88.0",
     "vow": "0.4.20",
-    "ws": "7.1.0",
+    "ws": "7.1.1",
     "ws-heartbeat": "1.1.0"
   },
   "devDependencies": {
