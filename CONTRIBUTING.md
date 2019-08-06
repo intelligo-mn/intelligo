@@ -140,14 +140,14 @@ to read on GitHub as well as in various git tools.
 
 The footer should contain a [closing reference to an issue](https://help.github.com/articles/closing-issues-via-commit-messages/) if any.
 
-Samples: (even more [samples](https://github.com/angular/angular/commits/master))
+Samples: (even more [samples](https://github.com/intelligo-systems/intelligo/commits/master))
 
 ```
 docs(changelog): update changelog to beta.5
 ```
 
 ```
-fix(release): need to depend on latest rxjs and zone.js
+fix(release): need to depend on latest neuro.js
 
 The version in our package.json gets copied to the one we publish, and users need the latest of these.
 ```
