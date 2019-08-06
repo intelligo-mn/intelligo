@@ -38,7 +38,7 @@
     "machine-learning"
   ],
   "dependencies": {
-    "async": "2.6.3",
+    "async": "3.1.0",
     "body-parser": "1.19.0",
     "config": "3.2.2",
     "eventemitter3": "4.0.0",
