@@ -1,4 +1,6 @@
-# Contributing Intelligo Framework
+# Contributing to Intelligo Framework
+
+We would love for you to contribute to Intelligo and help make it even better than it is today! As a contributor, here are the guidelines we would like you to follow:
 
 - [Issues and Bugs](#issue)
 - [Feature Requests](#feature)
