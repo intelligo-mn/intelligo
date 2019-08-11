@@ -1,6 +1,6 @@
 module.exports = {
 	title: 'Intelligo Framework',
-	dest: './dist',
+	dest: './',
 	locales: {
 		// The key is the path for the locale to be nested under.
 		// As a special case, the default locale can use '/' as its path.
@@ -16,7 +16,7 @@ module.exports = {
 		}
 	},
 	themeConfig: {
-		repo: 'https://github.com/intelligo-systems/intelligo.js.org',
+		repo: 'https://github.com/intelligo-systems/intelligo',
 		repoLabel: 'Github',
 		docsDir: './docs',
 		editLinks: true,
