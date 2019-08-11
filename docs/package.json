@@ -8,7 +8,7 @@
   "copyright": "Copyright 2019 Intelligo Systems.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/intelligo-systems/intelligo.js.org.git"
+    "url": "https://github.com/intelligo-systems/intelligo.git"
   },
   "license": "MIT",
   "dependencies": {
