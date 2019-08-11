@@ -1,0 +1,39 @@
+{
+  "name": "intelligo.js.org",
+  "version": "1.0.0",
+  "description": "The official documentation site for Intelligo chatbot framework",
+  "main": "index.js",
+  "author": "Turtuvshin Byambaa",
+  "homepage": "https://intelligo.js.org",
+  "copyright": "Copyright 2019 Intelligo Systems.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/intelligo-systems/intelligo.js.org.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "intelligo": "^1.0.0",
+    "opencollective": "^1.0.3",
+    "opencollective-postinstall": "^2.0.2"
+  },
+  "devDependencies": {
+    "@vuepress/plugin-google-analytics": "1.0.2",
+    "@vuepress/plugin-pwa": "1.0.2",
+    "vuepress": "1.0.2",
+    "vuepress-plugin-janitor": "1.0.0",
+    "vuepress-plugin-reading-time": "0.1.1",
+    "vuepress-plugin-rss": "2.0.0",
+    "yaml-front-matter": "4.0.0"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/intelligo"
+  },
+  "scripts": {
+    "postinstall": "opencollective-postinstall",
+    "test": "mocha --recursive test/*",
+    "test:watch": "npm test -- --watch",
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
+  }
+}
