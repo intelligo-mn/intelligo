@@ -1,0 +1,8 @@
+type ExampleType {
+    id: Int! 
+    name: String
+}
+
+type ExampleArrayType {
+    list: [ExampleType]
+}

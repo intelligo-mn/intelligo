@@ -1,0 +1,3 @@
+projects:
+  nxplorer:
+    schemaPath: server/graphql/schema/main.graphql

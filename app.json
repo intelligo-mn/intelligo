@@ -1,18 +1,8 @@
 {
-  "name": "Intelligo Platform",
-  "description": "Intelligo Platform",
-  "repository": "https://github.com/intelligo-systems/intelligo-platform.git",
-  "image": "heroku/nodejs",
-  "env": {
-    "SECRET": {
-      "description": "A secret key for verifying the integrity of signed cookies.",
-      "generator": "secret"
-    },
-    "DB_URL": {
-      "description": "MongoDB url"
-    }
-  },
-  "addons": [
-    "mongolab"
-  ]
+  "name": "Start on Heroku: nXplorerJS",
+  "description": "Node JS , Typescript , Express based reactive microservice starter project for REST and GraphQL APIs ",
+  "repository": "https://github.com/ERS-HCL/nxplorerjs-microservice-starter",
+  "logo": "https://github.com/ERS-HCL/nxplorerjs-microservice-starter/blob/master/public/logo.png",
+  "keywords": ["node", "express", "heroku"],
+  "image": "heroku/nodejs"
 }

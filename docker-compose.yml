@@ -1,0 +1,22 @@
+version: '2.1'
+services:
+  hystrix:
+    image: tsukhu/hystrix-dash
+    restart: always
+    ports:
+      - 8080:8080
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  nxplorerjs-microservice:
+    build: .
+    restart: always
+    ports:
+      - 3000:3000
+      - 3001:3001
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
