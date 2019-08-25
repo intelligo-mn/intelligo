@@ -20,11 +20,9 @@
     "chat",
     "chatbot",
     "classifier",
-    "slack",
-    "line",
     "slack-bot",
     "line-bot",
-    "conversation",
+    "conversational",
     "messenger-bot",
     "messenger",
     "facebook",
@@ -58,6 +56,10 @@
     "ws-heartbeat": "1.1.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/register": "^7.5.5",
     "chai": "4.2.0",
     "eslint": "6.2.2",
     "mocha": "6.2.0",
@@ -69,7 +71,7 @@
   },
   "scripts": {
     "postinstall": "opencollective-postinstall",
-    "test": "mocha --recursive test/*",
-    "test:watch": "npm test -- --watch"
+    "build": "babel src -d dist",
+    "test": "mocha --require @babel/register"
   }
 }
