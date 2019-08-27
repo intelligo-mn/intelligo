@@ -6,7 +6,7 @@ const app = new Server().getServer().build();
 
 app.listen(process.env.PORT);
 
-describe('nxplorerjs-microservice: routes spec', () => {
+describe('chatbots.mn: routes spec', () => {
   it('should get 200 response from home page', done => {
     request(app)
       .get('/')
