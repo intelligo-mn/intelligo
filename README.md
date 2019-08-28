@@ -22,8 +22,7 @@
      </a>
 </p>
 
-
-Intelligo is a JavaScript Framework to build AI Chat bots.
+Intelligo is a AI Chatbot Framework for Node.js.
 
 ## Installation
 
@@ -110,7 +109,7 @@ bot.on('message', (event) => {
 
 ## Quick Start
 
-The quickest way to get started with intelligo is to utilize the [`intelligo-cli`](https://github.com/intelligo-systems/intelligo-cli) to generate an bot as shown below:
+The quickest way to get started with intelligo is to utilize the [`intelligo-generator`](https://github.com/intelligo-systems/intelligo-generator) to generate an bot as shown below:
 
 Install the command line tool
 
