@@ -388,11 +388,11 @@ export class SlackBot extends EventEmitter {
    * @param text
    * @param {object} params
    * @param {function} cb
-   * @returns {vow.Promise}
+   * @returns
    * @private
    */
   _post(type: string, name: string, text: string, params: any, cb: any) {
-    let method = {
+    let method: any = {
       group: 'getGroupId',
       channel: 'getChannelId',
       user: 'getChatId',
