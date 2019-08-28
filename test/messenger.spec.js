@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 const sinon = require('sinon');
-const Intelligo = require('../');
+const Intelligo = require('../lib');
 
 let server;
 let intelligo;
