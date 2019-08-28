@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "./lib",
+    "rootDir": "./src",
+    "types": ["node"],
+    "lib": ["es5", "es2015", "es2016.array.include", "esnext.asynciterable"]
+  },
+  "include": ["src/**/*"]
+}

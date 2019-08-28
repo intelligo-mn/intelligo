@@ -1,8 +1,9 @@
 {
   "name": "intelligo",
-  "version": "1.0.18",
+  "version": "1.0.20",
   "description": "AI Chatbot Framework for Node.js",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "typings": "./lib/index.d.ts",
   "author": "Turtuvshin Byambaa",
   "homepage": "https://intelligo.js.org",
   "copyright": "Copyright 2019 Intelligo Systems.",
@@ -36,8 +37,8 @@
     "machine-learning"
   ],
   "files": [
-    "src/",
-    "index.js"
+    "/lib",
+    "/src"
   ],
   "dependencies": {
     "async": "3.1.0",
@@ -60,10 +61,20 @@
     "@babel/core": "7.5.5",
     "@babel/preset-env": "7.5.5",
     "@babel/register": "7.5.5",
+    "@types/express": "^4.16.0",
+    "@types/extend": "^3.0.1",
+    "@types/lodash": "^4.14.138",
+    "@types/node": "^10.12.18",
+    "@types/request": "^2.48.2",
+    "@types/ws": "^6.0.3",
     "chai": "4.2.0",
     "eslint": "6.2.2",
     "mocha": "6.2.0",
-    "sinon": "7.4.1"
+    "prettier": "^1.18.2",
+    "sinon": "7.4.1",
+    "tslint": "^5.19.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.5.3"
   },
   "collective": {
     "type": "opencollective",
@@ -71,7 +82,9 @@
   },
   "scripts": {
     "postinstall": "opencollective-postinstall",
-    "build": "babel src -d dist",
-    "test": "mocha --require @babel/register"
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
+    "test": "mocha --recursive test/*"
   }
 }
