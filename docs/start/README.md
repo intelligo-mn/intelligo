@@ -39,8 +39,8 @@ Intelligo is a JavaScript Framework to build AI Chat bots.
 
 | Project | Build Status | NPM version |
 |-----------|--------------|---------------------------|
-| [neuro.js](https://github.com/intelligo-systems/neuro.js) | [![Build status](https://ci.appveyor.com/api/projects/status/eue1p0li7vf7hqt9?svg=true)](https://ci.appveyor.com/project/tortuvshin/intelligo-cli) | [![npm version](https://badgen.net/npm/v/neuro.js)](https://www.npmjs.com/package/neuro.js) |
-| [intelligo-cli](https://github.com/intelligo-systems/intelligo-cli) | [![Build status](https://ci.appveyor.com/api/projects/status/eue1p0li7vf7hqt9?svg=true)](https://ci.appveyor.com/project/tortuvshin/intelligo-cli) | [![npm version](https://badgen.net/npm/v/intelligo-cli)](https://www.npmjs.com/package/intelligo-cli) |
+| [neuro](https://github.com/intelligo-systems/neuro) | [![Build status](https://ci.appveyor.com/api/projects/status/eue1p0li7vf7hqt9?svg=true)](https://ci.appveyor.com/project/tortuvshin/intelligo-cli) | [![npm version](https://badgen.net/npm/v/neuro.js)](https://www.npmjs.com/package/neuro.js) |
+| [intelligo-generator](https://github.com/intelligo-systems/intelligo-generator) | [![Build status](https://ci.appveyor.com/api/projects/status/eue1p0li7vf7hqt9?svg=true)](https://ci.appveyor.com/project/tortuvshin/intelligo-cli) | [![npm version](https://badgen.net/npm/v/intelligo-cli)](https://www.npmjs.com/package/intelligo-cli) |
 
 
 ## Example
@@ -116,7 +116,7 @@ bot.on('message', (event) => {
 
 ## Quick Start
 
-The quickest way to get started with intelligo is to utilize the [`intelligo-cli`](https://github.com/intelligo-systems/intelligo-cli) to generate an bot as shown below:
+The quickest way to get started with intelligo is to utilize the [`intelligo-generator`](https://github.com/intelligo-systems/intelligo-generator) to generate an bot as shown below:
 
 Install the command line tool
 
