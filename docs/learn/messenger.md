@@ -49,7 +49,7 @@ $ npm start
 | `appSecret` | string | | `Y` |
 | `webhook` | string | `"/webhook"` | `N` |
 | `broadcastEchoes` | boolean | `false` | `N` |
-| `graphApiVersion` | string | `v2.12` | `N` |
+| `graphApiVersion` | string | `4.0` | `N` |
 
 Creates a new `Intelligo.MessengerBot` instance. Instantiates the new express app and all required webhooks. `options` param must contain all tokens and app secret of your Facebook app. Optionally, set `broadcastEchoes` to `true` if you want the messages your bot send to be echoed back to it (you probably don't need this feature unless you have multiple bots running on the same Facebook page).
 
@@ -80,156 +80,38 @@ Subscribe to an event emitted by the bot, and execute a callback when those even
 | `authentication` | A user has started a conversation with the bot using a "Send to Messenger" button |
 | `referral` | A user that already has a thread with the bot starts a conversation. [more](https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/messaging_referrals) |
 
-You can also subscribe to specific postbacks and quick replies by using a namespace. For example `postback:ADD_TO_CART` subscribes only to the postback event containing the `ADD_TO_CART` payload.
-
-If you want to subscribe to specific keywords on a `message` event, see the `.hear()` method below.
-
-When these events ocurr, the specified callback will be invoked with 3 params: `(payload, chat, data)`
-
-| Param | Description |
-|:------|:-----|
-| `payload` | The data sent by the user (contains the text of the message, the attachment, etc.) |
-| `chat` | A `Chat` instance that you can use to reply to the user. Contains all the methods defined in the [Send API](#send-api) |
-| `data` | Contains extra data provided by the framework, like a `captured` flag that signals if this message was already captured by a different callback |
-
 ##### `.on()` examples:
 
 ```javascript
-bot.on('message', (payload, chat) => {
+bot.on("message", event => {
 	console.log('A text message was received!');
 });
 
-bot.on('attachment', (payload, chat) => {
+bot.on('attachment', event => {
 	console.log('An attachment was received!');
 });
 
-bot.on('postback:HELP_ME', (payload, chat) => {
-	console.log('The Help Me button was clicked!');
-});
-
-bot.on('message', (payload, chat) => {
-	// Reply to the user
-	chat.say('Hey, user. I got your message!');
-});
 ```
-
 
 ### Send API
 
 BootBot provides helper methods for every type of message supported by Facebook's Messenger API. It also provides a generic `sendMessage` method that you can use to send a custom payload. All messages from the Send API return a Promise that you can use to apply actions after a message was successfully sent. You can use this to send consecutive messages and ensure that they're sent in the right order.
 
-#### Important Note:
-The Send API methods are shared between the `BootBot`, `Chat` and `Conversation` instances, the only difference is that when you use any of these methods from the `Chat` or `Conversation` instances, you don't have to specify the `userId`.
-
-Example - These two methods are identical:
+Example:
 
 ```javascript
-bot.on('message', (payload, chat) => {
-  const text = payload.message.text;
-  const userId = payload.sender.id;
-  bot.say(userId, 'Hello World');
+bot.on("message", event => {
+  const senderID = event.sender.id,
+    message = event.message;
+  bot.sendTextMessage(senderID, 'Hello World');
 });
 
-// is the same as...
-
-bot.on('message', (payload, chat) => {
-  const text = payload.message.text;
-  chat.say('Hello World');
-});
 ```
-
-You'll likely use the Send API methods from the `Chat` or `Conversation` instances (ex: `chat.say()` or `convo.say()`), but  you can use them from the `BootBot` instance if you're not in a chat or conversation context (for example, when you want to send a notification to a user).
-
-#### `.say()`
-
-| Method signature |
-|:-----------------|
-| `chat.say(message, [ options ])` |
-| `convo.say(message, [ options ])` |
-| `bot.say(userId, message, [ options ])` |
-
-Send a message to the user. The `.say()` method can be used to send text messages, button messages, messages with quick replies or attachments. If you want to send a different type of message (like a generic template), see the Send API method for that specific type of message.
-
-The `message` param can be a string an array, or an object:
-
-- If `message` is a string, the bot will send a text message.
-- If `message` is an array, the `.say()` method will be called once for each element in the array.
-- If `message` is an object, the message type will depend on the object's format:
-
-```javascript
-// Send a text message
-chat.say('Hello world!');
-
-// Send a text message with quick replies
-chat.say({
-	text: 'Favorite color?',
-	quickReplies: ['Red', 'Blue', 'Green']
-});
-
-// Send a button template
-chat.say({
-	text: 'Favorite color?',
-	buttons: [
-		{ type: 'postback', title: 'Red', payload: 'FAVORITE_RED' },
-		{ type: 'postback', title: 'Blue', payload: 'FAVORITE_BLUE' },
-		{ type: 'postback', title: 'Green', payload: 'FAVORITE_GREEN' }
-	]
-});
-
-// Send a list template
-chat.say({
-	elements: [
-		{ title: 'Artile 1', image_url: '/path/to/image1.png', default_action: {} },
-		{ title: 'Artile 2', image_url: '/path/to/image2.png', default_action: {} }
-	],
-	buttons: [
-		{ type: 'postback', title: 'View More', payload: 'VIEW_MORE' }
-	]
-});
-
-// Send a generic template
-chat.say({
-	cards: [
-		{ title: 'Card 1', image_url: '/path/to/image1.png', default_action: {} },
-		{ title: 'Card 2', image_url: '/path/to/image2.png', default_action: {} }
-	]
-});
-
-// Send an attachment
-chat.say({
-	attachment: 'video',
-	url: 'http://example.com/video.mp4'
-});
-
-// Passing an array will make subsequent calls to the .say() method
-// For example, calling:
-
-chat.say(['Hello', 'How are you?']);
-
-// is the same as:
-
-chat.say('Hello').then(() => {
-  chat.say('How are you?')
-});
-```
-
-The `options` param can contain:
-
-| `options` key | Type | Default | Description |
-|:--------------|:-----|:--------|:---------|
-| `typing` | boolean or number | `false` | Send a typing indicator before sending the message. If set to `true`, it will automatically calculate how long it lasts based on the message length. If it's a number, it will show the typing indicator for that amount of milliseconds (max. `20000` - 20 seconds) |
-| `messagingType` | string | `'RESPONSE'` | The messaging type of the message being sent. |
-| `notificationType` | string | | Push notification type: `'REGULAR'`: sound/vibration - `'SILENT_PUSH'`: on-screen notification only - `'NO_PUSH'`: no notification. |
-| `tag` | string | | The message tag string. Can only be used if `messagingType` is set to `'MESSAGE_TAG'` |
-| `onDelivery` | function | | Callback that will be executed when the message is received by the user. Receives params: `(payload, chat, data)` |
-| `onRead` | function | | Callback that will be executed when the message is read by the user. Receives params: `(payload, chat, data)` |
 
 #### `.sendTextMessage()`
 
 | Method signature |
 |:-----------------|
-| `chat.sendTextMessage(text, [ quickReplies, options ])` |
-| `convo.sendTextMessage(text, [ quickReplies, options ])` |
 | `bot.sendTextMessage(userId, text, [ quickReplies, options ])` |
 
 The `text` param must be a string containing the message to be sent.
@@ -242,8 +124,6 @@ The `options` param is identical to the `options` param of the [`.say()`](#say) 
 
 | Method signature |
 |:-----------------|
-| `chat.sendButtonTemplate(text, buttons, [ options ])` |
-| `convo.sendButtonTemplate(text, buttons, [ options ])` |
 | `bot.sendButtonTemplate(userId, text, buttons, [ options ])` |
 
 The `text` param must be a string containing the message to be sent.
@@ -256,8 +136,6 @@ The `options` param is identical to the `options` param of the [`.say()`](#say) 
 
 | Method signature |
 |:-----------------|
-| `chat.sendGenericTemplate(elements, [ options ])` |
-| `convo.sendGenericTemplate(elements, [ options ])` |
 | `bot.sendGenericTemplate(userId, elements, [ options ])` |
 
 The `elements` param must be an array of [element objects](https://developers.facebook.com/docs/messenger-platform/send-api-reference/generic-template).
@@ -268,8 +146,6 @@ The `options` param extends `options` param of the [`.say()`](#say) method with 
 
 | Method signature |
 |:-----------------|
-| `chat.sendListTemplate(elements, buttons, [ options ])` |
-| `convo.sendListTemplate(elements, buttons, [ options ])` |
 | `bot.sendListTemplate(userId, elements, buttons, [ options ])` |
 
 The `elements` param must be an array of [element objects](https://developers.facebook.com/docs/messenger-platform/send-api-reference/list-template).
@@ -282,8 +158,6 @@ The `options` param extends `options` param of the [`.say()`](#say) method with 
 
 | Method signature |
 |:-----------------|
-| `chat.sendTemplate(payload, [ options ])` |
-| `convo.sendTemplate(payload, [ options ])` |
 | `bot.sendTemplate(userId, payload, [ options ])` |
 
 Use this method if you want to send a custom template `payload`, like a [receipt template](https://developers.facebook.com/docs/messenger-platform/send-api-reference/receipt-template) or an [airline itinerary template](https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-itinerary-template).
@@ -294,8 +168,6 @@ The `options` param is identical to the `options` param of the [`.say()`](#say) 
 
 | Method signature |
 |:-----------------|
-| `chat.sendAttachment(type, url, [ quickReplies, options ])` |
-| `convo.sendAttachment(type, url, [ quickReplies, options ])` |
 | `bot.sendAttachment(userId, type, url, [ quickReplies, options ])` |
 
 The `type` param must be `'image'`, `'audio'`, `'video'` or `'file'`.
@@ -310,8 +182,6 @@ The `options` param is identical to the `options` param of the [`.say()`](#say) 
 
 | Method signature |
 |:-----------------|
-| `chat.sendAction(action, [ options ])` |
-| `convo.sendAction(action, [ options ])` |
 | `bot.sendAction(userId, action, [ options ])` |
 
 The `action` param must be `'mark_seen'`, `'typing_on'` or `'typing_off'`. To send a typing indicator in a more convenient way, see the [`.sendTypingIndicator`](#sendtypingindicator) method.
@@ -322,8 +192,6 @@ The `options` param is identical to the `options` param of the [`.say()`](#say) 
 
 | Method signature |
 |:-----------------|
-| `chat.sendMessage(message, [ options ])` |
-| `convo.sendMessage(message, [ options ])` |
 | `bot.sendMessage(userId, message, [ options ])` |
 
 Use this method if you want to send a custom `message` object.
@@ -334,8 +202,6 @@ The `options` param is identical to the `options` param of the [`.say()`](#say) 
 
 | Method signature |
 |:-----------------|
-| `chat.sendTypingIndicator(milliseconds)` |
-| `convo.sendTypingIndicator(milliseconds)` |
 | `bot.sendTypingIndicator(userId, milliseconds)` |
 
 Convinient method to send a `typing_on` action and then a `typing_off` action after `milliseconds` to simulate the bot is actually typing. Max value is 20000 (20 seconds).
@@ -361,147 +227,6 @@ bot.hear('hello', (payload, chat) => {
   });
 });
 ```
-
----
-
-### Conversations
-
-Conversations provide a convinient method to ask questions and handle the user's answer. They're useful when you want to set a flow of different questions/answers, like an onboarding process or when taking an order for example. Conversations also provide a method to save the information that you need from the user's answers, so the interaction is always in context.
-
-Messages sent by the user won't trigger a global `message`, `postback`, `attachment` or `quick_reply` event if there's an active conversation with that user. Answers must be managed by the conversation.
-
-#### `bot.conversation()`
-
-| Method signature |
-|:-----------------|
-| `chat.conversation(factory)` |
-| `bot.conversation(userId, factory)` |
-
-Starts a new conversation with the user.
-
-The `factory` param must be a function that is executed immediately receiving the `convo` instance as it's only param:
-
-```
-bot.on('hello', (payload, chat) => {
-	chat.conversation((convo) => {
-		// convo is available here...
-		convo.ask( ... );
-	});
-});
-```
-
-#### `convo.ask(question, answer, [ callbacks, options ])`
-
-| Param | Type | Default | Required |
-|:------|:-----|:--------|:---------|
-| `question` | string, object or function | | `Y` |
-| `answer` | function | | `Y` |
-| `callbacks` | array | | `N` |
-| `options` | object | | `N` |
-
-If `question` is a string or an object, the `.say()` method will be invoked immediately with that string or object, if it's a function it will also be invoked immedately with the `convo` instance as its only param.
-
-The `answer` param must be a function that receives the `payload`, `convo` and `data` params (similar to the callback function of the `.on()` or `.hear()` methods, except it receives the `convo` instance instead of the `chat` instance). The `answer` function will be called whenever the user replies to the `question` with a text message or quick reply.
-
-The `callbacks` array can be used to listen to specific types of answers to the `question`. You can listen for `postback`, `quick_reply` and `attachment` events, or you can match a specific text `pattern`. See example bellow:
-
-The `options` param is identical to the `options` param of the [`.say()`](#say) method.
-
-##### `convo.ask()` example:
-
-```javascript
-const question = {
-	text: `What's your favorite color?`,
-	quickReplies: ['Red', 'Green', 'Blue']
-};
-
-const answer = (payload, convo) => {
-	const text = payload.message.text;
-	convo.say(`Oh, you like ${text}!`);
-};
-
-const callbacks = [
-	{
-		event: 'quick_reply',
-		callback: () => { /* User replied using a quick reply */ }
-	},
-	{
-		event: 'attachment',
-		callback: () => { /* User replied with an attachment */ }
-	},
-	{
-		pattern: ['black', 'white'],
-		callback: () => { /* User said "black" or "white" */ }
-	}
-];
-
-const options = {
-	typing: true // Send a typing indicator before asking the question
-};
-
-convo.ask(question, answer, callbacks, options);
-```
-
-#### `convo.set(property, value)`
-
-| Param | Type | Default | Required |
-|:------|:-----|:--------|:---------|
-| `property` | string | | `Y` |
-| `value` | mixed | | `Y` |
-
-Save a value in the conversation's context. This value will be available in all subsequent questions and answers that are part of this conversation, but the values are lost once the conversation ends.
-
-```javascript
-convo.question(`What's your favorite color?`, (payload, convo) => {
-	const text = payload.message.text;
-
-	// Save the user's answer in the conversation's context.
-	// You can then call convo.get('favoriteColor') in a future question or answer to retrieve the value.
-	convo.set('favoriteColor', text);
-	convo.say(`Oh, you like ${text}!`);
-});
-```
-
-#### `convo.get(property)`
-
-| Param | Type | Default | Required |
-|:------|:-----|:--------|:---------|
-| `property` | string | | `Y` |
-
-Retrieve a value from the conversation's context.
-
-#### `convo.end()`
-
-Ends a conversation, giving control back to the `bot` instance. All `.on()` and `.hear()` listeners are now back in action. After you end a conversation the values that you saved using the `convo.set()` method are now lost.
-
-You must call `convo.end()` after you no longer wish to interpret user's messages as `answer`s to one of your `questions`. If you don't, and a message is received with no `answer` callback listening, the conversation will be ended automatically.
-
----
-
-### Modules
-
-Modules are simple functions that you can use to organize your code in different files and folders.
-
-#### `.module(factory)`
-
-The `factory` param is a function that gets called immediatly and receives the `bot` instance as its only parameter. For example:
-
-```javascript
-// help-module.js
-module.exports = (bot) => {
-	bot.hear('help', (payload, chat) => {
-		// Send Help Menu to the user...
-	});
-};
-
-// index.js
-const helpModule = require('./help-module');
-bot.module(helpModule);
-```
-
-Take a look at the `examples/module-example.js` file for a complete example.
-
----
 
 ### Messenger Profile API
 
@@ -554,7 +279,7 @@ If `disableInput` is set to `true`, it will disable user input in the menu. The 
 
 **Localization support:** if `buttons` is an array of objects containing a `locale` attribute, it will be used as-is, expecting it to be an array of localized menues. For more info on the format of these objects, see [the documentation](https://developers.facebook.com/docs/messenger-platform/messenger-profile/persistent-menu).
 
-##### Example 
+Example 
 
 ```
 bot.addPersistentMenu([
