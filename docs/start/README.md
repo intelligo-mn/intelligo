@@ -1,6 +1,7 @@
 ---
 sidebar: auto
 type: guide
+sidebarDepth: 3
 ---
 
 <p align="center">

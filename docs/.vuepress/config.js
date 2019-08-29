@@ -36,13 +36,14 @@ module.exports = {
             message: 'New content is available.',
             buttonText: 'Refresh',
           },
-        },
+		},
+		lastUpdated: 'Last Updated',
         // algolia docsearch options for current locale
         algolia: {},
         nav: [
           { text: 'Home', link: '/' },
-          { text: 'Get started', link: '/learn/' },
-          { text: 'Docs', items: [{ text: 'Messenger', link: '/learn/messenger' }, { text: 'Slack', link: '/learn/slack' }] },
+          { text: 'Get started', link: '/start/' },
+          { text: 'Docs', items: [{ text: 'Messenger', link: '/guide/messenger' }, { text: 'Slack', link: '/guide/slack' }] },
         ],
       },
       '/mn/': {
@@ -54,7 +55,8 @@ module.exports = {
             message: 'Шинэ өгөгдөл нэмэгдсэн байна.',
             buttonText: 'Шинэчлэх',
           },
-        },
+		},
+		lastUpdated: 'Сүүлд шинэчлэгдсэн',
         nav: [{ text: 'Home', link: '/mn/' }, { text: 'Learn', link: '/mn/learn/' }],
         algolia: {},
       },

@@ -61,7 +61,7 @@ describe('Intelligo Messenger Bot Tests', () => {
     });
 
     it('Subscribe to messages sent by the user with the bot.on() method', () => {
-
+        
     });
 
 });

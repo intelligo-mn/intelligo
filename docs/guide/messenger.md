@@ -1,3 +1,10 @@
+---
+title: Intelligo Messenger
+sidebar: auto
+sidebarDepth: 2
+prev: ./learn
+next: false
+---
 
 ## Quick Start
 
@@ -9,7 +16,7 @@ Install the command line tool
 $ npm install intelligo-cli -g
 ```
 
-### Configuration
+## Configuration
 
 Generate the your messenger bot project:
 
@@ -40,7 +47,7 @@ Start your bot app:
 $ npm start
 ```
 
-#### `new Intelligo.MessengerBot(options)`
+## Intelligo 
 
 | `options` key | Type | Default | Required |
 |:--------------|:-----|:--------|:---------|
@@ -55,11 +62,11 @@ Creates a new `Intelligo.MessengerBot` instance. Instantiates the new express ap
 If you want to specify a custom endpoint name for your webhook, you can do it with the `webhook` option.
 
 
-### Receive API
+## Receive API
 
 Use these methods to subscribe your bot to messages, attachments or anything the user might send.
 
-#### `.on(event, callback)`
+### `.on(event, callback)`
 
 | Param | Type | Default | Required |
 |:------|:-----|:--------|:---------|
@@ -79,7 +86,7 @@ Subscribe to an event emitted by the bot, and execute a callback when those even
 | `authentication` | A user has started a conversation with the bot using a "Send to Messenger" button |
 | `referral` | A user that already has a thread with the bot starts a conversation. [more](https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/messaging_referrals) |
 
-##### `.on()` examples:
+### `.on()` examples:
 
 ```javascript
 bot.on("message", event => {
@@ -92,7 +99,7 @@ bot.on('attachment', event => {
 
 ```
 
-### Send API
+## Send API
 
 BootBot provides helper methods for every type of message supported by Facebook's Messenger API. It also provides a generic `sendMessage` method that you can use to send a custom payload. All messages from the Send API return a Promise that you can use to apply actions after a message was successfully sent. You can use this to send consecutive messages and ensure that they're sent in the right order.
 
@@ -107,7 +114,7 @@ bot.on("message", event => {
 
 ```
 
-#### `.sendTextMessage()`
+### `.sendTextMessage()`
 
 | Method signature |
 |:-----------------|
@@ -118,7 +125,7 @@ The `text` param must be a string containing the message to be sent.
 The `quickReplies` param can be an array of strings or [quick_reply objects](https://developers.facebook.com/docs/messenger-platform/send-api-reference/quick-replies).
 
 
-#### `.sendButtonTemplate()`
+### `.sendButtonTemplate()`
 
 | Method signature |
 |:-----------------|
@@ -129,7 +136,7 @@ The `text` param must be a string containing the message to be sent.
 The `buttons` param can be an array of strings or [button objects](https://developers.facebook.com/docs/messenger-platform/send-api-reference/button-template).
 
 
-#### `.sendGenericTemplate()`
+### `.sendGenericTemplate()`
 
 | Method signature |
 |:-----------------|
@@ -139,7 +146,7 @@ The `elements` param must be an array of [element objects](https://developers.fa
 
 The `options` param extends `options` param of the [`.say()`](#say) method with `imageAspectRatio` property.
 
-#### `.sendListTemplate()`
+### `.sendListTemplate()`
 
 | Method signature |
 |:-----------------|
@@ -151,7 +158,7 @@ The `buttons` param can be an array with one element: string or [button object](
 
 The `options` param extends `options` param of the [`.say()`](#say) method with `topElementStyle` property.
 
-#### `.sendTemplate()`
+### `.sendTemplate()`
 
 | Method signature |
 |:-----------------|
@@ -160,7 +167,7 @@ The `options` param extends `options` param of the [`.say()`](#say) method with 
 Use this method if you want to send a custom template `payload`, like a [receipt template](https://developers.facebook.com/docs/messenger-platform/send-api-reference/receipt-template) or an [airline itinerary template](https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-itinerary-template).
 
 
-#### `.sendAttachment()`
+### `.sendAttachment()`
 
 | Method signature |
 |:-----------------|
@@ -172,7 +179,7 @@ The `url` param must be a string with the URL of the attachment.
 
 The `quickReplies` param can be an array of strings or [quick_reply objects](https://developers.facebook.com/docs/messenger-platform/send-api-reference/quick-replies).
 
-#### `.sendAction()`
+### `.sendAction()`
 
 | Method signature |
 |:-----------------|
@@ -181,7 +188,7 @@ The `quickReplies` param can be an array of strings or [quick_reply objects](htt
 The `action` param must be `'mark_seen'`, `'typing_on'` or `'typing_off'`. To send a typing indicator in a more convenient way, see the [`.sendTypingIndicator`](#sendtypingindicator) method.
 
 
-#### `.sendMessage()`
+### `.sendMessage()`
 
 | Method signature |
 |:-----------------|
@@ -189,22 +196,22 @@ The `action` param must be `'mark_seen'`, `'typing_on'` or `'typing_off'`. To se
 
 Use this method if you want to send a custom `message` object.
 
-#### `.sendTypingOn()`
+### `.sendTypingOn()`
 
 | Method signature |
 |:-----------------|
 | `bot.sendTypingOn(userId)` |
 
-#### `.sendTypingOff()`
+### `.sendTypingOff()`
 
 | Method signature |
 |:-----------------|
 | `bot.sendTypingOff(userId)` |
 
 
-### Messenger Profile API
+## Messenger Profile API
 
-#### `.addGreeting(text)`
+### `.addGreeting(text)`
 
 [Facebook Docs](https://developers.facebook.com/docs/messenger-platform/messenger-profile/greeting-text)
 
@@ -216,7 +223,7 @@ Set a greeting text for new conversations. The Greeting Text is only rendered th
 
 **Localization support:** `text` can be a string containing the greeting text, or an array of objects to support multiple locales. For more info on the format of these objects, see [the documentation](https://developers.facebook.com/docs/messenger-platform/messenger-profile/greeting-text).
 
-##### Example
+Example
 
 ```
 bot.addGreeting(
@@ -224,7 +231,7 @@ bot.addGreeting(
 );
 ```
 
-#### `.addGetStartedButton(action)`
+### `.addGetStartedButton(action)`
 
 [Facebook Docs](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/get-started-button)
 
@@ -234,11 +241,11 @@ bot.addGreeting(
 
 React to a user starting a conversation with the bot by clicking the Get Started button. If `action` is a string, the Get Started button postback will be set to that string. If it's a function, that callback will be executed when a user clicks the Get Started button.
 
-#### `.deleteGetStartedButton()`
+### `.deleteGetStartedButton()`
 
 Removes the Get Started button call to action.
 
-#### `.setPersistentMenu(buttons, [ disableInput ])`
+### `.setPersistentMenu(buttons, [ disableInput ])`
 
 [Facebook Docs](https://developers.facebook.com/docs/messenger-platform/messenger-profile/persistent-menu)
 
@@ -288,7 +295,7 @@ bot.addPersistentMenu([
 ]);
 ```
 
-#### `.removePersistentMenu()`
+### `.removePersistentMenu()`
 
 Removes the Persistent Menu.
 
