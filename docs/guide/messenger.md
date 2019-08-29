@@ -2,13 +2,13 @@
 title: Intelligo Messenger
 sidebar: auto
 sidebarDepth: 2
-prev: ./learn
+prev: ./start
 next: false
 ---
 
 ## Quick Start
 
-The quickest way to get started with intelligo is to utilize the [`intelligo-cli`](https://github.com/intelligo-systems/intelligo-cli) to generate an bot as shown below:
+The quickest way to get started with intelligo is to utilize the [`intelligo-generator`](https://github.com/intelligo-systems/intelligo-generator) to generate an bot as shown below:
 
 Install the command line tool
 
@@ -225,7 +225,7 @@ Set a greeting text for new conversations. The Greeting Text is only rendered th
 
 Example
 
-```
+```javascript
 bot.addGreeting(
   "cryptocurrency trading bot."
 );
@@ -262,7 +262,7 @@ If `disableInput` is set to `true`, it will disable user input in the menu. The 
 
 Example 
 
-```
+```javascript
 bot.addPersistentMenu([
   {
     locale: "default",
