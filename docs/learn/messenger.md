@@ -48,10 +48,9 @@ $ npm start
 | `verifyToken` | string | | `Y` |
 | `appSecret` | string | | `Y` |
 | `webhook` | string | `"/webhook"` | `N` |
-| `broadcastEchoes` | boolean | `false` | `N` |
 | `graphApiVersion` | string | `4.0` | `N` |
 
-Creates a new `Intelligo.MessengerBot` instance. Instantiates the new express app and all required webhooks. `options` param must contain all tokens and app secret of your Facebook app. Optionally, set `broadcastEchoes` to `true` if you want the messages your bot send to be echoed back to it (you probably don't need this feature unless you have multiple bots running on the same Facebook page).
+Creates a new `Intelligo.MessengerBot` instance. Instantiates the new express app and all required webhooks. `options` param must contain all tokens and app secret of your Facebook app.
 
 If you want to specify a custom endpoint name for your webhook, you can do it with the `webhook` option.
 
@@ -118,7 +117,6 @@ The `text` param must be a string containing the message to be sent.
 
 The `quickReplies` param can be an array of strings or [quick_reply objects](https://developers.facebook.com/docs/messenger-platform/send-api-reference/quick-replies).
 
-The `options` param is identical to the `options` param of the [`.say()`](#say) method.
 
 #### `.sendButtonTemplate()`
 
@@ -130,7 +128,6 @@ The `text` param must be a string containing the message to be sent.
 
 The `buttons` param can be an array of strings or [button objects](https://developers.facebook.com/docs/messenger-platform/send-api-reference/button-template).
 
-The `options` param is identical to the `options` param of the [`.say()`](#say) method.
 
 #### `.sendGenericTemplate()`
 
@@ -162,7 +159,6 @@ The `options` param extends `options` param of the [`.say()`](#say) method with 
 
 Use this method if you want to send a custom template `payload`, like a [receipt template](https://developers.facebook.com/docs/messenger-platform/send-api-reference/receipt-template) or an [airline itinerary template](https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-itinerary-template).
 
-The `options` param is identical to the `options` param of the [`.say()`](#say) method.
 
 #### `.sendAttachment()`
 
@@ -176,8 +172,6 @@ The `url` param must be a string with the URL of the attachment.
 
 The `quickReplies` param can be an array of strings or [quick_reply objects](https://developers.facebook.com/docs/messenger-platform/send-api-reference/quick-replies).
 
-The `options` param is identical to the `options` param of the [`.say()`](#say) method.
-
 #### `.sendAction()`
 
 | Method signature |
@@ -186,7 +180,6 @@ The `options` param is identical to the `options` param of the [`.say()`](#say) 
 
 The `action` param must be `'mark_seen'`, `'typing_on'` or `'typing_off'`. To send a typing indicator in a more convenient way, see the [`.sendTypingIndicator`](#sendtypingindicator) method.
 
-The `options` param is identical to the `options` param of the [`.say()`](#say) method.
 
 #### `.sendMessage()`
 
@@ -196,37 +189,18 @@ The `options` param is identical to the `options` param of the [`.say()`](#say) 
 
 Use this method if you want to send a custom `message` object.
 
-The `options` param is identical to the `options` param of the [`.say()`](#say) method.
-
-#### `.sendTypingIndicator()`
+#### `.sendTypingOn()`
 
 | Method signature |
 |:-----------------|
-| `bot.sendTypingIndicator(userId, milliseconds)` |
+| `bot.sendTypingOn(userId)` |
 
-Convinient method to send a `typing_on` action and then a `typing_off` action after `milliseconds` to simulate the bot is actually typing. Max value is 20000 (20 seconds).
-
-You can also use this method via the `typing` option (see [`.say()`](#say) method).
-
-#### `.getUserProfile()`
+#### `.sendTypingOff()`
 
 | Method signature |
 |:-----------------|
-| `chat.getUserProfile()` |
-| `convo.getUserProfile()` |
-| `bot.getUserProfile(userId)` |
+| `bot.sendTypingOff(userId)` |
 
-This method is not technically part of the "Send" API, but it's listed here because it's also shared between the `bot`, `chat` and `convo` instances.
-
-Returns a Promise that contains the user's [profile information](https://developers.facebook.com/docs/messenger-platform/user-profile).
-
-```javascript
-bot.hear('hello', (payload, chat) => {
-  chat.getUserProfile().then((user) => {
-    chat.say(`Hello, ${user.first_name}!`);
-  });
-});
-```
 
 ### Messenger Profile API
 
