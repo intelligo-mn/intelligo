@@ -256,6 +256,7 @@ export class MessengerBot extends EventEmitter {
       },
     });
   }
+  
   /**
    * @param {Recipient|String} recipientId
    * @param {String} type Must be 'image', 'audio', 'video' or 'file'.
@@ -276,6 +277,38 @@ export class MessengerBot extends EventEmitter {
       },
     });
   }
+
+  /**
+   * @param {Recipient|String} recipientId
+   * @param {String} url URL of the attachment.
+   */
+  sendFileMessage(recipientId: any, url: any) {
+    this.sendAttachment(recipientId, 'file', url);
+  }
+
+  /**
+   * @param {Recipient|String} recipientId
+   * @param {String} url URL of the attachment.
+   */
+  sendImageMessage(recipientId: any, url: any) {
+    this.sendAttachment(recipientId, 'image', url);
+  }
+
+  /**
+   * @param {Recipient|String} recipientId
+   * @param {String} url URL of the attachment.
+   */
+  sendVideoMessage(recipientId: any, url: any) {
+    this.sendAttachment(recipientId, 'video', url);
+  }
+  /**
+   * @param {Recipient|String} recipientId
+   * @param {String} url URL of the attachment.
+   */
+  sendAudioMessage(recipientId: any, url: any) {
+    this.sendAttachment(recipientId, 'audio', url);
+  }
+
   /**
    * @param {Recipient|String} recipientId
    * @param {Array.<Element>} elements
