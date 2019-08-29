@@ -1,5 +1,5 @@
 <p align="center">
-	<img src="https://raw.githubusercontent.com/intelligo-systems/intelligo/master/.github/intelligo-logo.png"/>
+	<img src="https://raw.githubusercontent.com/intelligo-systems/intelligo/master/.github/intelligo-logo.png" height="150"/>
 <br>
 	<b>Intelligo AI chatbot framework</b>
 </p>
@@ -27,6 +27,14 @@ Intelligo is a AI Chatbot Framework for Node.js.
 ## Installation
 
 [![NPM](https://nodei.co/npm/intelligo.png?compact=true)](https://nodei.co/npm/intelligo/)
+
+## Documentation
+
+You can find the Intelligo documentation [on the website](https://intelligo.js.org).  
+
+Check out the [Getting Started](https://intelligo.js.org/start) page for a quick overview.
+
+You can improve it by sending pull requests to this repository.
 
 ## Related projects
 
@@ -117,7 +125,7 @@ Install the command line tool
 $ npm install intelligo-cli -g
 ```
 
-### Messenger bot
+### Intelligo Generator basic usage
 
 Generate the your messenger bot project:
 
@@ -132,16 +140,6 @@ Set the values in `config/default.json` before running the bot. Using your Faceb
 - `APP_SECRET:` A app secret for your app, found under App -> Settings -> Basic -> App Secret -> Show
 
 **Note:** If you don't know how to get these tokens, take a look at Facebook's [Quick Start Guide](https://developers.facebook.com/docs/messenger-platform/guides/quick-start) .
-
-### Slack bot
-
-Generate the your slack bot project:
-
-<p align="center">
-<img width="100%" src="https://raw.githubusercontent.com/intelligo-systems/intelligo-cli/master/.github/intelligo-cli-slack.gif">
-</p>
-
-Before you start, you'll need a Slack App. If you don't already have one, click the following [link to create it](https://my.slack.com/services/new/bot) and put ```token``` in `index.js` file.
 
 ## Install dependencies:
 
@@ -162,9 +160,12 @@ $ npm start
 Collection of examples for using Intelligo Framework.
 
 - **Hello, world** The [hello world bot](https://github.com/intelligo-systems/intelligo/blob/master/samples/hello-bot) is a minimal Messenger bot.
-
 - **Jisho bot** The [jisho bot](https://github.com/intelligo-systems/jisho-bot) Japanese-English dictionary Messenger bot using [www.jisho.org](https://jisho.org/) public API.
 
+## Stay In Touch
+
+- Blogging at [Medium](https://medium.com/intelligo-systems)
+- Chatting on [Slack](http://intelligo-slack.herokuapp.com)
 
 ## Contributors
 
