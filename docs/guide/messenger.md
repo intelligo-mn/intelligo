@@ -47,15 +47,15 @@ $ npm start
 
 ## Intelligo 
 
-| `options` key | Type | Default | Required |
+| `params` key | Type | Default | Required |
 |:--------------|:-----|:--------|:---------|
-| `accessToken` | string | | `Y` |
-| `verifyToken` | string | | `Y` |
-| `appSecret` | string | | `Y` |
+| `ACCESS_TOKEN` | string | | `Y` |
+| `VERIFY_TOKEN` | string | | `Y` |
+| `APP_SECRET` | string | | `Y` |
 | `webhook` | string | `"/webhook"` | `N` |
 | `graphApiVersion` | string | `4.0` | `N` |
 
-Creates a new `Intelligo.MessengerBot` instance. Instantiates the new express app and all required webhooks. `options` param must contain all tokens and app secret of your Facebook app.
+Creates a new `Intelligo.MessengerBot` instance. Instantiates the new express app and all required webhooks. `params` param must contain all tokens and app secret of your Facebook app.
 
 If you want to specify a custom endpoint name for your webhook, you can do it with the `webhook` option.
 
@@ -99,7 +99,7 @@ bot.on('attachment', event => {
 
 ## Send API
 
-BootBot provides helper methods for every type of message supported by Facebook's Messenger API. It also provides a generic `sendMessage` method that you can use to send a custom payload. All messages from the Send API return a Promise that you can use to apply actions after a message was successfully sent. You can use this to send consecutive messages and ensure that they're sent in the right order.
+Intelligo provides helper methods for every type of message supported by Facebook's Messenger API. It also provides a generic `sendTextMessage` method that you can use to send a custom payload. All messages from the Send API return a Promise that you can use to apply actions after a message was successfully sent. You can use this to send consecutive messages and ensure that they're sent in the right order.
 
 Example:
 
@@ -112,104 +112,279 @@ bot.on("message", event => {
 
 ```
 
-### `.sendTextMessage()`
+### Sending text
+ 
+#### `sendTextMessage(userId, message [, options])`
 
-| Method signature |
-|:-----------------|
-| `bot.sendTextMessage(userId, text, [ quickReplies, options ])` |
+Send messages to specified user using the [Send API](https://developers.facebook.com/docs/messenger-platform/reference/send-api#request).
 
-The `text` param must be a string containing the message to be sent.
+| Param   | Type                              | Description                                                                                                                                                                                                                       |
+| ------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| userId  | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient][send-api-reference#recipient] object.                                                                                                                                         |
+| message | `Object`                          | [message](https://developers.facebook.com/docs/messenger-platform/reference/send-api#message) object.                                                                                                                             |
+| options | `Object`                          | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types) or [tags](https://developers.facebook.com/docs/messenger-platform/message-tags). |
 
-The `quickReplies` param can be an array of strings or [quick_reply objects](https://developers.facebook.com/docs/messenger-platform/send-api-reference/quick-replies).
+Example:
 
+```js
+bot.sendTextMessage(USER_ID, {
+  text: 'Hello World!',
+});
+```
 
-### `.sendButtonTemplate()`
+You can specifiy [messaging type](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types) using options. If `messaging_type` and `tag` is not provided, `UPDATE` will be used as default messaging type.
 
-| Method signature |
-|:-----------------|
-| `bot.sendButtonTemplate(userId, text, buttons, [ options ])` |
+Example:
 
-The `text` param must be a string containing the message to be sent.
+```js
+bot.sendTextMessage(
+  USER_ID,
+  {
+    text: 'Hello!',
+  },
+  {
+    messaging_type: 'RESPONSE',
+  }
+);
+```
 
-The `buttons` param can be an array of strings or [button objects](https://developers.facebook.com/docs/messenger-platform/send-api-reference/button-template).
+### Sending Attachments
 
+#### `sendAttachment(userId, attachment [, options])`
 
-### `.sendGenericTemplate()`
+Send attachment messages to specified user using the [Send API](https://developers.facebook.com/docs/messenger-platform/reference/send-api#request).
 
-| Method signature |
-|:-----------------|
-| `bot.sendGenericTemplate(userId, elements, [ options ])` |
+| Param            | Type                              | Description                                                                                                                                                                                                                       |
+| ---------------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| userId           | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient][send-api-reference#recipient] object.                                                                                                                                         |
+| attachment       | `Object`                          | [attachment](https://developers.facebook.com/docs/messenger-platform/reference/send-api#attachment) object.                                                                                                                       |
+| options          | `Object`                          | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types) or [tags](https://developers.facebook.com/docs/messenger-platform/message-tags). |
+| options.filename | Required when upload from buffer. |
 
-The `elements` param must be an array of [element objects](https://developers.facebook.com/docs/messenger-platform/send-api-reference/generic-template).
+Example:
 
-The `options` param extends `options` param of the [`.say()`](#say) method with `imageAspectRatio` property.
+```js
+bot.sendAttachment(USER_ID, {
+  type: 'image',
+  payload: {
+    url: 'https://example.com/pic.png',
+  },
+});
+```
 
-### `.sendListTemplate()`
+<br />
 
-| Method signature |
-|:-----------------|
-| `bot.sendListTemplate(userId, elements, buttons, [ options ])` |
+### Sending Audio
 
-The `elements` param must be an array of [element objects](https://developers.facebook.com/docs/messenger-platform/send-api-reference/list-template).
+#### `sendAudioMessage(userId, audio [, options])`
 
-The `buttons` param can be an array with one element: string or [button object](https://developers.facebook.com/docs/messenger-platform/send-api-reference/list-template).
+Send sounds to specified user by uploading them or sharing a URL using the [Send API](https://developers.facebook.com/docs/messenger-platform/reference/send-api#request).
 
-The `options` param extends `options` param of the [`.say()`](#say) method with `topElementStyle` property.
+| Param            | Type                                                                         | Description                                                                                                                                       |
+| ---------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| userId           | <code>String &#124; Object</code>                                            | Page-scoped user ID of the recipient or [recipient][send-api-reference#recipient] object.                                                         |
+| audio            | <code>String &#124; Buffer &#124; ReadStream &#124; AttachmentPayload</code> | The audio to be sent.                                                                                                                             |
+| options          | `Object`                                                                     | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types). |
+| options.filename | Required when upload from buffer.                                            |
 
-### `.sendTemplate()`
+Example:
 
-| Method signature |
-|:-----------------|
-| `bot.sendTemplate(userId, payload, [ options ])` |
+- Send audio using url string:
 
-Use this method if you want to send a custom template `payload`, like a [receipt template](https://developers.facebook.com/docs/messenger-platform/send-api-reference/receipt-template) or an [airline itinerary template](https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-itinerary-template).
+```js
+bot.sendAudioMessage(USER_ID, 'https://intelligo.js.org/audio.mp3');
+```
 
+- Use `AttachmentPayload` to send cached attachment:
 
-### `.sendAttachment()`
+```js
+bot.sendAudioMessage(USER_ID, { attachment_id: '55688' });
+```
 
-| Method signature |
-|:-----------------|
-| `bot.sendAttachment(userId, type, url, [ quickReplies, options ])` |
+- Use `ReadStream` created from local file:
 
-The `type` param must be `'image'`, `'audio'`, `'video'` or `'file'`.
+```js
+const fs = require('fs');
 
-The `url` param must be a string with the URL of the attachment.
+bot.sendAudioMessage(USER_ID, fs.createReadStream('audio.mp3'));
+```
 
-The `quickReplies` param can be an array of strings or [quick_reply objects](https://developers.facebook.com/docs/messenger-platform/send-api-reference/quick-replies).
+- Use `Buffer` to send attachment:
 
-### `.sendAction()`
+```js
+bot.sendAudioMessage(USER_ID, buffer, { filename: 'audio.mp3' });
+```
 
-| Method signature |
-|:-----------------|
-| `bot.sendAction(userId, action, [ options ])` |
+<br />
 
-The `action` param must be `'mark_seen'`, `'typing_on'` or `'typing_off'`. To send a typing indicator in a more convenient way, see the [`.sendTypingIndicator`](#sendtypingindicator) method.
+### Sending Image
 
+#### `sendImageMessage(userId, image [, options])`
 
-### `.sendMessage()`
+Send images to specified user by uploading them or sharing a URL using the [Send API](https://developers.facebook.com/docs/messenger-platform/reference/send-api#request). Supported formats are jpg, png and gif.
 
-| Method signature |
-|:-----------------|
-| `bot.sendMessage(userId, message, [ options ])` |
+| Param            | Type                                                                         | Description                                                                                                                                       |
+| ---------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| userId           | <code>String &#124; Object</code>                                            | Page-scoped user ID of the recipient or [recipient][send-api-reference#recipient] object.                                                         |
+| image            | <code>String &#124; Buffer &#124; ReadStream &#124; AttachmentPayload</code> | The image to be sent.                                                                                                                             |
+| options          | `Object`                                                                     | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types). |
+| options.filename | Required when upload from buffer.                                            |
 
-Use this method if you want to send a custom `message` object.
+Example:
 
-### `.sendTypingOn()`
+- Send image using url string:
 
-| Method signature |
-|:-----------------|
-| `bot.sendTypingOn(userId)` |
+```js
+bot.sendImageMessage(USER_ID, 'https://intelligo.js.org/logo.jpg');
+```
 
-### `.sendTypingOff()`
+- Use `AttachmentPayload` to send cached attachment:
 
-| Method signature |
-|:-----------------|
-| `bot.sendTypingOff(userId)` |
+```js
+bot.sendImageMessage(USER_ID, { attachment_id: '55688' });
+```
 
+- Use `ReadStream` created from local file:
+
+```js
+const fs = require('fs');
+
+bot.sendImageMessage(USER_ID, fs.createReadStream('image.jpg'));
+```
+
+- Use `Buffer` to send attachment:
+
+```js
+bot.sendImageMessage(USER_ID, buffer, { filename: 'image.jpg' });
+```
+
+<br />
+
+### Sending Video
+
+#### `sendVideo(userId, video [, options])`
+
+Send videos to specified user by uploading them or sharing a URL using the [Send API](https://developers.facebook.com/docs/messenger-platform/reference/send-api#request).
+
+| Param            | Type                                                                         | Description                                                                                                                                       |
+| ---------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| userId           | <code>String &#124; Object</code>                                            | Page-scoped user ID of the recipient or [recipient][send-api-reference#recipient] object.                                                         |
+| video            | <code>String &#124; Buffer &#124; ReadStream &#124; AttachmentPayload</code> | The video to be sent.                                                                                                                             |
+| options          | `Object`                                                                     | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types). |
+| options.filename | Required when upload from buffer.                                            |
+
+Example:
+
+- Send video using url string:
+
+```js
+bot.sendVideoMessage(USER_ID, 'https://intelligo.js.org/video.mp4');
+```
+
+- Use `AttachmentPayload` to send cached attachment:
+
+```js
+bot.sendVideoMessage(USER_ID, { attachment_id: '55688' });
+```
+
+- Use `ReadStream` created from local file:
+
+```js
+const fs = require('fs');
+
+bot.sendVideoMessage(USER_ID, fs.createReadStream('video.mp4'));
+```
+
+- Use `Buffer` to send attachment:
+
+```js
+bot.sendVideoMessage(USER_ID, buffer, { filename: 'video.mp4' });
+```
+
+<br />
+
+### Sending File
+
+#### `sendFileMessage(userId, file [, options])`
+
+Send files to specified user by uploading them or sharing a URL using the [Send API](https://developers.facebook.com/docs/messenger-platform/reference/send-api#request).
+
+| Param            | Type                                                                         | Description                                                                                                                                       |
+| ---------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| userId           | <code>String &#124; Object</code>                                            | Page-scoped user ID of the recipient or [recipient][send-api-reference#recipient] object.                                                         |
+| file             | <code>String &#124; Buffer &#124; ReadStream &#124; AttachmentPayload</code> | The file to be sent.                                                                                                                              |
+| options          | `Object`                                                                     | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types). |
+| options.filename | Required when upload from buffer.                                            |
+
+Example:
+
+- Send file using url string:
+
+```js
+bot.sendFileMessage(USER_ID, 'https://intelligo.js.org/document.pdf');
+```
+
+- Use `AttachmentPayload` to send cached attachment:
+
+```js
+bot.sendFileMessage(USER_ID, { attachment_id: '55688' });
+```
+
+- Use `ReadStream` created from local file:
+
+```js
+const fs = require('fs');
+
+bot.sendFileMessage(USER_ID, fs.createReadStream('document.pdf'));
+```
+
+- Use `Buffer` to send attachment:
+
+```js
+bot.sendFileMessage(USER_ID, buffer, { filename: 'file.pdf' });
+```
+
+<br />
+
+<a id="templates" />
+
+## Message Templates
+
+### Sending a Message Template 
+
+`sendTemplate(userId, template [, options])`
+
+Send structured message templates to specified user using the [Send API](https://developers.facebook.com/docs/messenger-platform/reference/send-api#request).
+
+| Param    | Type                              | Description                                                                                                                                                                                                                       |
+| -------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| userId   | <code>String &#124; Object</code> | Page-scoped user ID of the recipient or [recipient][send-api-reference#recipient] object.                                                                                                                                         |
+| template | `Object`                          | Object of the template.                                                                                                                                                                                                           |
+| options  | `Object`                          | Other optional parameters. For example, [messaging types](https://developers.facebook.com/docs/messenger-platform/send-messages#messaging_types) or [tags](https://developers.facebook.com/docs/messenger-platform/message-tags). |
+
+Example:
+
+```js
+bot.sendTemplate(USER_ID, {
+  template_type: 'button',
+  text: 'title',
+  buttons: [
+    {
+      type: 'postback',
+      title: 'Start Chatting',
+      payload: 'USER_DEFINED_PAYLOAD',
+    },
+  ],
+});
+```
+
+<br />
 
 ## Messenger Profile API
 
-### `.addGreeting(text)`
+### Greeting Text
+
+#### `.addGreeting(text)`
 
 [Facebook Docs](https://developers.facebook.com/docs/messenger-platform/messenger-profile/greeting-text)
 
@@ -229,7 +404,9 @@ bot.addGreeting(
 );
 ```
 
-### `.addGetStartedButton(action)`
+### Get Started Button 
+
+#### `.addGetStartedButton(action)`
 
 [Facebook Docs](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/get-started-button)
 
@@ -239,11 +416,13 @@ bot.addGreeting(
 
 React to a user starting a conversation with the bot by clicking the Get Started button. If `action` is a string, the Get Started button postback will be set to that string. If it's a function, that callback will be executed when a user clicks the Get Started button.
 
-### `.deleteGetStartedButton()`
+#### `.deleteGetStartedButton()`
 
 Removes the Get Started button call to action.
 
-### `.setPersistentMenu(buttons, [ disableInput ])`
+### The Persistent Menu 
+
+#### `.setPersistentMenu(buttons, [ disableInput ])`
 
 [Facebook Docs](https://developers.facebook.com/docs/messenger-platform/messenger-profile/persistent-menu)
 
@@ -293,7 +472,7 @@ bot.addPersistentMenu([
 ]);
 ```
 
-### `.removePersistentMenu()`
+#### `.removePersistentMenu()`
 
 Removes the Persistent Menu.
 
