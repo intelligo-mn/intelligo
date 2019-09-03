@@ -39,7 +39,7 @@
     "@angular/cli": "7.0.3",
     "@angular/language-service": "7.2.15",
     "@types/jasmine": "2.8.8",
-    "@types/jasminewd2": "2.0.3",
+    "@types/jasminewd2": "2.0.6",
     "@types/node": "8.9.5",
     "codelyzer": "4.2.1",
     "jasmine-core": "2.99.1",
