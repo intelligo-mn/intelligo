@@ -1,4 +1,0 @@
-This file contains a list of people who have made large contributions to the open source project.
-
-Original design and implementation:
-Tarun Kumar Sukhu <tsukhu@hcl.com>

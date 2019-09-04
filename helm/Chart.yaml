@@ -1,7 +1,0 @@
-apiVersion: v1
-description: A Helm chart for Express Microservice
-name: nxplorerjs-microservice-starter
-version: 1.0.0
-maintainers:
-  - name: Tarun Kumar Sukhu
-    email: tksukhu@gmail.com

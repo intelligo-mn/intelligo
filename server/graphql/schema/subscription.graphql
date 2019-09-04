@@ -1,4 +1,0 @@
-type Subscription {
-    exampleAdded: ExampleType!
-    commentAdded(blogId: ID!): Comment
-}
