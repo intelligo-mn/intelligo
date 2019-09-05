@@ -1,0 +1,48 @@
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.swp
+npm-debug.*
+*.bak
+
+# package-lock.json
+
+productsDB.json
+publishDB.json
+
+pids
+*.log*
+results
+tmp
+coverage
+
+# Sonar scanner Temp files
+.scannerwork
+reports
+reports/*
+
+#Kubernetes Temp files
+k8s/.*
+
+# API keys and secrets
+# .env
+
+# Dependency directory
+node_modules
+
+
+# Editors
+.idea
+*.iml
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Ignore built ts files
+build/**/*

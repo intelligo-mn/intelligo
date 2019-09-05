@@ -1,0 +1,9 @@
+type ActorType {
+    name: String!
+}
+
+type MovieType {
+    actors: [ActorType]
+    releaseDate: String
+    slug: String
+}

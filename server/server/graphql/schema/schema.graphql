@@ -1,0 +1,3 @@
+# import Query.* from './queries.graphql'
+# import Mutation.* from './mutation.graphql'
+# import Subscription.* from './subscription.graphql'
