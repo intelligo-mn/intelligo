@@ -6,6 +6,7 @@ AI chatbot marketplace. Buy and Sell chatbots on Chatbot.mn Marketplace.
 
 | Apps | Web | Status |
 |-----------|---------:|-----------|
+| Chatbots API | [api.chatbots.mn](https://api.chatbots.mn) |  |
 | Chatbots Agent | [agent.chatbots.mn](https://agent.chatbots.mn) | [![Netlify Status](https://api.netlify.com/api/v1/badges/956ba64f-48a6-4c8b-9716-4b5a835de79a/deploy-status)](https://app.netlify.com/sites/chatbotsmn-agent/deploys) |
 | Chatbots Analytics | [analytics.chatbots.mn](https://analytics.chatbots.mn) | [![Netlify Status](https://api.netlify.com/api/v1/badges/a913f4df-f998-49b5-af50-6224800e1b22/deploy-status)](https://app.netlify.com/sites/chatbotsmn-analytic/deploys) |
 | Chatbots Studio | [app.chatbots.mn](https://app.chatbots.mn) | [![Netlify Status](https://api.netlify.com/api/v1/badges/3626d3d8-2fa1-4366-8b1d-3bb49ba26350/deploy-status)](https://app.netlify.com/sites/chatbotsmn-studio/deploys) |
