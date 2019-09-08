@@ -3,29 +3,17 @@ import { Container } from 'inversify';
 
 import { LogService, MetricsService, SecurityService } from '../services';
 import {
-  IExample,
-  IHystrixDemo,
   IProduct,
-  IStarwars,
-  IUser,
-  IScraper
+  IUser
 } from '../../api/interfaces';
 import { ILogger, IMetrics, ISecurity } from '../interfaces';
 import {
-  ExamplesService,
   ProductService,
-  HystrixDemoService,
-  StarwarsService,
-  UserService,
-  ScraperService
+  UserService
 } from '../../api/services';
 import LoggerMiddleware from '../middleware/logger-middleware';
-import '../../api/controllers/hystrix-demo/controller';
-import '../../api/controllers/examples/controller';
 import '../../api/controllers/shop/controller';
-import '../../api/controllers/starwars/controller';
 import '../../api/controllers/security/controller';
-import '../../api/controllers/scraper/controller';
 import SERVICE_IDENTIFIER from '../constants/identifiers';
 
 /**
@@ -40,16 +28,9 @@ export class IOCContainer {
       const container = new Container();
 
       // Define service bindings
-      container.bind<IExample>(SERVICE_IDENTIFIER.EXAMPLE).to(ExamplesService);
-      container
-        .bind<IHystrixDemo>(SERVICE_IDENTIFIER.HYSTRIX)
-        .to(HystrixDemoService);
       container.bind<IProduct>(SERVICE_IDENTIFIER.PRODUCT).to(ProductService);
-      container
-        .bind<IStarwars>(SERVICE_IDENTIFIER.STARWARS)
-        .to(StarwarsService);
+      
       container.bind<IUser>(SERVICE_IDENTIFIER.USER).to(UserService);
-      container.bind<IScraper>(SERVICE_IDENTIFIER.SCRAPER).to(ScraperService);
       container
         .bind<ILogger>(SERVICE_IDENTIFIER.LOGGER)
         .to(LogService)
