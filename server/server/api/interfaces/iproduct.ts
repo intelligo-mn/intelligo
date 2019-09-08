@@ -1,32 +1,29 @@
 import { Observable } from 'rxjs';
 import {
-  BaseProduct,
-  BaseProductPrice,
-  BaseProductInventory,
-  BaseProductOption
+  IProduct
 } from '../models';
 
 /**
  * Product Service Interface
  */
-interface IProduct {
-  allBaseProducts(): Observable<BaseProduct[]>;
+interface IProductService {
+  allBaseProducts(): Observable<IProduct[]>;
 
-  baseProductbyId(id: number): Observable<BaseProduct>;
+  baseProductbyId(id: number): Observable<IProduct>;
 
-  allBaseProductOptions(): Observable<BaseProductOption[]>;
+  allBaseProductOptions(): Observable<IProduct[]>;
 
-  baseProductOptionsbyId(id: number): Observable<BaseProductOption>;
+  baseProductOptionsbyId(id: number): Observable<IProduct>;
 
-  allBaseProductPrice(): Observable<BaseProductPrice[]>;
+  allBaseProductPrice(): Observable<IProduct[]>;
 
-  baseProductPricebyId(id: number): Observable<BaseProductPrice>;
+  baseProductPricebyId(id: number): Observable<IProduct>;
 
-  allBaseProductInventory(): Observable<BaseProductInventory[]>;
+  allBaseProductInventory(): Observable<IProduct[]>;
 
-  baseProductInventorybyId(id: number): Observable<BaseProductInventory>;
+  baseProductInventorybyId(id: number): Observable<IProduct>;
 
-  getProductOptionPricebyId(id: number): Observable<BaseProductPrice[]>;
+  getProductOptionPricebyId(id: number): Observable<IProduct[]>;
 }
 
-export default IProduct;
+export default IProductService;

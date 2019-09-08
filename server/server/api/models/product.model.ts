@@ -1,41 +1,29 @@
-/**
- * Base Product Options Interface
- * Each Product Option has a price and inventory
- */
-export interface BaseProductOption {
-  baseProductOptionId: number;
-  description: string;
-  price?: number;
-  inventory?: number;
+import * as mongoose from 'mongoose';
+
+export interface IProduct extends mongoose.Document {
+  productName: String,
+  productDescription: String,
+  productCategory: String,
+  productPrice: String,
+  productImage: String,
+  productSeller: String,
+  isBestProduct: Boolean,
+  isTopProduct: Boolean,
+  productRating: Number
 }
 
-/**
- * Base Product Interface
- * Each Base Product has multiple Product Options
- */
-export interface BaseProduct {
-  id: number;
-  name: string;
-  description: string;
-  baseProductOptions: BaseProductOption[];
-}
+const UserSchema: mongoose.Schema = new mongoose.Schema({
+  productName: { type: String, required: true },
+  productDescription: { type: String, required: true },
+  productCategory: { type: String, required: true },
+  productPrice: { type: String, required: true },
+  productImage: { type: String, required: true },
+  productSeller: { type: String, required: true },
+  isBestProduct: { type: String, required: true },
+  isTopProduct: { type: String, required: true },
+  productRating: { type: Number, required: true }
 
-/**
- * Base Product Price Interface
- * Each Base Product Option has a price
- */
-export interface BaseProductPrice {
-  id?: number;
-  baseProductOptionId: number;
-  price: number;
-}
+});
 
-/**
- * Base Product Inventory Interface
- * Each Base Product Option has an inventory number
- */
-export interface BaseProductInventory {
-  id: number;
-  baseProductOptionId: number;
-  inventory: number;
-}
+// Export the model and return your IUser interface
+export default mongoose.model<IProduct>('Product', UserSchema);
