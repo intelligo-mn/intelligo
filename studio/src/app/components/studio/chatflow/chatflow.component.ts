@@ -1,25 +1,20 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, HostListener, OnDestroy } from '@angular/core';
-import { Http } from '@angular/http';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
-import { ChatFlowService } from '../../../services/chatflow.service'
-import { SettingsService } from '../../../services/settings.service'
-import { GlobalsService } from '../../../services/globals.service'
-import * as models from '../../../models/chatflow.models';
-import { NodeEditorComponent } from '../nodeeditor/nodeeditor.component';
-import { MatMenuTrigger, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
-
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Hotkey, HotkeysService } from 'angular2-hotkeys';
 import { ObjectID } from 'bson';
-import { InfoDialogService } from '../../../services/info-dialog.service';
-import { SimulatorFrameComponent } from '../simulator-frame/simulator-frame.component';
-import { SimulatorService } from '../../../services/simulator.service';
-import { PublishChatbotComponent } from '../../shared/publish-chatbot/publish-chatbot.component';
-import { PublishDialogComponent } from '../../shared/publish-dialog/publish-dialog.component';
-import { HotkeysService, Hotkey } from 'angular2-hotkeys';
-import { LoginService } from '../../../services/login.service';
+import * as models from '../../../models/chatflow.models';
+import { ChatFlowService } from '../../../services/chatflow.service';
 import { DataService } from '../../../services/data.service';
+import { GlobalsService } from '../../../services/globals.service';
+import { InfoDialogService } from '../../../services/info-dialog.service';
+import { LoginService } from '../../../services/login.service';
+import { SettingsService } from '../../../services/settings.service';
+import { SimulatorService } from '../../../services/simulator.service';
 import { BusinessPickerComponent, BusinessPickerParam, ChoosenBizAccChatProj } from '../../shared/business-picker/business-picker.component';
-import { BusinessAccount } from '../../../models/data.models';
+import { PublishChatbotComponent } from '../../shared/publish-chatbot/publish-chatbot.component';
+import { NodeEditorComponent } from '../nodeeditor/nodeeditor.component';
+import { SimulatorFrameComponent } from '../simulator-frame/simulator-frame.component';
 
 @Component({
 	selector: 'app-chatflow',
@@ -55,10 +50,10 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 	chatFlowNetwork: ChatFlowNetwork;
 	MH: models.ModelHelpers;
 
-	@ViewChild('chatflowRoot', {static: true})
+	@ViewChild('chatflowRoot', { static: true })
 	chatflowRoot: ElementRef;
 
-	@ViewChild('simulator', {static: true})
+	@ViewChild('simulator', { static: true })
 	simulator: SimulatorFrameComponent;
 
 	projName: string = "";
