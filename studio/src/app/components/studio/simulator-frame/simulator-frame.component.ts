@@ -5,7 +5,7 @@ import { environment } from '../../../../environments/environment';
 @Component({
 	selector: 'app-simulator-frame',
 	templateUrl: './simulator-frame.component.html',
-	styleUrls: ['./simulator-frame.component.css']
+	styleUrls: ['./simulator-frame.component.scss']
 })
 export class SimulatorFrameComponent implements OnInit {
 

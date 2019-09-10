@@ -14,7 +14,7 @@ import { Hotkey, HotkeysService } from 'angular2-hotkeys';
 @Component({
 	selector: 'app-nodeeditor',
 	templateUrl: './nodeeditor.component.html',
-	styleUrls: ['./nodeeditor.component.css']
+	styleUrls: ['./nodeeditor.component.scss']
 })
 export class NodeEditorComponent implements OnInit, OnDestroy {
 	constructor(

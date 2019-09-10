@@ -15,7 +15,7 @@ import { BusinessAccount } from '../../../models/data.models';
 @Component({
 	selector: 'app-edit-business-account',
 	templateUrl: './edit-business-account.component.html',
-	styleUrls: ['./edit-business-account.component.css']
+	styleUrls: ['./edit-business-account.component.scss']
 })
 export class EditBusinessAccountComponent implements OnInit {
 	title: string = "Create business account";

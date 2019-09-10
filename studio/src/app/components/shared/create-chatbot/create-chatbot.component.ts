@@ -14,7 +14,7 @@ import { GlobalsService } from '../../../services/globals.service';
 @Component({
 	selector: 'app-create-chatbot',
 	templateUrl: './create-chatbot.component.html',
-	styleUrls: ['./create-chatbot.component.css']
+	styleUrls: ['./create-chatbot.component.scss']
 })
 export class CreateChatbotComponent implements OnInit {
 

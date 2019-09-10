@@ -9,7 +9,7 @@ import * as models from '../../../models/chatflow.models';
 @Component({
 	selector: 'app-publish-dialog',
 	templateUrl: './publish-dialog.component.html',
-	styleUrls: ['./publish-dialog.component.css']
+	styleUrls: ['./publish-dialog.component.scss']
 })
 export class PublishDialogComponent implements OnInit {
 

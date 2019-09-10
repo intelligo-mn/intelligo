@@ -21,7 +21,7 @@ import { BusinessPickerComponent } from '../business-picker/business-picker.comp
 @Component({
 	selector: 'app-publish-chatbot',
 	templateUrl: './publish-chatbot.component.html',
-	styleUrls: ['./publish-chatbot.component.css']
+	styleUrls: ['./publish-chatbot.component.scss']
 })
 export class PublishChatbotComponent implements OnInit {
 	constructor(

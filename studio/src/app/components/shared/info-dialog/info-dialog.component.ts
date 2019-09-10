@@ -4,7 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/
 @Component({
 	selector: 'app-info-dialog',
 	templateUrl: './info-dialog.component.html',
-	styleUrls: ['./info-dialog.component.css']
+	styleUrls: ['./info-dialog.component.scss']
 })
 export class InfoDialogComponent implements OnInit {
 

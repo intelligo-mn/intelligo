@@ -10,7 +10,7 @@ import { Md5 } from 'ts-md5/dist/md5';
 @Component({
 	selector: 'app-deploy-landing',
 	templateUrl: './deploy-landing.component.html',
-	styleUrls: ['./deploy-landing.component.css']
+	styleUrls: ['./deploy-landing.component.scss']
 })
 export class DeployLandingComponent implements OnInit, AfterViewInit {
 

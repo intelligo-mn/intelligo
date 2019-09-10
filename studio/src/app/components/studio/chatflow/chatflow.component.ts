@@ -24,7 +24,7 @@ import { BusinessAccount } from '../../../models/data.models';
 @Component({
 	selector: 'app-chatflow',
 	templateUrl: './chatflow.component.html',
-	styleUrls: ['./chatflow.component.css'],
+	styleUrls: ['./chatflow.component.scss'],
 })
 export class ChatFlowComponent implements OnInit, OnDestroy {
 	constructor(

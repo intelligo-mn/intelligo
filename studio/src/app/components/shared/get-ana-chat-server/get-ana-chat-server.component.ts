@@ -5,7 +5,7 @@ import { AnaCloudSignupComponent } from '../ana-cloud-signup/ana-cloud-signup.co
 @Component({
 	selector: 'app-get-ana-chat-server',
 	templateUrl: './get-ana-chat-server.component.html',
-	styleUrls: ['./get-ana-chat-server.component.css']
+	styleUrls: ['./get-ana-chat-server.component.scss']
 })
 export class GetAnaChatServerComponent implements OnInit {
 

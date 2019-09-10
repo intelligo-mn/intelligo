@@ -11,7 +11,7 @@ import { GetAnaChatServerComponent } from '../get-ana-chat-server/get-ana-chat-s
 @Component({
 	selector: 'app-chat-server-manager',
 	templateUrl: './chat-server-manager.component.html',
-	styleUrls: ['./chat-server-manager.component.css'],
+	styleUrls: ['./chat-server-manager.component.scss'],
 })
 export class ChatServerManagerComponent implements OnInit {
 	constructor(
