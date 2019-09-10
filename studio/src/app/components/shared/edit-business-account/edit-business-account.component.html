@@ -1,0 +1,42 @@
+﻿<h2 matDialogTitle>{{title}}</h2>
+<mat-dialog-content>
+    <div class="center-block center-content">
+        <form (ngSubmit)="save()" class="form">
+            <mat-form-field>
+                <input type="text" placeholder="Id" name="Id" matInput [(ngModel)]="account.id" required [readonly]="!isCreate"/>
+            </mat-form-field>
+            <mat-form-field>
+                <input type="text" placeholder="Name" name="name" matInput [(ngModel)]="account.name" required />
+            </mat-form-field>
+            <mat-form-field>
+                <input type="email" placeholder="Business Email" name="email" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" matInput [(ngModel)]="account.email" required #email="ngModel" />
+                <mat-error align="start" *ngIf="email.invalid && (email.dirty || email.touched)">
+                    Please enter a valid email address
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input type="tel" placeholder="Business Phone" name="phone" matInput [(ngModel)]="account.phone" pattern="^\+?\d{6,15}$" #phone="ngModel"/>
+                <mat-error align="start" *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+                    Please enter a valid phone number
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input type="url" placeholder="Logo Url" name="logoUrl" matInput [(ngModel)]="account.logoUrl" />
+            </mat-form-field>
+            <mat-form-field>
+                <input type="text" placeholder="Primary Background Color" name="primaryBGColor" matInput [(ngModel)]="primaryBGColor" required />
+            </mat-form-field>
+            <mat-form-field>
+                <input type="text" placeholder="Primary Text Color" name="primaryFGColor" matInput [(ngModel)]="primaryFGColor" required />
+            </mat-form-field>
+            <mat-form-field>
+                <input type="text" placeholder="Secondary Color" name="secondaryColor" matInput [(ngModel)]="secondaryColor" />
+            </mat-form-field>
+            <input type="submit" name="submit" hidden />
+        </form>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button matTooltip="Save" color="primary" mat-raised-button (click)="save()">Save</button>
+    <button mat-raised-button matDialogClose>Dismiss</button>
+</mat-dialog-actions>

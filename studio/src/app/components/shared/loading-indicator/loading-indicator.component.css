@@ -1,0 +1,23 @@
+.chatflow-loading {
+    z-index: 20;
+    padding: 10px 50px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #8cc83c;
+}
+
+    .chatflow-loading > .loading-content {
+        width: 200px;
+        height: 200px;
+        position: fixed;
+        top: 40%;
+        left: 50%;
+        -moz-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+        -o-transform: translate(-50%,-50%);
+        -webkit-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);
+    }

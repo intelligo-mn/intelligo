@@ -1,0 +1,35 @@
+<mat-toolbar class="mat-elevation-z2" color="primary">
+    <mat-toolbar-row>
+        <button mat-icon-button (click)="goBack()" *ngIf="!hideBackButton" class="back-button">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <span>{{title}}</span>
+        <span class="toolbar-spacer"></span>
+        <span class="user-info" *ngIf="loggedInUser">
+            <span class="user-name">
+                {{loggedInUser.name | titlecase }}
+            </span>
+            <span class="user-role">
+                {{roles()}}
+            </span>
+        </span>
+        <span class="user-info" *ngIf="!loggedInUser">
+            <span class="user-name">
+                <button mat-raised-button (click)="loginDialog()" color="primary" class="inverse">Login</button>
+            </span>
+        </span>
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="toolbar-icon" *ngIf="loggedInUser">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="changePassword()">
+                <mat-icon>lock_outline</mat-icon>
+                <span>Change password</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>Logout</span>
+            </button>
+        </mat-menu>
+    </mat-toolbar-row>
+</mat-toolbar>

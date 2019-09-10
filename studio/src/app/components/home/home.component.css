@@ -1,0 +1,42 @@
+.button-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.container {
+    padding: 30px;
+    width: 100vw;
+}
+
+.button-row > .mat-raised-button {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 180px;
+    width: 200px;
+    font-size: 18px;
+}
+
+.btn-studio svg {
+    width: 84px;
+    height: 84px;
+    margin-left: 4px;
+}
+
+.btn-user-management svg {
+    width: 84px;
+    height: 84px;
+    margin-left: 4px;
+}
+
+.feature-button {
+    color: #8cc83c !important;
+    background-color: white !important;
+}
+
+    .feature-button svg path {
+        fill: #8cc83c !important;
+    }

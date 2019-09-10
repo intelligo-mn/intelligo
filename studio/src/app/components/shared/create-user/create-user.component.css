@@ -1,0 +1,15 @@
+.form {
+    display: flex;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+
+mat-dialog-actions button {
+    margin-left: 0 !important;
+    margin-right: 8px !important;
+}
+
+.mat-input-element:disabled {
+    color: black;
+}

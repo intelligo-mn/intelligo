@@ -1,0 +1,58 @@
+:host {
+    width: 100%;
+}
+
+mat-form-field, mat-select {
+    width: 100%;
+}
+
+.bottom-actions > button {
+    margin: 20px 10px;
+}
+
+button[color="primary"] {
+    color: white;
+}
+
+mat-action-row > button {
+    margin: 10px;
+}
+
+.bottom-actions {
+    display: block;
+    text-align: center;
+}
+
+.list-action-btn {
+    float: right;
+}
+
+.list-item {
+    width: 100%
+}
+
+.mat-expansion-panel-body {
+    display: none !important;
+}
+
+.app-content {
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    padding-bottom: 40px;
+}
+
+.page-title {
+    display: flex;
+    flex-direction: row;
+}
+
+    .page-title .text {
+        flex-grow: 1;
+    }
+
+.page-title-actions button:first-child {
+    margin-left: 10px;
+    margin-right: 10px;
+}

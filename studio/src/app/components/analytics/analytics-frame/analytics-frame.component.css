@@ -1,0 +1,14 @@
+.ana-analytics-iframe {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+    height: calc(100vh - 70px);
+    border: none;
+    top: 70px;
+}
+
+:host {
+    width: 100%;
+}

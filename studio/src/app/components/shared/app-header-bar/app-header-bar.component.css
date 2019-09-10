@@ -1,0 +1,32 @@
+app-header-bar {
+    width: 100%;
+}
+
+    app-header-bar > .user-info {
+        float: right;
+    }
+
+.back-button {
+    margin-right: 10px;
+}
+
+.toolbar-icon {
+    padding: 0 14px;
+}
+
+.toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-role {
+    font-size: 13px;
+    opacity: .7;
+    margin-top: -10px;
+    align-self: flex-end;
+}
+

@@ -1,0 +1,296 @@
+
+.ana-full {
+    width: 100%;
+    height: 100%;
+}
+
+.ana-root {
+    z-index: 10;
+    position: fixed;
+    bottom: 35px;
+    right: 20px;
+    background-color: transparent;
+    font-family: 'Open Sans';
+    display: block;
+}
+
+.ana-frame-container {
+    box-shadow: 0px 6px 40px 1px rgba(0,0,0,0.36);
+    border-radius: 10px !important;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: #F5F5F5;
+}
+
+.ana-full-screen {
+    background-color: rgba(0, 0, 0, 0.84);
+}
+
+.ana-iframe {
+    border: none;
+    width: 100%;
+    flex-grow: 1;
+    border-radius: inherit;
+}
+
+.ana-title {
+}
+
+.ana-content {
+    display: inline;
+}
+
+    .ana-content > .title {
+        font-weight: bold;
+        font-size: 18px;
+        position: relative;
+    }
+
+    .ana-content > .subtitle {
+        font-size: 11px;
+    }
+
+.ana-online-dot {
+    border-radius: 5px;
+    height: 5px;
+    width: 5px;
+    background-color: #00DF50;
+    border: 1px solid white;
+    position: absolute;
+    bottom: 4px;
+    transform: translate(4px, -0.5px);
+}
+
+.ana-actions > img {
+    width: 50px;
+}
+
+.ana-minmax-btn {
+    z-index: 15;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background-color: #8cc83c;
+    height: 60px;
+    width: 60px;
+    border-radius: 60px !important;
+    cursor: pointer;
+    box-shadow: 0px 6px 40px 1px rgba(0,0,0,0.36);
+}
+
+    .ana-minmax-btn:hover {
+        box-shadow: 0px 6px 40px 4px rgba(0,0,0,0.36);
+    }
+
+    .ana-minmax-btn > img,
+    .ana-minmax-btn > .max-btn {
+        width: 36px;
+        height: 36px;
+        margin: 12px;
+    }
+
+.ana-min.ana-root {
+    /*display: none;*/
+}
+
+@-webkit-keyframes maximizeAnimation {
+    0% {
+        opacity: 0;
+        width: 0px;
+        height: 0px;
+    }
+
+    100% {
+        opacity: 1;
+        width: 360px;
+        height: 70vh;
+    }
+}
+
+@keyframes maximizeAnimation {
+    0% {
+        opacity: 0;
+        width: 0px;
+        height: 0px;
+    }
+
+    100% {
+        opacity: 1;
+        width: 360px;
+        height: 70vh;
+    }
+}
+
+.maximizeAnimation {
+    -webkit-animation-name: maximizeAnimation;
+    animation-name: maximizeAnimation;
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes minimizeAnimation {
+    0% {
+        opacity: 1;
+        width: 360px;
+        height: 70vh;
+    }
+
+    100% {
+        opacity: 0;
+        display: none;
+        width: 0px;
+        height: 0px;
+    }
+}
+
+@keyframes minimizeAnimation {
+    0% {
+        opacity: 1;
+        width: 360px;
+        height: 70vh;
+    }
+
+    100% {
+        opacity: 0;
+        display: block;
+        width: 0px;
+        height: 0px;
+    }
+}
+
+.minimizeAnimation {
+    -webkit-animation-name: minimizeAnimation;
+    animation-name: minimizeAnimation;
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.ana-hidden {
+    display: none;
+}
+
+.ana-max.ana-minmax-btn {
+    border-radius: 3px !important;
+    height: 24px;
+    width: 24px;
+    box-shadow: none;
+    background-color: transparent;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+}
+
+    .ana-max.ana-minmax-btn > .max-btn {
+        display: none;
+    }
+
+    .ana-max.ana-minmax-btn > .min-btn {
+        display: block;
+        opacity: 0.6;
+    }
+
+.powered-by-ana {
+    font-size: 11px;
+    text-align: right;
+    z-index: 20;
+    position: absolute;
+    bottom: -22px;
+    width: 100%;
+    display: none;
+}
+
+    .powered-by-ana > div {
+        display: inline;
+        /*background-color: #F5F5F5;*/
+        border-radius: 0 0 10px 10px;
+        padding: 6px 24px;
+        /*box-shadow: 0px 20px 40px 1px rgba(0,0,0,0.36)*/
+    }
+
+.ana-link {
+    color: #3c3c3c;
+    text-decoration: none;
+}
+
+    .ana-link:hover {
+        text-decoration: underline;
+    }
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .ana-root {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        border: 0;
+        height: 100%;
+        width: 100vw;
+        color: #3c3c3c;
+    }
+
+    .powered-by-ana {
+        display: none;
+    }
+
+    @-webkit-keyframes maximizeAnimation {
+        0% {
+            opacity: 0;
+            width: 0px;
+            height: 0px;
+        }
+
+        100% {
+            opacity: 1;
+            width: 100vw;
+            height: 100%;
+        }
+    }
+
+    @keyframes maximizeAnimation {
+        0% {
+            opacity: 0;
+            width: 0px;
+            height: 0px;
+        }
+
+        100% {
+            opacity: 1;
+            width: 100vw;
+            height: 100%;
+        }
+    }
+
+    @-webkit-keyframes minimizeAnimation {
+        0% {
+            opacity: 1;
+            width: 100vw;
+            height: 100%;
+        }
+
+        100% {
+            opacity: 0;
+            display: none;
+            width: 0px;
+            height: 0px;
+        }
+    }
+
+    @keyframes minimizeAnimation {
+        0% {
+            opacity: 1;
+            width: 100vw;
+            height: 100%;
+        }
+
+        100% {
+            opacity: 0;
+            display: block;
+            width: 0px;
+            height: 0px;
+        }
+    }
+}

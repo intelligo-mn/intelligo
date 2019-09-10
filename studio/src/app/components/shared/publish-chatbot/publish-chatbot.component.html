@@ -1,0 +1,41 @@
+<h2 matDialogTitle>Publish chatbot</h2>
+<mat-dialog-content>
+    <mat-card *ngIf="!chatProjects || chatProjects.length <= 0" class="text-center">
+        <h4> Looks like you don't have any Ana chatbot projects yet. </h4>
+    </mat-card>
+    <mat-form-field *ngIf="chatProjects && chatProjects.length>0" #chatProjectFormField tabindex="-1">
+        <input tabindex="-1" type="text" placeholder="Choose a chatbot project" aria-label="Chatbot Project" matInput [(ngModel)]="filter" [matAutocomplete]="auto" name="chatProject">
+        <mat-autocomplete tabindex="-1" #auto="matAutocomplete" (optionSelected)="optionSelected($event)" [displayWith]="displayWith">
+            <mat-option *ngFor="let option of filteredOptions()" [value]="option">
+                {{ option.name }} <span class="desc">Last updated at {{option.updatedAt | date:'hh:mm a on dd-MM-yyyy'}} -- Id: {{ option.id }}</span>
+            </mat-option>
+        </mat-autocomplete>
+        <mat-hint *ngIf="added">
+            {{added}}
+        </mat-hint>
+    </mat-form-field>
+    <section *ngIf="chatProjects && chatProjects.length>0" class="text-center">
+        <h3>Or</h3>
+        <br />
+    </section>
+    <div>
+        <h5>Create new chatbot project</h5>
+        <form (ngSubmit)="createAndPublish()" class="form">
+            <mat-form-field>
+                <input type="text" placeholder="Id" name="Id" matInput [(ngModel)]="newChatProject.id" required />
+                <mat-hint>New chatbot project id</mat-hint>
+            </mat-form-field>
+            <mat-form-field>
+                <input type="text" placeholder="Name" name="name" matInput [(ngModel)]="newChatProject.name" required />
+                <mat-hint>New chatbot project name</mat-hint>
+            </mat-form-field>
+            <input type="submit" name="submit" hidden />
+        </form>
+    </div>
+
+    <label class="desc">You are logged into '{{chatConnName}}' Ana chat server</label>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button [disabled]="!canPublish()" color="primary" (click)="doPublish()">Publish</button>
+    <button mat-raised-button matDialogClose>Dismiss</button>
+</mat-dialog-actions>

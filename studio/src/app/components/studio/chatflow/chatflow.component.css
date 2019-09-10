@@ -1,0 +1,164 @@
+/** {
+    position: static !important;
+    top: auto !important;
+}*/
+.pointer-events-none {
+    pointer-events: none;
+}
+
+.pointer-cursor {
+    cursor: pointer;
+}
+
+.not-allowed-cursor {
+    cursor: not-allowed;
+}
+
+.moving-cursor {
+    cursor: grab;
+}
+
+.section-icon {
+    width: 23px;
+}
+
+.chatflow-actions {
+    margin: 15px 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+}
+
+    .chatflow-actions > button {
+        margin: 8px 0;
+        font-size: 12px;
+    }
+
+    .chatflow-actions .fab-btn-icon {
+        margin-bottom: -13px !important;
+    }
+
+.chatflow-root-svg {
+    overflow: hidden;
+    width: calc(99vw - 88px);
+    height: 99vh;
+}
+
+.chatflow-designer-wrapper {
+    overflow: hidden;
+    display: flex;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
+
+    .chatflow-designer-wrapper .left-sidebar {
+        height: 100vh;
+        background-color: #8cc83c;
+        color: white;
+    }
+
+    .chatflow-designer-wrapper .chatflow-root-svg {
+        flex-grow: 1;
+    }
+
+.chatnode {
+    background: none;
+    cursor: move;
+    border: 2px solid transparent;
+    border-radius: 12px;
+}
+
+    .chatnode:hover {
+        border: 2px solid rgba(140, 200, 60, 0.50);
+    }
+
+    .chatnode.selected {
+        border: 2px solid #8cc83c;
+    }
+
+    .chatnode.click-connect {
+        cursor: alias;
+    }
+
+.chatnode-header {
+    height: 30px;
+    border-radius: 10px 10px 0 0;
+    background-color: #666666;
+}
+
+    .chatnode-header.startnode {
+        background-color: #8cc83c;
+    }
+
+    .chatnode-header > p {
+        padding: 5px;
+        text-align: center;
+        color: white
+    }
+
+.chatnode-body {
+    background-color: white;
+    color: #666666;
+    border-radius: 0 0 10px 10px;
+}
+
+.chatnode-sections {
+    height: 100%;
+    padding: 0 5px
+}
+
+    .chatnode-sections > table {
+        width: 100%;
+    }
+
+        .chatnode-sections > table > tr {
+            border-bottom: 1px dashed #F0F0F0;
+        }
+
+            .chatnode-sections > table > tr > td {
+                padding-left: 5px;
+            }
+
+.section-icon > fa {
+    font-size: 20px;
+}
+
+.section-alias {
+    padding-right: 5px
+}
+
+    .section-alias > div {
+        margin: 10px 0px 10px 5px
+    }
+
+.chatnode-buttons {
+    height: 100%;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px
+}
+
+    .chatnode-buttons > table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+        .chatnode-buttons > table > tr > td {
+            width: 80px;
+            padding: 10px;
+        }
+
+            .chatnode-buttons > table > tr > td > div {
+                text-align: center;
+            }
+
+                .chatnode-buttons > table > tr > td > div > .fa {
+                    font-size: 20px;
+                }
+
+.chatnode-empty {
+    text-align: center;
+    width: 100%;
+    padding: 5px 0 10px 0; 
+}

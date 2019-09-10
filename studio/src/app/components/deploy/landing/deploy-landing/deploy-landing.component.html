@@ -1,0 +1,94 @@
+<app-header-bar #appHeader [title]="'SDK Configuration'" [skipAuth]="true" [logoutNavigation]=""></app-header-bar>
+<div class="app-content">
+    <div class="center-block center-content">
+        <div class="row">
+            <div class="col-md-3">
+                <h4 class="left-header">
+                    Customizations
+                </h4>
+                <mat-form-field>
+                    <input matInput type="url" placeholder="Web SDK URL" [(ngModel)]="webOptions.websdkUrl" name="websdkUrl">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="url" placeholder="Web sockets URL" [(ngModel)]="webOptions.webSocketsUrl" name="webSocketsUrl">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="url" placeholder="Logo URL" [(ngModel)]="webOptions.logoUrl" name="webLogoUrl">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Color" [(ngModel)]="webOptions.accentColor" name="webColor">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Title" [(ngModel)]="webOptions.title" name="webTitle">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Description" [(ngModel)]="webOptions.desc" name="webDesc">
+                </mat-form-field>
+                <section class="control radio-grp">
+                    <label>Chat window placement</label>
+                    <mat-radio-group [(ngModel)]="webOptions.isFullPage">
+                        <mat-radio-button [value]="true">Center - full page</mat-radio-button>
+                        <mat-radio-button [value]="false">Right bottom - minimized</mat-radio-button>
+                    </mat-radio-group>
+                </section>
+
+                <section class="control" [hidden]="webOptions.isFullPage">
+                    <mat-slide-toggle #webAutoOpenCheck [(ngModel)]="enableAutoOpen" name="webAutoOpenCheck">Auto open</mat-slide-toggle>
+                </section>
+
+                <mat-form-field *ngIf="enableAutoOpen && !webOptions.isFullPage">
+                    <input matInput type="text" placeholder="Auto open" [(ngModel)]="webOptions.autoOpenSecs" name="webAutoOpenSecs">
+                    <mat-hint> in seconds </mat-hint>
+                </mat-form-field>
+
+                <section class="control">
+                    <mat-slide-toggle name="webAllowChatReset" [(ngModel)]="webOptions.allowChatReset">Allow chat reset</mat-slide-toggle>
+                </section>
+                <section class="control">
+                    <mat-slide-toggle name="webHtmlMessages" [(ngModel)]="webOptions.enableHtmlMessages">Enable HTML in messages</mat-slide-toggle>
+                </section>
+                <section class="control">
+                    <mat-slide-toggle name="webShowAnaBranding" [(ngModel)]="webOptions.showPoweredByAna">Show 'powered by ana'</mat-slide-toggle>
+                </section>
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Height" [(ngModel)]="webOptions.height" name="webHeight">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Width" [(ngModel)]="webOptions.width" name="webWidth">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Foreground color" [(ngModel)]="webOptions.foregroundColor" name="webForegroundColor">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Secondary color" [(ngModel)]="webOptions.foregroundColor" name="webForegroundColor">
+                </mat-form-field>
+            </div>
+            <div class="col-md-9">
+                <mat-tab-group>
+                    <mat-tab label="Web" >
+                        <div class="table-body">
+                            <p>
+                                Please use the following HTML code snippet to enable Ana web chat on your web page:
+                            </p>
+                            <div highlight-js-content=".highlight" class="highlight-container">
+                                <div class="html highlight" [innerText]="webSnippet"></div>
+                            </div>
+                            <button mat-raised-button color="primary" ngxClipboard [cbContent]="webSnippet" (cbOnSuccess)="copied()"> Copy </button>
+                            <button mat-raised-button (click)="preview()"> Preview </button>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Android" class="table-body">
+                        <div class="table-body">
+                            Please follow the instructions for configuring Ana Android SDK <a href="javascript:;" (click)="open('https://github.com/Kitsune-tools/ANAChat-Android')">here</a>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="iOS">
+                        <div class="table-body">
+                            Please follow the instructions for configuring Ana iOS SDK <a href="javascript:;" (click)="open('https://github.com/Kitsune-tools/ANAChat-iOS')">here</a>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

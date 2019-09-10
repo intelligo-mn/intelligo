@@ -1,0 +1,32 @@
+.button-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+    .button-row > .mat-raised-button {
+        margin-left: 10px;
+        margin-right: 10px;
+        height: 180px;
+        width: 200px;
+        font-size: 18px;
+    }
+
+        .button-row > .mat-raised-button:first-child {
+            margin-left: 0;
+        }
+
+        .button-row > .mat-raised-button:last-child {
+            margin-right: 0;
+        }
+
+mat-raised-button svg {
+    width: 84px;
+    height: 84px;
+    margin-left: 4px;
+}
+
+.actions {
+    justify-content: flex-end;
+}

@@ -1,0 +1,55 @@
+<app-header-bar [title]="'User Management'" #appHeader></app-header-bar>
+<div class="app-content">
+    <div class="app-content-header">
+        <h4 class="app-content-header-text">Business Accounts</h4>
+        <div class="app-content-header-actions">
+            <mat-form-field floatLabel="never" class="search-text">
+                <mat-label>Search</mat-label>
+                <input type="text" matInput name="search" [(ngModel)]="search" (keyup.enter)="searchStart()" />
+                <button mat-icon-button matSuffix (click)="searchStart()">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="editBusinessAccount()">Create new account</button>
+        </div>
+    </div>
+    <mat-card *ngIf="!accounts || accounts.length<=0">
+        <mat-card-content>
+            Looks like there are no business accounts yet.
+        </mat-card-content>
+    </mat-card>
+    <div class="ana-pagination" *ngIf="accounts && accounts.length>0">
+        <div class="info">
+            Page {{page+1}}/{{totalPages}}
+        </div>
+        <div class="buttons">
+            <button mat-icon-button (click)="prevPage()" [disabled]="page<=0">
+                <mat-icon>navigate_before</mat-icon>
+            </button>
+            <button mat-icon-button (click)="nextPage()" [disabled]="page>=totalPages-1">
+                <mat-icon>navigate_next</mat-icon>
+            </button>
+        </div>
+    </div>
+    <mat-list *ngIf="accounts && accounts.length>0">
+        <mat-list-item class="mat-elevation-z2 list-item" *ngFor="let acc of accounts">
+            <div class="list-item-text">
+                {{acc.name}} <span class="list-item-hint"> {{BusinessAccountStatus[acc.status].toLowerCase()}}</span>
+            </div>
+            <div class="list-item-buttons">
+                <button matTooltip="Edit" mat-icon-button (click)="editBusinessAccount(acc)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button matTooltip="Manage Users" mat-icon-button (click)="manageUsers(acc)">
+                    <mat-icon>supervisor_account</mat-icon>
+                </button>
+                <button matTooltip="Deactivate" *ngIf="acc.status==BusinessAccountStatus.ACTIVE" mat-icon-button (click)="updateBusinessAccountStatus(acc, BusinessAccountStatus.INACTIVE)">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <button matTooltip="Activate" *ngIf="acc.status==BusinessAccountStatus.INACTIVE" mat-icon-button (click)="updateBusinessAccountStatus(acc, BusinessAccountStatus.ACTIVE)">
+                    <mat-icon>check</mat-icon>
+                </button>
+            </div>
+        </mat-list-item>
+    </mat-list>
+</div>

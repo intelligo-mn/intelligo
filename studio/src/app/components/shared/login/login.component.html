@@ -1,0 +1,42 @@
+<h2 matDialogTitle>Login </h2>
+<mat-dialog-content>
+    <mat-card *ngIf="!savedConns || savedConns.length <= 0" class="text-center">
+        <h4>
+            Looks like you don't have any saved Ana chat server connections.
+            <br />
+            <br />
+            <button mat-raised-button color="primary" (click)="managePublishServers()">Add Ana chat server connection</button>
+        </h4>
+    </mat-card>
+
+    <mat-form-field *ngIf="savedConns && savedConns.length>0">
+        <mat-select placeholder="Server" [(ngModel)]="selectedServer" name="PublishServer">
+            <mat-option *ngFor="let conn of savedConns" [value]="conn">
+                {{ conn.Name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="selectedServer">
+        <form (ngSubmit)="login()">
+            <mat-form-field>
+                <input type="text" name="username" placeholder="Username" [(ngModel)]="username" matInput />
+            </mat-form-field>
+            <mat-form-field>
+                <input type="password" name="password" placeholder="Password" [(ngModel)]="password" matInput />
+            </mat-form-field>
+            <input type="submit" hidden />
+        </form>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="left" *ngIf="savedConns && savedConns.length>0">
+        <button mat-raised-button (click)="managePublishServers()">Add/edit Ana chat servers</button>
+    </div>
+    <div class="spacing"></div>
+    <div class="right">
+        <button mat-raised-button [disabled]="!selectedServer || !username || !password" color="primary" (click)="login()">Login</button>
+        <button mat-raised-button (click)="dismiss()">Dismiss</button>
+    </div>
+</mat-dialog-actions>

@@ -1,0 +1,16 @@
+mat-form-field {
+    width: 100%;
+}
+
+mat-dialog-actions > .spacing {
+    flex-grow: 1;
+}
+
+.desc {
+    font-size: 11px;
+    opacity: 0.6;
+}
+
+label.desc {
+    margin-top: 10px;
+}

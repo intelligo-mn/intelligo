@@ -1,0 +1,20 @@
+<h2 matDialogTitle>Add new chatbot project</h2>
+<mat-dialog-content>
+    <div class="center-block center-content">
+        <form (ngSubmit)="create()" class="form">
+            <mat-form-field>
+                <input type="text" placeholder="Id" name="Id" matInput [(ngModel)]="chatProject.id" required />
+                <mat-hint>New chatbot project id</mat-hint>
+            </mat-form-field>
+            <mat-form-field>
+                <input type="text" placeholder="Name" name="name" matInput [(ngModel)]="chatProject.name" required />
+                <mat-hint>New chatbot project name</mat-hint>
+            </mat-form-field>
+            <input type="submit" name="submit" hidden />
+        </form>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button matTooltip="Add" color="primary" mat-raised-button (click)="create()">Create</button>
+    <button mat-raised-button matDialogClose>Dismiss</button>
+</mat-dialog-actions>
