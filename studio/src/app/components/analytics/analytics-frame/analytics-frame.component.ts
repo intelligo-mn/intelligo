@@ -10,7 +10,7 @@ import { InfoDialogService } from '../../../services/info-dialog.service';
 @Component({
 	selector: 'app-analytics-frame',
 	templateUrl: './analytics-frame.component.html',
-	styleUrls: ['./analytics-frame.component.css']
+	styleUrls: ['./analytics-frame.component.scss']
 })
 export class AnalyticsFrameComponent implements OnInit {
 

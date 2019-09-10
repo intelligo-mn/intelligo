@@ -1,0 +1,93 @@
+:host {
+  width: 100%;
+}
+
+mat-form-field,
+mat-select {
+  width: 100%;
+}
+
+.bottom-actions>button {
+  margin: 20px 10px;
+}
+
+button[color="primary"] {
+  color: white;
+}
+
+mat-action-row>button {
+  margin: 10px;
+}
+
+.bottom-actions {
+  display: block;
+  text-align: center;
+}
+
+.list-action-btn {
+  float: right;
+}
+
+.list-item {
+  width: 100%
+}
+
+.mat-expansion-panel-body {
+  display: none !important;
+}
+
+.app-content {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  padding-bottom: 40px;
+}
+
+.page-title {
+  display: flex;
+  flex-direction: row;
+}
+
+.page-title .text {
+  flex-grow: 1;
+}
+
+.page-title-actions button:first-child {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.table-body {
+  padding: 10px 0;
+}
+
+section.control {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.radio-grp {
+  margin-top: 0 !important;
+  margin-bottom: 20px !important;
+}
+
+.left-header {
+  margin-bottom: 19px;
+  margin-top: 19px;
+  margin-left: -2px;
+}
+
+label {
+  font-weight: normal;
+  font-size: small;
+  opacity: 0.9;
+}
+
+.highlight-container {
+  margin-bottom: 10px;
+}
+
+.highlight {
+  border-radius: 3px;
+}
