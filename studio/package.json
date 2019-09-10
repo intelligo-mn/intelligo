@@ -18,7 +18,7 @@
     "@angular/core": "~8.2.5",
     "@angular/forms": "~8.2.5",
     "@angular/http": "~7.2.15",
-    "@angular/material": "~8.1.4",
+    "@angular/material": "8.2.0",
     "@angular/platform-browser": "~8.2.5",
     "@angular/platform-browser-dynamic": "~8.2.5",
     "@angular/router": "~8.2.5",

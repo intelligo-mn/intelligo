@@ -55,10 +55,10 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 	chatFlowNetwork: ChatFlowNetwork;
 	MH: models.ModelHelpers;
 
-	@ViewChild('chatflowRoot', {static: false})
+	@ViewChild('chatflowRoot', {static: true})
 	chatflowRoot: ElementRef;
 
-	@ViewChild('simulator', {static: false})
+	@ViewChild('simulator', {static: true})
 	simulator: SimulatorFrameComponent;
 
 	projName: string = "";

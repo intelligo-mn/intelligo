@@ -1,1 +1,178 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import '../node_modules/font-awesome/css/font-awesome.min.css';
+
+body {
+    font-family: 'Open Sans';
+    background-color: #f5f5f5;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.fab-btn-icon {
+    color: white;
+}
+
+.panel-heading-actions {
+    margin: -10px;
+}
+
+.dialog-root {
+    margin: 20px 0;
+    height: 90vh;
+}
+
+.root {
+    margin: 20px 0;
+    height: 90vh;
+    width: 98vw;
+}
+
+    .root > .center-content {
+        width: 800px;
+    }
+
+input[type=text] {
+    line-height: normal;
+}
+
+.danger-button {
+    background-color: crimson !important;
+    color: white !important;
+}
+
+.white-button {
+    background-color: white !important;
+    color: crimson !important;
+}
+
+    .white-button .fab-btn-icon {
+        color: crimson !important;
+    }
+
+.mat-dialog-content {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.mat-select-placeholder {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.125;
+}
+
+.mat-select {
+    font-family: 'Open Sans' !important;
+}
+
+.mat-hint {
+    margin: 0 0 4px 0 !important;
+}
+
+.mat-form-field.contains-hint {
+    padding-bottom: 10px;
+}
+
+.mat-dialog-title {
+    margin: 0 !important;
+}
+
+.mat-progress-bar-buffer {
+    background-color: white;
+}
+
+.mat-raised-button.mat-primary {
+    color: white;
+}
+
+    .mat-raised-button.mat-primary.inverse {
+        background-color: white;
+        color: #8cc83c;
+    }
+
+/*Dynamic styles*/
+.chat-message-item.incoming {
+    border-left-color: #8cc83c;
+}
+
+.incoming > .chat-stub {
+    border-top-color: #8cc83c;
+}
+
+.carousel-item-button:first-child,
+.chat-input button.btn-icon {
+    color: #8cc83c;
+}
+
+.chat-input button.btn-click {
+    background-color: #8cc83c;
+    color: white;
+}
+
+.chat-message-item.outgoing {
+    border-right-color: black;
+}
+
+.outgoing > .chat-stub {
+    border-top-color: black;
+}
+
+.complex-input-btn-done {
+    color: white !important;
+}
+
+.content {
+    width: 100vw;
+}
+
+.ana-title {
+    background-color: #8cc83c;
+    color: white;
+}
+
+.ana-logo > img {
+    background-color: white;
+    border: 2px solid white;
+}
+
+.ana-min .ana-minmax-btn {
+    border: 2px solid white;
+}
+
+.ana-minmax-btn {
+    background-color: white;
+}
+
+.typing-indicator span {
+    background-color: #8cc83c;
+}
+
+.mat-toolbar.mat-primary {
+    color: white;
+}
+
+.trans-background .mat-dialog-container {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background-color: rgba(0,0,0,0.15);
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.dark-overlay {
+    background-color: black;
+    opacity: 0.8 !important;
+}
+
+app-nodeeditor .mat-tab-body-wrapper {
+    height: 50vh;
+}
+
+.mat-radio-label-content {
+    font-weight: normal;
+}
