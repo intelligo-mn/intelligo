@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 @Component({
 	selector: 'app-business-picker',
 	templateUrl: './business-picker.component.html',
-	styleUrls: ['./business-picker.component.css']
+	styleUrls: ['./business-picker.component.scss']
 })
 export class BusinessPickerComponent implements OnInit {
 

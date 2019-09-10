@@ -8,7 +8,7 @@ import { InfoDialogService } from '../../../services/info-dialog.service';
 @Component({
 	selector: 'app-ana-cloud-signup',
 	templateUrl: './ana-cloud-signup.component.html',
-	styleUrls: ['./ana-cloud-signup.component.css']
+	styleUrls: ['./ana-cloud-signup.component.scss']
 })
 export class AnaCloudSignupComponent implements OnInit {
 

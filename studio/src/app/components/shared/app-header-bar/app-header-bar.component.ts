@@ -11,7 +11,7 @@ import { ChangePasswordComponent } from '../change-password/change-password.comp
 @Component({
 	selector: 'app-header-bar',
 	templateUrl: './app-header-bar.component.html',
-	styleUrls: ['./app-header-bar.component.css']
+	styleUrls: ['./app-header-bar.component.scss']
 })
 export class AppHeaderBarComponent implements OnInit, AfterViewInit {
 

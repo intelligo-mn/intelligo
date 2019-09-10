@@ -11,7 +11,7 @@ import { BusinessAccount, BusinessAccountStatus } from '../../../models/data.mod
 @Component({
 	selector: 'app-biz-accounts',
 	templateUrl: './biz-accounts.component.html',
-	styleUrls: ['./biz-accounts.component.css']
+	styleUrls: ['./biz-accounts.component.scss']
 })
 export class BizAccountsComponent implements AfterViewInit {
 
