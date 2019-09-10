@@ -1,0 +1,40 @@
+@import '~@angular/material/theming';
+@include mat-core();
+$mat-ana-green: (
+  50: #8cc83c,
+  100: #8cc83c,
+  200: #8cc83c,
+  300: #8cc83c,
+  400: #8cc83c,
+  500: #8cc83c,
+  600: #8cc83c,
+  700: #8cc83c,
+  800: #8cc83c,
+  900: #8cc83c,
+  A100: #8cc83c,
+  A200: #8cc83c,
+  A400: #8cc83c,
+  A700: #8cc83c,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: white,
+    400: white,
+    500: $white-87-opacity,
+    600: $white-87-opacity,
+    700: $white-87-opacity,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $black-87-opacity,
+    A200: white,
+    A400: white,
+    A700: $white-87-opacity,
+  )
+);
+
+$ana-app-primary: mat-palette($mat-ana-green);
+$ana-app-accent: mat-palette($mat-ana-green, A200, A100, A400);
+$ana-app-warn: mat-palette($mat-red);
+$ana-app-theme: mat-light-theme($ana-app-primary, $ana-app-accent, $ana-app-warn);
+@include angular-material-theme($ana-app-theme);
