@@ -55,10 +55,10 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 	chatFlowNetwork: ChatFlowNetwork;
 	MH: models.ModelHelpers;
 
-	@ViewChild('chatflowRoot')
+	@ViewChild('chatflowRoot', {static: false})
 	chatflowRoot: ElementRef;
 
-	@ViewChild('simulator')
+	@ViewChild('simulator', {static: false})
 	simulator: SimulatorFrameComponent;
 
 	projName: string = "";
@@ -403,7 +403,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 		//cancel any ongoing animation as user might have interrupted it by doing the mouse down.
 		this.zoomCancel();
 
-		let change = Config.zoomCoefficient * event.wheelDelta;
+		let change = Config.zoomCoefficient * event.screenX;
 		if (this._viewBoxWidth - change > 0)
 			this._viewBoxWidth -= change;
 

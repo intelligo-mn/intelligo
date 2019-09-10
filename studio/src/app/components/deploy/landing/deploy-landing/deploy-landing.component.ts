@@ -1,7 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { HighlightJsService } from 'angular2-highlight-js';
 import { AfterViewInit } from '@angular/core';
-import { ElectronService } from 'ngx-electron';
 import { DataService } from '../../../../services/data.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
@@ -12,12 +10,10 @@ import { Md5 } from 'ts-md5/dist/md5';
 	templateUrl: './deploy-landing.component.html',
 	styleUrls: ['./deploy-landing.component.scss']
 })
-export class DeployLandingComponent implements OnInit, AfterViewInit {
+export class DeployLandingComponent implements OnInit{
 
 	constructor(
 		private el: ElementRef,
-		private highlight: HighlightJsService,
-		private electron: ElectronService,
 		private snakbar: MatSnackBar,
 		private route: ActivatedRoute,
 		private dataService: DataService) {
@@ -60,31 +56,25 @@ export class DeployLandingComponent implements OnInit, AfterViewInit {
 		webSocketsUrl: '',
 	};
 
-	ele: HTMLElement;
-	ngAfterViewInit() {
-		this.ele = this.el.nativeElement.querySelector('.highlight');
-		this.highlight.highlight(this.ele);
-	}
-
 	open(url: string) {
-		if (this.electron.isElectronApp) {
-			this.electron.shell.openExternal(url);
-		} else {
-			window.open(url, '_blank');
-		}
+		// if (this.electron.isElectronApp) {
+		// 	this.electron.shell.openExternal(url);
+		// } else {
+		// 	window.open(url, '_blank');
+		// }
 	}
 
-	openElectronWindow(url: string) {
-		if (!this.electron.isElectronApp) {
-			window.open(url);
-			return;
-		}
-		let win = new this.electron.remote.BrowserWindow();
-		win.on('closed', () => {
-			win = null
-		});
-		win.loadURL(url);
-	}
+	// openElectronWindow(url: string) {
+	// 	if (!this.electron.isElectronApp) {
+	// 		window.open(url);
+	// 		return;
+	// 	}
+	// 	let win = new this.electron.remote.BrowserWindow();
+	// 	win.on('closed', () => {
+	// 		win = null
+	// 	});
+	// 	win.loadURL(url);
+	// }
 
 	copied() {
 		this.snakbar.open("Code copied", "dismiss", {
@@ -124,7 +114,7 @@ ${this.webSnippet}
 </html>`;
 
 		var url = "data:text/html;base64," + btoa(src);
-		this.openElectronWindow(url);
+		// this.openElectronWindow(url);
 	}
 
 	_oldVal;
@@ -133,7 +123,6 @@ ${this.webSnippet}
 			let newVal = JSON.stringify(this.webOptions);
 			if (!this._oldVal || this._oldVal != newVal) {
 				setTimeout(() => {
-					this.highlight.highlight(this.ele);
 					this.saveOptions();
 				}, 0);
 				this._oldVal = newVal;

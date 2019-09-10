@@ -37,10 +37,10 @@ export class SimulatorFrameComponent implements OnInit {
 	iframeUrl: SafeResourceUrl;
 	isOpen: boolean = false;
 
-	@ViewChild('anaRoot')
+	@ViewChild('anaRoot', {static: false})
 	anaRoot: ElementRef;
 
-	@ViewChild('simulatorIFrame')
+	@ViewChild('simulatorIFrame', {static: false})
 	simulatorIFrame: ElementRef;
 
 	frame() {

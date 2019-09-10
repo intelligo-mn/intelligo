@@ -1,15 +1,10 @@
-import { Component, Inject, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTab, MatTabGroup } from '@angular/material';
-import 'rxjs/add/operator/filter';
-
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialogRef, MatTab, MatTabGroup, MAT_DIALOG_DATA } from '@angular/material';
+import { Hotkey, HotkeysService } from 'angular2-hotkeys';
 import * as models from '../../../models/chatflow.models';
-import * as chatflow from '../../../components/studio/chatflow/chatflow.component';
 import { ChatFlowService } from '../../../services/chatflow.service';
 import { GlobalsService } from '../../../services/globals.service';
 import { InfoDialogService } from '../../../services/info-dialog.service';
-import { Hotkey, HotkeysService } from 'angular2-hotkeys';
 
 @Component({
 	selector: 'app-nodeeditor',

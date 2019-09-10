@@ -2,7 +2,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../shared.module';
 import { DeployLandingComponent } from './landing/deploy-landing/deploy-landing.component';
-import { HighlightJsService } from 'angular2-highlight-js';
 
 export const DEPLOY_ROUTES: Routes = [
 	{
@@ -24,9 +23,6 @@ export const DEPLOY_ROUTES: Routes = [
 	schemas: [
 		
 	],
-	providers: [
-		HighlightJsService
-	]
 })
 export class DeployModule { }
 

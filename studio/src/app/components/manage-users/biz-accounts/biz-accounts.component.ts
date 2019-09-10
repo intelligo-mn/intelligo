@@ -15,7 +15,7 @@ import { BusinessAccount, BusinessAccountStatus } from '../../../models/data.mod
 })
 export class BizAccountsComponent implements AfterViewInit {
 
-	@ViewChild('appHeader')
+	@ViewChild('appHeader', { static: false })
 	appHeader: AppHeaderBarComponent;
 
 	ngAfterViewInit(): void {

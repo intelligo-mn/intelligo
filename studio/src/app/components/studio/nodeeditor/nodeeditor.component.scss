@@ -1,86 +1,87 @@
-mat-form-field, mat-select {
-    width: 100%;
+mat-form-field,
+mat-select {
+  width: 100%;
 }
 
 .text-section-icon {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .tab-content {
-    margin: 20px;
+  margin: 20px;
 }
 
 .col-centered {
-    float: none;
-    margin: 0 auto;
+  float: none;
+  margin: 0 auto;
 }
 
 .panel-header-icon {
-    margin-top: 2px;
-    margin-right: 5px;
+  margin-top: 2px;
+  margin-right: 5px;
 }
 
 .spacing {
-    width: 20px;
-    display: inline-block;
+  width: 20px;
+  display: inline-block;
 }
 
 .dialog-actions {
-    margin: 10px;
+  margin: 10px;
 }
 
 mat-dialog-actions {
-    justify-content: center;
+  justify-content: center;
 }
 
 .section-type-button {
-    width: 110px;
-    height: 110px;
-    padding: 11px;
-    cursor: pointer;
+  width: 110px;
+  height: 110px;
+  padding: 11px;
+  cursor: pointer;
 }
 
-    .section-type-button.text {
-        content: url("../../../../assets/img/node-editor/text.png");
-    }
+.section-type-button.text {
+  content: url("../../../../assets/img/node-editor/text.png");
+}
 
-        .section-type-button.text:hover {
-            content: url("../../../../assets/img/node-editor/text-hover.png");
-            padding: 0;
-        }
+.section-type-button.text:hover {
+  content: url("../../../../assets/img/node-editor/text-hover.png");
+  padding: 0;
+}
 
-    .section-type-button.image {
-        content: url("../../../../assets/img/node-editor/image.png");
-    }
+.section-type-button.image {
+  content: url("../../../../assets/img/node-editor/image.png");
+}
 
-        .section-type-button.image:hover {
-            content: url("../../../../assets/img/node-editor/image-hover.png");
-            padding: 0;
-        }
+.section-type-button.image:hover {
+  content: url("../../../../assets/img/node-editor/image-hover.png");
+  padding: 0;
+}
 
-    .section-type-button.video {
-        content: url("../../../../assets/img/node-editor/video.png");
-    }
+.section-type-button.video {
+  content: url("../../../../assets/img/node-editor/video.png");
+}
 
-        .section-type-button.video:hover {
-            content: url("../../../../assets/img/node-editor/video-hover.png");
-            padding: 0;
-        }
+.section-type-button.video:hover {
+  content: url("../../../../assets/img/node-editor/video-hover.png");
+  padding: 0;
+}
 
-    .section-type-button.gif {
-        content: url("../../../../assets/img/node-editor/gif.png");
-    }
+.section-type-button.gif {
+  content: url("../../../../assets/img/node-editor/gif.png");
+}
 
-        .section-type-button.gif:hover {
-            content: url("../../../../assets/img/node-editor/gif-hover.png");
-            padding: 0;
-        }
+.section-type-button.gif:hover {
+  content: url("../../../../assets/img/node-editor/gif-hover.png");
+  padding: 0;
+}
 
-    .section-type-button.carousel {
-        content: url("../../../../assets/img/node-editor/carousel.png");
-    }
+.section-type-button.carousel {
+  content: url("../../../../assets/img/node-editor/carousel.png");
+}
 
-        .section-type-button.carousel:hover {
-            content: url("../../../../assets/img/node-editor/carousel-hover.png");
-            padding: 0;
-        }
+.section-type-button.carousel:hover {
+  content: url("../../../../assets/img/node-editor/carousel-hover.png");
+  padding: 0;
+}

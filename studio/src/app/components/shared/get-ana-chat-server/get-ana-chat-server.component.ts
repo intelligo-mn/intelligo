@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ElectronService } from 'ngx-electron';
 import { MatDialog } from '@angular/material';
 import { AnaCloudSignupComponent } from '../ana-cloud-signup/ana-cloud-signup.component';
 @Component({
@@ -10,7 +9,6 @@ import { AnaCloudSignupComponent } from '../ana-cloud-signup/ana-cloud-signup.co
 export class GetAnaChatServerComponent implements OnInit {
 
 	constructor(
-		private electron: ElectronService,
 		private dialog: MatDialog,
 	) { }
 
@@ -18,7 +16,7 @@ export class GetAnaChatServerComponent implements OnInit {
 	}
 
 	selfHost() {
-		this.electron.shell.openExternal('https://www.ana.chat/self-hosting.html?r=' + Math.random());
+		// this.electron.shell.openExternal('https://www.ana.chat/self-h・osting.html?r=' + Math.random());
 	}
 
 	anaCloud() {

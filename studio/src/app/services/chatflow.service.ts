@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestOptionsArgs, Headers } from '@angular/http';
-import { Observable } from 'rxjs';
-import 'rxjs/add/operator/map';
-import * as models from '../models/chatflow.models'
-import { ChatServerConnection, ChatBotProject } from '../models/app.models';
+import { Http } from '@angular/http';
+import { ChatBotProject, ChatServerConnection } from '../models/app.models';
+import * as models from '../models/chatflow.models';
 
 @Injectable()
 export class ChatFlowService {
@@ -12,7 +10,7 @@ export class ChatFlowService {
 	private publishChatBotAPI: string = "bot/business";
 
 	private normalizeBaseUrl(baseUrl: string) {
-		baseUrl = baseUrl.replace(/\\$/, '');//Remove ending \ char if any
+		baseUrl = baseUrl.replace(/\\Ï$/, '');//Remove ending \ char if any
 		if (!baseUrl.endsWith('/'))
 			baseUrl += '/';
 		return baseUrl;
@@ -25,11 +23,11 @@ export class ChatFlowService {
 			business_id: proj.Id,
 			flow: chatNodes,
 			business_name: proj.Name
-		}).map(res => res.json());
+		});
 	}
 
 	chatProjectExists(conn: ChatServerConnection, proj: ChatBotProject) {
-		return this.http.get(this.normalizeBaseUrl(conn.ServerUrl) + this.publishChatBotAPI + "?business_id=" + proj.Id).map(res => res.json());
+		return this.http.get(this.normalizeBaseUrl(conn.ServerUrl) + this.publishChatBotAPI + "?business_id=" + proj.Id);
 	}
 
 	normalizeChatNodes(chatNodes: models.ChatNode[]) {
