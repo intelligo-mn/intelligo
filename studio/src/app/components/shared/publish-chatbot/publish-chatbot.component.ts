@@ -1,22 +1,12 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatAutocompleteSelectedEvent, MatFormField } from '@angular/material';
-import { ChatBotReferance, ChatServerConnection } from '../../../models/app.models';
-import { SettingsService } from '../../../services/settings.service';
-import { ChatFlowService } from '../../../services/chatflow.service';
-import { InfoDialogService } from '../../../services/info-dialog.service';
-import { ChatServerManagerComponent } from '../chat-server-manager/chat-server-manager.component';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MatAutocompleteSelectedEvent, MatDialog, MatDialogRef, MatFormField, MAT_DIALOG_DATA } from '@angular/material';
 import * as models from '../../../models/chatflow.models';
+import { ChatProject } from '../../../models/data.models';
 import { DataService } from '../../../services/data.service';
-import { LoginService } from '../../../services/login.service';
-import { ChatProject, BusinessAccount } from '../../../models/data.models';
 import { GlobalsService } from '../../../services/globals.service';
-import { CreateChatbotComponent, BusinessDetails } from '../create-chatbot/create-chatbot.component';
-
-import { Observable } from 'rxjs/Observable';
-import { startWith } from 'rxjs/operators/startWith';
-import { map } from 'rxjs/operators/map';
-import { FormControl } from '@angular/forms';
-import { BusinessPickerComponent } from '../business-picker/business-picker.component';
+import { InfoDialogService } from '../../../services/info-dialog.service';
+import { LoginService } from '../../../services/login.service';
+import { SettingsService } from '../../../services/settings.service';
 
 @Component({
 	selector: 'app-publish-chatbot',
@@ -39,7 +29,7 @@ export class PublishChatbotComponent implements OnInit {
 		this.loadChatProjects();
 	}
 
-	@ViewChild("chatProjectFormField")
+	@ViewChild("chatProjectFormField", { static: false })
 	chatProjectFormField: MatFormField;
 
 	chatProjects: ChatProject[] = [];

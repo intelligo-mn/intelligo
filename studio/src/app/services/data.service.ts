@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { InfoDialogService } from './info-dialog.service';
 import { ChatServerConnection, ChatBotProject } from '../models/app.models';
 import { LoginData, APIResponse, ListContent, BusinessAccount, BusinessAccountStatus, ErrorItem, Role, ListData, UserRegisterModel, User, ChatProject, RegisterOnAnaCloudDetails } from '../models/data.models';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class DataService {
@@ -69,64 +70,57 @@ export class DataService {
 		this.conn = conn;
 	}
 
-	getRoles() {
+	getRoles(): Observable<APIResponse<Role[]>> {
 		let h = this.getHeaders();
-		return this.http.get(`${this.conn.ServerUrl}auth/roles`, { headers: h })
-			.map(x => x as APIResponse<Role[]>);
+		return this.http.get<any>(`${this.conn.ServerUrl}auth/roles`, { headers: h });
 	}
 
-	getBusinessAccounts(searchText: string = "", page: number = 0, size: number = 10) {
+	getBusinessAccounts(searchText: string = "", page: number = 0, size: number = 10): Observable<APIResponse<ListContent<BusinessAccount>>> {
 		let h = this.getHeaders();
-		return this.http.get(`${this.conn.ServerUrl}business/accounts?searchText=${encodeURIComponent(searchText)}&page=${page}&size=${size}`, { headers: h })
-			.map(x => x as APIResponse<ListContent<BusinessAccount>>);
+		return this.http.get<any>(`${this.conn.ServerUrl}business/accounts?searchText=${encodeURIComponent(searchText)}&page=${page}&size=${size}`, { headers: h });
 	}
 
-	getBusinessDetails(bizId: string) {
+	getBusinessDetails(bizId: string): Observable<APIResponse<BusinessAccount>> {
 		let h = this.getHeaders();
-		return this.http.get(`${this.conn.ServerUrl}business/accounts/${bizId}`, { headers: h })
-			.map(x => x as APIResponse<BusinessAccount>);
+		return this.http.get<any>(`${this.conn.ServerUrl}business/accounts/${bizId}`, { headers: h });
 	}
 
-	updateBusinessAccountStatus(account: BusinessAccount, status: BusinessAccountStatus) {
+	updateBusinessAccountStatus(account: BusinessAccount, status: BusinessAccountStatus): Observable<APIResponse<BusinessAccount>> {
 		let h = this.getHeaders();
-		return this.http.put(this.conn.ServerUrl + "business/accounts/" + account.id + "/status/" + BusinessAccountStatus[<number>status], { headers: h })
-			.map(x => x as APIResponse<BusinessAccount>);
+		return this.http.put<any>(this.conn.ServerUrl + "business/accounts/" + account.id + "/status/" + BusinessAccountStatus[<number>status], { headers: h });
 	}
 
-	saveBusinessAccount(account: BusinessAccount, create: boolean) {
+	saveBusinessAccount(account: BusinessAccount, create: boolean): Observable<APIResponse<BusinessAccount>> {
 		if (create) {
-			return this.http.post(this.conn.ServerUrl + "business/accounts", account,
-				{ headers: this.getHeaders() }).map(x => x as APIResponse<BusinessAccount>);
+			return this.http.post<any>(this.conn.ServerUrl + "business/accounts", account,
+				{ headers: this.getHeaders() });
 		} else {
-			return this.http.put(this.conn.ServerUrl + "business/accounts/" + account.id, account,
-				{ headers: this.getHeaders() }).map(x => x as APIResponse<BusinessAccount>);
+			return this.http.put<any>(this.conn.ServerUrl + "business/accounts/" + account.id, account,
+				{ headers: this.getHeaders() });
 		}
 	}
 
-	getChatProjects(businessId: string, page: number = 0, size: number = 10) {
+	getChatProjects(businessId: string, page: number = 0, size: number = 10): Observable<APIResponse<ListContent<ChatProject>>> {
 		let h = this.getHeaders();
-		return this.http.get(`${this.conn.ServerUrl}business/flows?page=${page}&size=${size}&businessId=${businessId}`, { headers: h })
-			.map(x => x as APIResponse<ListContent<ChatProject>>);
+		return this.http.get<any>(`${this.conn.ServerUrl}business/flows?page=${page}&size=${size}&businessId=${businessId}`, { headers: h });
 	}
 
-	createChatProject(chatProject: ChatProject) {
+	createChatProject(chatProject: ChatProject): Observable<APIResponse<ChatProject>> {
 		let h = this.getHeaders();
 
-		return this.http.post(`${this.conn.ServerUrl}business/flows`, chatProject, { headers: h })
-			.map(x => x as APIResponse<ChatProject>);
+		return this.http.post<any>(`${this.conn.ServerUrl}business/flows`, chatProject, { headers: h });
 	}
 
-	registerOnAnaCloud(request: RegisterOnAnaCloudDetails) {
+	registerOnAnaCloud(request: RegisterOnAnaCloudDetails): Observable<APIResponse<RegisterOnAnaCloudDetails>> {
 		let h = this.getHeaders();
 		let serverUrl = "http://gateway.api.dev.ana.chat/";
 		if (environment.production) {
 			serverUrl = "http://gateway.api.ana.chat/";
 		}
-		return this.http.post(`${serverUrl}business/accounts/publicRegister`, request, { headers: h })
-			.map(x => x as APIResponse<RegisterOnAnaCloudDetails>);
+		return this.http.post<any>(`${serverUrl}business/accounts/publicRegister`, request, { headers: h });
 	}
 
-	saveChatProject(chatProject: ChatProject) {
+	saveChatProject(chatProject: ChatProject) :Observable<APIResponse<ChatProject>>{
 		let h = this.getHeaders();
 
 		if ((chatProject.flow && Object.keys(chatProject.flow).length <= 0) || chatProject.flow === null) {
@@ -135,49 +129,46 @@ export class DataService {
 		if ((chatProject.source && Object.keys(chatProject.source).length <= 0) || chatProject.source === null) {
 			delete chatProject.source;
 		}
-		return this.http.put(`${this.conn.ServerUrl}business/flows/${chatProject.id}`, chatProject, { headers: h })
-			.map(x => x as APIResponse<ChatProject>);
+		return this.http.put<any>(`${this.conn.ServerUrl}business/flows/${chatProject.id}`, chatProject, { headers: h });
 
 	}
 
-	getUsers(bizid: string, searchText: string = "", page: number = 0, size: number = 10) {
+	getUsers(bizid: string, searchText: string = "", page: number = 0, size: number = 10): Observable<ListContent<User>> {
 		let h = this.getHeaders();
-		return this.http.get(`${this.conn.ServerUrl}auth/users?searchText=${encodeURIComponent(searchText)}&page=${page}&size=${size}&businessId=${bizid}`, { headers: h })
-			.map(x => x as ListContent<User>);
+		return this.http.get<any>(`${this.conn.ServerUrl}auth/users?searchText=${encodeURIComponent(searchText)}&page=${page}&size=${size}&businessId=${bizid}`, { headers: h });
 	}
 
-	createUser(user: UserRegisterModel) {
+	createUser(user: UserRegisterModel): Observable<APIResponse<User>> {
 		let h = this.getHeaders();
-		return this.http.post(`${this.conn.ServerUrl}auth/users/accounts/register`, user, { headers: h })
-			.map(x => x as APIResponse<User>);
+		return this.http.post<any>(`${this.conn.ServerUrl}auth/users/accounts/register`, user, { headers: h });
 	}
 
-	login(username: string, password: string) {
-		return this.http.post(this.conn.ServerUrl + "auth/login", {
+	login(username: string, password: string): Observable<APIResponse<LoginData>> {
+		return this.http.post<any>(this.conn.ServerUrl + "auth/login", {
 			"username": username,
 			"password": password
-		}).map(x => x as APIResponse<LoginData>);
+		});
 	}
 
-	updatePassword(userId: string, password: string) {
+	updatePassword(userId: string, password: string): Observable<APIResponse<LoginData>> {
 		let h = this.getHeaders();
-		return this.http.put(`${this.conn.ServerUrl}auth/credentials/${userId}`, {
+		return this.http.put<any>(`${this.conn.ServerUrl}auth/credentials/${userId}`, {
 			"newPassword": password
-		}, { headers: h }).map(x => x as APIResponse<LoginData>);
+		}, { headers: h });
 	}
 
-	changeCurrentUserPassword(password: string, newPassword: string) {
+	changeCurrentUserPassword(password: string, newPassword: string): Observable<APIResponse<LoginData>> {
 		let h = this.getHeaders();
-		return this.http.put(`${this.conn.ServerUrl}auth/credentials/reset`, {
+		return this.http.put<any>(`${this.conn.ServerUrl}auth/credentials/reset`, {
 			"newPassword": newPassword,
 			"password": password
-		}, { headers: h }).map(x => x as APIResponse<LoginData>);
+		}, { headers: h });
 	}
 
-	checkLogin(data: LoginData) {
-		return this.http.get(this.conn.ServerUrl + "auth/me", {
+	checkLogin(data: LoginData): Observable<APIResponse<LoginData>> {
+		return this.http.get<any>(this.conn.ServerUrl + "auth/me", {
 			headers: { "access-token": data.accessToken }
-		}).map(x => x as APIResponse<LoginData>);
+		});
 	}
 
 	logout() {
@@ -186,7 +177,7 @@ export class DataService {
 		delete this.loggedInUser;
 		return this.http.get(this.conn.ServerUrl + "auth/logout", {
 			headers: h
-		}).map(x => x);
+		}).subscribe(x => x);
 	}
 
 	userLoggedinCheck(callback: (loggedin: boolean) => void, hardCheck: boolean = false) {
@@ -199,16 +190,16 @@ export class DataService {
 					callback(true);
 					return;
 				}
-				this.checkLogin(user).subscribe(x => {
-					if (x.success) {
-						this.loggedInUser = user;
-						callback(true);
-					} else {
-						callback(false);
-					}
-				}, err => {
-					callback(false);
-				});
+				// this.checkLogin(user)(x => {
+				// 	if (x.success) {
+				// 		this.loggedInUser = user;
+				// 		callback(true);
+				// 	} else {
+				// 		callback(false);
+				// 	}
+				// }, err => {
+				// 	callback(false);
+				// });
 				return;
 			}
 		}

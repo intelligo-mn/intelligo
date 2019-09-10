@@ -27,13 +27,11 @@
     "bootstrap": "^4.3.1",
     "bson": "^4.0.2",
     "core-js": "^3.2.1",
-    "electron": "~6.0.8",
     "font-awesome": "^4.7.0",
     "highlightjs": "^9.12.0",
     "jsonpath": "^1.0.2",
     "mousetrap": "^1.6.3",
     "ngx-clipboard": "^12.2.1",
-    "ngx-electron": "^2.1.1",
     "rxjs": "^6.5.3",
     "ts-md5": "^1.2.6",
     "underscore": "^1.9.1",
@@ -55,7 +53,6 @@
     "@types/shelljs": "^0.8.5",
     "@types/underscore": "^1.9.2",
     "codelyzer": "^5.1.0",
-    "electron-builder": "^21.2.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.3.0",
@@ -68,6 +65,6 @@
     "shelljs": "^0.8.3",
     "ts-node": "~8.3.0",
     "tslint": "~5.20.0",
-    "typescript": "3.6.2"
+    "typescript": "3.5.3"
   }
 }
