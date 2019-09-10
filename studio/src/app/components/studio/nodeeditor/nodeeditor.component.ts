@@ -27,17 +27,17 @@ export class NodeEditorComponent implements OnInit, OnDestroy {
 		this.MH = new models.ModelHelpers(globalsService, infoDialog);
 	}
 
-	@ViewChild("nodeInfoTab")
+	@ViewChild("nodeInfoTab", { static: false })
 	nodeInfoTab: MatTab;
 
-	@ViewChild("contentTab")
+	@ViewChild("contentTab", { static: false })
 	contentTab: MatTab;
 	contentTabIndex = 1;
 
-	@ViewChild("buttonsTab")
+	@ViewChild("buttonsTab", { static: false })
 	buttonsTab: MatTab;
 
-	@ViewChild("tabGroup")
+	@ViewChild("tabGroup", { static: false })
 	tabGroup: MatTabGroup;
 
 	keymapOnNodeEditor: Hotkey[] = [

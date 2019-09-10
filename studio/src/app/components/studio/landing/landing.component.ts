@@ -22,7 +22,7 @@ export class LandingComponent implements OnInit {
 		this.loadSavedProjects();
 	}
 
-	@ViewChild('fileInput')
+	@ViewChild('fileInput', { static: false })
 	fileInput: ElementRef;
 
 	loadSavedProjects() {
@@ -41,9 +41,9 @@ export class LandingComponent implements OnInit {
 			let selectedFile = fileInput.files[0];
 			fileInput.value = '';
 			if (selectedFile.name.endsWith('.anaproj')) {
-				let reader = new FileReader();
+				let reader: FileReader = new FileReader();
 				reader.onload = (evt) => {
-					let pack = JSON.parse(reader.result) as models.ChatFlowPack;
+					let pack = JSON.parse(reader.result.toString()) as models.ChatFlowPack;
 					let projName = selectedFile.name.replace(new RegExp('\.anaproj$'), '');
 					this.settings.saveChatProject(projName, pack, false, () => {
 						this.openChatBotProject(projName);
