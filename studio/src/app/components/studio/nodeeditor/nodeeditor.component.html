@@ -1,275 +1,597 @@
 <h2 mat-dialog-title>Edit chat node information</h2>
 <mat-dialog-content>
-    <mat-tab-group #tabGroup>
-        <mat-tab label="Node Info" #nodeInfoTab>
-            <div class="node-details tab-content">
-                <div class="node-basic-info">
-                    <mat-form-field>
-                        <input matInput type="text" placeholder="Node Name" [(ngModel)]="chatNode.Name" name="nodeName">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-select placeholder="Node Type" [(ngModel)]="chatNode.NodeType" name="nodeType">
-                            <mat-option *ngFor="let nType of MH.nodeTypes" [value]="nType">
-                                {{ nType }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <section class="form-field">
-                        <mat-checkbox [(ngModel)]="chatNode.IsStartNode" (click)="MH.resetOtherStartNodes(chatNode)" name="isStartNode" align="start">Mark as start node</mat-checkbox>
-                    </section>
-                    <section class="form-field">
-                        <mat-checkbox [(ngModel)]="chatNode.IsGoalNode" name="isGoalNode" align="start">Mark as goal node</mat-checkbox>
-                    </section>
-                    <mat-form-field>
-                        <input matInput type="text" placeholder="Variable Name" [(ngModel)]="chatNode.VariableName" name="variableName">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput type="text" disabled readonly placeholder="Node Id" [(ngModel)]="chatNode.Id" name="nodeId">
-                    </mat-form-field>
-                </div>
-                <div class="node-condition" [hidden]="chatNode.NodeType!='Condition'">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Condition Details</div>
-                        <div class="panel-body">
-                            <div>
-                                <mat-form-field>
-                                    <input matInput type="text" placeholder="Fallback Next Node Id" [(ngModel)]="chatNode.NextNodeId" name="NextNodeId-Condition">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="node-api-details" [hidden]="chatNode.NodeType!='ApiCall'">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">API Details</div>
-                        <div class="panel-body">
-                            <div>
-                                <mat-form-field>
-                                    <mat-select placeholder="API Method" [(ngModel)]="chatNode.ApiMethod" name="ApiMethod">
-                                        <mat-option *ngFor="let apiMethod of MH.apiMethods" [value]="apiMethod">
-                                            {{ apiMethod || 'None' }}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <mat-form-field>
-                                    <input matInput type="url" placeholder="API Url" [(ngModel)]="chatNode.ApiUrl" name="ApiUrl">
-                                </mat-form-field>
-                                <mat-form-field class="contains-hint">
-                                    <textarea rows="3" matInput placeholder="Headers" [(ngModel)]="chatNode.Headers" name="Headers"></textarea>
-                                    <mat-hint>Enter one header per line. Separate Key and value with a colon. Eg: Content-Type:text/plain </mat-hint>
-                                </mat-form-field>
-                                <mat-form-field>
-                                    <input matInput type="text" placeholder="Fallback Next Node Id" [(ngModel)]="chatNode.NextNodeId" name="NextNodeId">
-                                </mat-form-field>
-                                <mat-form-field [hidden]="!MH.chatNodeApiCallFieldVisible(chatNode, 'RequiredVariables')">
-                                    <input matInput type="text" placeholder="Required Variables" [(ngModel)]="chatNode.RequiredVariables" name="RequiredVariables">
-                                </mat-form-field>
-                                <mat-form-field [hidden]="!MH.chatNodeApiCallFieldVisible(chatNode, 'RequestBody')">
-                                    <textarea rows="6" matInput placeholder="Request Body" [(ngModel)]="chatNode.RequestBody" name="RequestBody"></textarea>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="node-card-details" [hidden]="chatNode.NodeType!='Card'">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Card Details</div>
-                        <div class="panel-body">
-                            <mat-form-field>
-                                <input matInput type="text" placeholder="Card Header" [(ngModel)]="chatNode.CardHeader" name="CardHeader">
-                            </mat-form-field>
-                            <mat-form-field>
-                                <input matInput type="text" placeholder="Card Footer" [(ngModel)]="chatNode.CardFooter" name="CardFooter">
-                            </mat-form-field>
-                            <mat-form-field>
-                                <mat-select placeholder="Card Placement" [(ngModel)]="chatNode.Placement" name="Placement">
-                                    <mat-option *ngFor="let cardPlacement of MH.cardPlacements" [value]="cardPlacement">
-                                        {{ cardPlacement || 'None' }}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </div>
-                <div class="node-jumptobot-details" [hidden]="chatNode.NodeType!='JumpToBot'">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Jump To Bot Details</div>
-                        <div class="panel-body">
-                            <div>
-                                <mat-form-field>
-                                    <input matInput type="text" placeholder="Target Bot Id" [(ngModel)]="chatNode.TargetBotId" name="TargetBotId">
-                                </mat-form-field>
-                                <mat-form-field>
-                                    <input matInput type="text" placeholder="Target Node Id" [(ngModel)]="chatNode.TargetNodeId" name="TargetNodeId">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <mat-tab-group #tabGroup>
+    <mat-tab label="Node Info" #nodeInfoTab>
+      <div class="node-details tab-content">
+        <div class="node-basic-info">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              placeholder="Node Name"
+              [(ngModel)]="chatNode.Name"
+              name="nodeName"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select
+              placeholder="Node Type"
+              [(ngModel)]="chatNode.NodeType"
+              name="nodeType"
+            >
+              <mat-option *ngFor="let nType of MH.nodeTypes" [value]="nType">
+                {{ nType }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <section class="form-field">
+            <mat-checkbox
+              [(ngModel)]="chatNode.IsStartNode"
+              (click)="MH.resetOtherStartNodes(chatNode)"
+              name="isStartNode"
+              align="start"
+              >Mark as start node</mat-checkbox
+            >
+          </section>
+          <section class="form-field">
+            <mat-checkbox
+              [(ngModel)]="chatNode.IsGoalNode"
+              name="isGoalNode"
+              align="start"
+              >Mark as goal node</mat-checkbox
+            >
+          </section>
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              placeholder="Variable Name"
+              [(ngModel)]="chatNode.VariableName"
+              name="variableName"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              disabled
+              readonly
+              placeholder="Node Id"
+              [(ngModel)]="chatNode.Id"
+              name="nodeId"
+            />
+          </mat-form-field>
+        </div>
+        <div class="node-condition" [hidden]="chatNode.NodeType != 'Condition'">
+          <div class="panel panel-default">
+            <div class="panel-heading">Condition Details</div>
+            <div class="panel-body">
+              <div>
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Fallback Next Node Id"
+                    [(ngModel)]="chatNode.NextNodeId"
+                    name="NextNodeId-Condition"
+                  />
+                </mat-form-field>
+              </div>
             </div>
-        </mat-tab>
-        <mat-tab label="Content" *ngIf="contentTabVisible()" #contentTab>
-            <div class="node-section-details tab-content">
-                <div class="node-section" *ngFor="let section of chatNode.Sections; let i = index">
-                    <div [ngSwitch]="MH.editorTypeFromSectionType(section.SectionType)">
-                        <ng-container *ngSwitchCase="'Text'">
-                            <div class="node-text-section">
-                                <mat-form-field>
-                                    <span matPrefix>
-                                        <i class="fa fa-file-text-o text-section-icon"></i>
-                                        &nbsp;
-                                    </span>
-                                    <input [autofocus] matInput type="text" placeholder="Section text" [(ngModel)]="section.Text" name="sectionText-{{i}}">
-                                    <span matSuffix style="font-size: 24px">
-                                        <button mat-icon-button (click)="MH.sectionMoveUp(chatNode, section)">
-                                            <mat-icon>arrow_upward</mat-icon>
-                                        </button>
-                                        <button mat-icon-button (click)="MH.sectionMoveDown(chatNode, section)">
-                                            <mat-icon>arrow_downward</mat-icon>
-                                        </button>
-                                        <button mat-icon-button (click)="MH.sectionDelete(chatNode, section)">
-                                            <mat-icon>delete</mat-icon>
-                                        </button>
-                                    </span>
-                                </mat-form-field>
-                            </div>
-                        </ng-container>
-                        <ng-container *ngSwitchCase="'TitleCaptionUrl'">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <i [matTooltip]="section.SectionType + ' Section'" class="fa panel-header-icon" [ngClass]="MH.sectionIcon(section)"></i> Section: {{MH.sectionAlias(section)}}
-                                    <div class="pull-right panel-heading-actions">
-                                        <button mat-icon-button (click)="MH.sectionMoveUp(chatNode, section)">
-                                            <mat-icon>arrow_upward</mat-icon>
-                                        </button>
-                                        <button mat-icon-button (click)="MH.sectionMoveDown(chatNode, section)">
-                                            <mat-icon>arrow_downward</mat-icon>
-                                        </button>
-                                        <button mat-icon-button (click)="MH.sectionDelete(chatNode, section)">
-                                            <mat-icon>delete</mat-icon>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="panel-body">
-                                    <mat-form-field>
-                                        <input matInput type="text" placeholder="Title" [(ngModel)]="section.Title" name="sectionTitle-{{i}}">
-                                    </mat-form-field>
-                                    <mat-form-field>
-                                        <input matInput type="url" placeholder="Url" [(ngModel)]="section.Url" name="sectionUrl-{{i}}">
-                                    </mat-form-field>
-                                    <mat-form-field>
-                                        <input matInput type="text" placeholder="Caption" [(ngModel)]="section.Caption" name="sectionCaption-{{i}}">
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                        </ng-container>
-                        <ng-container *ngSwitchCase="'Carousel'">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <i [matTooltip]="section.SectionType + ' Section'" class="fa panel-header-icon" [ngClass]="MH.sectionIcon(section)"></i> Carousel
-                                    <div class="pull-right panel-heading-actions">
-                                        <button matTooltip="Add Carousel Item" mat-icon-button (click)="MH.carouselItemAdd(section)">
-                                            <mat-icon>add</mat-icon>
-                                        </button>
-                                        <button mat-icon-button (click)="MH.sectionMoveUp(chatNode, section)">
-                                            <mat-icon>arrow_upward</mat-icon>
-                                        </button>
-                                        <button mat-icon-button (click)="MH.sectionMoveDown(chatNode, section)">
-                                            <mat-icon>arrow_downward</mat-icon>
-                                        </button>
-                                        <button mat-icon-button (click)="MH.sectionDelete(chatNode, section)">
-                                            <mat-icon>delete</mat-icon>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="carousel-container">
-                                        <span *ngIf="!section.Items || section.Items.length<=0">Add a carousel item using the plus (+) button in this panel's header</span>
-                                        <div class="carousel-item" *ngFor="let carItem of section.Items">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <i matTooltip="Carousel Item" class="fa panel-header-icon" [ngClass]="MH.sectionIcon(section)"></i> Carousel Item: {{carItem.Title}}
-                                                    <div class="pull-right panel-heading-actions">
-                                                        <button mat-icon-button matTooltip="Add Carousel Button" (click)="MH.carouselButtonAdd(carItem)">
-                                                            <mat-icon>add</mat-icon>
-                                                        </button>
-                                                        <button mat-icon-button (click)="MH.carouselItemMoveUp(section, carItem)">
-                                                            <mat-icon>arrow_upward</mat-icon>
-                                                        </button>
-                                                        <button mat-icon-button (click)="MH.carouselItemMoveDown(section, carItem)">
-                                                            <mat-icon>arrow_downward</mat-icon>
-                                                        </button>
-                                                        <button mat-icon-button (click)="MH.carouselItemDelete(section, carItem)">
-                                                            <mat-icon>delete</mat-icon>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="panel-body">
-                                                    <mat-form-field>
-                                                        <input matInput type="text" placeholder="Title" [(ngModel)]="carItem.Title" name="carItemTitle-{{i}}">
-                                                    </mat-form-field>
-                                                    <mat-form-field>
-                                                        <input matInput type="url" placeholder="Image Url" [(ngModel)]="carItem.ImageUrl" name="carItemImageUrl-{{i}}">
-                                                    </mat-form-field>
-                                                    <mat-form-field>
-                                                        <input matInput type="text" placeholder="Caption" [(ngModel)]="carItem.Caption" name="carItemCaption-{{i}}">
-                                                    </mat-form-field>
-                                                    <div class="carousel-buttons" *ngFor="let carBtn of carItem.Buttons">
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">
-                                                                <i matTooltip="Carousel Button" class="fa panel-header-icon" [ngClass]="MH.sectionIcon(section)"></i> Carousel Button: {{carBtn.Text}}
-                                                                <div class="pull-right panel-heading-actions">
-                                                                    <button mat-icon-button (click)="MH.carouselButtonMoveUp(carItem, carBtn)">
-                                                                        <mat-icon>arrow_upward</mat-icon>
-                                                                    </button>
-                                                                    <button mat-icon-button (click)="MH.carouselButtonMoveDown(carItem, carBtn)">
-                                                                        <mat-icon>arrow_downward</mat-icon>
-                                                                    </button>
-                                                                    <button mat-icon-button (click)="MH.carouselButtonDelete(carItem, carBtn)">
-                                                                        <mat-icon>delete</mat-icon>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                            <div class="panel-body">
-                                                                <mat-form-field>
-                                                                    <input matInput type="text" placeholder="Text" [(ngModel)]="carBtn.Text" name="carBtnText-{{i}}">
-                                                                </mat-form-field>
-                                                                <mat-form-field>
-                                                                    <mat-select placeholder="Type" [(ngModel)]="carBtn.Type" name="carBtnType">
-                                                                        <mat-option *ngFor="let bType of MH.carouselButtonTypes" [value]="bType">
-                                                                            {{ bType || 'None' }}
-                                                                        </mat-option>
-                                                                    </mat-select>
-                                                                </mat-form-field>
-                                                                <mat-form-field *ngIf="carBtn.Type==MH.CarouselButtonType.OpenUrl || carBtn.Type==MH.CarouselButtonType.DeepLink">
-                                                                    <input matInput type="url" placeholder="Url" [(ngModel)]="carBtn.Url" name="carBtnUrl-{{i}}">
-                                                                </mat-form-field>
-                                                                <mat-form-field>
-                                                                    <input matInput type="text" placeholder="Next Node Id" [(ngModel)]="carBtn.NextNodeId" name="carBtnNextNodeId-{{i}}">
-                                                                </mat-form-field>
-                                                                <mat-form-field>
-                                                                    <input matInput type="text" placeholder="Variable Value" [(ngModel)]="carBtn.VariableValue" name="carBtnVariableValue-{{i}}">
-                                                                </mat-form-field>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </ng-container>
-                    </div>
+          </div>
+        </div>
+        <div class="node-api-details" [hidden]="chatNode.NodeType != 'ApiCall'">
+          <div class="panel panel-default">
+            <div class="panel-heading">API Details</div>
+            <div class="panel-body">
+              <div>
+                <mat-form-field>
+                  <mat-select
+                    placeholder="API Method"
+                    [(ngModel)]="chatNode.ApiMethod"
+                    name="ApiMethod"
+                  >
+                    <mat-option
+                      *ngFor="let apiMethod of MH.apiMethods"
+                      [value]="apiMethod"
+                    >
+                      {{ apiMethod || "None" }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="url"
+                    placeholder="API Url"
+                    [(ngModel)]="chatNode.ApiUrl"
+                    name="ApiUrl"
+                  />
+                </mat-form-field>
+                <mat-form-field class="contains-hint">
+                  <textarea
+                    rows="3"
+                    matInput
+                    placeholder="Headers"
+                    [(ngModel)]="chatNode.Headers"
+                    name="Headers"
+                  ></textarea>
+                  <mat-hint
+                    >Enter one header per line. Separate Key and value with a
+                    colon. Eg: Content-Type:text/plain
+                  </mat-hint>
+                </mat-form-field>
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Fallback Next Node Id"
+                    [(ngModel)]="chatNode.NextNodeId"
+                    name="NextNodeId"
+                  />
+                </mat-form-field>
+                <mat-form-field
+                  [hidden]="
+                    !MH.chatNodeApiCallFieldVisible(
+                      chatNode,
+                      'RequiredVariables'
+                    )
+                  "
+                >
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Required Variables"
+                    [(ngModel)]="chatNode.RequiredVariables"
+                    name="RequiredVariables"
+                  />
+                </mat-form-field>
+                <mat-form-field
+                  [hidden]="
+                    !MH.chatNodeApiCallFieldVisible(chatNode, 'RequestBody')
+                  "
+                >
+                  <textarea
+                    rows="6"
+                    matInput
+                    placeholder="Request Body"
+                    [(ngModel)]="chatNode.RequestBody"
+                    name="RequestBody"
+                  ></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="node-card-details" [hidden]="chatNode.NodeType != 'Card'">
+          <div class="panel panel-default">
+            <div class="panel-heading">Card Details</div>
+            <div class="panel-body">
+              <mat-form-field>
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Card Header"
+                  [(ngModel)]="chatNode.CardHeader"
+                  name="CardHeader"
+                />
+              </mat-form-field>
+              <mat-form-field>
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Card Footer"
+                  [(ngModel)]="chatNode.CardFooter"
+                  name="CardFooter"
+                />
+              </mat-form-field>
+              <mat-form-field>
+                <mat-select
+                  placeholder="Card Placement"
+                  [(ngModel)]="chatNode.Placement"
+                  name="Placement"
+                >
+                  <mat-option
+                    *ngFor="let cardPlacement of MH.cardPlacements"
+                    [value]="cardPlacement"
+                  >
+                    {{ cardPlacement || "None" }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div
+          class="node-jumptobot-details"
+          [hidden]="chatNode.NodeType != 'JumpToBot'"
+        >
+          <div class="panel panel-default">
+            <div class="panel-heading">Jump To Bot Details</div>
+            <div class="panel-body">
+              <div>
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Target Bot Id"
+                    [(ngModel)]="chatNode.TargetBotId"
+                    name="TargetBotId"
+                  />
+                </mat-form-field>
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Target Node Id"
+                    [(ngModel)]="chatNode.TargetNodeId"
+                    name="TargetNodeId"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Content" *ngIf="contentTabVisible()" #contentTab>
+      <div class="node-section-details tab-content">
+        <div
+          class="node-section"
+          *ngFor="let section of chatNode.Sections; let i = index"
+        >
+          <div [ngSwitch]="MH.editorTypeFromSectionType(section.SectionType)">
+            <ng-container *ngSwitchCase="'Text'">
+              <div class="node-text-section">
+                <mat-form-field>
+                  <span matPrefix>
+                    <i class="fa fa-file-text-o text-section-icon"></i>
+                    &nbsp;
+                  </span>
+                  <input
+                    [autofocus]
+                    matInput
+                    type="text"
+                    placeholder="Section text"
+                    [(ngModel)]="section.Text"
+                    name="sectionText-{{ i }}"
+                  />
+                  <span matSuffix style="font-size: 24px">
+                    <button
+                      mat-icon-button
+                      (click)="MH.sectionMoveUp(chatNode, section)"
+                    >
+                      <mat-icon>arrow_upward</mat-icon>
+                    </button>
+                    <button
+                      mat-icon-button
+                      (click)="MH.sectionMoveDown(chatNode, section)"
+                    >
+                      <mat-icon>arrow_downward</mat-icon>
+                    </button>
+                    <button
+                      mat-icon-button
+                      (click)="MH.sectionDelete(chatNode, section)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </span>
+                </mat-form-field>
+              </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="'TitleCaptionUrl'">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <i
+                    [matTooltip]="section.SectionType + ' Section'"
+                    class="fa panel-header-icon"
+                    [ngClass]="MH.sectionIcon(section)"
+                  ></i>
+                  Section: {{ MH.sectionAlias(section) }}
+                  <div class="pull-right panel-heading-actions">
+                    <button
+                      mat-icon-button
+                      (click)="MH.sectionMoveUp(chatNode, section)"
+                    >
+                      <mat-icon>arrow_upward</mat-icon>
+                    </button>
+                    <button
+                      mat-icon-button
+                      (click)="MH.sectionMoveDown(chatNode, section)"
+                    >
+                      <mat-icon>arrow_downward</mat-icon>
+                    </button>
+                    <button
+                      mat-icon-button
+                      (click)="MH.sectionDelete(chatNode, section)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
                 </div>
-                <section class="text-center">
-                    <img matTooltip="Add a text content" class="section-type-button text" (click)="MH.addSection(chatNode, SectionType.Text)" />
-                    <img matTooltip="Add an image content" class="section-type-button image" (click)="MH.addSection(chatNode, SectionType.Image)" />
-                    <img matTooltip="Add a gif content" class="section-type-button gif" (click)="MH.addSection(chatNode, SectionType.Gif)" />
-                    <!--<img matTooltip="Add an audio content" class="section-type-button audio" (click)="MH.addSection(chatNode, SectionType.Audio)" />-->
-                    <img matTooltip="Add a video content" class="section-type-button video" (click)="MH.addSection(chatNode, SectionType.Video)" />
-                    <img matTooltip="Add a carousel content" class="section-type-button carousel" (click)="MH.addSection(chatNode, SectionType.Carousel)" />
-                    <!--<mat-menu #addSectionMenu="matMenu">
+                <div class="panel-body">
+                  <mat-form-field>
+                    <input
+                      matInput
+                      type="text"
+                      placeholder="Title"
+                      [(ngModel)]="section.Title"
+                      name="sectionTitle-{{ i }}"
+                    />
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input
+                      matInput
+                      type="url"
+                      placeholder="Url"
+                      [(ngModel)]="section.Url"
+                      name="sectionUrl-{{ i }}"
+                    />
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input
+                      matInput
+                      type="text"
+                      placeholder="Caption"
+                      [(ngModel)]="section.Caption"
+                      name="sectionCaption-{{ i }}"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="'Carousel'">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <i
+                    [matTooltip]="section.SectionType + ' Section'"
+                    class="fa panel-header-icon"
+                    [ngClass]="MH.sectionIcon(section)"
+                  ></i>
+                  Carousel
+                  <div class="pull-right panel-heading-actions">
+                    <button
+                      matTooltip="Add Carousel Item"
+                      mat-icon-button
+                      (click)="MH.carouselItemAdd(section)"
+                    >
+                      <mat-icon>add</mat-icon>
+                    </button>
+                    <button
+                      mat-icon-button
+                      (click)="MH.sectionMoveUp(chatNode, section)"
+                    >
+                      <mat-icon>arrow_upward</mat-icon>
+                    </button>
+                    <button
+                      mat-icon-button
+                      (click)="MH.sectionMoveDown(chatNode, section)"
+                    >
+                      <mat-icon>arrow_downward</mat-icon>
+                    </button>
+                    <button
+                      mat-icon-button
+                      (click)="MH.sectionDelete(chatNode, section)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="carousel-container">
+                    <span *ngIf="!section.Items || section.Items.length <= 0"
+                      >Add a carousel item using the plus (+) button in this
+                      panel's header</span
+                    >
+                    <div
+                      class="carousel-item"
+                      *ngFor="let carItem of section.Items"
+                    >
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <i
+                            matTooltip="Carousel Item"
+                            class="fa panel-header-icon"
+                            [ngClass]="MH.sectionIcon(section)"
+                          ></i>
+                          Carousel Item: {{ carItem.Title }}
+                          <div class="pull-right panel-heading-actions">
+                            <button
+                              mat-icon-button
+                              matTooltip="Add Carousel Button"
+                              (click)="MH.carouselButtonAdd(carItem)"
+                            >
+                              <mat-icon>add</mat-icon>
+                            </button>
+                            <button
+                              mat-icon-button
+                              (click)="MH.carouselItemMoveUp(section, carItem)"
+                            >
+                              <mat-icon>arrow_upward</mat-icon>
+                            </button>
+                            <button
+                              mat-icon-button
+                              (click)="
+                                MH.carouselItemMoveDown(section, carItem)
+                              "
+                            >
+                              <mat-icon>arrow_downward</mat-icon>
+                            </button>
+                            <button
+                              mat-icon-button
+                              (click)="MH.carouselItemDelete(section, carItem)"
+                            >
+                              <mat-icon>delete</mat-icon>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="panel-body">
+                          <mat-form-field>
+                            <input
+                              matInput
+                              type="text"
+                              placeholder="Title"
+                              [(ngModel)]="carItem.Title"
+                              name="carItemTitle-{{ i }}"
+                            />
+                          </mat-form-field>
+                          <mat-form-field>
+                            <input
+                              matInput
+                              type="url"
+                              placeholder="Image Url"
+                              [(ngModel)]="carItem.ImageUrl"
+                              name="carItemImageUrl-{{ i }}"
+                            />
+                          </mat-form-field>
+                          <mat-form-field>
+                            <input
+                              matInput
+                              type="text"
+                              placeholder="Caption"
+                              [(ngModel)]="carItem.Caption"
+                              name="carItemCaption-{{ i }}"
+                            />
+                          </mat-form-field>
+                          <div
+                            class="carousel-buttons"
+                            *ngFor="let carBtn of carItem.Buttons"
+                          >
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <i
+                                  matTooltip="Carousel Button"
+                                  class="fa panel-header-icon"
+                                  [ngClass]="MH.sectionIcon(section)"
+                                ></i>
+                                Carousel Button: {{ carBtn.Text }}
+                                <div class="pull-right panel-heading-actions">
+                                  <button
+                                    mat-icon-button
+                                    (click)="
+                                      MH.carouselButtonMoveUp(carItem, carBtn)
+                                    "
+                                  >
+                                    <mat-icon>arrow_upward</mat-icon>
+                                  </button>
+                                  <button
+                                    mat-icon-button
+                                    (click)="
+                                      MH.carouselButtonMoveDown(carItem, carBtn)
+                                    "
+                                  >
+                                    <mat-icon>arrow_downward</mat-icon>
+                                  </button>
+                                  <button
+                                    mat-icon-button
+                                    (click)="
+                                      MH.carouselButtonDelete(carItem, carBtn)
+                                    "
+                                  >
+                                    <mat-icon>delete</mat-icon>
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="panel-body">
+                                <mat-form-field>
+                                  <input
+                                    matInput
+                                    type="text"
+                                    placeholder="Text"
+                                    [(ngModel)]="carBtn.Text"
+                                    name="carBtnText-{{ i }}"
+                                  />
+                                </mat-form-field>
+                                <mat-form-field>
+                                  <mat-select
+                                    placeholder="Type"
+                                    [(ngModel)]="carBtn.Type"
+                                    name="carBtnType"
+                                  >
+                                    <mat-option
+                                      *ngFor="
+                                        let bType of MH.carouselButtonTypes
+                                      "
+                                      [value]="bType"
+                                    >
+                                      {{ bType || "None" }}
+                                    </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                                <mat-form-field
+                                  *ngIf="
+                                    carBtn.Type ==
+                                      MH.CarouselButtonType.OpenUrl ||
+                                    carBtn.Type ==
+                                      MH.CarouselButtonType.DeepLink
+                                  "
+                                >
+                                  <input
+                                    matInput
+                                    type="url"
+                                    placeholder="Url"
+                                    [(ngModel)]="carBtn.Url"
+                                    name="carBtnUrl-{{ i }}"
+                                  />
+                                </mat-form-field>
+                                <mat-form-field>
+                                  <input
+                                    matInput
+                                    type="text"
+                                    placeholder="Next Node Id"
+                                    [(ngModel)]="carBtn.NextNodeId"
+                                    name="carBtnNextNodeId-{{ i }}"
+                                  />
+                                </mat-form-field>
+                                <mat-form-field>
+                                  <input
+                                    matInput
+                                    type="text"
+                                    placeholder="Variable Value"
+                                    [(ngModel)]="carBtn.VariableValue"
+                                    name="carBtnVariableValue-{{ i }}"
+                                  />
+                                </mat-form-field>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <section class="text-center">
+          <img
+            matTooltip="Add a text content"
+            class="section-type-button text"
+            (click)="MH.addSection(chatNode, SectionType.Text)"
+          />
+          <img
+            matTooltip="Add an image content"
+            class="section-type-button image"
+            (click)="MH.addSection(chatNode, SectionType.Image)"
+          />
+          <img
+            matTooltip="Add a gif content"
+            class="section-type-button gif"
+            (click)="MH.addSection(chatNode, SectionType.Gif)"
+          />
+          <!--<img matTooltip="Add an audio content" class="section-type-button audio" (click)="MH.addSection(chatNode, SectionType.Audio)" />-->
+          <img
+            matTooltip="Add a video content"
+            class="section-type-button video"
+            (click)="MH.addSection(chatNode, SectionType.Video)"
+          />
+          <img
+            matTooltip="Add a carousel content"
+            class="section-type-button carousel"
+            (click)="MH.addSection(chatNode, SectionType.Carousel)"
+          />
+          <!--<mat-menu #addSectionMenu="matMenu">
         <button mat-menu-item (click)="MH.addSection(chatNode, SectionType.Text)">Text</button>
         <button mat-menu-item (click)="MH.addSection(chatNode, SectionType.Image)">Image</button>
         <button mat-menu-item (click)="MH.addSection(chatNode, SectionType.Gif)">Gif</button>
@@ -280,104 +602,276 @@
                     <button type="button" matTooltip="Add Section" [matMenuTriggerFor]="addSectionMenu" mat-fab>
                         <mat-icon class="fab-btn-icon">add</mat-icon>
                     </button>-->
-                </section>
+        </section>
+      </div>
+    </mat-tab>
+    <mat-tab label="Buttons" #buttonsTab>
+      <div class="tab-content">
+        <div
+          class="node-buttons"
+          *ngFor="let btn of chatNode.Buttons; let i = index"
+        >
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Button: {{ MH.chatButtonAlias(btn) }}
+              <div class="pull-right panel-heading-actions">
+                <button
+                  mat-icon-button
+                  (click)="MH.buttonMoveUp(chatNode, btn)"
+                >
+                  <mat-icon>arrow_upward</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  (click)="MH.buttonMoveDown(chatNode, btn)"
+                >
+                  <mat-icon>arrow_downward</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  (click)="MH.buttonDelete(chatNode, btn)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
             </div>
-        </mat-tab>
-        <mat-tab label="Buttons" #buttonsTab>
-            <div class="tab-content">
-                <div class="node-buttons" *ngFor="let btn of chatNode.Buttons; let i = index">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Button: {{MH.chatButtonAlias(btn)}}
-                            <div class="pull-right panel-heading-actions">
-                                <button mat-icon-button (click)="MH.buttonMoveUp(chatNode, btn)">
-                                    <mat-icon>arrow_upward</mat-icon>
-                                </button>
-                                <button mat-icon-button (click)="MH.buttonMoveDown(chatNode, btn)">
-                                    <mat-icon>arrow_downward</mat-icon>
-                                </button>
-                                <button mat-icon-button (click)="MH.buttonDelete(chatNode, btn)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'ButtonType')">
-                                <mat-select placeholder="Type" [(ngModel)]="btn.ButtonType" name="btnType-{{i}}">
-                                    <mat-option *ngFor="let bType of MH.buttonTypes" [value]="bType">
-                                        {{ bType }}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
+            <div class="panel-body">
+              <mat-form-field
+                [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'ButtonType')"
+              >
+                <mat-select
+                  placeholder="Type"
+                  [(ngModel)]="btn.ButtonType"
+                  name="btnType-{{ i }}"
+                >
+                  <mat-option
+                    *ngFor="let bType of MH.buttonTypes"
+                    [value]="bType"
+                  >
+                    {{ bType }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
 
-                            <mat-form-field>
-                                <input matInput [autofocus] type="text" [placeholder]="['ApiCall', 'Condition'].indexOf(chatNode.NodeType)==-1?'Text on button':'Button Name'" [(ngModel)]="btn.ButtonName" name="btnName-{{i}}">
-                            </mat-form-field>
-                            <!--<mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'ButtonText')">
+              <mat-form-field>
+                <input
+                  matInput
+                  [autofocus]
+                  type="text"
+                  [placeholder]="
+                    ['ApiCall', 'Condition'].indexOf(chatNode.NodeType) == -1
+                      ? 'Text on button'
+                      : 'Button Name'
+                  "
+                  [(ngModel)]="btn.ButtonName"
+                  name="btnName-{{ i }}"
+                />
+              </mat-form-field>
+              <!--<mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'ButtonText')">
                                 <input matInput type="text" placeholder="Text in chat" [(ngModel)]="btn.ButtonText" name="btnText-{ {i}}">
                             </mat-form-field>-->
-                            <mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'ConditionMatchKey')">
-                                <input matInput type="text" placeholder="Condition Match Key" [(ngModel)]="btn.ConditionMatchKey" name="btnConditionMatchKey-{{i}}">
-                            </mat-form-field>
-                            <mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'ConditionOperator')">
-                                <mat-select placeholder="Condition Operator" [(ngModel)]="btn.ConditionOperator" name="btnConditionOperator-{{i}}">
-                                    <mat-option *ngFor="let CO of MH.conditionOperators" [value]="CO">
-                                        {{ CO }}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'ConditionMatchValue')">
-                                <input matInput type="text" placeholder="Condition Match Value" [(ngModel)]="btn.ConditionMatchValue" name="btnConditionMatchValue-{{i}}">
-                            </mat-form-field>
-                            <mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'PlaceholderText')">
-                                <input matInput type="text" placeholder="Placeholder" [(ngModel)]="btn.PlaceholderText" name="btnPlaceholderText-{{i}}">
-                            </mat-form-field>
-                            <mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'DeepLinkUrl')">
-                                <input matInput type="text" placeholder="Deeplink Url" [(ngModel)]="btn.DeepLinkUrl" name="btnDeepLinkUrl-{{i}}">
-                            </mat-form-field>
-                            <mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'Url')">
-                                <input matInput type="text" placeholder="Url" [(ngModel)]="btn.Url" name="btnUrl-{{i}}">
-                            </mat-form-field>
-                            <mat-form-field class="contains-hint" [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'ItemsSource')" hintLabel="Format: 'Key1:Value1, Key2:Value2'  Eg: 'Car:1, Bike:2'">
-                                <textarea matInput type="text" placeholder="Items" [(ngModel)]="btn.ItemsSource" name="btnItemsSource-{{i}}"></textarea>
-                            </mat-form-field>
-                            <section class="form-field" [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'AllowMultiple')">
-                                <mat-checkbox [(ngModel)]="btn.AllowMultiple" name="btnAllowMultiple-{{i}}" align="start">Allow Multiple</mat-checkbox>
-                            </section>
-                            <mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'NextNodeId')">
-                                <input matInput type="text" placeholder="Next Node Id" [(ngModel)]="btn.NextNodeId" name="btnNextNodeId-{{i}}">
-                            </mat-form-field>
-                            <section class="form-field">
-                                <mat-checkbox [(ngModel)]="btn.AdvancedOptions" name="btnAdvancedOptions-{{i}}" align="start">Advanced options</mat-checkbox>
-                            </section>
-                            <div class="btn-advanced-options" [hidden]="!btn.AdvancedOptions">
-                                <mat-form-field>
-                                    <input matInput type="text" placeholder="Variable Value" [(ngModel)]="btn.VariableValue" name="btnVariableValue-{{i}}">
-                                </mat-form-field>
+              <mat-form-field
+                [hidden]="
+                  MH.chatButtonFieldHidden(chatNode, btn, 'ConditionMatchKey')
+                "
+              >
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Condition Match Key"
+                  [(ngModel)]="btn.ConditionMatchKey"
+                  name="btnConditionMatchKey-{{ i }}"
+                />
+              </mat-form-field>
+              <mat-form-field
+                [hidden]="
+                  MH.chatButtonFieldHidden(chatNode, btn, 'ConditionOperator')
+                "
+              >
+                <mat-select
+                  placeholder="Condition Operator"
+                  [(ngModel)]="btn.ConditionOperator"
+                  name="btnConditionOperator-{{ i }}"
+                >
+                  <mat-option
+                    *ngFor="let CO of MH.conditionOperators"
+                    [value]="CO"
+                  >
+                    {{ CO }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                [hidden]="
+                  MH.chatButtonFieldHidden(chatNode, btn, 'ConditionMatchValue')
+                "
+              >
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Condition Match Value"
+                  [(ngModel)]="btn.ConditionMatchValue"
+                  name="btnConditionMatchValue-{{ i }}"
+                />
+              </mat-form-field>
+              <mat-form-field
+                [hidden]="
+                  MH.chatButtonFieldHidden(chatNode, btn, 'PlaceholderText')
+                "
+              >
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Placeholder"
+                  [(ngModel)]="btn.PlaceholderText"
+                  name="btnPlaceholderText-{{ i }}"
+                />
+              </mat-form-field>
+              <mat-form-field
+                [hidden]="
+                  MH.chatButtonFieldHidden(chatNode, btn, 'DeepLinkUrl')
+                "
+              >
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Deeplink Url"
+                  [(ngModel)]="btn.DeepLinkUrl"
+                  name="btnDeepLinkUrl-{{ i }}"
+                />
+              </mat-form-field>
+              <mat-form-field
+                [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'Url')"
+              >
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Url"
+                  [(ngModel)]="btn.Url"
+                  name="btnUrl-{{ i }}"
+                />
+              </mat-form-field>
+              <mat-form-field
+                class="contains-hint"
+                [hidden]="
+                  MH.chatButtonFieldHidden(chatNode, btn, 'ItemsSource')
+                "
+                hintLabel="Format: 'Key1:Value1, Key2:Value2'  Eg: 'Car:1, Bike:2'"
+              >
+                <textarea
+                  matInput
+                  type="text"
+                  placeholder="Items"
+                  [(ngModel)]="btn.ItemsSource"
+                  name="btnItemsSource-{{ i }}"
+                ></textarea>
+              </mat-form-field>
+              <section
+                class="form-field"
+                [hidden]="
+                  MH.chatButtonFieldHidden(chatNode, btn, 'AllowMultiple')
+                "
+              >
+                <mat-checkbox
+                  [(ngModel)]="btn.AllowMultiple"
+                  name="btnAllowMultiple-{{ i }}"
+                  align="start"
+                  >Allow Multiple</mat-checkbox
+                >
+              </section>
+              <mat-form-field
+                [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'NextNodeId')"
+              >
+                <input
+                  matInput
+                  type="text"
+                  placeholder="Next Node Id"
+                  [(ngModel)]="btn.NextNodeId"
+                  name="btnNextNodeId-{{ i }}"
+                />
+              </mat-form-field>
+              <section class="form-field">
+                <mat-checkbox
+                  [(ngModel)]="btn.AdvancedOptions"
+                  name="btnAdvancedOptions-{{ i }}"
+                  align="start"
+                  >Advanced options</mat-checkbox
+                >
+              </section>
+              <div class="btn-advanced-options" [hidden]="!btn.AdvancedOptions">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Variable Value"
+                    [(ngModel)]="btn.VariableValue"
+                    name="btnVariableValue-{{ i }}"
+                  />
+                </mat-form-field>
 
-                                <!--<mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'PrefixText')">
+                <!--<mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'PrefixText')">
                                     <input matInput type="text" placeholder="Prefix" [(ngModel)]="btn.PrefixText" name="btnPrefixText-{ {i}}">
                                 </mat-form-field>
                                 <mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'PostfixText')">
                                     <input matInput type="text" placeholder="Postfix" [(ngModel)]="btn.PostfixText" name="btnPostfixText-{ {i}}">
                                 </mat-form-field>-->
-                                <mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'MinLength')">
-                                    <input matInput type="number" placeholder="Minimum Length" [(ngModel)]="btn.MinLength" name="btnMinLength-{{i}}">
-                                </mat-form-field>
-                                <mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'MaxLength')">
-                                    <input matInput type="number" placeholder="Maximum Length" [(ngModel)]="btn.MaxLength" name="btnMaxLength-{{i}}">
-                                </mat-form-field>
-                                <mat-form-field [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'DefaultText')">
-                                    <input matInput type="text" placeholder="Default Text" [(ngModel)]="btn.DefaultText" name="btnDefaultText-{{i}}">
-                                </mat-form-field>
-                                <section class="form-field" [hidden]="MH.chatButtonFieldHidden(chatNode, btn, 'IsMultiLine')">
-                                    <mat-checkbox [(ngModel)]="btn.IsMultiLine" name="btnIsMultiLine-{{i}}" align="start">Multiple line allowed</mat-checkbox>
-                                </section>
-                                <!--<section class="form-field">
+                <mat-form-field
+                  [hidden]="
+                    MH.chatButtonFieldHidden(chatNode, btn, 'MinLength')
+                  "
+                >
+                  <input
+                    matInput
+                    type="number"
+                    placeholder="Minimum Length"
+                    [(ngModel)]="btn.MinLength"
+                    name="btnMinLength-{{ i }}"
+                  />
+                </mat-form-field>
+                <mat-form-field
+                  [hidden]="
+                    MH.chatButtonFieldHidden(chatNode, btn, 'MaxLength')
+                  "
+                >
+                  <input
+                    matInput
+                    type="number"
+                    placeholder="Maximum Length"
+                    [(ngModel)]="btn.MaxLength"
+                    name="btnMaxLength-{{ i }}"
+                  />
+                </mat-form-field>
+                <mat-form-field
+                  [hidden]="
+                    MH.chatButtonFieldHidden(chatNode, btn, 'DefaultText')
+                  "
+                >
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Default Text"
+                    [(ngModel)]="btn.DefaultText"
+                    name="btnDefaultText-{{ i }}"
+                  />
+                </mat-form-field>
+                <section
+                  class="form-field"
+                  [hidden]="
+                    MH.chatButtonFieldHidden(chatNode, btn, 'IsMultiLine')
+                  "
+                >
+                  <mat-checkbox
+                    [(ngModel)]="btn.IsMultiLine"
+                    name="btnIsMultiLine-{{ i }}"
+                    align="start"
+                    >Multiple line allowed</mat-checkbox
+                  >
+                </section>
+                <!--<section class="form-field">
                                     <mat-checkbox [(ngModel)]="btn.PostToChat" name="btnPostToChat-{ {i}}" align="start">Post to chat</mat-checkbox>
                                 </section>-->
-                            </div>
-                            <!--<section class="form-field">
+              </div>
+              <!--<section class="form-field">
                                 <mat-checkbox [(ngModel)]="btn.DoesRepeat" name="btnDoesRepeat-{ {i}}" align="start">Does repeat</mat-checkbox>
                             </section>
                             <div class="btn-repeat-options" [hidden]="!btn.DoesRepeat">
@@ -394,24 +888,34 @@
                                     <input matInput type="number" placeholder="Max Repeats" [(ngModel)]="btn.MaxRepeats" name="btnMaxRepeats-{ {i}}">
                                 </mat-form-field>
                             </div>-->
-                        </div>
-                    </div>
-                </div>
-                <section class="text-center">
-                    <button matTooltip="Add Button" type="button" mat-fab (click)="MH.addButton(chatNode)">
-                        <mat-icon class="fab-btn-icon">add</mat-icon>
-                    </button>
-                </section>
             </div>
-        </mat-tab>
-    </mat-tab-group>
+          </div>
+        </div>
+        <section class="text-center">
+          <button
+            matTooltip="Add Button"
+            type="button"
+            mat-fab
+            (click)="MH.addButton(chatNode)"
+          >
+            <mat-icon class="fab-btn-icon">add</mat-icon>
+          </button>
+        </section>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button type="button" (click)="dismiss()" mat-raised-button color="primary">
-        Done
-    </button>
-    <span class="spacing"></span>
-    <button type="button" matTooltip="Delete Node" (click)="MH.nodeDelete(chatNode, this)" mat-raised-button>
-        Delete Node
-    </button>
+  <button type="button" (click)="dismiss()" mat-raised-button color="primary">
+    Done
+  </button>
+  <span class="spacing"></span>
+  <button
+    type="button"
+    matTooltip="Delete Node"
+    (click)="MH.nodeDelete(chatNode, this)"
+    mat-raised-button
+  >
+    Delete Node
+  </button>
 </mat-dialog-actions>
