@@ -165,7 +165,7 @@ Collection of examples for using Intelligo Framework.
 ## Stay In Touch
 
 - Blogging at [Medium](https://medium.com/intelligo-systems)
-- Chatting on [Slack](http://intelligo-slack.herokuapp.com)
+- Chatting on [Slack](https://slack.intelligo.systems/)
 
 ## Contributors
 
