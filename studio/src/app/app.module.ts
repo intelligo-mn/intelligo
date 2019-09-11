@@ -9,6 +9,7 @@ import { StudioModule, STUDIO_ROUTES } from './components/studio/studio.module';
 import { AnalyticsModule, ANALYTICS_ROUTES } from './components/analytics/analytics.module';
 import { HotkeyModule } from 'angular2-hotkeys';
 import { DeployModule, DEPLOY_ROUTES } from './components/deploy/deploy.module';
+import { FormsModule } from '@angular/forms';
 
 const APP_ROUTES: Routes = [
   { path: '', redirectTo: 'home', pathMatch: "full" },
@@ -38,6 +39,7 @@ const APP_ROUTES: Routes = [
     HomeComponent
   ],
   imports: [
+    FormsModule,
     SharedModule,
     ManageUsersModule,
     StudioModule,
@@ -50,6 +52,6 @@ const APP_ROUTES: Routes = [
       cheatSheetCloseEsc: true,
     })
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

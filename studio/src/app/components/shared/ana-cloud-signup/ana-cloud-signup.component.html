@@ -28,7 +28,7 @@
         </mat-form-field>
         <mat-form-field class="full-width">
             <input type="password" matInput name="confirmPassword" [(ngModel)]="details.confirmPassword" placeholder="Confirm Password" [pattern]="'^'+pwd.value+'$'" required maxlength="50" #cpwd="ngModel"/>
-            <mat-error align="start" *ngIf="(cpwd.invalue) && (cpwd.dirty || cpwd.touched)">
+            <mat-error align="start" *ngIf="(cpwd.invalid) && (cpwd.dirty || cpwd.touched)">
                 Passwords do not match
             </mat-error>
         </mat-form-field>

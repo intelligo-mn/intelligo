@@ -10,9 +10,9 @@
                 {{ option.name }} <span class="desc">Last updated at {{option.updatedAt | date:'hh:mm a on dd-MM-yyyy'}} -- Id: {{ option.id }}</span>
             </mat-option>
         </mat-autocomplete>
-        <mat-hint *ngIf="added">
+        <!-- <mat-hint *ngIf="added">
             {{added}}
-        </mat-hint>
+        </mat-hint> -->
     </mat-form-field>
     <section *ngIf="chatProjects && chatProjects.length>0" class="text-center">
         <h3>Or</h3>

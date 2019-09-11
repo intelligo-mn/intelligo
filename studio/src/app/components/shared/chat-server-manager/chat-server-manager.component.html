@@ -15,11 +15,11 @@
                 </mat-expansion-panel-header>
 
                 <mat-form-field>
-                    <input matInput type="text" placeholder="Name" [(ngModel)]="conn.Name" name="connName-{{i}}">
+                    <input matInput type="text" placeholder="Name" ngModel="conn.Name" name="connName-{{i}}">
                 </mat-form-field>
 
                 <mat-form-field>
-                    <input matInput type="url" placeholder="Server Url" [(ngModel)]="conn.ServerUrl" name="connUrl-{{i}}">
+                    <input matInput type="url" placeholder="Server Url" ngModel="conn.ServerUrl" name="connUrl-{{i}}">
                 </mat-form-field>
 
                 <section>
@@ -33,22 +33,26 @@
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <mat-form-field>
-                                <input matInput type="text" placeholder="Chat Project Id" [(ngModel)]="proj.Id" name="projId-{{i}}">
+                                <input matInput type="text" placeholder="Chat Project Id" ngModel="proj.Id"
+                                    name="projId-{{i}}">
                             </mat-form-field>
 
                             <mat-form-field>
-                                <input matInput type="text" placeholder="Chat Project Name" [(ngModel)]="proj.Name" name="projName-{{i}}">
+                                <input matInput type="text" placeholder="Chat Project Name" ngModel="proj.Name"
+                                    name="projName-{{i}}">
                             </mat-form-field>
 
                             <mat-action-row>
-                                <button mat-raised-button (click)="deleteProject(conn,proj)"><span>Delete Project</span></button>
+                                <button mat-raised-button (click)="deleteProject(conn,proj)"><span>Delete
+                                        Project</span></button>
                             </mat-action-row>
                         </mat-expansion-panel>
                     </mat-accordion>
                 </section>
                 <mat-action-row>
                     <!--<button mat-raised-button (click)="addChatProjectToConn(conn)"><span>Add chat project</span></button>-->
-                    <button mat-raised-button (click)="deleteConnection(conn)"><span>Delete server connection</span></button>
+                    <button mat-raised-button (click)="deleteConnection(conn)"><span>Delete server
+                            connection</span></button>
                 </mat-action-row>
 
             </mat-expansion-panel>
@@ -56,8 +60,10 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button matTooltip="Save Changes" color="primary" *ngIf="savedConnections.length!=0" mat-raised-button (click)="saveConnections(true)">Save changes</button>
-    <button matTooltip="Add new connection" [color]="savedConnections.length==0?'primary':''" mat-raised-button (click)="addConnection()">Add new server connection</button>
+    <button matTooltip="Save Changes" color="primary" *ngIf="savedConnections.length!=0" mat-raised-button
+        (click)="saveConnections(true)">Save changes</button>
+    <button matTooltip="Add new connection" [color]="savedConnections.length==0?'primary':''" mat-raised-button
+        (click)="addConnection()">Add new server connection</button>
     <!--<button matTooltip="Get an Ana chat server" mat-raised-button (click)="getAnaChatServer()">Get an Ana chat server</button>-->
     <button mat-raised-button matDialogClose>Dismiss</button>
 </mat-dialog-actions>

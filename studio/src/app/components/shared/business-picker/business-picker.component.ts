@@ -19,7 +19,7 @@ export class BusinessPickerComponent implements OnInit {
 		private router: Router,
 		private analyticsWindow: AnalyticsWindowService,
 		private dialogRef: MatDialogRef<BusinessPickerComponent>,
-		@Inject(MAT_DIALOG_DATA) private param: BusinessPickerParam) {
+		@Inject(MAT_DIALOG_DATA) public param: BusinessPickerParam) {
 		if (this.param.askFlowId) {
 			this.title = "Choose business account and chat project";
 		} else {
