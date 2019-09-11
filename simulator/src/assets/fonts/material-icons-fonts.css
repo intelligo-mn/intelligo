@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(Material_Icons_400_normal.eot); /* {{embedded-opentype-gf-url}} */
+    src: local('☺'),
+        url(Material_Icons_400_normal.eot?#iefix) format('embedded-opentype'), /* {{embedded-opentype-gf-url}} */
+        url(Material_Icons_400_normal.woff) format('woff'), /* http://fonts.gstatic.com/s/materialicons/v31/2fcrYFNaTjcS6g4U3t-Y5ewrjPiaoEww8AihgqWRJAo.woff */
+        url(Material_Icons_400_normal.ttf) format('truetype'), /* http://fonts.gstatic.com/s/materialicons/v31/2fcrYFNaTjcS6g4U3t-Y5bbKic1PW3nceB3q24YFOMg.ttf */
+        url(Material_Icons_400_normal.svg#Material+Icons_400_normal) format('svg'); /* http://fonts.gstatic.com/l/font?kit=2fcrYFNaTjcS6g4U3t-Y5dh2DojuSknG-1uCuZr85Zg&skey=4fbfe4498ec2960a&v=v31#MaterialIcons */
+}
