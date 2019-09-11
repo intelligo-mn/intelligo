@@ -7,7 +7,7 @@ import * as agm from '@agm/core';
 @Component({
 	selector: 'app-complex-input',
 	templateUrl: './complex-input.component.html',
-	styleUrls: ['./complex-input.component.css']
+	styleUrls: ['./complex-input.component.scss']
 })
 export class ComplexInputComponent implements OnInit, AfterViewInit {
 	constructor(
@@ -46,7 +46,7 @@ export class ComplexInputComponent implements OnInit, AfterViewInit {
 		};
 	}
 
-	@ViewChild("datePicker")
+	@ViewChild("datePicker", { static: true })
 	datePicker: MatDatepicker<Date>;
 
 	choosenDate: Date;

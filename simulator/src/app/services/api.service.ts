@@ -1,11 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import 'rxjs/add/operator/map'
-
-import { ANATime, ANADate, ANAMeta, SenderType } from '../models/ana-chat.models';
-import { StompConfig } from './stomp.service';
-import { AppConfig, AppSettings, BrandingConfig, ThirdPartyConfig } from '../models/ana-config.models';
+import 'rxjs/add/operator/map';
 import { UtilitiesService } from '../services/utilities.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class APIService {
@@ -13,7 +10,7 @@ export class APIService {
 	apiEndpoint: string;
 	private chatHistoryEndpoint: string;
 
-	constructor(public http: Http) { }
+	constructor(public http: HttpClient) { }
 
 	setAPIEndpoint(apiEndpoint: string) {
 		this.apiEndpoint = apiEndpoint;
@@ -24,14 +21,13 @@ export class APIService {
 		this.chatHistoryEndpoint = this.apiEndpoint + "chatdata/messages?userId={userId}&businessId={businessId}&flowId={flowId}&size={size}&page=0&ofCurrentSession={ofCurrentSession}";
 	}
 
-	uploadFile(file: File) {
+	uploadFile(file: File): Observable<UploadFileResponse> {
 		let formData = new FormData();
 		formData.append("file", file);
-		let headers = new Headers();
-		return this.http.post(this.fileUploadEndpoint, formData, { headers }).map(res => res.json() as UploadFileResponse);
+		return this.http.post<any>(this.fileUploadEndpoint, formData);
 	}
 
-	fetchHistory(oldestMsgTimestamp: number, size: number = 20) {
+	fetchHistory(oldestMsgTimestamp: number, size: number = 20): Observable<ChatHistoryResponse> {
 		let businessId = UtilitiesService.settings.stompConfig.businessId;
 		let customerId = UtilitiesService.settings.stompConfig.customerId;
 		let flowId = UtilitiesService.settings.stompConfig.flowId;
@@ -46,7 +42,7 @@ export class APIService {
 
 		if (oldestMsgTimestamp)
 			api += "&lastMessageTimeStamp=" + oldestMsgTimestamp.toString();
-		return this.http.get(api).map(res => res.json() as ChatHistoryResponse);
+		return this.http.get<any>(api);
 	}
 }
 

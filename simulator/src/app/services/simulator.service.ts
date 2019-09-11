@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
-import * as models from '../models/ana-chat.models';
+import { HttpClient } from 'selenium-webdriver/http';
 import * as vm from '../models/ana-chat-vm.models';
-import * as jsonpath from 'jsonpath';
-
-import { Http, Headers, URLSearchParams } from '@angular/http';
+import * as models from '../models/ana-chat.models';
 import { UtilitiesService } from '../services/utilities.service';
 @Injectable()
 export class SimulatorService {
 
 	private debug: boolean = true;
 
-	constructor(private http: Http, private utils: UtilitiesService) {
+	constructor(private http: HttpClient, private utils: UtilitiesService) {
 		window.onmessage = (event) => {
 			this.logDebug('On message received from studio:');
 			this.logDebug(event.data);

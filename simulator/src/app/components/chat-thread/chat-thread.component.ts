@@ -17,7 +17,7 @@ import { InfoDialogService } from '../../services/info-dialog.service';
 @Component({
 	selector: 'app-chat-thread',
 	templateUrl: './chat-thread.component.html',
-	styleUrls: ['./chat-thread.component.css']
+	styleUrls: ['./chat-thread.component.scss']
 })
 export class ChatThreadComponent implements OnInit, AfterViewInit {
 
@@ -38,10 +38,10 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
 		this.chatThread = new vm.ChatThreadVM(this.sanitizer);
 		this.chatInput = new vm.ChatInputVM(this.dialog, this.chatThread, this.apiService, this.stompService, this, this.sanitizer);
 	}
-	@ViewChild("inputContainer")
+	@ViewChild("inputContainer", { static: true })
 	inputContainerRef: ElementRef;
 
-	@ViewChild("chatThreadView")
+	@ViewChild("chatThreadView", { static: true })
 	chatThreadView: ElementRef;
 
 	@ViewChildren("carouselContainer")

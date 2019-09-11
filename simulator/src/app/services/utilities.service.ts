@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-
-import { ANATime, ANADate, ANAMeta, SenderType, GeoLoc, MediaType, AddressInput } from '../models/ana-chat.models';
+import { AddressInput, ANADate, ANAMeta, ANATime, GeoLoc, MediaType, SenderType } from '../models/ana-chat.models';
+import { AppSettings } from '../models/ana-config.models';
 import { GoogleMapsConfig } from '../models/google-maps-config.model';
-import { AppSettings, BrandingConfig, AppConfig, ThirdPartyConfig } from '../models/ana-config.models';
+
 @Injectable()
 export class UtilitiesService {
 	static googleMapsConfigRef: GoogleMapsConfig = { apiKey: '' };
