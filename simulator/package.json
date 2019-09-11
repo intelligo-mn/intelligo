@@ -11,6 +11,7 @@
   },
   "private": true,
   "dependencies": {
+    "@agm/core": "1.0.0-beta.2",
     "@angular/animations": "~8.2.4",
     "@angular/common": "~8.2.4",
     "@angular/compiler": "~8.2.4",
@@ -20,8 +21,17 @@
     "@angular/platform-browser-dynamic": "~8.2.4",
     "@angular/router": "~8.2.4",
     "rxjs": "~6.4.0",
+    "@angular/cdk": "~5.0.2",
+    "@angular/material": "~5.0.2",
+    "bootstrap": "^3.3.7",
+    "core-js": "^2.4.1",
+    "hammerjs": "^2.0.8",
+    "jsonpath": "^1.0.0",
+    "ngx-image-viewer": "^1.0.2",
+    "sockjs-client": "^1.1.4",
+    "stompjs": "^2.3.3",
     "tslib": "^1.10.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "^0.8.14"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.2",
