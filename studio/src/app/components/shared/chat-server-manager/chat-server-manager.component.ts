@@ -32,7 +32,7 @@ export class ChatServerManagerComponent implements OnInit {
 	}
 
 	connectionAlias(conn: ChatServerConnection) {
-		return conn.Name || conn.ServerUrl || 'New Ana chat server';
+		return conn.Name || conn.ServerUrl || 'New Chatbots.mn chat server';
 	}
 
 	deleteConnection(conn: ChatServerConnection) {
@@ -75,7 +75,7 @@ export class ChatServerManagerComponent implements OnInit {
 		if (this.savedConnections && this.savedConnections.length > 0) {
 			let invalidPublishServers = this.savedConnections.filter(x => !x.ServerUrl || !x.Name);
 			if (invalidPublishServers.length > 0) {
-				this.infoDialog.alert('Incomplete Details', `One or more of your Ana chat servers have Server Url or Name. Please fill them and try again.`);
+				this.infoDialog.alert('Incomplete Details', `One or more of your Chatbots.mn chat servers have Server Url or Name. Please fill them and try again.`);
 				return;
 			}
 
@@ -97,7 +97,7 @@ export class ChatServerManagerComponent implements OnInit {
 
 		this.settings.saveSavedConnections(this.savedConnections);
 
-		this.snakbar.open('Ana chat servers saved!', 'Dismiss', {
+		this.snakbar.open('Chatbots.mn chat servers saved!', 'Dismiss', {
 			duration: 3000
 		});
 

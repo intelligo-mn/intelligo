@@ -1,7 +1,7 @@
 <h2 matDialogTitle>Publish chatbot</h2>
 <mat-dialog-content>
     <mat-card *ngIf="!chatProjects || chatProjects.length <= 0" class="text-center">
-        <h4> Looks like you don't have any Ana chatbot projects yet. </h4>
+        <h4> Looks like you don't have any Chatbots.mn chatbot projects yet. </h4>
     </mat-card>
     <mat-form-field *ngIf="chatProjects && chatProjects.length>0" #chatProjectFormField tabindex="-1">
         <input tabindex="-1" type="text" placeholder="Choose a chatbot project" aria-label="Chatbot Project" matInput [(ngModel)]="filter" [matAutocomplete]="auto" name="chatProject">
@@ -33,7 +33,7 @@
         </form>
     </div>
 
-    <label class="desc">You are logged into '{{chatConnName}}' Ana chat server</label>
+    <label class="desc">You are logged into '{{chatConnName}}' Chatbots.mn chat server</label>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-raised-button [disabled]="!canPublish()" color="primary" (click)="doPublish()">Publish</button>

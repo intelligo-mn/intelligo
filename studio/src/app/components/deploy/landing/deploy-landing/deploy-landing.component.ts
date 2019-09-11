@@ -51,7 +51,7 @@ export class DeployLandingComponent implements OnInit{
 		isFullPage: false,
 		logoUrl: 'https://www.ana.chat/favicon.ico',
 		showPoweredByAna: false,
-		title: 'Ana chatbot',
+		title: 'Chatbots.mn chatbot',
 		websdkUrl: '',
 		webSocketsUrl: '',
 	};

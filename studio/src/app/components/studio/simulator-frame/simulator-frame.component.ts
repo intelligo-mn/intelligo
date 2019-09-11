@@ -16,7 +16,7 @@ export class SimulatorFrameComponent implements OnInit {
 				primaryForegroundColor: 'white',
 				secondaryBackgroundColor: '#3c3c3c',
 				logoUrl: `favicon.ico`,
-				agentName: "ANA Simulator",
+				agentName: "Chatbots.mn Simulator",
 				frameHeight: '70vh',
 				frameWidth: '360px',
 			},

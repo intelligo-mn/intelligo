@@ -150,7 +150,7 @@
 				primaryBackgroundColor: base.getAttr(script, "primary-bg") || '#8cc83c',
 				primaryForegroundColor: base.getAttr(script, "primary-fg") || 'white',
 				secondaryBackgroundColor: base.getAttr(script, "secondary-bg") || '#3c3c3c',
-				logoUrl: base.getAttr(script, "logo-url") || 'http://ana.chat/favicon.ico',
+				logoUrl: base.getAttr(script, "logo-url") || 'https://intelligo.systems/favicon.ico',
 				agentName: base.getAttr(script, "agent-name"),
 				agentDesc: base.getAttr(script, "agent-desc"),
 				frameHeight: base.getAttr(script, "frame-height") || '500px',
@@ -652,7 +652,7 @@
 							</svg>
 						</div>
 					</div>
-					<div class="powered-by-ana"><div><a class="ana-link" href="http://ana.chat" target="_blank">powered by ana</a></div></div>
+					<div class="powered-by-ana"><div><a class="ana-link" href="https://intelligo.systems" target="_blank">powered by ana</a></div></div>
 					<div class="ana-loading-overlay">
 						<div class="ana-loading">
 							<div class="sk-circle">

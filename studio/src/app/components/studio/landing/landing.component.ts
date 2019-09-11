@@ -54,7 +54,7 @@ export class LandingComponent implements OnInit {
 				};
 				reader.readAsText(selectedFile, "UTF-8");
 			} else
-				this.infoDialog.alert('Oops!', 'Invalid file. Please select a valid Ana project file');
+				this.infoDialog.alert('Oops!', 'Invalid file. Please select a valid Chatbots.mn project file');
 		}
 	}
 	search: string;

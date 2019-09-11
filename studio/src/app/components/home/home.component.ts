@@ -29,7 +29,7 @@ export class HomeComponent {
 	userManagement() {
 		this.loginService.performLogin(true, "/", true, (done) => {
 			if (!done) {
-				this.infoDialog.alert("Login Required", "You must be logged in to your Ana chat server to manage users");
+				this.infoDialog.alert("Login Required", "You must be logged in to your Chatbots.mn chat server to manage users");
 				return;
 			}
 			if (this.dataService.loggedInUser) {
@@ -47,7 +47,7 @@ export class HomeComponent {
 	analytics() {
 		this.loginService.performLogin(true, null, true, (done) => {
 			if (!done) {
-				this.infoDialog.alert("Login Required", "You must be logged in to your Ana chat server to view analytics");
+				this.infoDialog.alert("Login Required", "You must be logged in to your Chatbots.mn chat server to view analytics");
 				return;
 			}
 			if (this.dataService.loggedInUser) {
@@ -68,7 +68,7 @@ export class HomeComponent {
 	deploy() {
 		this.loginService.performLogin(true, null, true, (done) => {
 			if (!done) {
-				this.infoDialog.alert("Login Required", "You must be logged in to your Ana chat server to deploy your chatbot");
+				this.infoDialog.alert("Login Required", "You must be logged in to your Chatbots.mn chat server to deploy your chatbot");
 				return;
 			}
 			if (this.dataService.loggedInUser) {
