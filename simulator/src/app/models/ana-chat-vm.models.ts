@@ -1,13 +1,11 @@
-import { ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
-
-import * as models from './ana-chat.models';
-import { UtilitiesService, Config } from '../services/utilities.service';
-import { StompConnectionStatus, StompService } from '../services/stomp.service';
-import { APIService } from '../services/api.service';
-import { ComplexInputComponent, ComplexType, ComplexInputParams } from '../components/complex-input/complex-input.component';
-import { ChatThreadComponent } from '../components/chat-thread/chat-thread.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ChatThreadComponent } from '../components/chat-thread/chat-thread.component';
+import { ComplexInputComponent, ComplexType } from '../components/complex-input/complex-input.component';
+import { APIService } from '../services/api.service';
+import { StompService } from '../services/stomp.service';
+import { Config, UtilitiesService } from '../services/utilities.service';
+import * as models from './ana-chat.models';
 
 export enum Direction {
 	Incoming,
@@ -516,7 +514,7 @@ export class ChatInputVM {
 								let mediaBlob = new Blob([f], {
 									type: f.type
 								});
-								let mediaBlobUrl = URL.createObjectURL(mediaBlob, { oneTimeOnly: false });
+								let mediaBlobUrl = URL.createObjectURL(mediaBlob);
 								this.sendReplyAfterFileUpload(mediaBlobUrl, f.type, mediaInputContent, ackId, inputVM);
 							}
 						}

@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
 import { UtilitiesService } from '../services/utilities.service';
 import { Observable } from 'rxjs';
 

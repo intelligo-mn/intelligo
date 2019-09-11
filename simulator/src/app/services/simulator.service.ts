@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from 'selenium-webdriver/http';
 import * as vm from '../models/ana-chat-vm.models';
 import * as models from '../models/ana-chat.models';
 import { UtilitiesService } from '../services/utilities.service';
+import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class SimulatorService {
 
