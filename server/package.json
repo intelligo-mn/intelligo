@@ -37,9 +37,6 @@
       }
     }
   },
-  "engines": {
-    "node": "10.3.0"
-  },
   "dependencies": {
     "bluebird": "^3.5.3",
     "body-parser": "^1.19.0",
