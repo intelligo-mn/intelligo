@@ -12,7 +12,7 @@ import { DeployModule, DEPLOY_ROUTES } from './components/deploy/deploy.module';
 import { FormsModule } from '@angular/forms';
 
 const APP_ROUTES: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: "full" },
+  { path: '', redirectTo: 'studio', pathMatch: "full" },
   {
     path: 'manage-users',
     children: MANAGE_USERS_ROUTES
@@ -29,8 +29,8 @@ const APP_ROUTES: Routes = [
     path: 'analytics',
     children: ANALYTICS_ROUTES
   },
-  { path: 'home', component: HomeComponent },
-  { path: '**', redirectTo: 'home' }
+  // { path: 'home', component: HomeComponent },
+  { path: '**', redirectTo: 'studio' }
 ];
 
 @NgModule({
