@@ -16,6 +16,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { HomeModule } from './home/home.module';
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
+import { SectionsModule } from './sections/sections.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { CommonModule } from '@angular/common';
     RouterModule,
     NgbModule,
     AppRoutingModule,
+    SectionsModule,
     HomeModule
   ],
   providers: [],
