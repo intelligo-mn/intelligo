@@ -1,0 +1,16 @@
+
+<div class="container">
+  <h3 class="mt-lg mb-4">
+    <span>Alerts</span>
+  </h3>
+  <div *ngFor="let alert of alerts">
+    <ngb-alert [type]="alert.type"  [dismissible]="true"  (close)="close(alert)" >
+      <ng-container *ngIf="alert.icon">
+        <div class="alert-inner--icon">
+            <i class="{{alert.icon}}"></i>
+        </div>
+      </ng-container>
+      <span class="alert-inner--text">  <strong>{{alert.strong}} </strong>{{ alert.message }}</span>
+    </ngb-alert>
+  </div>
+</div>
