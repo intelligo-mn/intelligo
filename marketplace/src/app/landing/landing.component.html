@@ -23,13 +23,9 @@
               <p class="lead  text-white">Чатбот бол хэрэглэгчидтэй харилцах, маркетинг борлуулалтыг автоматжуулах
                 шилдэг шийдэл юм.</p>
               <div class="btn-wrapper">
-                <a href="#" class="btn btn-info btn-icon mb-3 mb-sm-0">
+                <a [routerLink]="['/login']" class="btn btn-white btn-icon mb-3 mb-sm-0">
                   <span class="btn-inner--icon"><i class="fa fa-code"></i></span>
                   <span class="btn-inner--text">Чатбот хөгжүүлэх</span>
-                </a>
-                <a href="#" class="btn btn-white btn-icon mb-3 mb-sm-0">
-                  <span class="btn-inner--icon"><i class="fa fa-cloud"></i></span>
-                  <span class="btn-inner--text">Чатбот платформ</span>
                 </a>
               </div>
             </div>
@@ -160,7 +156,7 @@
                 </div>
               </li>
             </ul>
-            <a href="/login" class="btn btn-white btn-icon mb-3 mb-sm-0">
+            <a [routerLink]="['/login']" class="btn btn-white btn-icon mb-3 mb-sm-0">
               <span class="btn-inner--icon"><i class="fa fa-rocket"></i></span>
               <span class="btn-inner--text">Чатбот бүтээх</span>
             </a>
