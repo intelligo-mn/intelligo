@@ -8,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 export class LoginComponent implements OnInit {
   focus;
   focus1;
+  message: string;
   constructor() { }
 
   ngOnInit() {
   }
 
+  login(){
+    this.message = "Хэрэглэгчийн нэр нууц үг буруу байна."
+  }
 }
