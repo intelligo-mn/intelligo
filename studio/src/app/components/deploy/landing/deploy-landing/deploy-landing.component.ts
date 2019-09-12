@@ -105,7 +105,7 @@ export class DeployLandingComponent implements OnInit{
 		let src = `<!DOCTYPE html>
 <html>
 <head>
-	<title>Ana web chat preview</title>
+	<title>Chatbots.mn web chat preview</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>

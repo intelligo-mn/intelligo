@@ -10,7 +10,7 @@ import { SectionType, CarouselSection } from '../models/chatflow.models';
 export class GlobalsService {
 	constructor(private title: Title) {
 	}
-	appName = 'Ana';
+	appName = 'Chatbots.mn';
 
 	chatFlowComponent: ChatFlowComponent;
 	loading: boolean = false;

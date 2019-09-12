@@ -52,7 +52,7 @@ export class EditBusinessAccountComponent implements OnInit {
 		phone: "",
 	};
 
-	primaryBGColor: string = "#8cc83c";
+	primaryBGColor: string = "#5e72e4";
 	primaryFGColor: string = "white";
 	secondaryColor: string = "#3c3c3c";
 

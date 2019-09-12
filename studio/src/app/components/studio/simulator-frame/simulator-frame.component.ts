@@ -12,7 +12,7 @@ export class SimulatorFrameComponent implements OnInit {
 	constructor(private sanitizer: DomSanitizer) {
 		let param = {
 			brandingConfig: {
-				primaryBackgroundColor: '#8cc83c',
+				primaryBackgroundColor: '#5e72e4',
 				primaryForegroundColor: 'white',
 				secondaryBackgroundColor: '#3c3c3c',
 				logoUrl: `favicon.ico`,
