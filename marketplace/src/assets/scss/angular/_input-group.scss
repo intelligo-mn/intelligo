@@ -1,0 +1,9 @@
+.input-group {
+	.form-control.datepicker {
+		&:not(:last-child) {
+			border-right: 1px solid #cad1d7;
+      border-top-right-radius: 0.25rem;
+      border-bottom-right-radius: 0.25rem;
+    }
+	}
+}
