@@ -1,23 +1,40 @@
-<nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom headroom--top headroom--pinned">
+<nav
+  id="navbar-main"
+  class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom headroom--top headroom--pinned"
+>
   <div class="container">
     <a class="navbar-brand mr-lg-5" [routerLink]="['/home']">
-      <img src="./assets/logo/logo.png">
+      <img src="./assets/logo/logo.png" />
     </a>
-    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed"
-          [attr.aria-expanded]="!isCollapsed" aria-controls="navbar_global">
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed"
+      aria-controls="navbar_global"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="navbar-collapse collapse" id="navbar_global" [ngbCollapse]="isCollapsed">
+    <div
+      class="navbar-collapse collapse"
+      id="navbar_global"
+      [ngbCollapse]="isCollapsed"
+    >
       <div class="navbar-collapse-header">
         <div class="row">
           <div class="col-6 collapse-brand">
             <a [routerLink]="['/']">
-              <img src="./assets/logo/logo.png">
+              <img src="./assets/logo/logo.png" />
             </a>
           </div>
           <div class="col-6 collapse-close">
-            <button type="button" class="navbar-toggler" (click)="isCollapsed = !isCollapsed"
-                  [attr.aria-expanded]="!isCollapsed" aria-controls="navbar_global">
+            <button
+              type="button"
+              class="navbar-toggler"
+              (click)="isCollapsed = !isCollapsed"
+              [attr.aria-expanded]="!isCollapsed"
+              aria-controls="navbar_global"
+            >
               <span></span>
               <span></span>
             </button>
@@ -25,9 +42,8 @@
         </div>
       </div>
       <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
-        
         <li class="nav-item">
-          <a [routerLink]="['/']" class="nav-link no-caret"role="button">
+          <a [routerLink]="['/']" class="nav-link no-caret" role="button">
             <i class="ni ni-collection d-lg-none"></i>
             <span class="nav-link-inner--text">Нүүр хуудас</span>
           </a>
@@ -37,60 +53,110 @@
             <i class="ni ni-ui-04 d-lg-none"></i>
             <span class="nav-link-inner--text">Чатбот Хөгжүүлэлт</span>
           </a>
-          <div class="dropdown-menu-xl dropdown-menu" >
+          <div class="dropdown-menu-xl dropdown-menu">
             <div class="dropdown-menu-inner">
-              <a routerLinkActive="active" [routerLink]="['/chatbot']" class="media d-flex align-items-center">
-                <div class="icon icon-shape bg-gradient-primary rounded-circle text-white">
+              <a
+                routerLinkActive="active"
+                [routerLink]="['/chatbot']"
+                class="media d-flex align-items-center"
+              >
+                <div
+                  class="icon icon-shape bg-gradient-primary rounded-circle text-white"
+                >
                   <i class="ni ni-spaceship"></i>
                 </div>
                 <div class="media-body ml-3">
                   <h6 class="heading text-primary mb-md-1">Messenger Bot</h6>
-                  <p class="description d-none d-md-inline-block mb-0">Бид chatbots.mn platform болон Intelligo Framework ашиглан хиймэл оюунтай чатбот хөгжүүлнэ.</p>
+                  <p class="description d-none d-md-inline-block mb-0">
+                    Бид chatbots.mn platform болон Intelligo Framework ашиглан
+                    хиймэл оюунтай чатбот хөгжүүлнэ.
+                  </p>
                 </div>
               </a>
-              <a routerLinkActive="active" [routerLink]="['/chatbot']" class="media d-flex align-items-center">
-                <div class="icon icon-shape bg-gradient-success rounded-circle text-white">
+              <a
+                routerLinkActive="active"
+                [routerLink]="['/chatbot']"
+                class="media d-flex align-items-center"
+              >
+                <div
+                  class="icon icon-shape bg-gradient-success rounded-circle text-white"
+                >
                   <i class="ni ni-chat-round"></i>
                 </div>
                 <div class="media-body ml-3">
                   <h6 class="heading text-primary mb-md-1">Web Chatbot</h6>
-                  <p class="description d-none d-md-inline-block mb-0">Chatbots.mn platform нь вэбэд зориулсан чатбот хөгжүүлэх шилдэг шийдэл юм.</p>
+                  <p class="description d-none d-md-inline-block mb-0">
+                    Chatbots.mn platform нь вэбэд зориулсан чатбот хөгжүүлэх
+                    шилдэг шийдэл юм.
+                  </p>
                 </div>
               </a>
-              <a routerLinkActive="active" [routerLink]="['/chatbot']" class="media d-flex align-items-center">
-                <div class="icon icon-shape bg-gradient-warning rounded-circle text-white">
+              <a
+                routerLinkActive="active"
+                [routerLink]="['/chatbot']"
+                class="media d-flex align-items-center"
+              >
+                <div
+                  class="icon icon-shape bg-gradient-warning rounded-circle text-white"
+                >
                   <i class="ni ni-ui-04"></i>
                 </div>
                 <div class="media-body ml-3">
                   <h5 class="heading text-warning mb-md-1">Бусад Platform</h5>
-                  <p class="description d-none d-md-inline-block mb-0">Slack, Line, Telegram, Discord, Wechat гэх мэт бүх төрлийн платформд зориулсан хиймэл оюунтай чатбот хөгжүүлэлт хийх.</p>
+                  <p class="description d-none d-md-inline-block mb-0">
+                    Slack, Line, Telegram, Discord, Wechat гэх мэт бүх төрлийн
+                    платформд зориулсан хиймэл оюунтай чатбот хөгжүүлэлт хийх.
+                  </p>
                 </div>
               </a>
             </div>
           </div>
-        </li><li class="nav-item dropdown">
+        </li>
+        <li class="nav-item dropdown">
           <a class="nav-link no-caret" data-toggle="dropdown" role="button">
             <i class="ni ni-ui-04 d-lg-none"></i>
             <span class="nav-link-inner--text">Холбоотой төсүүд</span>
           </a>
-          <div class="dropdown-menu-xl dropdown-menu" >
+          <div class="dropdown-menu-xl dropdown-menu">
             <div class="dropdown-menu-inner">
-              <a routerLinkActive="active" href='http://intelligo.js.org' target="_blank" class="media d-flex align-items-center">
-                <div class="icon icon-shape bg-gradient-primary rounded-circle text-white">
+              <a
+                routerLinkActive="active"
+                href="http://intelligo.js.org"
+                target="_blank"
+                class="media d-flex align-items-center"
+              >
+                <div
+                  class="icon icon-shape bg-gradient-primary rounded-circle text-white"
+                >
                   <i class="ni ni-spaceship"></i>
                 </div>
                 <div class="media-body ml-3">
-                  <h6 class="heading text-primary mb-md-1">Intelligo Framework</h6>
-                  <p class="description d-none d-md-inline-block mb-0">Хиймэл оюунтай чатбот хөгжүүлэхэд зориулсан Javascript Framework.</p>
+                  <h6 class="heading text-primary mb-md-1">
+                    Intelligo Framework
+                  </h6>
+                  <p class="description d-none d-md-inline-block mb-0">
+                    Хиймэл оюунтай чатбот хөгжүүлэхэд зориулсан Javascript
+                    Framework.
+                  </p>
                 </div>
               </a>
-              <a routerLinkActive="active" href="http://neuro.js.org" target="_blank" class="media d-flex align-items-center">
-                <div class="icon icon-shape bg-gradient-success rounded-circle text-white">
+              <a
+                routerLinkActive="active"
+                href="http://neuro.js.org"
+                target="_blank"
+                class="media d-flex align-items-center"
+              >
+                <div
+                  class="icon icon-shape bg-gradient-success rounded-circle text-white"
+                >
                   <i class="ni ni-chat-round"></i>
                 </div>
                 <div class="media-body ml-3">
                   <h6 class="heading text-primary mb-md-1">Neuro.js</h6>
-                  <p class="description d-none d-md-inline-block mb-0">Хиймэл оюунтай чатбот болон хэлний боловрсуулалт хийхэл зориулсан machine learning framework.</p>
+                  <p class="description d-none d-md-inline-block mb-0">
+                    Хиймэл оюунтай чатбот болон хэлний боловрсуулалт хийхэл
+                    зориулсан machine learning framework.
+                  </p>
                 </div>
               </a>
             </div>
@@ -98,8 +164,40 @@
         </li>
       </ul>
       <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-       
         <li class="nav-item d-none d-lg-block ml-lg-4">
+          <div class="" ngbDropdown>
+            <a
+              class="btn btn-secondary dropdown-toggle "
+              id="navbarDropdownMenuLink2"
+              ngbDropdownToggle
+            >
+              {{ translate.currentLang }}
+            </a>
+            <ul
+              class=""
+              aria-labelledby="navbarDropdownMenuLink2"
+              ngbDropdownMenu
+            >
+              <li>
+                <a
+                  class="dropdown-item"
+                  (click)="translate.use('mn')"
+                  href="javascript:void(0)"
+                >
+                  Монгол
+                </a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  (click)="translate.use('en')"
+                  href="javascript:void(0)"
+                >
+                  Англи
+                </a>
+              </li>
+            </ul>
+          </div>
           <a [routerLink]="['/login']" class="btn btn-neutral btn-icon">
             <span class="btn-inner--icon">
               <i class="fa fa-rocket mr-2"></i>

@@ -20,6 +20,8 @@
     "@angular/platform-browser-dynamic": "~8.2.6",
     "@angular/router": "~8.2.6",
     "@ng-bootstrap/ng-bootstrap": "5.1.1",
+    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/http-loader": "^4.0.0",
     "jw-bootstrap-switch-ng2": "2.0.5",
     "moment": "^2.24.0",
     "ng2-nouislider": "1.8.2",
