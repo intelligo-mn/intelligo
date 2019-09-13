@@ -7,12 +7,12 @@
 
 ---
 
-![nxplorer microservice starter](public/logo.png)
+![Chatbots.mn](public/logo.png)
 
-Cloud Native Node JS Express Reactive Microservice Starter Template (REST/GraphQL)
+Chatbots.mn Cloud Native Node JS Express Reactive Microservice (REST/GraphQL)
 This project provides complete Node JS / Typescript based microservices template with all that will be needed features for production deployment , monitoring , debugging , logging , security , CI/CD. Reactive extensions based samples are added as well to demonstrate how this can be used for building a microservice API edge-service , a backend for frontend or use it as a base for building any kind of microservice.
 
-![architecture vision](screenshots/express-microservice-starter.png)
+![architecture vision](screenshots/chatbots-microservice.png)
 
 # Table of contents
 
@@ -63,15 +63,6 @@ This project provides complete Node JS / Typescript based microservices template
 - Modular , replacable and plug and play code
 - Provide a starter for both the business APIs and microservice platform development.
 - DevOps ready with code quality, unit & integration tests, deployment automated.
-
-## Demo
-
-- nXplorer demo server is deployed on Heroku and can be accessed [here](https://nxplorer.herokuapp.com)
-
-## Mono Repo version
-
-- If you are interested in looking at the mono repo version of the project, it is currently being worked on and can be accessed [here](https://github.com/ERS-HCL/nxplorerjs-mono-starter).
-- Since either of the versions are perfectly good solutions, we will be maintaining and enhancing both.
 
 ## Features
 
@@ -139,217 +130,6 @@ http://localhost:3000/api-docs/
 - Use swagger UI for the complete list of sample APIs
 - metrics - Prometheus based metrics added for all APIs (/metrics)
 - API Partial JSON response support
-
-```bash
-    curl http://localhost:3000/api/v1/starwars/people/1
-```
-
-- Response
-
-```bash
-    {
-        name: "Luke Skywalker",
-        height: "172",
-        mass: "77",
-        hair_color: "blond",
-        skin_color: "fair",
-        eye_color: "blue",
-        birth_year: "19BBY",
-        gender: "male",
-        homeworld: {
-        name: "Tatooine",
-        rotation_period: "23",
-        orbital_period: "304",
-        diameter: "10465",
-        climate: "arid",
-        gravity: "1 standard",
-        terrain: "desert",
-        surface_water: "1",
-        population: "200000",
-        residents: [
-        "http://swapi.co/api/people/1/",
-        "http://swapi.co/api/people/2/",
-        "http://swapi.co/api/people/4/",
-        "http://swapi.co/api/people/6/",
-        "http://swapi.co/api/people/7/",
-        "http://swapi.co/api/people/8/",
-        "http://swapi.co/api/people/9/",
-        "http://swapi.co/api/people/11/",
-        "http://swapi.co/api/people/43/",
-        "http://swapi.co/api/people/62/"
-        ],
-        films: [
-        "http://swapi.co/api/films/5/",
-        "http://swapi.co/api/films/4/",
-        "http://swapi.co/api/films/6/",
-        "http://swapi.co/api/films/3/",
-        "http://swapi.co/api/films/1/"
-        ],
-        created: "2014-12-09T13:50:49.641000Z",
-        edited: "2014-12-21T20:48:04.175778Z",
-        url: "http://swapi.co/api/planets/1/"
-        },
-        films: [
-        "http://swapi.co/api/films/2/",
-        "http://swapi.co/api/films/6/",
-        "http://swapi.co/api/films/3/",
-        "http://swapi.co/api/films/1/",
-        "http://swapi.co/api/films/7/"
-        ],
-        species: [
-        "http://swapi.co/api/species/1/"
-        ],
-        vehicles: [
-        "http://swapi.co/api/vehicles/14/",
-        "http://swapi.co/api/vehicles/30/"
-        ],
-        starships: [
-        "http://swapi.co/api/starships/12/",
-        "http://swapi.co/api/starships/22/"
-        ],
-        created: "2014-12-09T13:50:51.644000Z",
-        edited: "2014-12-20T21:17:56.891000Z",
-        url: "http://swapi.co/api/people/1/"
-        }
-```
-
----
-
-```bash
-    curl http://localhost:3000/api/v1/starwars/people/1?data(name,gender,homeworld(gravity,population))
-```
-
-- Response
-
-```bash
-    {
-      "data": {
-        "name": "Luke Skywalker",
-        "gender": "male",
-        "homeworld": {
-          "gravity": "1 standard",
-          "population": "200000"
-        }
-      }
-    }
-```
-
-### GraphQL
-
-- GraphQL support has been added based on the [apollo framework](https://github.com/apollographql) and a reference implementation (including the starwars apis from swapi.co)
-  ![GraphQL](screenshots/graphql.png)
-- Access the graphql playground from http://localhost:3000/playground
-- Access the graphiql tool from http://localhost:3000/graphiql
-- GraphQL API tracing (configurable)
-- Dataloader for caching and batching
-- Multiple samples added **Dataloader Enabled**
-  - RxJS API call - peopleWithPlanets(id : <number>)
-  - Starwars APIs - people(id: <number>) , planet(id: <number>) , starship(id: <number>) - peopleList(keys: [number])
-- List of Queries (see schema details for complete list)
-
-  - quoteOfTheDay: String
-  - random: Float
-  - examples: [ExampleType] <-- [**JWT Authentication. Please read the JWT Security section for details**](#jwt-security-graphql)
-  - example(id: Int): ExampleType
-  - blog(id: Int) (Paginated query)
-  - rollThreeDice: [Int]
-  - peopleWithPlanet(id: Int): PeopleWithPlanetType (Uses RxJS to combine results from 2 APIs)
-  - peopleDS(id: Int): PersonType (Based on REST DataSource)
-  - people(id: Int): PersonType (Based on data loader)
-  - planet(id: Int): PlanetType
-  - starship(id: Int): StarshipType
-  - peopleList(keys: [Int]): [PersonType]
-  - movie: MovieType
-
-  - Sample Query Execution
-
-![Sample Query](screenshots/query_1.PNG)
-
-- Mutations
-
-  - addExample(name: String!): ExampleType
-  - addComment(comment: CommentInput!): Comment
-  - login(email: String!,password: String!): UserType
-
-  - Sample Mutation Execution
-
-  ![Sample Mutation](screenshots/mutation_1.PNG)
-
-  - Subscriptions
-
-    - exampleAdded (Will check whenever a new element is added via a mutation)
-    - commentAdded (Will check whenever a new comment is added via a mutation)
-
-  - Sample Subscription Execution
-
-  ![Sample Subscription step 1](screenshots/subscription_1.PNG)
-  ![Sample Subscription step 2](screenshots/subscription_2.PNG)
-
-- VSCode Debug Launch Configuration (Preconfigured Debug Launcher added)
-- Node Dashboard view added for telemetry during development process
-- Added NodeJS cluster mode (load balanced workers)
-  - When you start the server it adds workers based on the number of CPUs
-
-```bash
-Master cluster setting up 4 workers...
-Worker 2828 is online
-Worker 2816 is online
-Worker 13956 is online
-Worker 3756 is online
-up and running in development @: LP-507B9DA1D355 on port: 3000
-up and running in development @: LP-507B9DA1D355 on port: 3000
-up and running in development @: LP-507B9DA1D355 on port: 3000
-up and running in development @: LP-507B9DA1D355 on port: 3000
-```
-
-## Graphql client apis
-
-- While we build GraphQL based servers, there might a need to get data from other downstream GraphQL based API servers.
-- As an example the graphqlcool/graphql-request module has been used to demonstrate this, using graphqlcool demo graphQL api `https://api.graph.cool/simple/v1/movies`
-
-- API spec
-
-```bash
-query {
-  movie {
-    releaseDate
-    slug
-    actors {
-      name
-    }
-  }
-}
-```
-
-- API output
-
-```json
-{
-  "data": {
-    "movie": {
-      "releaseDate": "2010-08-28T20:00:00.000Z",
-      "slug": "inception",
-      "actors": [
-        {
-          "name": "Leonardo DiCaprio"
-        },
-        {
-          "name": "Ellen Page"
-        },
-        {
-          "name": "Tom Hardy"
-        },
-        {
-          "name": "Joseph Gordon-Levitt"
-        },
-        {
-          "name": "Marion Cotillard"
-        }
-      ]
-    }
-  }
-}
-```
 
 ## Pre-requisites
 
@@ -444,8 +224,6 @@ npm itest:run
 - Point you're browser to [http://localhost:3000](http://localhost:3000).
 - Invoke the example REST endpoints directly or via swagger `http://localhost:3000/swagger`
 - Invoke the prometheus metrics using the endpoint `curl http://localhost:3000/metrics`
-- Access in-browser IDE for graphQL `http://localhost:3000/graphiql`
-- Access the graphQL playground app `http://localhost:3000/playground/`
 - Access the health check api `curl http://localhost:3000/healthcheck`
 
 ### File Structure
@@ -474,13 +252,6 @@ npm itest:run
 |   │   └───swagger             * Swagger API specification (YAML)
 |   |   └───env.ts              * DotENV configuration
 |   |   └───server.ts           * Express Server setup and configuration
-|   └───graphql                 * GraphQL APIs defined on the server
-|   |   ├───dataloader          * GraphQL data loader functions
-|   |   ├───errors              * GraphQL error handler
-|   |   ├───schema              * GraphQL Schema Types
-|   |   ├───mocks               * GraphQL Mock Resolvers
-|   |   └───resolvers           * GraphQL resolvers
-|   |   └───setupSchema.ts      * GraphQL schema configuration
 |   └───index.ts                * Main Server entry point
 ├───helm                        * Helm chart deployment scripts
 │   ├───charts                  *
@@ -521,18 +292,6 @@ npm itest:run
 }
 ```
 
-### GraphQL Mocks
-
-- As part of TDD we may need to mock the graphql responses till we are able to implement the resolvers
-- The infrastructure is setup to add mocks only for the resolvers that are currently not implemented. Hence once the implementation is available the actual resolvers take over. Also incase there is a resolvers execution failure , then this will fall back on the mocked response. This feature must be used only during development, hence a check has been added to disable this feature in 'production' builds.
-- To support that
-  - Set the environemnt variable GRAPHQL_MOCK to true
-  - Define the mock resolvers in the [mocks/index.ts](server/graphql/mocks/index.ts) file
-- As a sample there are queries added examplesMock, peopleMock
-- Sample output is given below
-
-![Sample Mock output](screenshots/graphql_mock.PNG)
-
 ### RestAPI Mocks
 
 - Enable `API_MOCK=true` in the `.<Profile>.env` file . Note: For security this will not work in production mode even if `API_MOCK` is set to `true`
@@ -546,46 +305,6 @@ npm itest:run
 
 ```bash
 ./build-docker.sh
-```
-
-#### k8s deployment
-
-- Helm chart based deployment
-
-```bash
-./deploy-k8s.sh
-```
-
-- A sample output
-
-```bash
-release "nxplorerjs-microservice" deleted
-NAME:   nxplorerjs-microservice
-LAST DEPLOYED: Fri Sep 22 22:10:58 2017
-NAMESPACE: default
-STATUS: DEPLOYED
-
-RESOURCES:
-==> v1/ConfigMap
-NAME                          DATA  AGE
-nxplorerjs-microservice-starter  5     1s
-
-==> v1/Service
-NAME                          CLUSTER-IP  EXTERNAL-IP  PORT(S)       AGE
-nxplorerjs-microservice-starter  10.0.0.196  <nodes>      80:30316/TCP  1s
-
-==> v1beta1/Deployment
-NAME                          DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE
-nxplorerjs-microservice-starter  1        1        1           0          1s
-
-
-NOTES:
-1. Get the application URL by running these commands:
-  export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services nxplorerjs-microservice-nxplorerjs-microservice-starter)
-  export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
-  echo http://$NODE_IP:$NODE_PORT
-
-Express Microservice is deployed at  http://192.168.99.100:30316/
 ```
 
 #### Using node dashboard view (Development Only)
@@ -604,40 +323,6 @@ npm run dash
 - JWT based security has been implemented using [sample JWT private and public keys](https://gist.github.com/ygotthilf/baa58da5c3dd1f69fae9)
 - Both the REST APIs and GraphQL have sample implementations added.
 - The authentication middleware code can be viewed [here](server/common/middleware/auth-middleware.ts)
-
-#### JWT Security GraphQL
-
-- A demo implementation of JWT based security has enabled for one query "examples". Given below are the steps to test it out.
-- If the JWT Security is enabled (environment variable JWT_AUTH is true) , we need to use the login mutation API to get the sample JWT Token (currently set at an expiry of 1 hour)
-- Step 1 - use the login mutation to get the jwt token for a valid user. For demo purposes any email and password string can be provided. The role is optional. If not provided is defaults to the role 'USER'
-
-```
-mutation {
-  login(email: "tsukhu@nxplorer.com",
-  password:"admin",role:"ADMIN") {
-    id
-    role
-    email
-    jwt
-  }
-}
-```
-
-![Login Mutation](screenshots/jwt_login_mutation.PNG)
-
-- Step 2 - Verify if "examples" works without Authentication. It will give an error (Note: error handling needs to be improved but here we are only looking at the concept)
-
-![UnSecure Query](screenshots/jwt_unauthenticated.PNG)
-
-- Step 3 - Set the Authorization Header with the Bearer Token before executiong the "examples" query.
-
-```
-{
-  "Authorization": "Bearer xxx.xxx.xxx"
-}
-```
-
-![Secure Query](screenshots/jwt_authenticated.PNG)
 
 #### JWT Security REST APIs
 
@@ -828,5 +513,3 @@ or
 ### License
 
 MIT
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FERS-HCL%2Fnxplorerjs-microservice-starter.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FERS-HCL%2Fnxplorerjs-microservice-starter?ref=badge_large)

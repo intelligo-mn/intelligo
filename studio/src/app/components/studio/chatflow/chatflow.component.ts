@@ -400,7 +400,6 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 
 		let change = Config.zoomCoefficient * event.deltaY;
 
-		console.log(change)
 		if (this._viewBoxWidth - change > 0)
 			this._viewBoxWidth -= change;
 
