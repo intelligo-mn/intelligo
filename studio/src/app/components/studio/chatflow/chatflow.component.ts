@@ -398,7 +398,9 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 		//cancel any ongoing animation as user might have interrupted it by doing the mouse down.
 		this.zoomCancel();
 
-		let change = Config.zoomCoefficient * event.screenX;
+		let change = Config.zoomCoefficient * event.deltaY;
+
+		console.log(change)
 		if (this._viewBoxWidth - change > 0)
 			this._viewBoxWidth -= change;
 
