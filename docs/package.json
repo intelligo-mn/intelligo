@@ -17,9 +17,9 @@
     "opencollective-postinstall": "^2.0.2"
   },
   "devDependencies": {
-    "@vuepress/plugin-google-analytics": "1.0.4",
-    "@vuepress/plugin-pwa": "1.0.4",
-    "vuepress": "1.0.4",
+    "@vuepress/plugin-google-analytics": "1.1.0",
+    "@vuepress/plugin-pwa": "1.1.0",
+    "vuepress": "1.1.0",
     "vuepress-plugin-janitor": "1.0.0",
     "vuepress-plugin-reading-time": "0.1.1",
     "vuepress-plugin-rss": "2.0.0",
