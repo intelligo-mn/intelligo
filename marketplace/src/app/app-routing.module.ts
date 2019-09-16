@@ -16,7 +16,10 @@ const routes: Routes = [
   // { path: 'landing', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: '', component: LandingComponent },
-  { path: '**', component: LandingComponent }
+  {
+    path: 'market',
+    loadChildren: () => import('./market/market.module').then(m => m.MarketModule)
+  },
 ];
 
 @NgModule({
