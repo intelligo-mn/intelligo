@@ -10,6 +10,13 @@ import { AnalyticsModule, ANALYTICS_ROUTES } from './components/analytics/analyt
 import { HotkeyModule } from 'angular2-hotkeys';
 import { DeployModule, DEPLOY_ROUTES } from './components/deploy/deploy.module';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}
 
 const APP_ROUTES: Routes = [
   { path: '', redirectTo: 'studio', pathMatch: "full" },
@@ -50,6 +57,13 @@ const APP_ROUTES: Routes = [
     }),
     HotkeyModule.forRoot({
       cheatSheetCloseEsc: true,
+    }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
     })
   ],
   bootstrap: [AppComponent],
