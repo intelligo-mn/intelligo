@@ -64,7 +64,7 @@
     "@types/request": "2.48.3",
     "@types/ws": "6.0.3",
     "chai": "4.2.0",
-    "eslint": "6.3.0",
+    "eslint": "6.4.0",
     "mocha": "6.2.0",
     "prettier": "1.18.2",
     "sinon": "7.4.2",
