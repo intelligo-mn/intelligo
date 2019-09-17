@@ -1,53 +1,99 @@
-<app-header-bar #appHeader [title]="'Chatbots.mn Studio'" [skipAuth]="true" [logoutNavigation]=""></app-header-bar>
+<app-header-bar
+  #appHeader
+  [title]="'Chatbots.mn Studio'"
+  [skipAuth]="true"
+  [logoutNavigation]=""
+></app-header-bar>
 <div class="app-content">
-    <div class="center-block center-content">
-        <mat-card [hidden]="savedProjects.length!=0" class="text-center">
-            <mat-card-content>
-                Looks like you don't have any saved chat projects. Start by adding one.
-            </mat-card-content>
-        </mat-card>
-        <mat-accordion [hidden]="savedProjects.length==0">
-            <div class="page-title">
-                <h4 class="text">Recent chatbot projects</h4>
-                <div class="search">
-                    <mat-form-field>
-                        <input type="text" name="search" value="" matInput [(ngModel)]="search" placeholder="Search" />
-                    </mat-form-field>
-                </div>
-                <div class="page-title-actions">
-                    <button matTooltip="Add new chatbot project" color="primary" mat-mini-fab (click)="addProject()">
-                        <mat-icon>add</mat-icon>
-                    </button>
-                    <button matTooltip="Import chatbot project from file" mat-mini-fab (click)="fileInput.click()">
-                        <mat-icon>arrow_downward</mat-icon>
-                    </button>
-                </div>
-            </div>
-            <mat-expansion-panel *ngFor="let projName of searchedProjects(); let i = index">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>{{projName}}</mat-panel-title>
-                </mat-expansion-panel-header>
-                <mat-action-row>
-                    <button mat-raised-button color="primary" (click)="openChatBotProject(projName)">
-                        <span>Open</span>
-                    </button>
-                    <button mat-raised-button (click)="renameChatBotProject(projName)">
-                        <span>Rename</span>
-                    </button>
-                    <button mat-raised-button (click)="downloadChatBotProject(projName)">
-                        <span>Download</span>
-                    </button>
-                    <button mat-raised-button (click)="deleteChatBotProject(projName)">
-                        <span>Delete</span>
-                    </button>
-                </mat-action-row>
-            </mat-expansion-panel>
-        </mat-accordion>
+  <div class="center-block center-content">
+    <mat-card [hidden]="savedProjects.length != 0" class="text-center">
+      <mat-card-content>
+        Looks like you don't have any saved chat projects. Start by adding one.
+      </mat-card-content>
+    </mat-card>
+    <mat-accordion [hidden]="savedProjects.length == 0">
+      <div class="page-title">
+        <h4 class="text">Recent chatbot projects</h4>
+        <div class="search">
+          <mat-form-field>
+            <input
+              type="text"
+              name="search"
+              value=""
+              matInput
+              [(ngModel)]="search"
+              placeholder="Search"
+            />
+          </mat-form-field>
+        </div>
+        <div class="page-title-actions">
+          <button
+            matTooltip="Add new chatbot project"
+            color="primary"
+            mat-mini-fab
+            (click)="addProject()"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <button
+            matTooltip="Import chatbot project from file"
+            mat-mini-fab
+            (click)="fileInput.click()"
+          >
+            <mat-icon>arrow_downward</mat-icon>
+          </button>
+        </div>
+      </div>
+      <mat-expansion-panel
+        *ngFor="let projName of searchedProjects(); let i = index"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ projName }}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-action-row>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="openChatBotProject(projName)"
+          >
+            <span>Open</span>
+          </button>
+          <button mat-raised-button (click)="renameChatBotProject(projName)">
+            <span>Rename</span>
+          </button>
+          <button mat-raised-button (click)="downloadChatBotProject(projName)">
+            <span>Download</span>
+          </button>
+          <button mat-raised-button (click)="deleteChatBotProject(projName)">
+            <span>Delete</span>
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
 
-        <section class="bottom-actions" *ngIf="savedProjects.length==0">
-            <button matTooltip="Add new chatbot project" color="primary" mat-raised-button (click)="addProject()">Add new chatbot</button>
-            <button matTooltip="Import chatbot project from file" mat-raised-button (click)="fileInput.click()">Import chatbot</button>
-        </section>
-    </div>
+    <section class="bottom-actions" *ngIf="savedProjects.length == 0">
+      <button
+        matTooltip="Add new chatbot project"
+        color="primary"
+        mat-raised-button
+        (click)="addProject()"
+      >
+        Add new chatbot
+      </button>
+      <button
+        matTooltip="Import chatbot project from file"
+        mat-raised-button
+        (click)="fileInput.click()"
+      >
+        Import chatbot
+      </button>
+    </section>
+  </div>
 </div>
-<input type="file" name="f" style="display:none" #fileInput (change)="fileInputChange()" />
+<input
+  type="file"
+  name="f"
+  style="display:none"
+  #fileInput
+  (change)="fileInputChange()"
+/>
