@@ -1,164 +1,305 @@
 <div>
-    <div [hidden]="layoutReady()">
-        <app-loading-indicator></app-loading-indicator>
+  <div [hidden]="layoutReady()">
+    <app-loading-indicator></app-loading-indicator>
+  </div>
+  <div class="chatflow-designer-wrapper">
+    <div class="left-sidebar">
+      <div class="chatflow-actions" [hidden]="!layoutReady()">
+        <button
+          matTooltip="Add new node"
+          matTooltipPosition="right"
+          type="button"
+          mat-button
+          (click)="addNewNode()"
+        >
+          <mat-icon class="fab-btn-icon">add</mat-icon><br />
+          Нэмэх
+        </button>
+        <button
+          matTooltip="Save chatbot project"
+          type="button"
+          mat-button
+          matTooltipPosition="right"
+          (click)="saveChatFlow()"
+        >
+          <mat-icon class="fab-btn-icon">save</mat-icon><br />
+          Хадгалах
+        </button>
+        <button
+          matTooltip="Download chatbot project"
+          type="button"
+          mat-button
+          matTooltipPosition="right"
+          (click)="exportChatFlow()"
+        >
+          <mat-icon class="fab-btn-icon">file_download</mat-icon><br />
+          Export
+        </button>
+        <button
+          matTooltip="Publish to Chatbots.mn chat server"
+          type="button"
+          mat-button
+          matTooltipPosition="right"
+          (click)="openPublishDialog()"
+        >
+          <mat-icon class="fab-btn-icon">publish</mat-icon><br />
+          Publish
+        </button>
+        <button
+          matTooltip="Run chat in simulator"
+          type="button"
+          mat-button
+          matTooltipPosition="right"
+          (click)="playChatFlow()"
+        >
+          <mat-icon class="fab-btn-icon">play_arrow</mat-icon><br />
+          Run Chatbot
+        </button>
+        <button
+          matTooltip="Fit"
+          type="button"
+          mat-button
+          matTooltipPosition="right"
+          (click)="fitViewToAllNodes()"
+        >
+          <mat-icon class="fab-btn-icon">zoom_out_map</mat-icon><br />
+          Fit
+        </button>
+        <button
+          matTooltip="Close designer"
+          type="button"
+          mat-button
+          matTooltipPosition="right"
+          (click)="gotoStartup()"
+        >
+          <mat-icon class="fab-btn-icon">close</mat-icon><br />
+          Хаах
+        </button>
+      </div>
     </div>
-    <div class="chatflow-designer-wrapper">
-        <div class="left-sidebar">
-            <div class="chatflow-actions" [hidden]="!layoutReady()">
-                <button matTooltip="Add new node" matTooltipPosition="right" type="button" mat-button
-                    (click)="addNewNode()">
-                    <mat-icon class="fab-btn-icon">add</mat-icon><br />
-                    Нэмэх
-                </button>
-                <button matTooltip="Save chatbot project" type="button" mat-button matTooltipPosition="right"
-                    (click)="saveChatFlow()">
-                    <mat-icon class="fab-btn-icon">save</mat-icon><br />
-                    Хадгалах
-                </button>
-                <button matTooltip="Download chatbot project" type="button" mat-button matTooltipPosition="right"
-                    (click)="exportChatFlow()">
-                    <mat-icon class="fab-btn-icon">file_download</mat-icon><br />
-                    Export
-                </button>
-                <button matTooltip="Publish to Chatbots.mn chat server" type="button" mat-button matTooltipPosition="right"
-                    (click)="openPublishDialog()">
-                    <mat-icon class="fab-btn-icon">publish</mat-icon><br />
-                    Publish
-                </button>
-                <button matTooltip="Run chat in simulator" type="button" mat-button matTooltipPosition="right"
-                    (click)="playChatFlow()">
-                    <mat-icon class="fab-btn-icon">play_arrow</mat-icon><br />
-                    Run Chatbot
-                </button>
-                <button matTooltip="Fit" type="button" mat-button matTooltipPosition="right"
-                    (click)="fitViewToAllNodes()">
-                    <mat-icon class="fab-btn-icon">zoom_out_map</mat-icon><br />
-                    Fit
-                </button>
-                <button matTooltip="Close designer" type="button" mat-button matTooltipPosition="right"
-                    (click)="gotoStartup()">
-                    <mat-icon class="fab-btn-icon">close</mat-icon><br />
-                    Хаах
-                </button>
-            </div>
-        </div>
-        <div class="designer-panel">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" #chatflowRoot
-                [attr.visibility]="(layoutReady()?'visible':'collapse')" (mouseup)="mouseUp($event)"
-                (mousemove)="mouseMove($event)" (mousedown)="mouseDown($event)" (mouseleave)="mouseLeave($event)"
-                [attr.viewBox]="viewBox()" (wheel)="designerWheel($event)" class="chatflow-root-svg">
-                <defs>
-                    <linearGradient id="NodeBG">
-                        <stop offset="0" stop-color="#CCC" />
-                    </linearGradient>
-                    <linearGradient id="NodeFG">
-                        <stop offset="0" stop-color="black" />
-                    </linearGradient>
-                    <linearGradient id="NodeHeaderBG">
-                        <stop offset="0" stop-color="gray" />
-                    </linearGradient>
-                    <linearGradient id="NodeHeaderFG">
-                        <stop offset="0" stop-color="white" />
-                    </linearGradient>
-                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto"
-                        markerUnits="strokeWidth">
-                        <path d="M0,0 L0,6 L9,3 z" fill="darkgray" opacity="0.5" />
-                    </marker>
-                </defs>
+    <div class="designer-panel">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        #chatflowRoot
+        [attr.visibility]="layoutReady() ? 'visible' : 'collapse'"
+        (mouseup)="mouseUp($event)"
+        (mousemove)="mouseMove($event)"
+        (mousedown)="mouseDown($event)"
+        (mouseleave)="mouseLeave($event)"
+        [attr.viewBox]="viewBox()"
+        (wheel)="designerWheel($event)"
+        class="chatflow-root-svg"
+      >
+        <defs>
+          <linearGradient id="NodeBG">
+            <stop offset="0" stop-color="#CCC" />
+          </linearGradient>
+          <linearGradient id="NodeFG">
+            <stop offset="0" stop-color="black" />
+          </linearGradient>
+          <linearGradient id="NodeHeaderBG">
+            <stop offset="0" stop-color="gray" />
+          </linearGradient>
+          <linearGradient id="NodeHeaderFG">
+            <stop offset="0" stop-color="white" />
+          </linearGradient>
+          <marker
+            id="arrow"
+            markerWidth="10"
+            markerHeight="10"
+            refX="0"
+            refY="3"
+            orient="auto"
+            markerUnits="strokeWidth"
+          >
+            <path d="M0,0 L0,6 L9,3 z" fill="darkgray" opacity="0.5" />
+          </marker>
+        </defs>
 
-                <g *ngFor="let chatNodeVM of chatFlowNetwork.chatNodeVMs" transform="translate(20,20)">
-                    <foreignObject [attr.transform]="ngTr(chatNodeVM.x(), chatNodeVM.y())"
-                        (mousedown)="chatNodeVM.mouseDown($event)" (mouseup)="chatNodeVM.mouseUp($event)"
-                        (mouseleave)="chatNodeVM.mouseLeave($event)" (mouseenter)="chatNodeVM.mouseEnter($event)"
-                        fill="url(#NodeFG)" class="node-section-title noselect" x="0" y="0"
-                        [attr.width]="chatNodeVM.width()-30" [attr.height]="chatNodeVM.height()" height="0" width="0"
-                        (dblclick)="openEditor(chatNodeVM)" (click)="chatNodeVM.nodeClick()">
-                        <xhtml:div xmlns="http://www.w3.org/1999/xhtml" [attr.node-id]="chatNodeVM.chatNode.Id">
+        <g
+          *ngFor="let chatNodeVM of chatFlowNetwork.chatNodeVMs"
+          transform="translate(20,20)"
+        >
+          <foreignObject
+            [attr.transform]="ngTr(chatNodeVM.x(), chatNodeVM.y())"
+            (mousedown)="chatNodeVM.mouseDown($event)"
+            (mouseup)="chatNodeVM.mouseUp($event)"
+            (mouseleave)="chatNodeVM.mouseLeave($event)"
+            (mouseenter)="chatNodeVM.mouseEnter($event)"
+            fill="url(#NodeFG)"
+            class="node-section-title noselect"
+            x="0"
+            y="0"
+            [attr.width]="chatNodeVM.width() - 30"
+            [attr.height]="chatNodeVM.height()"
+            height="0"
+            width="0"
+            (dblclick)="openEditor(chatNodeVM)"
+            (click)="chatNodeVM.nodeClick()"
+          >
+            <xhtml:div
+              xmlns="http://www.w3.org/1999/xhtml"
+              [attr.node-id]="chatNodeVM.chatNode.Id"
+            >
+              <xhtml:div
+                onmousedown="return false;//to avoid text selection, creates issue with node drag"
+                class="noselect chatnode"
+                [class.selected]="chatNodeVM.isSelected"
+                [class.click-connect]="chatNodeVM.clickConnectionActive()"
+              >
+                <xhtml:div
+                  [ngClass]="{ startnode: chatNodeVM.chatNode.IsStartNode }"
+                  class="chatnode-header"
+                >
+                  <xhtml:p>
+                    {{ MH.chatNodeAlias(chatNodeVM.chatNode) }}
+                  </xhtml:p>
+                </xhtml:div>
+                <xhtml:div class="chatnode-body">
+                  <xhtml:div class="chatnode-sections">
+                    <xhtml:table>
+                      <xhtml:tr
+                        *ngFor="let section of chatNodeVM.chatNode.Sections"
+                        [attr.title]="MH.sectionAlias(section)"
+                      >
+                        <xhtml:td valign="middle" class="section-icon">
+                          <xhtml:i class="fa fa-file-text-o"></xhtml:i>
+                        </xhtml:td>
+                        <xhtml:td valign="middle" class="section-alias">
+                          <xhtml:div>{{
+                            MH.sectionAlias(section) | ellipsis: 50
+                          }}</xhtml:div>
+                        </xhtml:td>
+                      </xhtml:tr>
+                    </xhtml:table>
+                  </xhtml:div>
+                  <xhtml:div class="chatnode-buttons">
+                    <xhtml:table [attr.node-id]="chatNodeVM.chatNode.Id">
+                      <xhtml:tr>
+                        <xhtml:td
+                          *ngFor="let chatButton of chatNodeVM.chatNode.Buttons"
+                          valign="middle"
+                        >
+                          <xhtml:div
+                            [attr.title]="MH.chatButtonAlias(chatButton)"
+                          >
+                            <xhtml:i class="fa fa-link"></xhtml:i>
+                            <br />
                             <xhtml:div
-                                onmousedown="return false;//to avoid text selection, creates issue with node drag"
-                                class="noselect chatnode" [class.selected]="chatNodeVM.isSelected"
-                                [class.click-connect]="chatNodeVM.clickConnectionActive()">
-                                <xhtml:div [ngClass]="{'startnode':chatNodeVM.chatNode.IsStartNode}"
-                                    class="chatnode-header">
-                                    <xhtml:p>
-                                        {{MH.chatNodeAlias(chatNodeVM.chatNode)}}
-                                    </xhtml:p>
-                                </xhtml:div>
-                                <xhtml:div class="chatnode-body">
-                                    <xhtml:div class="chatnode-sections">
-                                        <xhtml:table>
-                                            <xhtml:tr *ngFor="let section of chatNodeVM.chatNode.Sections"
-                                                [attr.title]="MH.sectionAlias(section)">
-                                                <xhtml:td valign="middle" class="section-icon">
-                                                    <xhtml:i class="fa fa-file-text-o"></xhtml:i>
-                                                </xhtml:td>
-                                                <xhtml:td valign="middle" class="section-alias">
-                                                    <xhtml:div>{{MH.sectionAlias(section) | ellipsis:50}}</xhtml:div>
-                                                </xhtml:td>
-                                            </xhtml:tr>
-                                        </xhtml:table>
-                                    </xhtml:div>
-                                    <xhtml:div class="chatnode-buttons">
-                                        <xhtml:table [attr.node-id]="chatNodeVM.chatNode.Id">
-                                            <xhtml:tr>
-                                                <xhtml:td *ngFor="let chatButton of chatNodeVM.chatNode.Buttons"
-                                                    valign="middle">
-                                                    <xhtml:div [attr.title]="MH.chatButtonAlias(chatButton)">
-                                                        <xhtml:i class="fa fa-link"></xhtml:i>
-                                                        <br />
-                                                        <xhtml:div>{{MH.chatButtonAlias(chatButton) | ellipsis:50 }}
-                                                        </xhtml:div>
-                                                    </xhtml:div>
-                                                </xhtml:td>
-                                            </xhtml:tr>
-                                        </xhtml:table>
-                                    </xhtml:div>
-                                    <xhtml:div *ngIf="chatNodeVM.isNodeEmpty()" class="chatnode-empty">
-                                        <xhtml:span>
-                                            Double click to edit node
-                                        </xhtml:span>
-                                    </xhtml:div>
-                                </xhtml:div>
+                              >{{
+                                MH.chatButtonAlias(chatButton) | ellipsis: 50
+                              }}
                             </xhtml:div>
-                        </xhtml:div>
-                    </foreignObject>
-                </g>
+                          </xhtml:div>
+                        </xhtml:td>
+                      </xhtml:tr>
+                    </xhtml:table>
+                  </xhtml:div>
+                  <xhtml:div
+                    *ngIf="chatNodeVM.isNodeEmpty()"
+                    class="chatnode-empty"
+                  >
+                    <xhtml:span>
+                      Double click to edit node
+                    </xhtml:span>
+                  </xhtml:div>
+                </xhtml:div>
+              </xhtml:div>
+            </xhtml:div>
+          </foreignObject>
+        </g>
 
-                <g *ngFor="let connection of chatFlowNetwork.chatNodeConnections" transform="translate(15,20)">
-                    <path [attr.d]="connection.path()" (mouseenter)="connection.mouseEnter($event)" fill="transparent"
-                        stroke="darkgray" stroke-opacity="0.5" stroke-width="3" d="M 0,0"
-                        (click)="connection.remove($event)" class="not-allowed-cursor" fill-rule="evenodd"></path>
-                </g>
+        <g
+          *ngFor="let connection of chatFlowNetwork.chatNodeConnections"
+          transform="translate(15,20)"
+        >
+          <path
+            [attr.d]="connection.path()"
+            (mouseenter)="connection.mouseEnter($event)"
+            fill="transparent"
+            stroke="darkgray"
+            stroke-opacity="0.5"
+            stroke-width="3"
+            d="M 0,0"
+            (click)="connection.remove($event)"
+            class="not-allowed-cursor"
+            fill-rule="evenodd"
+          ></path>
+        </g>
 
-                <g *ngFor="let chatNodeVM of chatFlowNetwork.chatNodeVMs" transform="translate(20,20)">
-                    <g *ngFor="let connector of chatNodeVM.chatButtonConnectors()" transform="translate(-7,0)">
-                        <circle r="0" [attr.r]="connector.circleRadius-3" [attr.cx]="connector.x()"
-                            [attr.cy]="connector.y()" [attr.fill]="connector.isConnected()?'darkgray':'#F0F0F0'"
-                            stroke="#F0F0F0" stroke-width="3" (mousedown)="connector.mouseDown($event)"
-                            (mouseup)="connector.startDirectConnection($event)"
-                            style="cursor: crosshair; padding: 20px"></circle>
-                    </g>
-                    <circle r="0" [attr.r]="chatNodeVM.circleRadius-3" [attr.cx]="chatNodeVM.nodeConnectorX()"
-                        [attr.cy]="chatNodeVM.nodeConnectorY()" fill="darkgray" stroke="#F0F0F0" stroke-width="3"
-                        transform="translate(-7,0)"></circle>
-                </g>
+        <g
+          *ngFor="let chatNodeVM of chatFlowNetwork.chatNodeVMs"
+          transform="translate(20,20)"
+        >
+          <g
+            *ngFor="let connector of chatNodeVM.chatButtonConnectors()"
+            transform="translate(-7,0)"
+          >
+            <circle
+              r="0"
+              [attr.r]="connector.circleRadius - 3"
+              [attr.cx]="connector.x()"
+              [attr.cy]="connector.y()"
+              [attr.fill]="connector.isConnected() ? 'darkgray' : '#F0F0F0'"
+              stroke="#F0F0F0"
+              stroke-width="3"
+              (mousedown)="connector.mouseDown($event)"
+              (mouseup)="connector.startDirectConnection($event)"
+              style="cursor: crosshair; padding: 20px"
+            ></circle>
+          </g>
+          <circle
+            r="0"
+            [attr.r]="chatNodeVM.circleRadius - 3"
+            [attr.cx]="chatNodeVM.nodeConnectorX()"
+            [attr.cy]="chatNodeVM.nodeConnectorY()"
+            fill="darkgray"
+            stroke="#F0F0F0"
+            stroke-width="3"
+            transform="translate(-7,0)"
+          ></circle>
+        </g>
 
-                <g transform="translate(15,20)"
-                    [attr.visibility]="chatFlowNetwork.newChatNodeConnection.isHidden?'collapse':'visible'"
-                    class="pointer-events-none">
-                    <path [attr.d]="chatFlowNetwork.newChatNodeConnection.path()" fill="transparent"
-                        [attr.stroke]="chatFlowNetwork.newChatNodeConnection.canConnect?'darkgray':'crimson'"
-                        stroke="crimson" stroke-width="3" d="M 0,0" class="pointer-events-none" fill-rule="evenodd">
-                    </path>
-                    <circle r="3" [attr.cx]="chatFlowNetwork.newChatNodeConnection.destX"
-                        [attr.cy]="chatFlowNetwork.newChatNodeConnection.destY" fill="darkgray"
-                        [attr.fill]="chatFlowNetwork.newChatNodeConnection.canConnect?'darkgray':'crimson'"
-                        class="pointer-events-none"></circle>
-                </g>
-            </svg>
-        </div>
+        <g
+          transform="translate(15,20)"
+          [attr.visibility]="
+            chatFlowNetwork.newChatNodeConnection.isHidden
+              ? 'collapse'
+              : 'visible'
+          "
+          class="pointer-events-none"
+        >
+          <path
+            [attr.d]="chatFlowNetwork.newChatNodeConnection.path()"
+            fill="transparent"
+            [attr.stroke]="
+              chatFlowNetwork.newChatNodeConnection.canConnect
+                ? 'darkgray'
+                : 'crimson'
+            "
+            stroke="crimson"
+            stroke-width="3"
+            d="M 0,0"
+            class="pointer-events-none"
+            fill-rule="evenodd"
+          ></path>
+          <circle
+            r="3"
+            [attr.cx]="chatFlowNetwork.newChatNodeConnection.destX"
+            [attr.cy]="chatFlowNetwork.newChatNodeConnection.destY"
+            fill="darkgray"
+            [attr.fill]="
+              chatFlowNetwork.newChatNodeConnection.canConnect
+                ? 'darkgray'
+                : 'crimson'
+            "
+            class="pointer-events-none"
+          ></circle>
+        </g>
+      </svg>
     </div>
+  </div>
 </div>
-<app-simulator-frame #simulator>
-</app-simulator-frame>
+<app-simulator-frame #simulator> </app-simulator-frame>
 <hotkeys-cheatsheet title="Keyboard Shortcuts:"></hotkeys-cheatsheet>

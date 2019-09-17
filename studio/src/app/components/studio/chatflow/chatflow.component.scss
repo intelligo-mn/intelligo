@@ -3,162 +3,162 @@
     top: auto !important;
 }*/
 .pointer-events-none {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 .pointer-cursor {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .not-allowed-cursor {
-    cursor: not-allowed;
+  cursor: not-allowed;
 }
 
 .moving-cursor {
-    cursor: grab;
+  cursor: grab;
 }
 
 .section-icon {
-    width: 23px;
+  width: 23px;
 }
 
 .chatflow-actions {
-    margin: 15px 0;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
+  margin: 15px 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
 }
 
-    .chatflow-actions > button {
-        margin: 8px 0;
-        font-size: 12px;
-    }
+.chatflow-actions > button {
+  margin: 8px 0;
+  font-size: 12px;
+}
 
-    .chatflow-actions .fab-btn-icon {
-        margin-bottom: -13px !important;
-    }
+.chatflow-actions .fab-btn-icon {
+  margin-bottom: -13px !important;
+}
 
 .chatflow-root-svg {
-    overflow: hidden;
-    width: calc(99vw - 88px);
-    height: 99vh;
+  overflow: hidden;
+  width: calc(99vw - 88px);
+  height: 99vh;
 }
 
 .chatflow-designer-wrapper {
-    overflow: hidden;
-    display: flex;
-    -ms-flex-direction: row;
-    -webkit-flex-direction: row;
-    flex-direction: row;
+  overflow: hidden;
+  display: flex;
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-direction: row;
 }
 
-    .chatflow-designer-wrapper .left-sidebar {
-        height: 100vh;
-        background-color: #5e72e4;
-        color: white;
-    }
+.chatflow-designer-wrapper .left-sidebar {
+  height: 100vh;
+  background-color: #5e72e4;
+  color: white;
+}
 
-    .chatflow-designer-wrapper .chatflow-root-svg {
-        flex-grow: 1;
-    }
+.chatflow-designer-wrapper .chatflow-root-svg {
+  flex-grow: 1;
+}
 
 .chatnode {
-    background: none;
-    cursor: move;
-    border: 2px solid transparent;
-    border-radius: 12px;
+  background: none;
+  cursor: move;
+  border: 2px solid transparent;
+  border-radius: 12px;
 }
 
-    .chatnode:hover {
-        border: 2px solid rgba(140, 200, 60, 0.50);
-    }
+.chatnode:hover {
+  border: 2px solid rgba(140, 200, 60, 0.5);
+}
 
-    .chatnode.selected {
-        border: 2px solid #5e72e4;
-    }
+.chatnode.selected {
+  border: 2px solid #5e72e4;
+}
 
-    .chatnode.click-connect {
-        cursor: alias;
-    }
+.chatnode.click-connect {
+  cursor: alias;
+}
 
 .chatnode-header {
-    height: 30px;
-    border-radius: 10px 10px 0 0;
-    background-color: #666666;
+  height: 30px;
+  border-radius: 10px 10px 0 0;
+  background-color: #666666;
 }
 
-    .chatnode-header.startnode {
-        background-color: #5e72e4;
-    }
+.chatnode-header.startnode {
+  background-color: #5e72e4;
+}
 
-    .chatnode-header > p {
-        padding: 5px;
-        text-align: center;
-        color: white
-    }
+.chatnode-header > p {
+  padding: 5px;
+  text-align: center;
+  color: white;
+}
 
 .chatnode-body {
-    background-color: white;
-    color: #666666;
-    border-radius: 0 0 10px 10px;
+  background-color: white;
+  color: #666666;
+  border-radius: 0 0 10px 10px;
 }
 
 .chatnode-sections {
-    height: 100%;
-    padding: 0 5px
+  height: 100%;
+  padding: 0 5px;
 }
 
-    .chatnode-sections > table {
-        width: 100%;
-    }
+.chatnode-sections > table {
+  width: 100%;
+}
 
-        .chatnode-sections > table > tr {
-            border-bottom: 1px dashed #F0F0F0;
-        }
+.chatnode-sections > table > tr {
+  border-bottom: 1px dashed #f0f0f0;
+}
 
-            .chatnode-sections > table > tr > td {
-                padding-left: 5px;
-            }
+.chatnode-sections > table > tr > td {
+  padding-left: 5px;
+}
 
 .section-icon > fa {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .section-alias {
-    padding-right: 5px
+  padding-right: 5px;
 }
 
-    .section-alias > div {
-        margin: 10px 0px 10px 5px
-    }
+.section-alias > div {
+  margin: 10px 0px 10px 5px;
+}
 
 .chatnode-buttons {
-    height: 100%;
-    text-align: center;
-    width: 100%;
-    margin-top: 10px
+  height: 100%;
+  text-align: center;
+  width: 100%;
+  margin-top: 10px;
 }
 
-    .chatnode-buttons > table {
-        width: 100%;
-        table-layout: fixed;
-    }
+.chatnode-buttons > table {
+  width: 100%;
+  table-layout: fixed;
+}
 
-        .chatnode-buttons > table > tr > td {
-            width: 80px;
-            padding: 10px;
-        }
+.chatnode-buttons > table > tr > td {
+  width: 80px;
+  padding: 10px;
+}
 
-            .chatnode-buttons > table > tr > td > div {
-                text-align: center;
-            }
+.chatnode-buttons > table > tr > td > div {
+  text-align: center;
+}
 
-                .chatnode-buttons > table > tr > td > div > .fa {
-                    font-size: 20px;
-                }
+.chatnode-buttons > table > tr > td > div > .fa {
+  font-size: 20px;
+}
 
 .chatnode-empty {
-    text-align: center;
-    width: 100%;
-    padding: 5px 0 10px 0; 
+  text-align: center;
+  width: 100%;
+  padding: 5px 0 10px 0;
 }
