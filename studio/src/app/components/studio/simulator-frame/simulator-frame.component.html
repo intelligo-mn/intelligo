@@ -1,32 +1,63 @@
-<div class="ana-root" id="ana-root" #anaRoot
-    [ngClass]="{'ana-min': !isOpen, 'minimizeAnimation': !isOpen, 'ana-max':isOpen, 'maximizeAnimation': isOpen }">
-    <div class="ana-frame-container ana-full">
-        <iframe [src]="iframeUrl" #simulatorIFrame class="ana-iframe" scrolling="no"></iframe>
+<div
+  class="intelligo-root"
+  id="intelligo-root"
+  #intelligoRoot
+  [ngClass]="{
+    'intelligo-min': !isOpen,
+    minimizeAnimation: !isOpen,
+    'intelligo-max': isOpen,
+    maximizeAnimation: isOpen
+  }"
+>
+  <div class="intelligo-frame-container intelligo-full">
+    <iframe
+      [src]="iframeUrl"
+      #simulatorIFrame
+      class="intelligo-iframe"
+      scrolling="no"
+    ></iframe>
+  </div>
+  <div
+    class="intelligo-minmax-btn"
+    [class.intelligo-max]="isOpen"
+    (click)="minMaxBtnClick()"
+  >
+    <div class="min-btn">
+      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+        <path
+          fill="#fff"
+          d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
+        />
+      </svg>
     </div>
-    <div class="ana-minmax-btn" [class.ana-max]="isOpen" (click)="minMaxBtnClick()">
-        <div class="min-btn">
-            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                <path fill="#fff" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-            </svg>
-        </div>
+  </div>
+  <div class="powered-by-intelligo">
+    <div>
+      <a class="intelligo-link" href="https://intelligo.systems" target="_blank"
+        >powered by Intelligo Systems</a
+      >
     </div>
-    <div class="powered-by-ana">
-        <div><a class="ana-link" href="https://intelligo.systems" target="_blank">powered by Intelligo Systems</a></div>
-    </div>
+  </div>
 </div>
-<div class="ana-minmax-btn" [class.ana-max]="isOpen" (click)="minMaxBtnClick()">
-    <div class="max-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-            <style>
-                .st0 {
-                    fill: #fff
-                }
-            </style>
-            <path class="st0"
-                d="M0 256c0 68.4 26.6 132.6 75 181 49.4 49.4 115 75 181.2 75 41.2 0 82.8-10 120.8-30.4 34.1 24.6 67.4 29.9 90.1 29.9 8.4 0 15.4-.8 20.2-1.5 10.4-1.6 18.4-9.7 20-20.1s-3.7-20.5-13.1-25.1c-19.6-9.6-32.8-28.9-41-45.5 83.9-101 77.4-250.7-16.1-344.2-48.4-48.4-112.6-75-181-75s-132.6 26.6-181 75S0 187.6 0 256zM95.9 95.7c88.3-88.4 232.2-88.4 320.6 0 84.6 84.6 88.8 221 9.5 310.6-2.1 2.4-3.2 5.3-3.6 8.2-.8 3-.5 6.3.8 9.4 8.1 18.5 22 42.3 43.9 58.3h-.1c-19.1 0-47.8-4.8-77.2-27.5-.3-.3-.8-.6-1.2-.9-4.7-4.7-11.9-5.7-17.8-2.3-89 52.3-202.1 37.8-275.2-35.3-88.2-88.3-88.2-232.1.3-320.5z" />
-            <circle class="st0" cx="256.1" cy="256" r="18" />
-            <circle class="st0" cx="163.5" cy="256" r="18" />
-            <circle class="st0" cx="348.8" cy="256" r="18" />
-        </svg>
-    </div>
+<div
+  class="intelligo-minmax-btn"
+  [class.intelligo-max]="isOpen"
+  (click)="minMaxBtnClick()"
+>
+  <div class="max-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+      <style>
+        .st0 {
+          fill: #fff;
+        }
+      </style>
+      <path
+        class="st0"
+        d="M0 256c0 68.4 26.6 132.6 75 181 49.4 49.4 115 75 181.2 75 41.2 0 82.8-10 120.8-30.4 34.1 24.6 67.4 29.9 90.1 29.9 8.4 0 15.4-.8 20.2-1.5 10.4-1.6 18.4-9.7 20-20.1s-3.7-20.5-13.1-25.1c-19.6-9.6-32.8-28.9-41-45.5 83.9-101 77.4-250.7-16.1-344.2-48.4-48.4-112.6-75-181-75s-132.6 26.6-181 75S0 187.6 0 256zM95.9 95.7c88.3-88.4 232.2-88.4 320.6 0 84.6 84.6 88.8 221 9.5 310.6-2.1 2.4-3.2 5.3-3.6 8.2-.8 3-.5 6.3.8 9.4 8.1 18.5 22 42.3 43.9 58.3h-.1c-19.1 0-47.8-4.8-77.2-27.5-.3-.3-.8-.6-1.2-.9-4.7-4.7-11.9-5.7-17.8-2.3-89 52.3-202.1 37.8-275.2-35.3-88.2-88.3-88.2-232.1.3-320.5z"
+      />
+      <circle class="st0" cx="256.1" cy="256" r="18" />
+      <circle class="st0" cx="163.5" cy="256" r="18" />
+      <circle class="st0" cx="348.8" cy="256" r="18" />
+    </svg>
+  </div>
 </div>

@@ -34,8 +34,8 @@ export class SimulatorFrameComponent implements OnInit {
   iframeUrl: SafeResourceUrl;
   isOpen: boolean = false;
 
-  @ViewChild("anaRoot", { static: false })
-  anaRoot: ElementRef;
+  @ViewChild("intelligoRoot", { static: false })
+  intelligoRoot: ElementRef;
 
   @ViewChild("simulatorIFrame", { static: false })
   simulatorIFrame: ElementRef;
@@ -47,9 +47,9 @@ export class SimulatorFrameComponent implements OnInit {
 
   minMaxBtnClick() {
     this.isOpen = !this.isOpen;
-    if (this.anaRoot && this.anaRoot.nativeElement)
-      (<HTMLDivElement>this.anaRoot.nativeElement).classList.remove(
-        "ana-hidden"
+    if (this.intelligoRoot && this.intelligoRoot.nativeElement)
+      (<HTMLDivElement>this.intelligoRoot.nativeElement).classList.remove(
+        "intelligo-hidden"
       );
   }
 }
