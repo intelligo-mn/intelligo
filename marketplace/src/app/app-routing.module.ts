@@ -8,6 +8,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { SignupComponent } from './signup/signup.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
+import { NavbarComponent } from './shared/navbar/navbar.component';
+import { FooterComponent } from './shared/footer/footer.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 
 const routes: Routes = [
@@ -17,20 +19,18 @@ const routes: Routes = [
   // { path: 'landing', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: '', component: LandingComponent },
-  { path: '**', component: ErrorPageComponent },
   {
     path: 'market',
     loadChildren: () => import('./market/market.module').then(m => m.MarketModule)
   },
+   { path: '**', component: ErrorPageComponent },
 ];
 
 @NgModule({
   imports: [
     CommonModule,
     BrowserModule,
-    RouterModule.forRoot(routes, {
-      useHash: true
-    })
+    RouterModule.forRoot(routes)
   ],
   exports: [
   ],
