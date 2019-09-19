@@ -13,7 +13,6 @@ import { RouterModule } from '@angular/router';
         path: "",
         component: BotListComponent
       },
-
       {
         path: "detail",
         component: BotDetailComponent

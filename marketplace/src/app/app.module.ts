@@ -17,6 +17,7 @@ import { SectionsModule } from "./sections/sections.module";
 import { FooterComponent } from "./shared/footer/footer.component";
 import { NavbarComponent } from "./shared/navbar/navbar.component";
 import { SignupComponent } from "./signup/signup.component";
+import { ErrorPageComponent } from './error-page/error-page.component'; 
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -30,7 +31,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ProfileComponent,
     NavbarComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
