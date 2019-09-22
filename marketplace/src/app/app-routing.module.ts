@@ -13,7 +13,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  // { path: 'home', component: HomeComponent },
   // { path: 'user-profile', component: ProfileComponent },
   // { path: 'register', component: SignupComponent },
   // { path: 'landing', component: LandingComponent },
