@@ -6,6 +6,7 @@
   "studio": {
     "add": "Нэмэх",
     "save": "Хадгалах",
-    "export": "Export Хийх"
+    "export": "Export Хийх",
+    "open": "Нээх"
   }
 }
