@@ -1,6 +1,23 @@
 {
-  "home": {
-    "title": "Chatbots.mn platform - Studio",
-    "language": "Language"
-  }
+	"home": {
+		"add": "Add",
+		"add-description": "Add new chatbot project",
+		"delete": "Delete",
+		"dont-save-projects": " Looks like you don't have any saved chat projects. Start by adding one",
+		"download": "Download",
+		"import": "Import",
+		"import-description": "Import chatbot project from file",
+		"language": "Language",
+		"open": "Open",
+		"projects": "Recent chatbot projects",
+		"rename": "Rename",
+		"search": "Search",
+		"title": "Chatbots.mn platform - Studio"
+	},
+	"studio": {
+		"add": "Add",
+		"export": "Export",
+		"open": "",
+		"save": ""
+	}
 }

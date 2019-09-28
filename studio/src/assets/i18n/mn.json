@@ -1,12 +1,23 @@
 {
-  "home": {
-    "title": "Chatbots.mn платформ - Studio",
-    "language": "Хэл солих"
-  },
-  "studio": {
-    "add": "Нэмэх",
-    "save": "Хадгалах",
-    "export": "Export Хийх",
-    "open": "Нээх"
-  }
+	"home": {
+		"add": "Нэмэх",
+		"add-description": "Шинээр чатбот үүсгэх",
+		"delete": "Устгах",
+		"dont-save-projects": "Таньд чатботын төсөл байхгүй байна. ",
+		"download": "Татах",
+		"import": "Имфорт хийх",
+		"import-description": "Чатбот файлаас имфорт хийх",
+		"language": "Хэл солих",
+		"open": "Нээх",
+		"projects": "Чатботууд",
+		"rename": "Нэр солих",
+		"search": "Хайх",
+		"title": "Chatbots.mn платформ - Studio"
+	},
+	"studio": {
+		"add": "Нэмэх",
+		"export": "Export Хийх",
+		"open": "Нээх",
+		"save": "Хадгалах"
+	}
 }
