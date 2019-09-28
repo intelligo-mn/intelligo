@@ -6,7 +6,7 @@
     <div class="left-sidebar">
       <div class="chatflow-actions" [hidden]="!layoutReady()">
         <button
-          matTooltip="Add new node"
+          matTooltip="{{ 'studio.add-description' | translate }}"
           matTooltipPosition="right"
           type="button"
           mat-button
@@ -16,7 +16,7 @@
           {{ 'studio.add' | translate }}
         </button>
         <button
-          matTooltip="Save chatbot project"
+          matTooltip="{{ 'studio.save-description' | translate }}"
           type="button"
           mat-button
           matTooltipPosition="right"
@@ -26,54 +26,54 @@
           {{ 'studio.save' | translate }}
         </button>
         <button
-          matTooltip="Download chatbot project"
+          matTooltip="{{ 'studio.export-description' | translate }}"
           type="button"
           mat-button
           matTooltipPosition="right"
           (click)="exportChatFlow()"
         >
           <mat-icon class="fab-btn-icon">file_download</mat-icon><br />
-          Export
+          {{ 'studio.export' | translate }}
         </button>
         <button
-          matTooltip="Publish to Chatbots.mn chat server"
+          matTooltip="{{ 'studio.publish-description' | translate }}"
           type="button"
           mat-button
           matTooltipPosition="right"
           (click)="openPublishDialog()"
         >
           <mat-icon class="fab-btn-icon">publish</mat-icon><br />
-          Publish
+          {{ 'studio.publish' | translate }}
         </button>
         <button
-          matTooltip="Run chat in simulator"
+          matTooltip="{{ 'studio.run-chatbot-description' | translate }}"
           type="button"
           mat-button
           matTooltipPosition="right"
           (click)="playChatFlow()"
         >
           <mat-icon class="fab-btn-icon">play_arrow</mat-icon><br />
-          Run Chatbot
+          {{ 'studio.run-chatbot' | translate }}
         </button>
         <button
-          matTooltip="Fit"
+          matTooltip="{{ 'studio.fit' | translate }}"
           type="button"
           mat-button
           matTooltipPosition="right"
           (click)="fitViewToAllNodes()"
         >
           <mat-icon class="fab-btn-icon">zoom_out_map</mat-icon><br />
-          Fit
+          {{ 'studio.fit' | translate }}
         </button>
         <button
-          matTooltip="Close designer"
+          matTooltip="{{ 'studio.close-description' | translate }}"
           type="button"
           mat-button
           matTooltipPosition="right"
           (click)="gotoStartup()"
         >
           <mat-icon class="fab-btn-icon">close</mat-icon><br />
-          Хаах
+          {{ 'studio.close' | translate }}
         </button>
       </div>
     </div>
