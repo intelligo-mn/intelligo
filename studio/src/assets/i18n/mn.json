@@ -2,17 +2,23 @@
 	"home": {
 		"add": "Нэмэх",
 		"add-description": "Шинээр чатбот үүсгэх",
+		"chatbot-project-description": "Чатботын нэрийг оруулна уу",
 		"delete": "Устгах",
 		"dont-save-projects": "Таньд чатботын төсөл байхгүй байна. ",
 		"download": "Татах",
+		"enter-new-name": "Шинэ нэр оруулна уу: ",
 		"import": "Имфорт хийх",
 		"import-description": "Чатбот файлаас имфорт хийх",
+		"invalid-project-file": "Алдаатай файл байна. Та Chatbot.mn ий төслийн файл сонгоно уу.",
 		"language": "Хэл солих",
+		"oops": "Өө!",
 		"open": "Нээх",
+		"project-name": "Чатботын нэр",
 		"projects": "Чатботууд",
 		"rename": "Нэр солих",
 		"search": "Хайх",
-		"title": "Chatbots.mn платформ - Studio"
+		"title": "Chatbots.mn платформ - Studio",
+		"unable-load": "Файл уншихад алдаа гарлаа."
 	},
 	"studio": {
 		"add": "Нэмэх",
