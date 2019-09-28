@@ -24,8 +24,18 @@
 	},
 	"studio": {
 		"add": "Add",
+		"add-description": "Add new node",
+		"close": "Close",
+		"close-description": "Close this project",
 		"export": "Export",
+		"export-description": "Download chatbot project",
+		"fit": "Fit",
 		"open": "",
-		"save": ""
+		"publish": "Publish",
+		"publish-description": "Publish to chatbot.mn chat server",
+		"run-chatbot": "Run Chatbot",
+		"run-chatbot-description": "Run chat in simulator",
+		"save": "",
+		"save-description": "Save chatbot project"
 	}
 }

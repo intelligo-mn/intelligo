@@ -24,8 +24,18 @@
 	},
 	"studio": {
 		"add": "Нэмэх",
+		"add-description": "Шинэ үйлдэл нэмэх",
+		"close": "Хаах",
+		"close-description": "Энэхүү төслөөс гарах",
 		"export": "Export Хийх",
+		"export-description": "Чатботын код татаж авах",
+		"fit": "Дэлгэц дүүргэх",
 		"open": "Нээх",
-		"save": "Хадгалах"
+		"publish": "Publish",
+		"publish-description": "Chatbot.mn дээр publish хийх",
+		"run-chatbot": "Чатбот ажиллуулах",
+		"run-chatbot-description": "Симулатор дээр чатботоо ажиллуулах",
+		"save": "Хадгалах",
+		"save-description": "Чатбот хадгалах"
 	}
 }
