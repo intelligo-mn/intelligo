@@ -126,8 +126,8 @@ export class LandingComponent implements OnInit {
   }
   deleteChatBotProject(name: string) {
     this.infoDialog.confirm(
-      "Sure?",
-      `Are you sure you want to delete '${name}'`,
+      this.translate.instant("home.delete"),
+      this.translate.instant("home.delete-description") + " "+ name,
       ok => {
         if (ok) {
           this.settings.deleteChatProject(name);
