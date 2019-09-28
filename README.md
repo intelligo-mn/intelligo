@@ -1,6 +1,6 @@
 # Chatbots.mn
 
-Conversational AI platform. .
+Conversational AI platform.
 
 ### Platforms 
 
