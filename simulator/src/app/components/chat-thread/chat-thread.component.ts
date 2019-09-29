@@ -476,12 +476,12 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
     let currentDeltaY = null;
 
     // Prevent long press saving on mobiles.
-    imgContainer.ontouchstart = function(e) {
+    imgContainer.ontouchstart = function (e) {
       e.preventDefault();
     };
 
     // Handles pinch and pan events/transforming at the same time;
-    this.hammerManager.on("pinch pan", function(ev) {
+    this.hammerManager.on("pinch pan", function (ev) {
       let transforms = [];
 
       // Adjusting the current pinch/pan event properties using the previous ones set when they finished touching
@@ -495,7 +495,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
       imgContainer.style.transform = transforms.join(" ");
     });
 
-    this.hammerManager.on("panend pinchend", function(ev) {
+    this.hammerManager.on("panend pinchend", function (ev) {
       // Saving the final transforms for adjustment next time the user interacts.
       adjustScale = currentScale;
       adjustDeltaX = currentDeltaX;
@@ -643,7 +643,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
               "*"
             );
           }
-        } catch (e) {}
+        } catch (e) { }
         this.stompService.connect();
       });
     }

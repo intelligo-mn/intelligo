@@ -16,7 +16,8 @@
         <ng-container *ngSwitchCase="ComplexType.Address">
 
             <mat-form-field>
-                <input matInput type="text" placeholder="Street Address" [(ngModel)]="givenAddress.line1" name="addressLine1">
+                <input matInput type="text" placeholder="Street Address" [(ngModel)]="givenAddress.line1"
+                    name="addressLine1">
             </mat-form-field>
 
             <mat-form-field>
@@ -32,7 +33,8 @@
             </mat-form-field>
 
             <mat-form-field>
-                <input matInput type="text" placeholder="Country" [(ngModel)]="givenAddress.country" name="addressCountry">
+                <input matInput type="text" placeholder="Country" [(ngModel)]="givenAddress.country"
+                    name="addressCountry">
             </mat-form-field>
 
             <mat-form-field>
@@ -41,7 +43,8 @@
         </ng-container>
         <ng-container *ngSwitchCase="ComplexType.Location">
             <agm-map [latitude]="geoLoc.lat" [longitude]="geoLoc.lng">
-                <agm-marker [latitude]="geoLoc.lat" [longitude]="geoLoc.lng" [markerDraggable]="true" (dragEnd)="mapLocationUpdated($event)"></agm-marker>
+                <agm-marker [latitude]="geoLoc.lat" [longitude]="geoLoc.lng" [markerDraggable]="true"
+                    (dragEnd)="mapLocationUpdated($event)"></agm-marker>
             </agm-map>
         </ng-container>
         <ng-container *ngSwitchCase="ComplexType.List">
@@ -53,13 +56,15 @@
             </mat-card>
             <mat-list *ngIf="listMultiple">
                 <mat-list-item *ngFor="let listItem of searchedListValues(); let i = index">
-                    <mat-checkbox [(ngModel)]="listItem.isSelected" name="listItemIsSelected-{{i}}" align="start">{{listItem.text}}</mat-checkbox>
+                    <mat-checkbox [(ngModel)]="listItem.isSelected" name="listItemIsSelected-{{i}}" align="start">
+                        {{listItem.text}}</mat-checkbox>
                 </mat-list-item>
             </mat-list>
             <mat-list *ngIf="!listMultiple">
                 <mat-radio-group [(ngModel)]="selectedListItem">
                     <mat-list-item *ngFor="let listItem of searchedListValues(); let i = index">
-                        <mat-radio-button name="listItemIsSelected-{{i}}" [value]="listItem" align="start">{{listItem.text}}</mat-radio-button>
+                        <mat-radio-button name="listItemIsSelected-{{i}}" [value]="listItem" align="start">
+                            {{listItem.text}}</mat-radio-button>
                     </mat-list-item>
                 </mat-radio-group>
             </mat-list>
@@ -67,5 +72,6 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
-    <button mat-raised-button color="primary" [disabled]="!isValid()" mat-button class="complex-input-btn-done" (click)="dialogClose()">Submit</button>
+    <button mat-raised-button color="primary" [disabled]="!isValid()" mat-button class="complex-input-btn-done"
+        (click)="dialogClose()">Submit</button>
 </mat-dialog-actions>
