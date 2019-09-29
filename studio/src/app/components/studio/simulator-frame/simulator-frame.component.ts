@@ -16,7 +16,7 @@ export class SimulatorFrameComponent implements OnInit {
         secondaryBackgroundColor: "#3c3c3c",
         logoUrl: `favicon.ico`,
         agentName: "Chatbots.mn",
-        frameHeight: "70vh",
+        frameHeight: "100%",
         frameWidth: "360px"
       },
       simulatorMode: true,
