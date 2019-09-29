@@ -1,5 +1,5 @@
 {
-  "name": "simulator",
+  "name": "simulator.chatbots.mn",
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
@@ -54,8 +54,8 @@
     "protractor": "~5.4.2",
     "ts-node": "~8.4.1",
     "tslint": "~5.20.0",
-    "typescript": "~3.6.3",
-    "@angular-devkit/core": "8.3.3",
+    "typescript": "~3.5.3",
+    "@angular-devkit/core": "8.3.6",
     "@types/hammerjs": "^2.0.36",
     "@types/jsonpath": "^0.2.0",
     "@types/sockjs-client": "^1.1.1",
