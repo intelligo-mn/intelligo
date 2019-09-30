@@ -1,15 +1,11 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ChatBotReferance, ChatServerConnection } from '../../../models/app.models';
-import { SettingsService } from '../../../services/settings.service';
-import { ChatFlowService } from '../../../services/chatflow.service';
-import { InfoDialogService } from '../../../services/info-dialog.service';
-import { ChatServerManagerComponent } from '../chat-server-manager/chat-server-manager.component';
-import * as models from '../../../models/chatflow.models';
-import { DataService } from '../../../services/data.service';
-import { LoginService } from '../../../services/login.service';
 import { ChatProject } from '../../../models/data.models';
+import { DataService } from '../../../services/data.service';
 import { GlobalsService } from '../../../services/globals.service';
+import { InfoDialogService } from '../../../services/info-dialog.service';
+import { LoginService } from '../../../services/login.service';
+import { SettingsService } from '../../../services/settings.service';
 
 @Component({
 	selector: 'app-create-chatbot',
