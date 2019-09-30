@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Edit chat node information</h2>
+<h2 mat-dialog-title>{{ 'studio.edit-chat-node-info' | translate }}</h2>
 <mat-dialog-content>
   <mat-tab-group #tabGroup>
     <mat-tab label="Node Info" #nodeInfoTab>
@@ -8,14 +8,14 @@
             <input
               matInput
               type="text"
-              placeholder="Node Name"
+              placeholder="{{ 'studio.node-name' | translate }}"
               [(ngModel)]="chatNode.Name"
               name="nodeName"
             />
           </mat-form-field>
           <mat-form-field>
             <mat-select
-              placeholder="Node Type"
+              placeholder="{{ 'studio.node-type' | translate }}"
               [(ngModel)]="chatNode.NodeType"
               name="nodeType"
             >
@@ -30,7 +30,7 @@
               (click)="MH.resetOtherStartNodes(chatNode)"
               name="isStartNode"
               align="start"
-              >Mark as start node</mat-checkbox
+              >{{ 'studio.mark-as-start-node' | translate }}</mat-checkbox
             >
           </section>
           <section class="form-field">
@@ -38,7 +38,7 @@
               [(ngModel)]="chatNode.IsGoalNode"
               name="isGoalNode"
               align="start"
-              >Mark as goal node</mat-checkbox
+              >{{ 'studio.mark-as-goal-node' }}</mat-checkbox
             >
           </section>
           <mat-form-field>
