@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Route, ActivatedRoute, Router } from '@angular/router';
-import { User, BusinessAccount } from '../../../models/data.models';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BusinessAccount, User } from '../../../models/data.models';
 import { DataService } from '../../../services/data.service';
 import { InfoDialogService } from '../../../services/info-dialog.service';
-import { MatDialog } from '@angular/material';
-import { CreateUserComponent, UserDialogParam, UserDialogMode } from '../../shared/create-user/create-user.component';
 import { AppHeaderBarComponent } from '../../shared/app-header-bar/app-header-bar.component';
+import { CreateUserComponent, UserDialogMode, UserDialogParam } from '../../shared/create-user/create-user.component';
 import { UpdatePasswordComponent } from '../../shared/update-password/update-password.component';
 
 @Component({
