@@ -2,6 +2,7 @@
 	"home": {
 		"add": "Add",
 		"add-description": "Add new chatbot project",
+		"change-password": "Change password",
 		"delete": "Delete",
 		"delete-description": "Are you sure you want to delete",
 		"dont-have-projects": " Looks like you don't have any saved chat projects. Start by adding one",
@@ -11,6 +12,8 @@
 		"import-description": "Import chatbot project from file",
 		"invalid-project-file": "Invalid file. Please select a valid Chatbots.mn project file",
 		"language": "Language",
+		"login": "Login",
+		"logout": "Logout",
 		"new-node": "New Node",
 		"oops": "Oops!",
 		"open": "Open",

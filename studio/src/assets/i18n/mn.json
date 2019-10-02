@@ -2,6 +2,7 @@
 	"home": {
 		"add": "Нэмэх",
 		"add-description": "Шинээр чатбот үүсгэх",
+		"change-password": "Нууц үг солих",
 		"delete": "Устгах",
 		"delete-description": "Та энэхүү төслийн устгахдаа итгэлтэй байна уу",
 		"dont-have-projects": "Таньд чатботын төсөл байхгүй байна. ",
@@ -11,6 +12,8 @@
 		"import-description": "Чатбот файлаас имфорт хийх",
 		"invalid-project-file": "Алдаатай файл байна. Та Chatbot.mn ий төслийн файл сонгоно уу.",
 		"language": "Хэл солих",
+		"login": "Нэвтрэх",
+		"logout": "Гарах",
 		"new-node": "Шинэ Үйлдэл",
 		"oops": "Өө!",
 		"open": "Нээх",
