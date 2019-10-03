@@ -497,17 +497,6 @@ or
 "tslint.exclude": "**/node_modules/**/*.ts"
 ```
 
-### Disclaimer
-
-- This is not an official HCL ERS product.
-
-### Thank you
-
-- Special thanks to the JetBrains team for supporting the open source community and this project.
-- This is simply the best IDE for developers. 
-
-[![JetBrains image](public/jetbrains.png)](https://www.jetbrains.com/?from=https://github.com/ERS-HCL/nxplorerjs-microservice-starter)
-
 ### License
 
 MIT
