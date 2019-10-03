@@ -15,7 +15,7 @@
         </span>
         <span class="user-info" *ngIf="!loggedInUser">
             <span class="user-name">
-                <button mat-raised-button (click)="loginDialog()" color="primary" class="inverse">Login</button>
+                <button mat-raised-button (click)="loginDialog()" color="primary" class="inverse">{{ 'home.login' | translate }}</button>
             </span>
         </span>
         <button mat-icon-button [matMenuTriggerFor]="menu" class="toolbar-icon" *ngIf="loggedInUser">
@@ -24,11 +24,11 @@
         <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="changePassword()">
                 <mat-icon>lock_outline</mat-icon>
-                <span>Change password</span>
+                <span>{{ 'home.change-password' | translate }}</span>
             </button>
             <button mat-menu-item (click)="logout()">
                 <mat-icon>exit_to_app</mat-icon>
-                <span>Logout</span>
+                <span>{{ 'home.logout' | translate }}</span>
             </button>
         </mat-menu>
     </mat-toolbar-row>

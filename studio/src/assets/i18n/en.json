@@ -1,6 +1,50 @@
 {
-  "home": {
-    "title": "Chatbots.mn platform - Studio",
-    "language": "Language"
-  }
+	"home": {
+		"add": "Add",
+		"add-description": "Add new chatbot project",
+		"change-password": "Change password",
+		"delete": "Delete",
+		"delete-description": "Are you sure you want to delete",
+		"dont-have-projects": " Looks like you don't have any saved chat projects. Start by adding one",
+		"download": "Download",
+		"enter-new-name": "Enter a new name: ",
+		"import": "Import",
+		"import-description": "Import chatbot project from file",
+		"invalid-project-file": "Invalid file. Please select a valid Chatbots.mn project file",
+		"language": "Language",
+		"login": "Login",
+		"logout": "Logout",
+		"new-node": "New Node",
+		"oops": "Oops!",
+		"open": "Open",
+		"project-name": "Chatbot Project Name",
+		"project-name-description": "Enter a name for your new chatbot project",
+		"projects": "Recent chatbot projects",
+		"rename": "Rename",
+		"search": "Search",
+		"title": "Chatbots.mn platform - Studio",
+		"unable-load": "Unable to load file."
+	},
+	"studio": {
+		"add": "Add",
+		"add-description": "Add new node",
+		"close": "Close",
+		"close-description": "Close this project",
+		"double-click-edit-node": "Double click to edit node",
+		"edit-chat-node-info": "Edit chat node information",
+		"export": "Export",
+		"export-description": "Download chatbot project",
+		"fit": "Fit",
+		"mark-as-goal-node": "Mark as goal node",
+		"mark-as-start-node": "Mark as start node",
+		"node-name": "Node Name",
+		"node-type": "Node Type",
+		"open": "",
+		"publish": "Publish",
+		"publish-description": "Publish to chatbot.mn chat server",
+		"run-chatbot": "Run Chatbot",
+		"run-chatbot-description": "Run chat in simulator",
+		"save": "",
+		"save-description": "Save chatbot project"
+	}
 }

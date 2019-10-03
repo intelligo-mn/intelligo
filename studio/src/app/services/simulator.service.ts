@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
 
 import * as models from '../models/chatflow.models';
-import * as chatModels from '../models/ana-chat.models';
+import * as chatModels from '../models/intelligo-chat.models';
 import * as jsonpath from 'jsonpath';
 import * as _ from 'underscore';
 
@@ -76,13 +76,13 @@ export class SimulatorService {
 		}
 	}
 
-	handleIncomingMessage(message: chatModels.ANAChatMessage) {
+	handleIncomingMessage(message: chatModels.IntelligoChatMessage) {
 		this.logDebug("Incoming message from client: ");
 		this.logDebug(message);
 		this.processIncomingMessage(message);
 	}
 
-	pushMessageToClient(message: chatModels.ANAChatMessage) {
+	pushMessageToClient(message: chatModels.IntelligoChatMessage) {
 		if (this.simulatorFrame) {
 			let resp: AnaChatSimulatorMessage = {
 				data: message,
@@ -100,7 +100,7 @@ export class SimulatorService {
 		}
 	}
 
-	private processIncomingMessage(chatMsg: chatModels.ANAChatMessage) {
+	private processIncomingMessage(chatMsg: chatModels.IntelligoChatMessage) {
 		let message = chatMsg.data;
 		if (message.type == chatModels.MessageType.INPUT) {
 			let ipMsgContent = message.content as chatModels.InputContent;
@@ -475,8 +475,8 @@ export class SimulatorService {
 		}
 	}
 
-	private prepareReplyAndSend(data: chatModels.ANAMessageData) {
-		let meta: chatModels.ANAMeta = {
+	private prepareReplyAndSend(data: chatModels.IntelligoMessageData) {
+		let meta: chatModels.IntelligoMeta = {
 			id: this.globals.uuidv4(),
 			recipient: {
 				id: this.simulatorBusinessId,
@@ -497,11 +497,11 @@ export class SimulatorService {
 		});
 	}
 
-	private convertSection(section: models.Section): chatModels.ANAMessageData {
+	private convertSection(section: models.Section): chatModels.IntelligoMessageData {
 		let anaMessageContent: chatModels.SimpleContent = {
 			text: ''
 		};
-		let anaMessageData: chatModels.ANAMessageData = {
+		let anaMessageData: chatModels.IntelligoMessageData = {
 			content: anaMessageContent,
 			type: chatModels.MessageType.SIMPLE
 		};
@@ -582,7 +582,7 @@ export class SimulatorService {
 		return anaMessageData;
 	}
 
-	private convertButtons(chatNode: models.ChatNode, callback: (resp: chatModels.ANAMessageData) => void): void {
+	private convertButtons(chatNode: models.ChatNode, callback: (resp: chatModels.IntelligoMessageData) => void): void {
 
 		let clickInputs = _.filter(chatNode.Buttons, x => _.contains([
 			models.ButtonType.DeepLink,
@@ -919,5 +919,5 @@ export interface SimulatorMessage {
 }
 
 export interface AnaChatSimulatorMessage extends SimulatorMessage {
-	data: chatModels.ANAChatMessage;
+	data: chatModels.IntelligoChatMessage;
 }

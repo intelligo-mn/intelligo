@@ -6,6 +6,8 @@
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-raised-button color="primary" (click)="primaryClick()" *ngIf="primaryButtonText">{{primaryButtonText}}</button>
-    <button mat-raised-button [color]="options.dialogType==InfoDialogType.Alert?'primary':''" [matDialogClose]="false">{{secondaryButtonText}}</button>
+    <button mat-raised-button color="primary" (click)="primaryClick()"
+        *ngIf="primaryButtonText">{{primaryButtonText}}</button>
+    <button mat-raised-button [color]="options.dialogType==InfoDialogType.Alert?'primary':''"
+        [matDialogClose]="false">{{secondaryButtonText}}</button>
 </mat-dialog-actions>

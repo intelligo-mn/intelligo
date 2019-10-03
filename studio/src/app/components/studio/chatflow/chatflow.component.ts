@@ -639,7 +639,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
   exportChatFlow() {
     let pack = this.saveChatFlow();
     this.globalsService.downloadTextAsFile(
-      this.projName + ".anaproj",
+      this.projName + ".intelligo",
       JSON.stringify(pack)
     );
   }

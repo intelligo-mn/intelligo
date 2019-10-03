@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -34,6 +34,12 @@ import { InfoDialogService } from './services/info-dialog.service';
 import { LoginService } from './services/login.service';
 import { SettingsService } from './services/settings.service';
 import { SimulatorService } from './services/simulator.service';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(httpClient: HttpClient) {
+	return new TranslateHttpLoader(httpClient);
+}
 
 @NgModule({
 	declarations: [
@@ -86,7 +92,14 @@ import { SimulatorService } from './services/simulator.service';
 		MatAutocompleteModule,
 		MatChipsModule,
 		MatSlideToggleModule,
-		MatRadioModule
+		MatRadioModule,
+		TranslateModule.forRoot({
+			loader: {
+				provide: TranslateLoader,
+				useFactory: HttpLoaderFactory,
+				deps: [HttpClient]
+			}
+		})
 	],
 	exports: [
 		BrowserModule,
@@ -137,7 +150,9 @@ import { SimulatorService } from './services/simulator.service';
 		BusinessPickerComponent,
 		AnaCloudSignupComponent,
 		AutofocusDirective,
-		EllipsisPipe],
+		EllipsisPipe,
+		TranslateModule
+	],
 	providers: [
 		ChatFlowService,
 		GlobalsService,

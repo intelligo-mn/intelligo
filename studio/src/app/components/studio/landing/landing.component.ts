@@ -5,6 +5,7 @@ import { GlobalsService } from "../../../services/globals.service";
 import { SettingsService } from "../../../services/settings.service";
 import * as models from "../../../models/chatflow.models";
 import { ObjectID } from "bson";
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: "app-studio-landing",
@@ -16,7 +17,8 @@ export class LandingComponent implements OnInit {
     private router: Router,
     private globals: GlobalsService,
     private infoDialog: InfoDialogService,
-    private settings: SettingsService
+    private settings: SettingsService,
+    private translate: TranslateService
   ) {
     this.globals.setPageTitle();
     this.loadSavedProjects();
@@ -50,13 +52,13 @@ export class LandingComponent implements OnInit {
           });
         };
         reader.onerror = () => {
-          this.infoDialog.alert("Oops!", "Unable to load the file!");
+          this.infoDialog.alert(this.translate.instant("home.oops"), this.translate.instant("home.unable-load"));
         };
         reader.readAsText(selectedFile, "UTF-8");
       } else
         this.infoDialog.alert(
-          "Oops!",
-          "Invalid file. Please select a valid Chatbots.mn project file"
+          this.translate.instant("home.oops"),
+          this.translate.instant("home.invalid-project-file")
         );
     }
   }
@@ -70,8 +72,8 @@ export class LandingComponent implements OnInit {
   }
   addProject() {
     this.infoDialog.prompt(
-      "Chatbot Project Name",
-      "Enter a name for your new chatbot project",
+      this.translate.instant("home.project-name"),
+      this.translate.instant("home.project-name-description"),
       name => {
         if (!name) return;
 
@@ -111,8 +113,8 @@ export class LandingComponent implements OnInit {
   }
   renameChatBotProject(name: string) {
     this.infoDialog.prompt(
-      "Rename",
-      "Enter a new name: ",
+      this.translate.instant("home.rename"),
+      this.translate.instant("home.enter-new-name"),
       newName => {
         if (newName && name != newName) {
           this.settings.renameChatProject(name, newName);
@@ -124,8 +126,8 @@ export class LandingComponent implements OnInit {
   }
   deleteChatBotProject(name: string) {
     this.infoDialog.confirm(
-      "Sure?",
-      `Are you sure you want to delete '${name}'`,
+      this.translate.instant("home.delete"),
+      this.translate.instant("home.delete-description") + " "+ name,
       ok => {
         if (ok) {
           this.settings.deleteChatProject(name);

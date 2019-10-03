@@ -1,10 +1,9 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Router } from "@angular/router";
+import { LoginData } from '../../../models/data.models';
 import { DataService } from '../../../services/data.service';
 import { InfoDialogService } from '../../../services/info-dialog.service';
-import { MatDialog } from '@angular/material';
-import { LoginComponent } from '../../shared/login/login.component';
-import { LoginData } from '../../../models/data.models';
 import { LoginService } from '../../../services/login.service';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 

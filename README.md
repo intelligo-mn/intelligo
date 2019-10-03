@@ -1,6 +1,6 @@
 # Chatbots.mn
 
-Conversational AI platform. .
+Conversational AI platform.
 
 ### Platforms 
 
@@ -18,6 +18,7 @@ Conversational AI platform. .
 | Apps | Web | Status |
 |-----------|--------------|--------------|
 | Intelligo Platform | [www.intelligo.systems](https://www.intelligo.systems) | [![Netlify Status](https://api.netlify.com/api/v1/badges/d99f8dbe-1a04-469d-8b29-2ca984dc11c5/deploy-status)](https://app.netlify.com/sites/intelligosystems/deploys) |
+| Intelligo Platform API | [api.intelligo.systems](https://api.intelligo.systems) | [![Netlify Status](https://api.netlify.com/api/v1/badges/d99f8dbe-1a04-469d-8b29-2ca984dc11c5/deploy-status)](https://app.netlify.com/sites/intelligosystems/deploys) |
 | Intelligo Framework | [intelligo.js.org](https://intelligo.js.org) | [![Netlify Status](https://api.netlify.com/api/v1/badges/b5da6232-0003-4718-bd5e-5d122b981eb6/deploy-status)](https://app.netlify.com/sites/intelligo/deploys) |
 | Neuro Framework | [neuro.js.org](https://neuro.js.org) | [![Netlify Status](https://api.netlify.com/api/v1/badges/e50b93e2-67b8-4c6e-a4cc-c245b571f3cc/deploy-status)](https://app.netlify.com/sites/neurojs/deploys) |
 

@@ -1,6 +1,50 @@
 {
-  "home": {
-    "title": "Chatbots.mn платформ - Studio",
-    "language": "Хэл солих"
-  }
+	"home": {
+		"add": "Нэмэх",
+		"add-description": "Шинээр чатбот үүсгэх",
+		"change-password": "Нууц үг солих",
+		"delete": "Устгах",
+		"delete-description": "Та энэхүү төслийн устгахдаа итгэлтэй байна уу",
+		"dont-have-projects": "Таньд чатботын төсөл байхгүй байна. ",
+		"download": "Татах",
+		"enter-new-name": "Шинэ нэр оруулна уу: ",
+		"import": "Имфорт хийх",
+		"import-description": "Чатбот файлаас имфорт хийх",
+		"invalid-project-file": "Алдаатай файл байна. Та Chatbot.mn ий төслийн файл сонгоно уу.",
+		"language": "Хэл солих",
+		"login": "Нэвтрэх",
+		"logout": "Гарах",
+		"new-node": "Шинэ Үйлдэл",
+		"oops": "Өө!",
+		"open": "Нээх",
+		"project-name": "Чатботын нэр",
+		"project-name-description": "Чатботын нэрийг оруулна уу",
+		"projects": "Чатботууд",
+		"rename": "Нэр солих",
+		"search": "Хайх",
+		"title": "Chatbots.mn платформ - Studio",
+		"unable-load": "Файл уншихад алдаа гарлаа."
+	},
+	"studio": {
+		"add": "Нэмэх",
+		"add-description": "Шинэ үйлдэл нэмэх",
+		"close": "Хаах",
+		"close-description": "Энэхүү төслөөс гарах",
+		"double-click-edit-node": "Хоёр удаа дарж засна уу",
+		"edit-chat-node-info": "Чатботын үйлдэлийн мэдээлэл засах",
+		"export": "Export Хийх",
+		"export-description": "Чатботын код татаж авах",
+		"fit": "Дэлгэц дүүргэх",
+		"mark-as-goal-node": "Хамгийн сүүлийн үйлдэл",
+		"mark-as-start-node": "Хамгийн эхэнд ажиллах үйлдэл",
+		"node-name": "Үйлдэлийн нэр",
+		"node-type": "Үйлдэлийн төрөл",
+		"open": "Нээх",
+		"publish": "Publish",
+		"publish-description": "Chatbot.mn дээр publish хийх",
+		"run-chatbot": "Чатбот ажиллуулах",
+		"run-chatbot-description": "Симулатор дээр чатботоо ажиллуулах",
+		"save": "Хадгалах",
+		"save-description": "Чатбот хадгалах"
+	}
 }

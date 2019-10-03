@@ -1,12 +1,11 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
+import { AfterViewInit, Component, Injectable, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from "@angular/router";
+import { BusinessAccount, BusinessAccountStatus } from '../../../models/data.models';
 import { DataService } from '../../../services/data.service';
 import { InfoDialogService } from '../../../services/info-dialog.service';
-import { MatDialog } from '@angular/material';
-import { LoginComponent } from '../../shared/login/login.component';
 import { AppHeaderBarComponent } from '../../shared/app-header-bar/app-header-bar.component';
 import { EditBusinessAccountComponent } from '../../shared/edit-business-account/edit-business-account.component';
-import { BusinessAccount, BusinessAccountStatus } from '../../../models/data.models';
 
 @Component({
 	selector: 'app-biz-accounts',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as models from '../models/chatflow.models';
-import { ANADate, ANATime, AddressInput, GeoLoc } from '../models/ana-chat.models';
+import { IntelligoDate, IntelligoTime, AddressInput, GeoLoc } from '../models/intelligo-chat.models';
 import { Title } from '@angular/platform-browser';
 import { ChatFlowComponent } from '../components/studio/chatflow/chatflow.component';
 import { ObjectID } from 'bson';
@@ -47,11 +47,11 @@ export class GlobalsService {
 		else return VariableType.Other;
 	}
 
-	anaDateDisplay(anaDate: ANADate) {
+	anaDateDisplay(anaDate: IntelligoDate) {
 		return `${parseInt(anaDate.mday)}-${parseInt(anaDate.month)}-${parseInt(anaDate.year)}`;
 	}
 
-	anaTimeDisplay(anaTime: ANATime) {
+	anaTimeDisplay(anaTime: IntelligoTime) {
 		let hr = parseInt(anaTime.hour);
 		let min = parseInt(anaTime.minute);
 

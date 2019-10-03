@@ -1,9 +1,8 @@
-﻿import { NgModule, Injectable } from '@angular/core';
-import { RouterModule, Routes, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { BizAccountsComponent, CanActivateBizAccountComponent } from './biz-accounts/biz-accounts.component';
+﻿import { NgModule } from '@angular/core';
+import { Routes } from '@angular/router';
 import { SharedModule } from '../../shared.module';
+import { BizAccountsComponent, CanActivateBizAccountComponent } from './biz-accounts/biz-accounts.component';
 import { UsersComponent } from './users/users.component';
-import { DataService } from '../../services/data.service';
 export const MANAGE_USERS_ROUTES: Routes = [
 	{
 		path: "",

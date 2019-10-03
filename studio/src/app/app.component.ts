@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalsService } from './services/globals.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, transformMenu } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -17,8 +17,7 @@ export class AppComponent {
 		public dialog: MatDialog) {
 		translate.addLangs(['mn', 'en']);
 		translate.setDefaultLang('mn');
-		const browserLang = translate.getBrowserLang();
-		translate.use(browserLang.match(/en|mn/) ? browserLang : 'mn');
+		translate.use('mn');
 	}
 
 	loading() {

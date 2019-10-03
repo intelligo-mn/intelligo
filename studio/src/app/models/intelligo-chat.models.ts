@@ -1,12 +1,12 @@
-﻿export interface ANAClientInfo {
+﻿export interface IntelligoClientInfo {
 	id: string;
 	medium: number;
 }
 
-export interface ANAMeta {
+export interface IntelligoMeta {
 	id: string;
-	sender: ANAClientInfo;
-	recipient: ANAClientInfo;
+	sender: IntelligoClientInfo;
+	recipient: IntelligoClientInfo;
 	senderType: SenderType;
 	timestamp: number;
 	sessionId: string;
@@ -63,19 +63,19 @@ export interface BaseContent {
 	mandatory?: Bool;
 }
 
-export interface SimpleMessageData extends ANAMessageData {
+export interface SimpleMessageData extends IntelligoMessageData {
 	content: SimpleContent;
 }
 
-export interface CarouselMessageData extends ANAMessageData {
+export interface CarouselMessageData extends IntelligoMessageData {
 	content: CarouselContent;
 }
 
-export interface InputMessageData extends ANAMessageData {
+export interface InputMessageData extends IntelligoMessageData {
 	content: InputContent;
 }
 
-export interface ANAMessageData {
+export interface IntelligoMessageData {
 	type: MessageType;
 	content: BaseContent;
 }
@@ -144,40 +144,40 @@ export interface LocationInputContent extends InputContent {
 	input: LocationInput;
 }
 
-export interface ANADate {
+export interface IntelligoDate {
 	year: string;
 	month: string;
 	mday: string;
 }
-export interface ANADateRange {
-	min: ANADate;
-	max: ANADate;
+export interface IntelligoDateRange {
+	min: IntelligoDate;
+	max: IntelligoDate;
 	interval: string;
 }
 
 export interface DateInput {
-	date: ANADate;
+	date: IntelligoDate;
 }
 
 export interface DateInputContent extends InputContent {
-	dateRange?: ANADateRange;
+	dateRange?: IntelligoDateRange;
 	input: DateInput;
 }
-export interface ANATime {
+export interface IntelligoTime {
 	hour: string;
 	minute: string;
 	second: string;
 }
-export interface ANATimeRange {
-	min: ANATime;
-	max: ANATime;
+export interface IntelligoTimeRange {
+	min: IntelligoTime;
+	max: IntelligoTime;
 	interval: string;
 }
 export interface TimeInput {
-	time: ANATime;
+	time: IntelligoTime;
 }
 export interface TimeInputContent extends InputContent {
-	dateRange: ANATimeRange;
+	dateRange: IntelligoTimeRange;
 	input: TimeInput;
 }
 
@@ -252,7 +252,7 @@ export interface MediaInputContent extends InputContent {
 	input: MediaInput;
 }
 
-export interface ANAChatMessage {
-	meta: ANAMeta;
-	data: ANAMessageData;
+export interface IntelligoChatMessage {
+	meta: IntelligoMeta;
+	data: IntelligoMessageData;
 }

@@ -18,7 +18,7 @@ export class SettingsService {
 	}
 
 	saveChatProject(chatProjectName: string, pack: ChatFlowPack, quite: boolean, next?: () => void) {
-		chatProjectName += '.anaproj';
+		chatProjectName += '.intelligo';
 
 		if (quite) {
 			localStorage.setItem(chatProjectName, JSON.stringify(pack));
@@ -41,7 +41,7 @@ export class SettingsService {
 	}
 
 	getChatProject(chatProjectName: string) {
-		chatProjectName += '.anaproj';
+		chatProjectName += '.intelligo';
 
 		let existing = localStorage.getItem(chatProjectName);
 		if (!existing) {
@@ -54,8 +54,8 @@ export class SettingsService {
 	listSavedChatProjectNames() {
 		let savedProjs = [];
 		for (var key in localStorage) {
-			if (key.endsWith('.anaproj')) {
-				let name = key.replace(new RegExp('\.anaproj$'), '');
+			if (key.endsWith('.intelligo')) {
+				let name = key.replace(new RegExp('\.intelligo$'), '');
 				savedProjs.push(name);
 			}
 		}
@@ -66,8 +66,8 @@ export class SettingsService {
 		if (oldName == newName)
 			return;
 
-		oldName += ".anaproj";
-		newName += ".anaproj";
+		oldName += ".intelligo";
+		newName += ".intelligo";
 
 		let temp = localStorage.getItem(oldName);
 		if (!temp) {
@@ -79,7 +79,7 @@ export class SettingsService {
 	}
 
 	deleteChatProject(name: string) {
-		name += ".anaproj";
+		name += ".intelligo";
 
 		let exists = localStorage.getItem(name);
 		if (!exists) {
