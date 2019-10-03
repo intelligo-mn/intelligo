@@ -5,7 +5,8 @@ import {
   httpPost,
   interfaces,
   request,
-  response
+  response,
+  next
 } from 'inversify-express-utils';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt-nodejs';
@@ -14,11 +15,12 @@ import SERVICE_IDENTIFIER from '../../../common/constants/identifiers';
 import { ILogger, ISecurity, JWT_KeyType } from '../../../common/interfaces';
 import { HttpStatus } from '../../services';
 import { User } from '../../../common/models/user.model';
+import { NextFunction } from 'connect';
 
 /**
  * Controller for Security Token
  */
-@controller('/login')
+@controller('/auth')
 class SecurityController implements interfaces.Controller {
   public loggerService: ILogger;
   public securityService: ISecurity;
@@ -36,7 +38,7 @@ class SecurityController implements interfaces.Controller {
    * @param req request
    * @param res response
    */
-  @httpPost('/')
+  @httpPost('/login')
   public async login(@request() req: Request, @response() res: Response) {
     const email = req.body.email;
     const password = req.body.password;
@@ -89,20 +91,25 @@ class SecurityController implements interfaces.Controller {
    * @param res response
    */
   @httpPost('/register')
-  public async register(@request() req: Request, @response() res: Response) {
+  public async register(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
     const email = req.body.email;
-    const password = req.body.password;
+    let password = req.body.password;
     const name = req.body.name;
-    const lastName = req.body.lastName;
+    const role = req.body.role;
     try {
-      const hash = await bcrypt.hash(password, 10);
-
-      const user = new User({
-        name,
-        lastName,
-        email,
-        password: hash
+      bcrypt.hash(password, 10, undefined, (err: Error, hash) => {
+        if (err) { return next(err); }
+        password = hash;
+        next();
       });
+      const user = new User({
+        name: name,
+        email: email,
+        password: password,
+        role: role
+      });
+
+      console.log(user)
 
       const newUser = await user.save();
 

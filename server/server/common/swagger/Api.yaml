@@ -211,6 +211,30 @@ definitions:
         enum:
           - admin
           - guest
+  RegisterBody:
+    type: object
+    title: user register
+    required:
+      - email
+      - password
+      - role
+      - name
+    properties:
+      name:
+        type: string
+        description: The user name
+      email:
+        type: string
+        description: The user email
+      password:
+        type: string
+        description: The user password
+      role:
+        type: string
+        description: User Role
+        enum:
+          - admin
+          - guest
   Token:
     type: object
     properties:
@@ -220,7 +244,7 @@ definitions:
         type: string
 
 paths:
-  /login:
+  /auth/login:
     post:
       tags:
         - Chatbots.mn Auth
@@ -244,6 +268,28 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/LoginBody'
+  /auth/register:
+    post:
+      tags:
+        - Chatbots.mn Auth
+      description: |
+        Register to user 
+      responses:
+        '200':
+          description: Returns valid 
+        '401':
+          description: Unauthorized user
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          description: used user info
+          required: true
+          schema:
+            $ref: '#/definitions/RegisterBody'
   /shop/products:
     get:
       tags:
