@@ -7,6 +7,11 @@
 
 ---
 
+<<<<<<< HEAD
+=======
+![Chatbots.mn](public/logo.png)
+
+>>>>>>> 32bffb21f4ae884aff94bc3e90f356fff2d93ef7
 Chatbots.mn Cloud Native Node JS Express Reactive Microservice (REST/GraphQL)
 This project provides complete Node JS / Typescript based microservices template with all that will be needed features for production deployment , monitoring , debugging , logging , security , CI/CD. Reactive extensions based samples are added as well to demonstrate how this can be used for building a microservice API edge-service , a backend for frontend or use it as a base for building any kind of microservice.
 

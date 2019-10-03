@@ -9,7 +9,7 @@ import {
   next
 } from 'inversify-express-utils';
 import * as jwt from 'jsonwebtoken';
-import * as bcrypt from 'bcrypt-nodejs';
+import bcrypt from 'bcrypt';
 import IDGenerator from '../../../common/config/utils';
 import SERVICE_IDENTIFIER from '../../../common/constants/identifiers';
 import { ILogger, ISecurity, JWT_KeyType } from '../../../common/interfaces';
@@ -44,7 +44,7 @@ class SecurityController implements interfaces.Controller {
     const password = req.body.password;
     const role = req.body.role;
     try {
-      const user: any = await User.findOne({ email: req.body.email });
+      const user: any = await User.findOne({ email: email });
       if (!user) {
         return res.status(404).send({
           success: false,
@@ -97,15 +97,11 @@ class SecurityController implements interfaces.Controller {
     const name = req.body.name;
     const role = req.body.role;
     try {
-      bcrypt.hash(password, 10, undefined, (err: Error, hash) => {
-        if (err) { return next(err); }
-        password = hash;
-        next();
-      });
+      const hash = await bcrypt.hash(password, 10);
       const user = new User({
         name: name,
         email: email,
-        password: password,
+        password: hash,
         role: role
       });
 

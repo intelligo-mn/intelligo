@@ -41,7 +41,11 @@
     "node": "10.3.0"
   },
   "dependencies": {
+<<<<<<< HEAD
+    "bcrypt": "^3.0.6",
+=======
     "bcrypt-nodejs": "0.0.3",
+>>>>>>> 32bffb21f4ae884aff94bc3e90f356fff2d93ef7
     "bluebird": "^3.5.3",
     "body-parser": "^1.19.0",
     "brakes": "^2.6.0",
