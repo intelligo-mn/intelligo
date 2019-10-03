@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as partialResponse from 'express-partial-response';
 import * as path from 'path';
+import * as mongoose from 'mongoose';
 import {
   swaggerify,
   secureApp,
@@ -19,7 +20,7 @@ const responseTime = require('response-time');
  */
 export default class ExpressServer {
   public server: InversifyExpressServer;
-
+  private MONGODB_URI = "mongodb://turtuvshin:turtuvshin1@ds211648.mlab.com:11648/chatbotsmn";
   constructor() {
     let root: string;
 
@@ -46,6 +47,8 @@ export default class ExpressServer {
         next();
       });
 
+      this.mongo();
+      
       // Add public folder
       app.use(express.static(`${root}/public`));
 
@@ -71,6 +74,39 @@ export default class ExpressServer {
       // Add swagger support
       swaggerify(app);
     });
+  }
+
+  private mongo() {
+    const connection = mongoose.connection;
+    connection.on("connected", () => {
+      console.log("Mongo Connection Established");
+    });
+    connection.on("reconnected", () => {
+      console.log("Mongo Connection Reestablished");
+    });
+    connection.on("disconnected", () => {
+      console.log("Mongo Connection Disconnected");
+      console.log("Trying to reconnect to Mongo ...");
+      setTimeout(() => {
+        mongoose.connect(this.MONGODB_URI, {
+          autoReconnect: true, keepAlive: true,
+          socketTimeoutMS: 3000, connectTimeoutMS: 3000
+        });
+      }, 3000);
+    });
+    connection.on("close", () => {
+      console.log("Mongo Connection Closed");
+    });
+    connection.on("error", (error: Error) => {
+      console.log("Mongo Connection ERROR: " + error);
+    });
+
+    const run = async () => {
+      await mongoose.connect(this.MONGODB_URI, {
+        autoReconnect: true, keepAlive: true
+      });
+    };
+    run().catch(error => console.error(error));
   }
 
   public getServer = (): InversifyExpressServer => {
