@@ -78,6 +78,7 @@ export default class ExpressServer {
 
   private mongo() {
     const connection = mongoose.connection;
+    mongoose.set('useCreateIndex', true);
     connection.on("connected", () => {
       console.log("Mongo Connection Established");
     });
