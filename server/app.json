@@ -1,8 +1,8 @@
 {
-  "name": "Intelligo Systems API",
+  "name": "Chatbots.mn API",
   "description": "Node JS , Typescript , Express based reactive microservice starter project for REST and GraphQL APIs ",
-  "repository": "https://github.com/intelligo-systems/intelligo-platform",
-  "logo": "https://github.com/intelligo-systems/intelligo-platform/blob/master/public/logo.png",
+  "repository": "https://github.com/intelligo-systems/api.chatbots.mn",
+  "logo": "https://github.com/intelligo-systems/api.chatbots.mn/blob/master/public/logo.png",
   "keywords": ["node", "express", "heroku"],
   "image": "heroku/nodejs"
 }
