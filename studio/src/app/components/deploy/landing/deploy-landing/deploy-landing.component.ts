@@ -1,16 +1,15 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { AfterViewInit } from '@angular/core';
-import { DataService } from '../../../../services/data.service';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 import { Md5 } from 'ts-md5/dist/md5';
+import { DataService } from '../../../../services/data.service';
 
 @Component({
 	selector: 'app-deploy-landing',
 	templateUrl: './deploy-landing.component.html',
 	styleUrls: ['./deploy-landing.component.scss']
 })
-export class DeployLandingComponent implements OnInit{
+export class DeployLandingComponent implements OnInit {
 
 	constructor(
 		private el: ElementRef,
@@ -49,7 +48,7 @@ export class DeployLandingComponent implements OnInit{
 		height: '70%',
 		width: '360px',
 		isFullPage: false,
-		logoUrl: 'https://www.ana.chat/favicon.ico',
+		logoUrl: 'https://www.chatbots.mn/favicon.ico',
 		showPoweredByAna: false,
 		title: 'Chatbots.mn chatbot',
 		websdkUrl: '',
