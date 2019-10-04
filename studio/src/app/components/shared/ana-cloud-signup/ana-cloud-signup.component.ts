@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RegisterOnAnaCloudDetails } from '../../../models/data.models';
-import { GlobalsService } from '../../../services/globals.service';
-import { NgForm } from '@angular/forms';
 import { DataService } from '../../../services/data.service';
+import { GlobalsService } from '../../../services/globals.service';
 import { InfoDialogService } from '../../../services/info-dialog.service';
 
 @Component({
