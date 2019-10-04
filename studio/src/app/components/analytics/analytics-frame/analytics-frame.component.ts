@@ -26,10 +26,10 @@ export class AnalyticsFrameComponent implements OnInit {
 		}
 	}
 
-	@ViewChild(AppHeaderBarComponent, {static: false})
+	@ViewChild(AppHeaderBarComponent, { static: false })
 	appHeader: AppHeaderBarComponent;
 
-	@ViewChild('analyticsFrame', {static: false})
+	@ViewChild('analyticsFrame', { static: false })
 	analyticsFrame: ElementRef;
 
 	iframeUrl: string | SafeUrl = "";
