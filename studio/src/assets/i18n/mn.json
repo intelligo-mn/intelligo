@@ -1,4 +1,13 @@
 {
+	"business": {
+		"account": "Business Account",
+		"choose-account": "Choose an account",
+		"choose-chat-project": "Choose a chat project",
+		"unable-fetch-project": "Unable to fetch chat projects",
+		"unable-fetch-project-message": "Something went wrong while trying to fetch chat projects. Please try again.",
+		"unable-load": "Unable to load business accounts",
+		"unable-load-message": "Something went wrong while loading business account. Please try again."
+	},
 	"cloud-signup": {
 		"company": "Company",
 		"confirm-password": "Confirm Password",
