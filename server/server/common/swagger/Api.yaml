@@ -290,7 +290,7 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/RegisterBody'
-  /shop/products:
+  /market/products:
     get:
       tags:
         - Chatbots.mn Marketplace
@@ -298,7 +298,7 @@ paths:
       responses:
         200:
           description: Returns all examples
-  /shop/products/{id}:
+  /market/products/{id}:
     get:
       tags:
         - Chatbots.mn Marketplace
@@ -313,7 +313,7 @@ paths:
           description: Return the example with the specified id
         404:
           description: Example not available
-  /shop/productOptions:
+  /market/category:
     get:
       tags:
         - Chatbots.mn Marketplace
@@ -321,7 +321,7 @@ paths:
       responses:
         200:
           description: Returns all examples
-  /shop/productOptions/{id}:
+  /market/category/{id}:
     get:
       tags:
         - Chatbots.mn Marketplace
@@ -336,53 +336,7 @@ paths:
           description: Return the example with the specified id
         404:
           description: Example not available
-  /shop/prices:
-    get:
-      tags:
-        - Chatbots.mn Marketplace
-      description: Fetch all examples
-      responses:
-        200:
-          description: Returns all examples
-  /shop/prices/{id}:
-    get:
-      tags:
-        - Chatbots.mn Marketplace
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: The id of the entity to retrieve
-          type: integer
-      responses:
-        200:
-          description: Return the example with the specified id
-        404:
-          description: Example not available
-  /shop/inventory:
-    get:
-      tags:
-        - Chatbots.mn Marketplace
-      description: Fetch all examples
-      responses:
-        200:
-          description: Returns all examples
-  /shop/inventory/{id}:
-    get:
-      tags:
-        - Chatbots.mn Marketplace
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: The id of the entity to retrieve
-          type: integer
-      responses:
-        200:
-          description: Return the example with the specified id
-        404:
-          description: Example not available
-  /shop/priceByOptionId/{id}:
+
     get:
       tags:
         - Chatbots.mn Marketplace
