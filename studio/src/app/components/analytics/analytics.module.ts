@@ -1,8 +1,7 @@
-﻿import { NgModule, Injectable } from '@angular/core';
-import { RouterModule, Routes, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+﻿import { NgModule } from '@angular/core';
+import { Routes } from '@angular/router';
 import { SharedModule } from '../../shared.module';
-import { AnalyticsFrameComponent, CanActivateAnalyticsFrameComponent } from './analytics-frame/analytics-frame.component';
-import { DataService } from '../../services/data.service';
+import { AnalyticsFrameComponent } from './analytics-frame/analytics-frame.component';
 
 export const ANALYTICS_ROUTES: Routes = [
 	{
