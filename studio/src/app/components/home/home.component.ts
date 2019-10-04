@@ -1,12 +1,10 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-import { LoginService } from '../../services/login.service';
 import { DataService } from '../../services/data.service';
 import { InfoDialogService } from '../../services/info-dialog.service';
-import { AnalyticsWindowService } from '../../services/analytics-window.service';
+import { LoginService } from '../../services/login.service';
 import { BusinessPickerComponent, BusinessPickerParam, ChoosenBizAccChatProj } from '../shared/business-picker/business-picker.component';
-
-import { MatDialog } from '@angular/material';
 
 @Component({
 	selector: 'app-home',
