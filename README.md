@@ -2,7 +2,7 @@
 
 Conversational AI platform.
 
-### Platforms 
+### Platform Apps
 
 | Apps | Web | Status |
 |-----------|---------:|-----------|
