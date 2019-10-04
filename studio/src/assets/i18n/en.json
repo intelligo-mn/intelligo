@@ -107,6 +107,8 @@
 		"save": "",
 		"save-description": "Save chatbot project",
 		"section-text": "Section text",
+		"start-node-not-set": "Start node not set!",
+		"start-node-not-set-message": "Tick 'Mark as start node' for the initial node of your chatbot.",
 		"target-bot-id": "Target Bot Id",
 		"target-node-id": "Target Node Id",
 		"variable-name": "Variable Name"
