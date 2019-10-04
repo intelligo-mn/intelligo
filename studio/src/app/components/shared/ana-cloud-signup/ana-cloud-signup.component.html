@@ -1,35 +1,45 @@
-<h2 matDialogTitle>Create your Chatbots.mnCloud account </h2>
+<h2 matDialogTitle>{{ 'cloud-signup.title' | translate }}</h2>
 <mat-dialog-content>
     <form #f="ngForm" (ngSubmit)="create()">
         <mat-form-field class="full-width">
-            <input type="text" matInput name="name" [(ngModel)]="details.displayName" placeholder="Full Name" required maxlength="30" />
+            <input type="text" matInput name="name" [(ngModel)]="details.displayName"
+                placeholder="{{ 'cloud-signup.display-name' | translate }}" required maxlength="30" />
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input type="email" matInput name="email" [(ngModel)]="details.email" pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$" placeholder="Email" required #email="ngModel" />
+            <input type="email" matInput name="email" [(ngModel)]="details.email"
+                pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$"
+                placeholder="{{ 'cloud-signup.email' | translate }}" required #email="ngModel" />
             <mat-error align="start" *ngIf="email.invalid && (email.dirty || email.touched)">
-                Please enter a valid email address
+                {{ 'cloud-signup.invalid-email' | translate }}
             </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input type="text" matInput name="phone" [(ngModel)]="details.phone" placeholder="Phone" required maxlength="16" pattern="^\+?\d{6,15}$" #phone="ngModel"/>
+            <input type="text" matInput name="phone" [(ngModel)]="details.phone"
+                placeholder="{{ 'cloud-signup.phone' | translate }}" required maxlength="16" pattern="^\+?\d{6,15}$"
+                #phone="ngModel" />
             <mat-error align="start" *ngIf="phone.invalid && (phone.dirty || phone.touched)">
-                Please enter a valid phone number
+                {{ 'cloud-signup.invalid-phone' | translate }}
             </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input type="text" matInput name="companyName" [(ngModel)]="details.companyName" placeholder="Company Name" required maxlength="50" />
+            <input type="text" matInput name="companyName" [(ngModel)]="details.companyName"
+                placeholder="{{ 'cloud-signup.company' | translate }}" required maxlength="50" />
         </mat-form-field>
 
         <mat-form-field class="full-width">
-            <input type="password" matInput name="password" [(ngModel)]="details.password" placeholder="Password" required pattern="^.{6,}$" maxlength="50" #pwd="ngModel" />
+            <input type="password" matInput name="password" [(ngModel)]="details.password"
+                placeholder="{{ 'cloud-signup.password' | translate }}" required pattern="^.{6,}$" maxlength="50"
+                #pwd="ngModel" />
             <mat-error align="start" *ngIf="(pwd.invalid) && (pwd.dirty || pwd.touched)">
-                Password should be at least 6 characters
+                {{ 'cloud-signup.invalid-password' | translate }}
             </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input type="password" matInput name="confirmPassword" [(ngModel)]="details.confirmPassword" placeholder="Confirm Password" [pattern]="'^'+pwd.value+'$'" required maxlength="50" #cpwd="ngModel"/>
+            <input type="password" matInput name="confirmPassword" [(ngModel)]="details.confirmPassword"
+                placeholder="{{ 'cloud-signup.confirm-password' | translate }}" [pattern]="'^'+pwd.value+'$'" required
+                maxlength="50" #cpwd="ngModel" />
             <mat-error align="start" *ngIf="(cpwd.invalid) && (cpwd.dirty || cpwd.touched)">
-                Passwords do not match
+                {{ 'cloud-signup.invalid-confirm-password' | translate }}
             </mat-error>
         </mat-form-field>
         <input type="submit" name="submit" style="display:none" />
@@ -41,6 +51,6 @@
     </mat-chip-list>
 </mat-dialog-content>
 <mat-dialog-actions class="actions">
-    <button mat-raised-button (click)="create()" color="primary">Create</button>
-    <button mat-raised-button matDialogClose>Dismiss</button>
+    <button mat-raised-button (click)="create()" color="primary">{{ 'global.create' | translate }}</button>
+    <button mat-raised-button matDialogClose>{{ 'global.dismiss' | translate }}</button>
 </mat-dialog-actions>

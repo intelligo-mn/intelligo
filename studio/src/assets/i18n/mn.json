@@ -1,4 +1,21 @@
 {
+	"cloud-signup": {
+		"company": "Company",
+		"confirm-password": "Confirm Password",
+		"display-name": "Full Name",
+		"email": "Email",
+		"invalid-confirm-password": "Passwords do not match",
+		"invalid-email": "Please enter a valid email address",
+		"invalid-password": "Password should be at least 6 characters",
+		"invalid-phone": "Please enter a valid phone number",
+		"password": "Password",
+		"phone": "Утасны дугаар",
+		"title": "Create your Chatbots.mn Cloud account"
+	},
+	"global": {
+		"create": "Create",
+		"dismiss": "Dismiss"
+	},
 	"home": {
 		"add": "Нэмэх",
 		"add-description": "Шинээр чатбот үүсгэх",
