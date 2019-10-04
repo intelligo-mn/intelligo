@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../../services/data.service';
 import { GlobalsService } from '../../../services/globals.service';
 import { InfoDialogService } from '../../../services/info-dialog.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-ana-cloud-signup',
@@ -13,7 +14,8 @@ export class AnaCloudSignupComponent implements OnInit {
 	constructor(
 		private global: GlobalsService,
 		private data: DataService,
-		private infoDialog: InfoDialogService
+		private infoDialog: InfoDialogService,
+		private translate: TranslateService
 	) { }
 	details: PublicRegistrationDetails = {
 		companyName: "",
@@ -29,7 +31,7 @@ export class AnaCloudSignupComponent implements OnInit {
 	allValid(): boolean {
 		let d = this.details;
 		if (!d || !d.companyName || !d.displayName) {
-			this.errorMessage = "Please fill all the mandatory fields.";
+			this.errorMessage = this.translate.instant('cloud-signup.please-fill');
 			return false;
 		}
 		

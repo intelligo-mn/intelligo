@@ -5,12 +5,20 @@
 		"display-name": "Full Name",
 		"email": "Email",
 		"invalid-confirm-password": "Passwords do not match",
+		"invalid-confirm-password-message": "Password and confirm password do not match.",
+		"invalid-details": "Invalid Details",
 		"invalid-email": "Please enter a valid email address",
+		"invalid-email-message": "Please enter a valid email address. Verification email will be sent to it.",
 		"invalid-password": "Password should be at least 6 characters",
 		"invalid-phone": "Please enter a valid phone number",
+		"invalid-phone-message": "Please enter a valid phone number.",
 		"password": "Password",
+		"password-min-message": "Minimum length of the password is 6 characters.",
 		"phone": "Phone number",
-		"title": "Create your Chatbots.mn Cloud account"
+		"please-fill": "Please fill all the mandatory fields.",
+		"title": "Create your Chatbots.mn Cloud account",
+		"unable-register": "Unable to register",
+		"unable-register-message": "Something went wrong while trying to register. Please try again."
 	},
 	"global": {
 		"create": "Create",
