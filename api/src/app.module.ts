@@ -1,14 +1,22 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
-import { UsersModule } from './users/users.module';
+import { ProductModule } from './product/product.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://turtuvshin:turtuvshin1@ds211648.mlab.com:11648/chatbotsmn'), AuthModule, CoreModule, UsersModule],
+  imports: [
+    MongooseModule.forRoot(process.env.MONGO_URI),
+    CoreModule,
+    AuthModule,
+    ProductModule,
+    OrderModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
