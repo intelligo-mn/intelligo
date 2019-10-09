@@ -5,8 +5,10 @@ import { User } from '../utilities/user.decorator';
 import { User as UserDocument } from '../types/user';
 import { OrderService } from './order.service';
 import { CreateOrderDTO } from './order.dto';
+import { ApiUseTags } from '@nestjs/swagger';
 
 @Controller('order')
+@ApiUseTags('Chatbots.mn Marketplace')
 export class OrderController {
   constructor(private orderService: OrderService) {}
 
