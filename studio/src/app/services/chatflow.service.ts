@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { ChatBotProject, ChatServerConnection } from '../models/app.models';
 import * as models from '../models/chatflow.models';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ChatFlowService {
-	constructor(private http: Http) { }
+	constructor(private http: HttpClient) { }
 
 	private publishChatBotAPI: string = "bot/business";
 

@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, URLSearchParams } from '@angular/http';
-
-import * as models from '../models/chatflow.models';
-import * as chatModels from '../models/intelligo-chat.models';
 import * as jsonpath from 'jsonpath';
 import * as _ from 'underscore';
-
+import { SimulatorFrameComponent } from '../components/studio/simulator-frame/simulator-frame.component';
+import * as models from '../models/chatflow.models';
+import { CarouselButton } from '../models/chatflow.models';
+import * as chatModels from '../models/intelligo-chat.models';
 import { GlobalsService } from '../services/globals.service';
 import { InfoDialogService } from '../services/info-dialog.service';
-import { SimulatorFrameComponent } from '../components/studio/simulator-frame/simulator-frame.component';
-import { CarouselButton } from '../models/chatflow.models';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
 @Injectable()
 export class SimulatorService {
 
@@ -21,7 +20,7 @@ export class SimulatorService {
 	public simulatorBusinessId = 'ana-studio';
 	public simulatorCustomerId = 'ana-simulator';
 
-	constructor(private http: Http, private globals: GlobalsService, private infoDialog: InfoDialogService) {
+	constructor(private http: HttpClient, private globals: GlobalsService, private infoDialog: InfoDialogService) {
 		window.onmessage = (event) => {
 			this.logDebug('On message received from client:');
 			this.logDebug(event.data);
@@ -394,7 +393,7 @@ export class SimulatorService {
 		switch (chatNode.NodeType) {
 			case models.NodeType.ApiCall:
 				{
-					let apiHeaders = new Headers();
+					let apiHeaders = new HttpHeaders();
 
 					if (chatNode.Headers) {
 						let splits = chatNode.Headers.split(/\n|,/);
@@ -417,7 +416,7 @@ export class SimulatorService {
 					if (chatNode.RequestBody)
 						reqBody = this.processVerbs(chatNode.RequestBody);
 
-					let reqParams = new URLSearchParams();
+					let reqParams = new HttpParams();
 					if (chatNode.RequiredVariables) {
 						for (var i = 0; i < chatNode.RequiredVariables.length; i++) {
 							if (chatNode.RequiredVariables[i] && Object.keys(this.state.variables).indexOf(chatNode.RequiredVariables[i]) != -1)
@@ -426,12 +425,11 @@ export class SimulatorService {
 					}
 
 					let nextNodeId = chatNode.NextNodeId;
-					this.http.request(chatNode.ApiUrl, {
+					this.http.request(models.APIMethod[chatNode.ApiMethod], chatNode.ApiUrl, {
 						headers: apiHeaders,
 						body: reqBody,
-						method: models.APIMethod[chatNode.ApiMethod],
 						params: reqParams,
-					}).subscribe(res => {
+					}).subscribe((res: any) => {
 						this.saveVariable(res.text());
 						this.processConditionNode(chatNode);
 					}, err => {
@@ -717,7 +715,7 @@ export class SimulatorService {
 							});
 						}
 						if (inputButton.Url) {
-							this.http.get(inputButton.Url).subscribe(x => {
+							this.http.get(inputButton.Url).subscribe((x:any) => {
 								let items = x.json() as {
 									[key: string]: string;
 								};
