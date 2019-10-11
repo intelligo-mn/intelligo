@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatDialogModule, MatExpansionModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatSidenavModule, MatSlideToggleModule, MatSnackBarModule, MatTabsModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HotkeyModule } from 'angular2-hotkeys';
 import { ClipboardModule } from 'ngx-clipboard';
 import { AnaCloudSignupComponent } from './components/shared/ana-cloud-signup/ana-cloud-signup.component';
@@ -34,8 +35,6 @@ import { InfoDialogService } from './services/info-dialog.service';
 import { LoginService } from './services/login.service';
 import { SettingsService } from './services/settings.service';
 import { SimulatorService } from './services/simulator.service';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
 	return new TranslateHttpLoader(httpClient);
@@ -65,7 +64,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 		BrowserModule,
 		BrowserAnimationsModule,
 		CommonModule,
-		HttpModule,
 		HttpClientModule,
 		FormsModule,
 		ReactiveFormsModule,
@@ -105,7 +103,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 		BrowserModule,
 		BrowserAnimationsModule,
 		CommonModule,
-		HttpModule,
 		HttpClientModule,
 		FormsModule,
 		ReactiveFormsModule,
