@@ -5,6 +5,7 @@ import * as Express from 'express';
 import * as cors from 'cors';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { uptimeBot } from './integrations/uptime-bot';
 
 if (process.env.NODE_ENV === 'test') {
   process.env.MONGO_URI = process.env.MONGO_URI_TEST;
@@ -13,6 +14,7 @@ if (process.env.NODE_ENV === 'test') {
 
 const server = Express();
 server.use(cors());
+server.use(uptimeBot);
 server.get('/', (req, res) => res.send('ok'));
 
 async function bootstrap() {
