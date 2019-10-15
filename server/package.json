@@ -30,6 +30,7 @@
     "@types/swagger-ui-express": "^3.0.1",
     "bcrypt": "^3.0.6",
     "dotenv": "^8.1.0",
+    "intelligo": "^1.2.8",
     "mongoose": "^5.7.3",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
