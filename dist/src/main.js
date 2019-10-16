@@ -18,14 +18,13 @@ const server = Express();
 const marketplace = Express();
 const studio = Express();
 const simulator = Express();
-marketplace.use(serveStatic('marketplace/dist/marketplace'));
 simulator.use(serveStatic('simulator/dist/simulator'));
 studio.use(serveStatic('studio/dist/studio'));
 server.use(cors());
 server.use(uptime_bot_1.uptimeBot);
 server.use(vhost('app.chatbots.mn', studio));
 server.use(vhost('simulator.chatbots.mn', simulator));
-server.use(vhost('www.chatbots.mn', marketplace));
+server.use(serveStatic('marketplace/dist/marketplace'));
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, new platform_express_1.ExpressAdapter(server));
     const options = new swagger_1.DocumentBuilder()

@@ -3,7 +3,7 @@ import { MessengerBot } from 'intelligo';
 const bot = new MessengerBot({
   PAGE_ACCESS_TOKEN: '',
   VALIDATION_TOKEN: '',
-  APP_SECRET: ''
+  APP_SECRET: '',
 });
 
 bot.initWebhook();

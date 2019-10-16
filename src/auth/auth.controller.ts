@@ -11,7 +11,7 @@ export class AuthController {
   constructor(
     private userService: UserService,
     private authService: AuthService,
-  ) { }
+  ) {}
 
   @Post('login')
   async login(@Body() userDTO: LoginDTO) {

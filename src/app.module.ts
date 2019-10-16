@@ -10,7 +10,10 @@ import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }),
+    MongooseModule.forRoot(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }),
     CoreModule,
     AuthModule,
     ProductModule,
@@ -19,4 +22,4 @@ import { OrderModule } from './order/order.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
