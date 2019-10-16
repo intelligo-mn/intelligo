@@ -27,7 +27,7 @@ server.use(cors());
 server.use(uptimeBot);
 server.use(vhost('app.chatbots.mn', studio))
 server.use(vhost('simulator.chatbots.mn', simulator))
-server.use(vhost('*', marketplace))
+server.use(vhost('www.chatbots.mn', marketplace))
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
 
