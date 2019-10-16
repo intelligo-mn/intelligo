@@ -1,0 +1,32 @@
+import { OnDestroy, OnInit } from "@angular/core";
+import { MatDialogRef, MatTab, MatTabGroup } from "@angular/material";
+import { Hotkey, HotkeysService } from "angular2-hotkeys";
+import * as models from "../../../models/chatflow.models";
+import { ChatFlowService } from "../../../services/chatflow.service";
+import { GlobalsService } from "../../../services/globals.service";
+import { InfoDialogService } from "../../../services/info-dialog.service";
+export declare class NodeEditorComponent implements OnInit, OnDestroy {
+    private chatFlowService;
+    private hotkeys;
+    private infoDialog;
+    dialogRef: MatDialogRef<NodeEditorComponent>;
+    chatNode: models.ChatNode;
+    globalsService: GlobalsService;
+    constructor(chatFlowService: ChatFlowService, hotkeys: HotkeysService, infoDialog: InfoDialogService, dialogRef: MatDialogRef<NodeEditorComponent>, chatNode: models.ChatNode, globalsService: GlobalsService);
+    nodeInfoTab: MatTab;
+    contentTab: MatTab;
+    contentTabIndex: number;
+    buttonsTab: MatTab;
+    tabGroup: MatTabGroup;
+    keymapOnNodeEditor: Hotkey[];
+    bindNodeEditorShortcuts(): void;
+    unbindNodeEditorShortcuts(): void;
+    ngOnDestroy(): void;
+    ngOnInit(): void;
+    contentTabVisible(): boolean;
+    addNewSectionText(): void;
+    addNewButton(): void;
+    SectionType: typeof models.SectionType;
+    dismiss(): void;
+    MH: models.ModelHelpers;
+}
