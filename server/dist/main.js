@@ -7,38 +7,14 @@ const Express = require("express");
 const cors = require("cors");
 const app_module_1 = require("./app.module");
 const swagger_1 = require("@nestjs/swagger");
-const uptime_js_1 = require("uptime.js");
+const uptime_bot_1 = require("./integrations/uptime-bot");
 if (process.env.NODE_ENV === 'test') {
     process.env.MONGO_URI = process.env.MONGO_URI_TEST;
     console.log('----------TESTING IN PROCESS----------');
 }
 const server = Express();
 server.use(cors());
-const uptime = new uptime_js_1.Uptime({
-    SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/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',
-});
-uptime.monitor([
-    {
-        url: 'https://www.intelligo.systems',
-        timeout: 200,
-    },
-    {
-        url: 'https://www.chatbots.mn',
-        timeout: 200,
-    },
-    {
-        url: 'https://app.chatbots.mn',
-        timeout: 200,
-    },
-    {
-        url: 'https://app.chatbots.mn',
-        timeout: 200,
-    },
-    {
-        url: 'https://api.intelligo.systems',
-        timeout: 200,
-    },
-]);
+server.use(uptime_bot_1.uptimeBot);
 server.get('/', (req, res) => res.send('ok'));
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, new platform_express_1.ExpressAdapter(server));

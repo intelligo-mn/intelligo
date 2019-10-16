@@ -1,0 +1,23 @@
+{
+  "name": "chatbots.mn",
+  "version": "1.0.0",
+  "description": "Chatbots.mn conversational AI platform.",
+  "main": "index.js",
+  "scripts": {
+    "simulator": "cd simulator && npm run build",
+    "marketplace": "cd marketplace && npm run build",
+    "studio": "cd studio && npm run build",
+    "server": "cd server && npm run start:prod",
+    "start": "npm run simulator && npm run marketplace && npm run studio && npm run server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intelligo-systems/chatbots.mn.git"
+  },
+  "author": "Intelligo Systems",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/intelligo-systems/chatbots.mn/issues"
+  },
+  "homepage": "https://github.com/intelligo-systems/chatbots.mn#readme"
+}
