@@ -1,23 +1,84 @@
 {
-  "name": "chatbots.mn",
+  "name": "api.chatbots.mn",
+  "private": true,
   "version": "1.0.0",
-  "description": "Chatbots.mn conversational AI platform.",
-  "main": "index.js",
+  "description": "Chatbots.mn API",
+  "license": "MIT",
   "scripts": {
-    "simulator": "cd simulator && npm install && npm run build",
-    "marketplace": "cd marketplace && npm install && npm run build",
-    "studio": "cd studio && npm install && npm run build",
-    "server": "cd server && npm run start:prod",
-    "start": "npm run simulator && npm run marketplace && npm run studio && npm run server"
+    "prebuild": "rimraf dist",
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/intelligo-systems/chatbots.mn.git"
+  "dependencies": {
+    "@nestjs/common": "^6.8.2",
+    "@nestjs/core": "^6.8.2",
+    "@nestjs/jwt": "^6.1.1",
+    "@nestjs/mongoose": "^6.1.2",
+    "@nestjs/passport": "^6.1.0",
+    "@nestjs/platform-express": "^6.8.2",
+    "@nestjs/swagger": "^3.1.0",
+    "@types/swagger-ui-express": "^3.0.1",
+    "bcrypt": "^3.0.6",
+    "dotenv": "^8.1.0",
+    "intelligo": "^1.2.8",
+    "mongoose": "^5.7.3",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.0",
+    "rxjs": "^6.5.3",
+    "swagger-ui-express": "^4.1.2",
+    "uptime.js": "^1.3.1",
+    "vhost": "^3.0.2"
   },
-  "author": "Intelligo Systems",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/intelligo-systems/chatbots.mn/issues"
+  "devDependencies": {
+    "@nestjs/cli": "^6.10.1",
+    "@nestjs/schematics": "^6.7.0",
+    "@nestjs/testing": "^6.8.2",
+    "@types/bcrypt": "^3.0.0",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^4.17.1",
+    "@types/jest": "^24.0.18",
+    "@types/mongoose": "^5.5.19",
+    "@types/node": "^12.7.12",
+    "@types/passport-jwt": "^3.0.2",
+    "@types/supertest": "^2.0.8",
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2",
+    "supertest": "^4.0.2",
+    "ts-jest": "^24.1.0",
+    "ts-loader": "^6.2.0",
+    "ts-node": "^8.4.1",
+    "tsconfig-paths": "^3.9.0",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.3"
   },
-  "homepage": "https://github.com/intelligo-systems/chatbots.mn#readme"
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
 }
