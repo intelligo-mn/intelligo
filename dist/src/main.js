@@ -25,7 +25,7 @@ server.use(cors());
 server.use(uptime_bot_1.uptimeBot);
 server.use(vhost('app.chatbots.mn', studio));
 server.use(vhost('simulator.chatbots.mn', simulator));
-server.use(vhost('*', marketplace));
+server.use(vhost('www.chatbots.mn', marketplace));
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, new platform_express_1.ExpressAdapter(server));
     const options = new swagger_1.DocumentBuilder()
