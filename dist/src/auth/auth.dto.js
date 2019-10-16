@@ -17,7 +17,10 @@ __decorate([
     __metadata("design:type", String)
 ], LoginDTO.prototype, "username", void 0);
 __decorate([
-    swagger_1.ApiModelProperty({ example: 'password', description: 'The password of acount' }),
+    swagger_1.ApiModelProperty({
+        example: 'password',
+        description: 'The password of acount',
+    }),
     __metadata("design:type", String)
 ], LoginDTO.prototype, "password", void 0);
 exports.LoginDTO = LoginDTO;

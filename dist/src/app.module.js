@@ -19,7 +19,10 @@ let AppModule = class AppModule {
 AppModule = __decorate([
     common_1.Module({
         imports: [
-            mongoose_1.MongooseModule.forRoot(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }),
+            mongoose_1.MongooseModule.forRoot(process.env.MONGO_URI, {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+            }),
             core_module_1.CoreModule,
             auth_module_1.AuthModule,
             product_module_1.ProductModule,

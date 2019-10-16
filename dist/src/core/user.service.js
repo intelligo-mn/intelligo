@@ -14,7 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const mongoose_2 = require("mongoose");
 let UserService = class UserService {
     constructor(userModel) {

@@ -4,7 +4,7 @@ const intelligo_1 = require("intelligo");
 const bot = new intelligo_1.MessengerBot({
     PAGE_ACCESS_TOKEN: '',
     VALIDATION_TOKEN: '',
-    APP_SECRET: ''
+    APP_SECRET: '',
 });
 bot.initWebhook();
 bot.on('message', event => {
