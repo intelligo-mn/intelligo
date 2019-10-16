@@ -7,6 +7,8 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { uptimeBot } from './integrations/uptime-bot';
 import * as vhost from 'vhost';
+import * as serveStatic from 'serve-static';
+
 if (process.env.NODE_ENV === 'test') {
   process.env.MONGO_URI = process.env.MONGO_URI_TEST;
   console.log('----------TESTING IN PROCESS----------');
@@ -16,18 +18,16 @@ const server = Express();
 const marketplace = Express();
 const studio = Express();
 const simulator = Express();
+
+marketplace.use(serveStatic('marketplace/dist/marketplace'))
+simulator.use(serveStatic('simulator/dist/simulator'));
+studio.use(serveStatic('studio/dist/studio'));
+
 server.use(cors());
 server.use(uptimeBot);
-server.use(
-  vhost('api.chatbots.mn', (req, res) => {
-    res.end('hello vhost api desu');
-  }),
-);
-server.use(
-  vhost('agent.chatbots.mn', (req, res) => {
-    res.end('hello vhost agent desu');
-  }),
-);
+server.use(vhost('app.chatbots.mn', studio))
+server.use(vhost('simulator.chatbots.mn', simulator))
+server.use(vhost('*', marketplace))
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
 
