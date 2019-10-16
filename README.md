@@ -47,18 +47,16 @@ You can improve it by sending pull requests to this repository.
 ## Example
 
 ```js
-'use strict';
-
-const express = require('express'),
-      Intelligo = require('intelligo');
+import express from 'express';
+import { MessengerBot } from 'intelligo';
 
 const app = express();
 
-const bot = new Intelligo.MessengerBot({
+const bot = new MessengerBot({
   PAGE_ACCESS_TOKEN: 'PAGE_ACCESS_TOKEN',
   VALIDATION_TOKEN: 'VALIDATION_TOKEN',
   APP_SECRET: 'APP_SECRET',
-  app: app
+  app: app,
 });
 
 bot.initWebhook();
@@ -98,7 +96,7 @@ bot.learn([
     { input: 'The world is a terrible place!', output: 'sad' },
   ]);
 
-var result = bot.answer('I feel great about the world!');  // 'happy'
+const result = bot.answer('I feel great about the world!');  // 'happy'
 ```
 
 #### `bot.on('message', (event));`

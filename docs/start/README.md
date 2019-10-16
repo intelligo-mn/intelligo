@@ -28,7 +28,6 @@ sidebarDepth: 3
      </a>
 </p>
 
-
 Intelligo is a JavaScript Framework to build AI Chat bots.
 
 ## Installation
@@ -37,27 +36,24 @@ Intelligo is a JavaScript Framework to build AI Chat bots.
 
 ## Related projects
 
-| Project | Build Status | NPM version |
-|-----------|--------------|---------------------------|
-| [neuro](https://github.com/intelligo-systems/neuro) | [![Build status](https://ci.appveyor.com/api/projects/status/eue1p0li7vf7hqt9?svg=true)](https://ci.appveyor.com/project/tortuvshin/intelligo-cli) | [![npm version](https://badgen.net/npm/v/neuro.js)](https://www.npmjs.com/package/neuro.js) |
+| Project                                                                         | Build Status                                                                                                                                       | NPM version                                                                                           |
+| ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| [neuro](https://github.com/intelligo-systems/neuro)                             | [![Build status](https://ci.appveyor.com/api/projects/status/eue1p0li7vf7hqt9?svg=true)](https://ci.appveyor.com/project/tortuvshin/intelligo-cli) | [![npm version](https://badgen.net/npm/v/neuro.js)](https://www.npmjs.com/package/neuro.js)           |
 | [intelligo-generator](https://github.com/intelligo-systems/intelligo-generator) | [![Build status](https://ci.appveyor.com/api/projects/status/eue1p0li7vf7hqt9?svg=true)](https://ci.appveyor.com/project/tortuvshin/intelligo-cli) | [![npm version](https://badgen.net/npm/v/intelligo-cli)](https://www.npmjs.com/package/intelligo-cli) |
-
 
 ## Example
 
 ```js
-'use strict';
-
-const express = require('express'),
-      Intelligo = require('intelligo');
+import express from 'express';
+import { MessengerBot } from 'intelligo';
 
 const app = express();
 
-const bot = new Intelligo.MessengerBot({
+const bot = new MessengerBot({
   PAGE_ACCESS_TOKEN: 'PAGE_ACCESS_TOKEN',
   VALIDATION_TOKEN: 'VALIDATION_TOKEN',
   APP_SECRET: 'APP_SECRET',
-  app: app
+  app: app,
 });
 
 bot.initWebhook();
@@ -69,14 +65,13 @@ bot.learn([
 ]);
 
 //Subscribe to messages sent by the user with the bot.on() method.
-bot.on('message', (event) => {
-
+bot.on('message', event => {
   const senderID = event.sender.id,
-        message = event.message;
+    message = event.message;
 
   if (message.text) {
-      const result = bot.answer(message.text);
-      bot.sendTextMessage(senderID, result);
+    const result = bot.answer(message.text);
+    bot.sendTextMessage(senderID, result);
   }
 });
 app.set('port', process.env.PORT || 5000);
@@ -93,11 +88,11 @@ Example using strings with inputs and outputs:
 
 ```js
 bot.learn([
-    { input: 'I feel great about the world!', output: 'happy' },
-    { input: 'The world is a terrible place!', output: 'sad' },
-  ]);
+  { input: 'I feel great about the world!', output: 'happy' },
+  { input: 'The world is a terrible place!', output: 'sad' },
+]);
 
-var result = bot.answer('I feel great about the world!');  // 'happy'
+const result = bot.answer('I feel great about the world!'); // 'happy'
 ```
 
 #### `bot.on('message', (event));`
@@ -105,11 +100,10 @@ var result = bot.answer('I feel great about the world!');  // 'happy'
 Triggered when a message is sent to the bot.
 
 ```js
-bot.on('message', (event) => {
-
+bot.on('message', event => {
   if (message.text) {
-      const result = bot.answer(message.text);
-      bot.sendTextMessage(event.sender.id, event.message);
+    const result = bot.answer(message.text);
+    bot.sendTextMessage(event.sender.id, event.message);
   }
 });
 ```
@@ -148,7 +142,7 @@ Generate the your slack bot project:
 <img width="100%" src="https://raw.githubusercontent.com/intelligo-systems/intelligo-cli/master/.github/intelligo-cli-slack.gif">
 </p>
 
-Before you start, you'll need a Slack App. If you don't already have one, click the following [link to create it](https://my.slack.com/services/new/bot) and put ```token``` in `index.js` file.
+Before you start, you'll need a Slack App. If you don't already have one, click the following [link to create it](https://my.slack.com/services/new/bot) and put `token` in `index.js` file.
 
 ### Install dependencies:
 
@@ -172,13 +166,12 @@ Collection of examples for using Intelligo Framework.
 
 - **Jisho bot** The [jisho bot](https://github.com/intelligo-systems/jisho-bot) Japanese-English dictionary Messenger bot using [www.jisho.org](https://jisho.org/) public API.
 
-
 ## Contributors
 
-- 📥 Pull requests and 🌟 Stars are always welcome. 
+- 📥 Pull requests and 🌟 Stars are always welcome.
 - You may contribute in several ways like creating new features, fixing bugs, improving documentation and examples
-or translating any document here to your language. [Find more information in CONTRIBUTING.md](CONTRIBUTING.md).
-<a href="https://github.com/intelligo-systems/intelligo/graphs/contributors">Contributors</a>
+  or translating any document here to your language. [Find more information in CONTRIBUTING.md](CONTRIBUTING.md).
+  <a href="https://github.com/intelligo-systems/intelligo/graphs/contributors">Contributors</a>
 
 This project exists thanks to all the people who contribute.
 <a href="https://github.com/intelligo-systems/intelligo/contributors"><img src="https://opencollective.com/intelligo/contributors.svg?width=890&button=false" /></a>
@@ -203,7 +196,6 @@ Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com
 
 <a href="https://opencollective.com/intelligo#backers" target="_blank"><img src="https://opencollective.com/intelligo/backers.svg?width=890"></a>
 
-
 ## Sponsors
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/intelligo#sponsor)]
@@ -218,7 +210,6 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 <a href="https://opencollective.com/intelligo/sponsor/7/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/7/avatar.svg"></a>
 <a href="https://opencollective.com/intelligo/sponsor/8/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/8/avatar.svg"></a>
 <a href="https://opencollective.com/intelligo/sponsor/9/website" target="_blank"><img src="https://opencollective.com/intelligo/sponsor/9/avatar.svg"></a>
-
 
 ## License
 

@@ -48,18 +48,16 @@ npm install intelligo --save
 ## Жишээ код
 
 ```js
-'use strict';
-
-const express = require('express'),
-      Intelligo = require('intelligo');
+import express from 'express';
+import { MessengerBot } from 'intelligo';
 
 const app = express();
 
-const bot = new Intelligo.MessengerBot({
+const bot = new MessengerBot({
   PAGE_ACCESS_TOKEN: 'PAGE_ACCESS_TOKEN',
   VALIDATION_TOKEN: 'VALIDATION_TOKEN',
   APP_SECRET: 'APP_SECRET',
-  app: app
+  app: app,
 });
 
 bot.initWebhook();

@@ -1,27 +1,24 @@
-'use strict';
-
-const express = require('express'),
-      Intelligo = require('intelligo');
+import express from 'express';
+import { MessengerBot } from 'intelligo';
 
 const app = express();
 
-const bot = new Intelligo.MessengerBot({
+const bot = new MessengerBot({
   PAGE_ACCESS_TOKEN: config.get('PAGE_ACCESS_TOKEN'),
   VALIDATION_TOKEN: config.get('VALIDATION_TOKEN'),
   APP_SECRET: config.get('APP_SECRET'),
-  app: app
+  app: app,
 });
 
 bot.initWebhook();
 
 //Subscribe to messages sent by the user with the bot.on() method.
-bot.on('message', (event) => {
-
+bot.on('message', event => {
   const senderID = event.sender.id,
-        message = event.message;
+    message = event.message;
 
   if (message.text) {
-      bot.sendTextMessage(senderID, "Hello world");
+    bot.sendTextMessage(senderID, 'Hello world');
   }
 });
 app.set('port', process.env.PORT || 5000);
