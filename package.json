@@ -4,9 +4,9 @@
   "description": "Chatbots.mn conversational AI platform.",
   "main": "index.js",
   "scripts": {
-    "simulator": "cd simulator && npm run build",
-    "marketplace": "cd marketplace && npm run build",
-    "studio": "cd studio && npm run build",
+    "simulator": "cd simulator && npm install && npm run build",
+    "marketplace": "cd marketplace && npm install && npm run build",
+    "studio": "cd studio && npm install && npm run build",
     "server": "cd server && npm run start:prod",
     "start": "npm run simulator && npm run marketplace && npm run studio && npm run server"
   },
