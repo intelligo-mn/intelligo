@@ -18,10 +18,14 @@ const studio = Express();
 const simulator = Express();
 server.use(cors());
 server.use(uptimeBot);
-server.get('/', (req, res) => res.send('ok'));
 server.use(
-  vhost('demo.chatbots.mn', (req, res) => {
-    res.end('hello vhost demo desu');
+  vhost('api.chatbots.mn', (req, res) => {
+    res.end('hello vhost api desu');
+  }),
+);
+server.use(
+  vhost('agent.chatbots.mn', (req, res) => {
+    res.end('hello vhost agent desu');
   }),
 );
 async function bootstrap() {
