@@ -1,7 +1,7 @@
 # GitHub Actions docs
 # https://help.github.com/en/articles/about-github-actions
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions
-name: Studio App
+name: studio
 
 on: [push]
 
@@ -19,9 +19,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.8
-    - name: Studio Directory
-      run: cd studio  
     - name: Install dependencies
       run: npm install
+      working-directory: ./studio
     - name: Build
-      run: npm run build -- --prod
+      run: npm run build
+      working-directory: ./studio
