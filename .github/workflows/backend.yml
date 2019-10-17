@@ -1,4 +1,4 @@
-name: Backend API
+name: backend
 
 on: [push]
 
