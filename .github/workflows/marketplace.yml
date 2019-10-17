@@ -19,9 +19,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.8
-    - name: App Directory
-      run: cd marketplace  
+    - working-directory: ./marketplace
     - name: Install dependencies
       run: npm install
     - name: Build
-      run: npm run build -- --prod
+      run: npm run build
