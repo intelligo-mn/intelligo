@@ -20,7 +20,7 @@ jobs:
       with:
         node-version: 12.8
     - name: Studio Directory
-      run: cd studio:  
+      run: cd studio  
     - name: Install dependencies
       run: npm install
     - name: Lint
