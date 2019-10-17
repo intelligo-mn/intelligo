@@ -34,6 +34,7 @@ async function bootstrap() {
     .setTitle('API for Chatbots.mn')
     .setDescription('API for Chatbots.mn')
     .setVersion('1.0')
+    .setSchemes("https", "http")
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
