@@ -54,7 +54,7 @@
     "protractor": "~5.4.2",
     "ts-node": "~8.4.1",
     "tslint": "~5.20.0",
-    "typescript": "~3.6.4",
+    "typescript": "~3.5.3",
     "@angular-devkit/core": "8.3.10",
     "@types/hammerjs": "^2.0.36",
     "@types/jsonpath": "^0.2.0",
