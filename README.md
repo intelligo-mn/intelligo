@@ -4,14 +4,12 @@ Conversational AI platform.
 
 ### Platform Apps
 
-| Apps                    |                                                    Web | Status                                                                                                                                                                      |
-|-------------------------|-------------------------------------------------------:|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Chatbots.mn Backend API        |             [api.chatbots.mn](https://api.chatbots.mn) |                                                                                                                                                                            |
-| Chatbots.mn Agent       |         [agent.chatbots.mn](https://agent.chatbots.mn) |  |
-| Chatbots.mn Analytics   | [analytics.chatbots.mn](https://analytics.chatbots.mn) |  |
-| Chatbots.mn Studio      |             [app.chatbots.mn](https://app.chatbots.mn) |  |
-| Chatbots.mn Simulator   | [simulator.chatbots.mn](https://simulator.chatbots.mn) |  |
-| Chatbots.mn Marketplace |             [www.chatbots.mn](https://www.chatbots.mn) |  |
+| Apps                    |                                                    Web | Status |
+| ----------------------- | -----------------------------------------------------: | ------ |
+| Chatbots.mn Backend API |             [api.chatbots.mn](https://api.chatbots.mn) |        |
+| Chatbots.mn Studio      |             [app.chatbots.mn](https://app.chatbots.mn) |        |
+| Chatbots.mn Simulator   | [simulator.chatbots.mn](https://simulator.chatbots.mn) |        |
+| Chatbots.mn Marketplace |             [www.chatbots.mn](https://www.chatbots.mn) |        |
 
 ### Related Systems 
 
