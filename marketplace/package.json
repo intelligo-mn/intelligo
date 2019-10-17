@@ -27,7 +27,7 @@
     "moment": "^2.24.0",
     "ng2-nouislider": "1.8.2",
     "nouislider": "14.0.3",
-    "popper.js": "1.15.0",
+    "popper.js": "1.16.0",
     "rxjs": "6.5.3",
     "rxjs-compat": "6.5.3",
     "tslib": "^1.10.0",
