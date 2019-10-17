@@ -14,12 +14,12 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
+    - working-directory: ./marketplace
     - uses: actions/checkout@v1
     - name: Use Node.js 12.8
       uses: actions/setup-node@v1
       with:
         node-version: 12.8
-    - working-directory: ./marketplace
     - name: Install dependencies
       run: npm install
     - name: Build
