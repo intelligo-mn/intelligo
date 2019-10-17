@@ -42,7 +42,7 @@
     "@angular-devkit/build-angular": "~0.803.6",
     "@angular/cli": "~8.3.6",
     "@angular/compiler-cli": "~8.2.8",
-    "@angular/language-service": "~8.2.8",
+    "@angular/language-service": "~8.2.11",
     "@types/bson": "^4.0.0",
     "@types/jasmine": "~3.4.1",
     "@types/jasminewd2": "~2.0.7",
