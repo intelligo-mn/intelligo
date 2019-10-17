@@ -38,7 +38,7 @@ jobs:
 
 workflows:
   version: 2
-  build-and-test:
+  build-and-test-api:
     jobs:
       - build
       
