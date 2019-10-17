@@ -4,12 +4,12 @@ Conversational AI platform.
 
 ### Platform Apps
 
-| Apps                    |                                                    Web | Status |
+| Apps                    |                                                    Web | CI |
 | ----------------------- | -----------------------------------------------------: | ------ |
-| Chatbots.mn Backend API |             [api.chatbots.mn](https://api.chatbots.mn) |        |
-| Chatbots.mn Studio      |             [app.chatbots.mn](https://app.chatbots.mn) |        |
-| Chatbots.mn Simulator   | [simulator.chatbots.mn](https://simulator.chatbots.mn) |        |
-| Chatbots.mn Marketplace |             [www.chatbots.mn](https://www.chatbots.mn) |        |
+| Chatbots.mn Backend API |             [api.chatbots.mn](https://api.chatbots.mn) |   [![CircleCI](https://circleci.com/gh/intelligo-systems/chatbots.mn/tree/master.svg?style=svg&circle-token=cde678f675f54a6a32769bda64fc27499da44ae2)](https://circleci.com/gh/intelligo-systems/chatbots.mn/tree/master)     |
+| Chatbots.mn Studio      |             [app.chatbots.mn](https://app.chatbots.mn) |    [![CircleCI](https://circleci.com/gh/intelligo-systems/chatbots.mn/tree/master.svg?style=svg&circle-token=cde678f675f54a6a32769bda64fc27499da44ae2)](https://circleci.com/gh/intelligo-systems/chatbots.mn/tree/master)    |
+| Chatbots.mn Simulator   | [simulator.chatbots.mn](https://simulator.chatbots.mn) |   [![CircleCI](https://circleci.com/gh/intelligo-systems/chatbots.mn/tree/master.svg?style=svg&circle-token=cde678f675f54a6a32769bda64fc27499da44ae2)](https://circleci.com/gh/intelligo-systems/chatbots.mn/tree/master)     |
+| Chatbots.mn Marketplace |             [www.chatbots.mn](https://www.chatbots.mn) |    [![CircleCI](https://circleci.com/gh/intelligo-systems/chatbots.mn/tree/master.svg?style=svg&circle-token=cde678f675f54a6a32769bda64fc27499da44ae2)](https://circleci.com/gh/intelligo-systems/chatbots.mn/tree/master)    |
 
 ### Related Systems 
 
