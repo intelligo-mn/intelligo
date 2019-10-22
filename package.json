@@ -52,7 +52,7 @@
     "@types/express": "^4.17.1",
     "@types/jest": "^24.0.19",
     "@types/mongoose": "^5.5.22",
-    "@types/node": "^12.11.2",
+    "@types/node": "^12.11.3",
     "@types/passport-jwt": "^3.0.2",
     "@types/supertest": "^2.0.8",
     "jest": "^24.9.0",
