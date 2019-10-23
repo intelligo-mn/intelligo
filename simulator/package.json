@@ -55,7 +55,7 @@
     "ts-node": "~8.4.1",
     "tslint": "~5.20.0",
     "typescript": "~3.5.3",
-    "@angular-devkit/core": "8.3.13",
+    "@angular-devkit/core": "8.3.14",
     "@types/hammerjs": "^2.0.36",
     "@types/jsonpath": "^0.2.0",
     "@types/sockjs-client": "^1.1.1",
