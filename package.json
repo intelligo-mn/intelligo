@@ -1,6 +1,6 @@
 {
   "name": "intelligo",
-  "version": "1.2.3",
+  "version": "1.2.9",
   "description": "AI Chatbot Framework for Node.js",
   "main": "lib/index.js",
   "typings": "./lib/index.d.ts",
@@ -47,11 +47,11 @@
     "eventemitter3": "4.0.0",
     "express": "4.17.1",
     "extend": "3.0.2",
-    "intelligo.js": "1.0.1",
     "lodash": "4.17.15",
     "opencollective": "1.0.3",
     "opencollective-postinstall": "2.0.2",
     "request": "2.88.0",
+    "neuro.js": "0.1.7",
     "vow": "0.4.20",
     "ws": "7.1.2",
     "ws-heartbeat": "1.1.0"

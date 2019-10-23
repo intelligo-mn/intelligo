@@ -3,7 +3,7 @@ import { EventEmitter } from 'eventemitter3';
 import { json as _json } from 'body-parser';
 import { createHmac } from 'crypto';
 import * as request from 'request';
-import * as intelligo from 'intelligo.js';
+import * as neuro from 'neuro.js';
 
 export class MessengerBot extends EventEmitter {
   PAGE_ACCESS_TOKEN: any;
@@ -34,8 +34,8 @@ export class MessengerBot extends EventEmitter {
 
   learn(data: any) {
     // Repeat multiple levels
-    const TextClassifier = intelligo.classifiers.multilabel.BinaryRelevance.bind(0, {
-      binaryClassifierType: intelligo.classifiers.Winnow.bind(0, { retrain_count: 10 }),
+    const TextClassifier = neuro.classifiers.multilabel.BinaryRelevance.bind(0, {
+      binaryClassifierType: neuro.classifiers.Winnow.bind(0, { retrain_count: 10 }),
     });
 
     const WordExtractor = (input: any, features: any) => {
@@ -44,7 +44,7 @@ export class MessengerBot extends EventEmitter {
       });
     };
 
-    this.intelligoClassifier = new intelligo.classifiers.EnhancedClassifier({
+    this.intelligoClassifier = new neuro.classifiers.EnhancedClassifier({
       classifierType: TextClassifier,
       featureExtractor: WordExtractor,
     });
