@@ -19,14 +19,14 @@ const marketplace = Express();
 const studio = Express();
 const simulator = Express();
 
-simulator.use(serveStatic('simulator/dist/simulator'));
-studio.use(serveStatic('studio/dist/studio'));
+simulator.use(serveStatic('simulator/dist'));
+studio.use(serveStatic('studio/dist'));
 
 server.use(cors());
 server.use(uptimeBot);
 server.use(vhost('app.chatbots.mn', studio));
 server.use(vhost('simulator.chatbots.mn', simulator));
-server.use(serveStatic('marketplace/dist/marketplace'));
+server.use(serveStatic('marketplace/dist'));
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
 

@@ -33,7 +33,7 @@ let ProductService = class ProductService {
         return product;
     }
     async create(productDTO, user) {
-        const product = await this.productModel.create(Object.assign({}, productDTO, { owner: user }));
+        const product = await this.productModel.create(Object.assign(Object.assign({}, productDTO), { owner: user }));
         await product.save();
         return product.populate('owner');
     }
