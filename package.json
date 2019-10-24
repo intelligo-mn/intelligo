@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^6.8.3",
-    "@nestjs/core": "^6.8.3",
+    "@nestjs/core": "^6.8.4",
     "@nestjs/jwt": "^6.1.1",
     "@nestjs/mongoose": "^6.1.2",
     "@nestjs/passport": "^6.1.0",
