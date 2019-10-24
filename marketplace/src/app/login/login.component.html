@@ -38,14 +38,13 @@
               <div class="text-center text-muted mb-4">
                 <small *ngIf="message">{{message}}</small>
               </div>
-              <form role="form">
+              <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div class="form-group mb-3" [ngClass]="{'focused':focus===true}">
                   <div class="input-group input-group-alternative">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Хэрэглэгчийн нэр" type="email" (focus)="focus=true"
-                      (blur)="focus=false">
+                    <input class="form-control" placeholder="Хэрэглэгчийн нэр" type="email" formControlName="username">
                   </div>
                 </div>
                 <div class="form-group" [ngClass]="{'focused':focus1===true}">
@@ -53,8 +52,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Нууц үг" type="password" (focus)="focus1=true"
-                      (blur)="focus1=false">
+                    <input class="form-control" placeholder="Нууц үг" type="password" formControlName="password">
                   </div>
                 </div>
                 <div class="custom-control custom-control-alternative custom-checkbox">
@@ -64,7 +62,7 @@
                   </label>
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn btn-primary my-4" (click)="login()">Нэвтрэх</button>
+                  <button type="submit" class="btn btn-primary my-4">Нэвтрэх</button>
                 </div>
               </form>
             </div>
