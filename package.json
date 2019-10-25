@@ -27,6 +27,10 @@
     "heroku-postbuild": "npm run studio:install && npm run marketplace:install && npm run simulator:install",
     "postinstall": "npm run studio:build && npm run marketplace:build && npm run simulator:build"
   },
+  "engines": {
+    "node": "12.13.0",
+    "npm": "6.x"
+  },
   "dependencies": {
     "@nestjs/common": "^6.8.4",
     "@nestjs/core": "^6.8.4",
