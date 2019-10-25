@@ -8,8 +8,7 @@
     "build:prod": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "preinstall": "npm install @angular/cli @angular/compiler @angular/compiler-cli @angular-devkit/build-angular typescript@3.5.3"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
