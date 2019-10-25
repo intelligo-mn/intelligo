@@ -638,7 +638,7 @@ let AppComponent = class AppComponent {
         const user = {
             token: this.activatedRoute.snapshot.queryParamMap.get('token'),
         };
-        localStorage.setItem('currentUser', user);
+        localStorage.setItem('currentUser', JSON.stringify(user));
     }
     loading() {
         return this.global.loading;

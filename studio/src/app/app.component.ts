@@ -23,7 +23,7 @@ export class AppComponent {
     const user: any = {
       token: this.activatedRoute.snapshot.queryParamMap.get('token'),
     };
-    localStorage.setItem('currentUser', user);
+    localStorage.setItem('currentUser', JSON.stringify(user));
   }
 
   loading() {

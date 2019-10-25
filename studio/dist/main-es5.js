@@ -645,7 +645,7 @@
                     var user = {
                         token: this.activatedRoute.snapshot.queryParamMap.get('token'),
                     };
-                    localStorage.setItem('currentUser', user);
+                    localStorage.setItem('currentUser', JSON.stringify(user));
                 }
                 AppComponent.prototype.loading = function () {
                     return this.global.loading;
