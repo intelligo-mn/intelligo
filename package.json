@@ -58,7 +58,7 @@
     "vhost": "^3.0.2"
   },
   "devDependencies": {
-    "@nestjs/cli": "^6.10.5",
+    "@nestjs/cli": "^6.11.0",
     "@nestjs/schematics": "^6.7.0",
     "@nestjs/testing": "^6.8.4",
     "@types/bcryptjs": "^2.4.2",
