@@ -16,6 +16,7 @@
     "@angular/common": "~8.2.8",
     "@angular/compiler": "~8.2.8",
     "@angular/core": "~8.2.8",
+    "@angular/cli": "~8.3.14",
     "@angular/forms": "~8.2.8",
     "@angular/platform-browser": "~8.2.8",
     "@angular/platform-browser-dynamic": "~8.2.8",
@@ -35,7 +36,6 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.14",
-    "@angular/cli": "~8.3.14",
     "@angular/compiler-cli": "~8.2.8",
     "@angular/language-service": "~8.2.12",
     "@types/node": "~12.11.7",
