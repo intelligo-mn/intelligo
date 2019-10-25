@@ -573,7 +573,7 @@ const routes = [
     { path: '', component: _landing_landing_component__WEBPACK_IMPORTED_MODULE_5__["LandingComponent"] },
     {
         path: 'market',
-        loadChildren: () => __webpack_require__.e(/*! import() | market-market-module */ "market-market-module").then(__webpack_require__.bind(null, /*! ./market/market.module */ "./src/app/market/market.module.ts")).then(m => m.MarketModule)
+        loadChildren: () => __webpack_require__.e(/*! import() | market-market-module */ "market-market-module").then(__webpack_require__.bind(null, /*! ./market/market.module */ "./src/app/market/market.module.ts")).then(m => m.MarketModule),
     },
     { path: '**', component: _error_page_error_page_component__WEBPACK_IMPORTED_MODULE_7__["ErrorPageComponent"] },
 ];
@@ -584,7 +584,9 @@ AppRoutingModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         imports: [
             _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["BrowserModule"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"].forRoot(routes)
+            _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"].forRoot(routes, {
+                useHash: true,
+            }),
         ],
         exports: [],
     })
@@ -1088,7 +1090,7 @@ let LoginComponent = class LoginComponent {
             password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
         });
         // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'https://app.chatbots.mn/';
     }
     // convenience getter for easy access to form fields
     get f() {
@@ -1105,7 +1107,7 @@ let LoginComponent = class LoginComponent {
             .login(this.f.username.value, this.f.password.value)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["first"])())
             .subscribe(data => {
-            this.router.navigate([this.returnUrl]);
+            window.location.href = this.returnUrl + '?token=' + data.token;
         }, error => {
             this.error = error;
             this.loading = false;
@@ -2041,7 +2043,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../../environments/environment */ "./src/environments/environment.ts");
 
 
 
@@ -2059,7 +2061,7 @@ let AuthenticationService = class AuthenticationService {
     }
     login(username, password) {
         return this.http
-            .post(`${src_environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].apiUrl}/auth/login`, {
+            .post(`${_environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].apiUrl}/auth/login`, {
             username,
             password,
         })

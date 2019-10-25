@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     });
 
     // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'https://app.chatbots.mn/';
   }
 
   // convenience getter for easy access to form fields
@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.router.navigate([this.returnUrl]);
+          window.location.href = this.returnUrl+'?token='+data.token;
         },
         error => {
           this.error = error;

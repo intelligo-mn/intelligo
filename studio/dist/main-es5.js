@@ -694,29 +694,31 @@
             /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
             /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
             /* harmony import */ var _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ngx-translate/http-loader */ "./node_modules/@ngx-translate/http-loader/fesm2015/ngx-translate-http-loader.js");
+            /* harmony import */ var _core_auth_guard__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./core/auth.guard */ "./src/app/core/auth.guard.ts");
             function HttpLoaderFactory(httpClient) {
                 return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_14__["TranslateHttpLoader"](httpClient);
             }
             var APP_ROUTES = [
-                { path: '', redirectTo: 'studio', pathMatch: "full" },
+                { path: '', children: _components_studio_studio_module__WEBPACK_IMPORTED_MODULE_7__["STUDIO_ROUTES"], canActivate: [_core_auth_guard__WEBPACK_IMPORTED_MODULE_15__["AuthGuard"]] },
                 {
                     path: 'manage-users',
-                    children: _components_manage_users_manage_users_module__WEBPACK_IMPORTED_MODULE_6__["MANAGE_USERS_ROUTES"]
+                    children: _components_manage_users_manage_users_module__WEBPACK_IMPORTED_MODULE_6__["MANAGE_USERS_ROUTES"],
                 },
                 {
                     path: 'studio',
-                    children: _components_studio_studio_module__WEBPACK_IMPORTED_MODULE_7__["STUDIO_ROUTES"]
+                    children: _components_studio_studio_module__WEBPACK_IMPORTED_MODULE_7__["STUDIO_ROUTES"],
+                    canActivate: [_core_auth_guard__WEBPACK_IMPORTED_MODULE_15__["AuthGuard"]],
                 },
                 {
                     path: 'deploy',
-                    children: _components_deploy_deploy_module__WEBPACK_IMPORTED_MODULE_10__["DEPLOY_ROUTES"]
+                    children: _components_deploy_deploy_module__WEBPACK_IMPORTED_MODULE_10__["DEPLOY_ROUTES"],
                 },
                 {
                     path: 'analytics',
-                    children: _components_analytics_analytics_module__WEBPACK_IMPORTED_MODULE_8__["ANALYTICS_ROUTES"]
+                    children: _components_analytics_analytics_module__WEBPACK_IMPORTED_MODULE_8__["ANALYTICS_ROUTES"],
                 },
                 // { path: 'home', component: HomeComponent },
-                { path: '**', redirectTo: 'studio' }
+                { path: '**', redirectTo: '' },
             ];
             var AppModule = /** @class */ (function () {
                 function AppModule() {
@@ -725,10 +727,7 @@
             }());
             AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-                    declarations: [
-                        _app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"],
-                        _components_home_home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"]
-                    ],
+                    declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"], _components_home_home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"]],
                     imports: [
                         _angular_forms__WEBPACK_IMPORTED_MODULE_11__["FormsModule"],
                         _shared_module__WEBPACK_IMPORTED_MODULE_5__["SharedModule"],
@@ -737,7 +736,7 @@
                         _components_analytics_analytics_module__WEBPACK_IMPORTED_MODULE_8__["AnalyticsModule"],
                         _components_deploy_deploy_module__WEBPACK_IMPORTED_MODULE_10__["DeployModule"],
                         _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forRoot(APP_ROUTES, {
-                            useHash: true
+                            useHash: true,
                         }),
                         angular2_hotkeys__WEBPACK_IMPORTED_MODULE_9__["HotkeyModule"].forRoot({
                             cheatSheetCloseEsc: true,
@@ -746,9 +745,9 @@
                             loader: {
                                 provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_13__["TranslateLoader"],
                                 useFactory: HttpLoaderFactory,
-                                deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_12__["HttpClient"]]
-                            }
-                        })
+                                deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_12__["HttpClient"]],
+                            },
+                        }),
                     ],
                     bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]],
                 })
@@ -4267,13 +4266,18 @@
             /* harmony import */ var bson__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! bson */ "./node_modules/bson/dist/bson.browser.esm.js");
             /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
             var LandingComponent = /** @class */ (function () {
-                function LandingComponent(router, globals, infoDialog, settings, translate) {
+                function LandingComponent(router, globals, infoDialog, settings, translate, activatedRoute) {
                     this.router = router;
                     this.globals = globals;
                     this.infoDialog = infoDialog;
                     this.settings = settings;
                     this.translate = translate;
+                    this.activatedRoute = activatedRoute;
                     this.savedProjects = [];
+                    var user = {
+                        token: this.activatedRoute.snapshot.queryParamMap.get('token'),
+                    };
+                    localStorage.setItem('currentUser', user);
                     this.globals.setPageTitle();
                     this.loadSavedProjects();
                 }
@@ -4286,23 +4290,23 @@
                     var fileInput = this.fileInput.nativeElement;
                     if (fileInput.files && fileInput.files[0]) {
                         var selectedFile_1 = fileInput.files[0];
-                        fileInput.value = "";
-                        if (selectedFile_1.name.endsWith(".intelligo")) {
+                        fileInput.value = '';
+                        if (selectedFile_1.name.endsWith('.intelligo')) {
                             var reader_1 = new FileReader();
                             reader_1.onload = function (evt) {
                                 var pack = JSON.parse(reader_1.result.toString());
-                                var projName = selectedFile_1.name.replace(new RegExp(".intelligo$"), "");
+                                var projName = selectedFile_1.name.replace(new RegExp('.intelligo$'), '');
                                 _this.settings.saveChatProject(projName, pack, false, function () {
                                     _this.openChatBotProject(projName);
                                 });
                             };
                             reader_1.onerror = function () {
-                                _this.infoDialog.alert(_this.translate.instant("home.oops"), _this.translate.instant("home.unable-load"));
+                                _this.infoDialog.alert(_this.translate.instant('home.oops'), _this.translate.instant('home.unable-load'));
                             };
-                            reader_1.readAsText(selectedFile_1, "UTF-8");
+                            reader_1.readAsText(selectedFile_1, 'UTF-8');
                         }
                         else
-                            this.infoDialog.alert(this.translate.instant("home.oops"), this.translate.instant("home.invalid-project-file"));
+                            this.infoDialog.alert(this.translate.instant('home.oops'), this.translate.instant('home.invalid-project-file'));
                     }
                 };
                 LandingComponent.prototype.searchedProjects = function () {
@@ -4313,16 +4317,16 @@
                 };
                 LandingComponent.prototype.addProject = function () {
                     var _this = this;
-                    this.infoDialog.prompt(this.translate.instant("home.project-name"), this.translate.instant("home.project-name-description"), function (name) {
+                    this.infoDialog.prompt(this.translate.instant('home.project-name'), this.translate.instant('home.project-name-description'), function (name) {
                         if (!name)
                             return;
                         var firstNode = {
-                            Name: "New Node",
+                            Name: 'New Node',
                             Id: new bson__WEBPACK_IMPORTED_MODULE_7__["ObjectID"]().toHexString(),
                             Buttons: [],
                             Sections: [],
                             NodeType: _models_chatflow_models__WEBPACK_IMPORTED_MODULE_6__["NodeType"].Combination,
-                            TimeoutInMs: 0
+                            TimeoutInMs: 0,
                         };
                         var _id = new bson__WEBPACK_IMPORTED_MODULE_7__["ObjectID"]().toHexString();
                         var defaultFlow = {
@@ -4331,7 +4335,7 @@
                             UpdatedOn: new Date(),
                             NodeLocations: {},
                             ProjectId: _id,
-                            _id: _id
+                            _id: _id,
                         };
                         defaultFlow.NodeLocations[firstNode.Id] = { X: 500, Y: 500 };
                         _this.settings.saveChatProject(name, defaultFlow, false, function () {
@@ -4343,11 +4347,11 @@
                     return this.savedProjects.indexOf(proj) == this.savedProjects.length - 1;
                 };
                 LandingComponent.prototype.openChatBotProject = function (name) {
-                    this.router.navigateByUrl("/studio/designer?proj=" + encodeURIComponent(name));
+                    this.router.navigateByUrl('/studio/designer?proj=' + encodeURIComponent(name));
                 };
                 LandingComponent.prototype.renameChatBotProject = function (name) {
                     var _this = this;
-                    this.infoDialog.prompt(this.translate.instant("home.rename"), this.translate.instant("home.enter-new-name"), function (newName) {
+                    this.infoDialog.prompt(this.translate.instant('home.rename'), this.translate.instant('home.enter-new-name'), function (newName) {
                         if (newName && name != newName) {
                             _this.settings.renameChatProject(name, newName);
                             _this.loadSavedProjects();
@@ -4356,7 +4360,7 @@
                 };
                 LandingComponent.prototype.deleteChatBotProject = function (name) {
                     var _this = this;
-                    this.infoDialog.confirm(this.translate.instant("home.delete"), this.translate.instant("home.delete-description") + " " + name, function (ok) {
+                    this.infoDialog.confirm(this.translate.instant('home.delete'), this.translate.instant('home.delete-description') + ' ' + name, function (ok) {
                         if (ok) {
                             _this.settings.deleteChatProject(name);
                             _this.loadSavedProjects();
@@ -4365,7 +4369,7 @@
                 };
                 LandingComponent.prototype.downloadChatBotProject = function (name) {
                     var pack = this.settings.getChatProject(name);
-                    this.globals.downloadTextAsFile(name + ".intelligo", JSON.stringify(pack));
+                    this.globals.downloadTextAsFile(name + '.intelligo', JSON.stringify(pack));
                 };
                 return LandingComponent;
             }());
@@ -4374,14 +4378,15 @@
                 { type: _services_globals_service__WEBPACK_IMPORTED_MODULE_4__["GlobalsService"] },
                 { type: _services_info_dialog_service__WEBPACK_IMPORTED_MODULE_3__["InfoDialogService"] },
                 { type: _services_settings_service__WEBPACK_IMPORTED_MODULE_5__["SettingsService"] },
-                { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateService"] }
+                { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateService"] },
+                { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] }
             ]; };
             tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])("fileInput", { static: false })
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('fileInput', { static: false })
             ], LandingComponent.prototype, "fileInput", void 0);
             LandingComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-                    selector: "app-studio-landing",
+                    selector: 'app-studio-landing',
                     template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./landing.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/studio/landing/landing.component.html")).default,
                     styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./landing.component.scss */ "./src/app/components/studio/landing/landing.component.scss")).default]
                 })
@@ -4665,6 +4670,45 @@
                     ]
                 })
             ], StudioModule);
+            /***/ 
+        }),
+        /***/ "./src/app/core/auth.guard.ts": 
+        /*!************************************!*\
+          !*** ./src/app/core/auth.guard.ts ***!
+          \************************************/
+        /*! exports provided: AuthGuard */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthGuard", function () { return AuthGuard; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+            /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/authentication.service */ "./src/app/services/authentication.service.ts");
+            var AuthGuard = /** @class */ (function () {
+                function AuthGuard(router, authenticationService) {
+                    this.router = router;
+                    this.authenticationService = authenticationService;
+                }
+                AuthGuard.prototype.canActivate = function (route, state) {
+                    var currentUser = this.authenticationService.currentUserValue;
+                    if (currentUser) {
+                        // logged in so return true
+                        return true;
+                    }
+                    // this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+                    window.location.href = 'https://chatbots.mn';
+                    return false;
+                };
+                return AuthGuard;
+            }());
+            AuthGuard.ctorParameters = function () { return [
+                { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
+                { type: _services_authentication_service__WEBPACK_IMPORTED_MODULE_3__["AuthenticationService"] }
+            ]; };
+            AuthGuard = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' })
+            ], AuthGuard);
             /***/ 
         }),
         /***/ "./src/app/directives/autofocus.directive.ts": 
@@ -5452,6 +5496,47 @@
             AnalyticsWindowService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()
             ], AnalyticsWindowService);
+            /***/ 
+        }),
+        /***/ "./src/app/services/authentication.service.ts": 
+        /*!****************************************************!*\
+          !*** ./src/app/services/authentication.service.ts ***!
+          \****************************************************/
+        /*! exports provided: AuthenticationService */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthenticationService", function () { return AuthenticationService; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+            /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+            var AuthenticationService = /** @class */ (function () {
+                function AuthenticationService(http) {
+                    this.http = http;
+                    this.currentUserSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](JSON.parse(localStorage.getItem('currentUser')));
+                    this.currentUser = this.currentUserSubject.asObservable();
+                }
+                Object.defineProperty(AuthenticationService.prototype, "currentUserValue", {
+                    get: function () {
+                        return this.currentUserSubject.value;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                AuthenticationService.prototype.logout = function () {
+                    // remove user from local storage to log user out
+                    localStorage.removeItem('currentUser');
+                    this.currentUserSubject.next(null);
+                };
+                return AuthenticationService;
+            }());
+            AuthenticationService.ctorParameters = function () { return [
+                { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+            ]; };
+            AuthenticationService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' })
+            ], AuthenticationService);
             /***/ 
         }),
         /***/ "./src/app/services/chatflow.service.ts": 

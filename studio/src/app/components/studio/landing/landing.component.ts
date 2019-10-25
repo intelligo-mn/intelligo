@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { Router } from "@angular/router";
-import { InfoDialogService } from "../../../services/info-dialog.service";
-import { GlobalsService } from "../../../services/globals.service";
-import { SettingsService } from "../../../services/settings.service";
-import * as models from "../../../models/chatflow.models";
-import { ObjectID } from "bson";
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { InfoDialogService } from '../../../services/info-dialog.service';
+import { GlobalsService } from '../../../services/globals.service';
+import { SettingsService } from '../../../services/settings.service';
+import * as models from '../../../models/chatflow.models';
+import { ObjectID } from 'bson';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: "app-studio-landing",
-  templateUrl: "./landing.component.html",
-  styleUrls: ["./landing.component.scss"]
+  selector: 'app-studio-landing',
+  templateUrl: './landing.component.html',
+  styleUrls: ['./landing.component.scss'],
 })
 export class LandingComponent implements OnInit {
   constructor(
@@ -18,13 +18,18 @@ export class LandingComponent implements OnInit {
     private globals: GlobalsService,
     private infoDialog: InfoDialogService,
     private settings: SettingsService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private activatedRoute: ActivatedRoute,
   ) {
+    const user: any = {
+      token: this.activatedRoute.snapshot.queryParamMap.get('token'),
+    };
+    localStorage.setItem('currentUser', user);
     this.globals.setPageTitle();
     this.loadSavedProjects();
   }
 
-  @ViewChild("fileInput", { static: false })
+  @ViewChild('fileInput', { static: false })
   fileInput: ElementRef;
 
   loadSavedProjects() {
@@ -39,26 +44,32 @@ export class LandingComponent implements OnInit {
     let fileInput = this.fileInput.nativeElement as HTMLInputElement;
     if (fileInput.files && fileInput.files[0]) {
       let selectedFile = fileInput.files[0];
-      fileInput.value = "";
-      if (selectedFile.name.endsWith(".intelligo")) {
+      fileInput.value = '';
+      if (selectedFile.name.endsWith('.intelligo')) {
         let reader: FileReader = new FileReader();
         reader.onload = evt => {
           let pack = JSON.parse(
-            reader.result.toString()
+            reader.result.toString(),
           ) as models.ChatFlowPack;
-          let projName = selectedFile.name.replace(new RegExp(".intelligo$"), "");
+          let projName = selectedFile.name.replace(
+            new RegExp('.intelligo$'),
+            '',
+          );
           this.settings.saveChatProject(projName, pack, false, () => {
             this.openChatBotProject(projName);
           });
         };
         reader.onerror = () => {
-          this.infoDialog.alert(this.translate.instant("home.oops"), this.translate.instant("home.unable-load"));
+          this.infoDialog.alert(
+            this.translate.instant('home.oops'),
+            this.translate.instant('home.unable-load'),
+          );
         };
-        reader.readAsText(selectedFile, "UTF-8");
+        reader.readAsText(selectedFile, 'UTF-8');
       } else
         this.infoDialog.alert(
-          this.translate.instant("home.oops"),
-          this.translate.instant("home.invalid-project-file")
+          this.translate.instant('home.oops'),
+          this.translate.instant('home.invalid-project-file'),
         );
     }
   }
@@ -66,24 +77,24 @@ export class LandingComponent implements OnInit {
   searchedProjects() {
     if (this.search && this.search.length > 0)
       return this.savedProjects.filter(
-        x => x.toLowerCase().indexOf(this.search.toLowerCase()) != -1
+        x => x.toLowerCase().indexOf(this.search.toLowerCase()) != -1,
       );
     return this.savedProjects;
   }
   addProject() {
     this.infoDialog.prompt(
-      this.translate.instant("home.project-name"),
-      this.translate.instant("home.project-name-description"),
+      this.translate.instant('home.project-name'),
+      this.translate.instant('home.project-name-description'),
       name => {
         if (!name) return;
 
         let firstNode = {
-          Name: "New Node",
+          Name: 'New Node',
           Id: new ObjectID().toHexString(),
           Buttons: [],
           Sections: [],
           NodeType: models.NodeType.Combination,
-          TimeoutInMs: 0
+          TimeoutInMs: 0,
         };
         let _id = new ObjectID().toHexString();
         let defaultFlow: models.ChatFlowPack = {
@@ -92,13 +103,13 @@ export class LandingComponent implements OnInit {
           UpdatedOn: new Date(),
           NodeLocations: {},
           ProjectId: _id,
-          _id: _id
+          _id: _id,
         };
         defaultFlow.NodeLocations[firstNode.Id] = { X: 500, Y: 500 };
         this.settings.saveChatProject(name, defaultFlow, false, () => {
           this.openChatBotProject(name);
         });
-      }
+      },
     );
   }
 
@@ -108,37 +119,37 @@ export class LandingComponent implements OnInit {
 
   openChatBotProject(name: string) {
     this.router.navigateByUrl(
-      "/studio/designer?proj=" + encodeURIComponent(name)
+      '/studio/designer?proj=' + encodeURIComponent(name),
     );
   }
   renameChatBotProject(name: string) {
     this.infoDialog.prompt(
-      this.translate.instant("home.rename"),
-      this.translate.instant("home.enter-new-name"),
+      this.translate.instant('home.rename'),
+      this.translate.instant('home.enter-new-name'),
       newName => {
         if (newName && name != newName) {
           this.settings.renameChatProject(name, newName);
           this.loadSavedProjects();
         }
       },
-      name
+      name,
     );
   }
   deleteChatBotProject(name: string) {
     this.infoDialog.confirm(
-      this.translate.instant("home.delete"),
-      this.translate.instant("home.delete-description") + " "+ name,
+      this.translate.instant('home.delete'),
+      this.translate.instant('home.delete-description') + ' ' + name,
       ok => {
         if (ok) {
           this.settings.deleteChatProject(name);
           this.loadSavedProjects();
         }
-      }
+      },
     );
   }
 
   downloadChatBotProject(name: string) {
     let pack = this.settings.getChatProject(name);
-    this.globals.downloadTextAsFile(name + ".intelligo", JSON.stringify(pack));
+    this.globals.downloadTextAsFile(name + '.intelligo', JSON.stringify(pack));
   }
 }

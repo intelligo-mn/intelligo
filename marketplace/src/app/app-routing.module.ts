@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -21,18 +21,20 @@ const routes: Routes = [
   { path: '', component: LandingComponent },
   {
     path: 'market',
-    loadChildren: () => import('./market/market.module').then(m => m.MarketModule)
+    loadChildren: () =>
+      import('./market/market.module').then(m => m.MarketModule),
   },
-   { path: '**', component: ErrorPageComponent },
+  { path: '**', component: ErrorPageComponent },
 ];
 
 @NgModule({
   imports: [
     CommonModule,
     BrowserModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, {
+      useHash: true,
+    }),
   ],
-  exports: [
-  ],
+  exports: [],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

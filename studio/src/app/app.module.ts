@@ -4,47 +4,52 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { SharedModule } from './shared.module';
-import { ManageUsersModule, MANAGE_USERS_ROUTES } from './components/manage-users/manage-users.module';
+import {
+  ManageUsersModule,
+  MANAGE_USERS_ROUTES,
+} from './components/manage-users/manage-users.module';
 import { StudioModule, STUDIO_ROUTES } from './components/studio/studio.module';
-import { AnalyticsModule, ANALYTICS_ROUTES } from './components/analytics/analytics.module';
+import {
+  AnalyticsModule,
+  ANALYTICS_ROUTES,
+} from './components/analytics/analytics.module';
 import { HotkeyModule } from 'angular2-hotkeys';
 import { DeployModule, DEPLOY_ROUTES } from './components/deploy/deploy.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
-import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
-import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AuthGuard } from './core/auth.guard';
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
 
 const APP_ROUTES: Routes = [
-  { path: '', redirectTo: 'studio', pathMatch: "full" },
+  { path: '', children: STUDIO_ROUTES, canActivate: [AuthGuard] },
   {
     path: 'manage-users',
-    children: MANAGE_USERS_ROUTES
+    children: MANAGE_USERS_ROUTES,
   },
   {
     path: 'studio',
-    children: STUDIO_ROUTES
+    children: STUDIO_ROUTES,
+    canActivate: [AuthGuard],
   },
   {
     path: 'deploy',
-    children: DEPLOY_ROUTES
+    children: DEPLOY_ROUTES,
   },
   {
     path: 'analytics',
-    children: ANALYTICS_ROUTES
+    children: ANALYTICS_ROUTES,
   },
   // { path: 'home', component: HomeComponent },
-  { path: '**', redirectTo: 'studio' }
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent
-  ],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     FormsModule,
     SharedModule,
@@ -53,7 +58,7 @@ const APP_ROUTES: Routes = [
     AnalyticsModule,
     DeployModule,
     RouterModule.forRoot(APP_ROUTES, {
-      useHash: true
+      useHash: true,
     }),
     HotkeyModule.forRoot({
       cheatSheetCloseEsc: true,
@@ -62,10 +67,10 @@ const APP_ROUTES: Routes = [
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
+        deps: [HttpClient],
+      },
+    }),
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

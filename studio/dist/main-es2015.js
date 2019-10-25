@@ -690,6 +690,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
 /* harmony import */ var _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ngx-translate/http-loader */ "./node_modules/@ngx-translate/http-loader/fesm2015/ngx-translate-http-loader.js");
+/* harmony import */ var _core_auth_guard__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./core/auth.guard */ "./src/app/core/auth.guard.ts");
+
 
 
 
@@ -709,34 +711,32 @@ function HttpLoaderFactory(httpClient) {
     return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_14__["TranslateHttpLoader"](httpClient);
 }
 const APP_ROUTES = [
-    { path: '', redirectTo: 'studio', pathMatch: "full" },
+    { path: '', children: _components_studio_studio_module__WEBPACK_IMPORTED_MODULE_7__["STUDIO_ROUTES"], canActivate: [_core_auth_guard__WEBPACK_IMPORTED_MODULE_15__["AuthGuard"]] },
     {
         path: 'manage-users',
-        children: _components_manage_users_manage_users_module__WEBPACK_IMPORTED_MODULE_6__["MANAGE_USERS_ROUTES"]
+        children: _components_manage_users_manage_users_module__WEBPACK_IMPORTED_MODULE_6__["MANAGE_USERS_ROUTES"],
     },
     {
         path: 'studio',
-        children: _components_studio_studio_module__WEBPACK_IMPORTED_MODULE_7__["STUDIO_ROUTES"]
+        children: _components_studio_studio_module__WEBPACK_IMPORTED_MODULE_7__["STUDIO_ROUTES"],
+        canActivate: [_core_auth_guard__WEBPACK_IMPORTED_MODULE_15__["AuthGuard"]],
     },
     {
         path: 'deploy',
-        children: _components_deploy_deploy_module__WEBPACK_IMPORTED_MODULE_10__["DEPLOY_ROUTES"]
+        children: _components_deploy_deploy_module__WEBPACK_IMPORTED_MODULE_10__["DEPLOY_ROUTES"],
     },
     {
         path: 'analytics',
-        children: _components_analytics_analytics_module__WEBPACK_IMPORTED_MODULE_8__["ANALYTICS_ROUTES"]
+        children: _components_analytics_analytics_module__WEBPACK_IMPORTED_MODULE_8__["ANALYTICS_ROUTES"],
     },
     // { path: 'home', component: HomeComponent },
-    { path: '**', redirectTo: 'studio' }
+    { path: '**', redirectTo: '' },
 ];
 let AppModule = class AppModule {
 };
 AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-        declarations: [
-            _app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"],
-            _components_home_home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"]
-        ],
+        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"], _components_home_home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"]],
         imports: [
             _angular_forms__WEBPACK_IMPORTED_MODULE_11__["FormsModule"],
             _shared_module__WEBPACK_IMPORTED_MODULE_5__["SharedModule"],
@@ -745,7 +745,7 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _components_analytics_analytics_module__WEBPACK_IMPORTED_MODULE_8__["AnalyticsModule"],
             _components_deploy_deploy_module__WEBPACK_IMPORTED_MODULE_10__["DeployModule"],
             _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forRoot(APP_ROUTES, {
-                useHash: true
+                useHash: true,
             }),
             angular2_hotkeys__WEBPACK_IMPORTED_MODULE_9__["HotkeyModule"].forRoot({
                 cheatSheetCloseEsc: true,
@@ -754,9 +754,9 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 loader: {
                     provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_13__["TranslateLoader"],
                     useFactory: HttpLoaderFactory,
-                    deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_12__["HttpClient"]]
-                }
-            })
+                    deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_12__["HttpClient"]],
+                },
+            }),
         ],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]],
     })
@@ -4518,13 +4518,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let LandingComponent = class LandingComponent {
-    constructor(router, globals, infoDialog, settings, translate) {
+    constructor(router, globals, infoDialog, settings, translate, activatedRoute) {
         this.router = router;
         this.globals = globals;
         this.infoDialog = infoDialog;
         this.settings = settings;
         this.translate = translate;
+        this.activatedRoute = activatedRoute;
         this.savedProjects = [];
+        const user = {
+            token: this.activatedRoute.snapshot.queryParamMap.get('token'),
+        };
+        localStorage.setItem('currentUser', user);
         this.globals.setPageTitle();
         this.loadSavedProjects();
     }
@@ -4536,23 +4541,23 @@ let LandingComponent = class LandingComponent {
         let fileInput = this.fileInput.nativeElement;
         if (fileInput.files && fileInput.files[0]) {
             let selectedFile = fileInput.files[0];
-            fileInput.value = "";
-            if (selectedFile.name.endsWith(".intelligo")) {
+            fileInput.value = '';
+            if (selectedFile.name.endsWith('.intelligo')) {
                 let reader = new FileReader();
                 reader.onload = evt => {
                     let pack = JSON.parse(reader.result.toString());
-                    let projName = selectedFile.name.replace(new RegExp(".intelligo$"), "");
+                    let projName = selectedFile.name.replace(new RegExp('.intelligo$'), '');
                     this.settings.saveChatProject(projName, pack, false, () => {
                         this.openChatBotProject(projName);
                     });
                 };
                 reader.onerror = () => {
-                    this.infoDialog.alert(this.translate.instant("home.oops"), this.translate.instant("home.unable-load"));
+                    this.infoDialog.alert(this.translate.instant('home.oops'), this.translate.instant('home.unable-load'));
                 };
-                reader.readAsText(selectedFile, "UTF-8");
+                reader.readAsText(selectedFile, 'UTF-8');
             }
             else
-                this.infoDialog.alert(this.translate.instant("home.oops"), this.translate.instant("home.invalid-project-file"));
+                this.infoDialog.alert(this.translate.instant('home.oops'), this.translate.instant('home.invalid-project-file'));
         }
     }
     searchedProjects() {
@@ -4561,16 +4566,16 @@ let LandingComponent = class LandingComponent {
         return this.savedProjects;
     }
     addProject() {
-        this.infoDialog.prompt(this.translate.instant("home.project-name"), this.translate.instant("home.project-name-description"), name => {
+        this.infoDialog.prompt(this.translate.instant('home.project-name'), this.translate.instant('home.project-name-description'), name => {
             if (!name)
                 return;
             let firstNode = {
-                Name: "New Node",
+                Name: 'New Node',
                 Id: new bson__WEBPACK_IMPORTED_MODULE_7__["ObjectID"]().toHexString(),
                 Buttons: [],
                 Sections: [],
                 NodeType: _models_chatflow_models__WEBPACK_IMPORTED_MODULE_6__["NodeType"].Combination,
-                TimeoutInMs: 0
+                TimeoutInMs: 0,
             };
             let _id = new bson__WEBPACK_IMPORTED_MODULE_7__["ObjectID"]().toHexString();
             let defaultFlow = {
@@ -4579,7 +4584,7 @@ let LandingComponent = class LandingComponent {
                 UpdatedOn: new Date(),
                 NodeLocations: {},
                 ProjectId: _id,
-                _id: _id
+                _id: _id,
             };
             defaultFlow.NodeLocations[firstNode.Id] = { X: 500, Y: 500 };
             this.settings.saveChatProject(name, defaultFlow, false, () => {
@@ -4591,10 +4596,10 @@ let LandingComponent = class LandingComponent {
         return this.savedProjects.indexOf(proj) == this.savedProjects.length - 1;
     }
     openChatBotProject(name) {
-        this.router.navigateByUrl("/studio/designer?proj=" + encodeURIComponent(name));
+        this.router.navigateByUrl('/studio/designer?proj=' + encodeURIComponent(name));
     }
     renameChatBotProject(name) {
-        this.infoDialog.prompt(this.translate.instant("home.rename"), this.translate.instant("home.enter-new-name"), newName => {
+        this.infoDialog.prompt(this.translate.instant('home.rename'), this.translate.instant('home.enter-new-name'), newName => {
             if (newName && name != newName) {
                 this.settings.renameChatProject(name, newName);
                 this.loadSavedProjects();
@@ -4602,7 +4607,7 @@ let LandingComponent = class LandingComponent {
         }, name);
     }
     deleteChatBotProject(name) {
-        this.infoDialog.confirm(this.translate.instant("home.delete"), this.translate.instant("home.delete-description") + " " + name, ok => {
+        this.infoDialog.confirm(this.translate.instant('home.delete'), this.translate.instant('home.delete-description') + ' ' + name, ok => {
             if (ok) {
                 this.settings.deleteChatProject(name);
                 this.loadSavedProjects();
@@ -4611,7 +4616,7 @@ let LandingComponent = class LandingComponent {
     }
     downloadChatBotProject(name) {
         let pack = this.settings.getChatProject(name);
-        this.globals.downloadTextAsFile(name + ".intelligo", JSON.stringify(pack));
+        this.globals.downloadTextAsFile(name + '.intelligo', JSON.stringify(pack));
     }
 };
 LandingComponent.ctorParameters = () => [
@@ -4619,14 +4624,15 @@ LandingComponent.ctorParameters = () => [
     { type: _services_globals_service__WEBPACK_IMPORTED_MODULE_4__["GlobalsService"] },
     { type: _services_info_dialog_service__WEBPACK_IMPORTED_MODULE_3__["InfoDialogService"] },
     { type: _services_settings_service__WEBPACK_IMPORTED_MODULE_5__["SettingsService"] },
-    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateService"] }
+    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])("fileInput", { static: false })
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('fileInput', { static: false })
 ], LandingComponent.prototype, "fileInput", void 0);
 LandingComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-        selector: "app-studio-landing",
+        selector: 'app-studio-landing',
         template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./landing.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/studio/landing/landing.component.html")).default,
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./landing.component.scss */ "./src/app/components/studio/landing/landing.component.scss")).default]
     })
@@ -4935,6 +4941,52 @@ StudioModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         ]
     })
 ], StudioModule);
+
+
+
+/***/ }),
+
+/***/ "./src/app/core/auth.guard.ts":
+/*!************************************!*\
+  !*** ./src/app/core/auth.guard.ts ***!
+  \************************************/
+/*! exports provided: AuthGuard */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthGuard", function() { return AuthGuard; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/authentication.service */ "./src/app/services/authentication.service.ts");
+
+
+
+
+let AuthGuard = class AuthGuard {
+    constructor(router, authenticationService) {
+        this.router = router;
+        this.authenticationService = authenticationService;
+    }
+    canActivate(route, state) {
+        const currentUser = this.authenticationService.currentUserValue;
+        if (currentUser) {
+            // logged in so return true
+            return true;
+        }
+        // this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+        window.location.href = 'https://chatbots.mn';
+        return false;
+    }
+};
+AuthGuard.ctorParameters = () => [
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
+    { type: _services_authentication_service__WEBPACK_IMPORTED_MODULE_3__["AuthenticationService"] }
+];
+AuthGuard = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' })
+], AuthGuard);
 
 
 
@@ -5741,6 +5793,50 @@ AnalyticsWindowService.ctorParameters = () => [
 AnalyticsWindowService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()
 ], AnalyticsWindowService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/authentication.service.ts":
+/*!****************************************************!*\
+  !*** ./src/app/services/authentication.service.ts ***!
+  \****************************************************/
+/*! exports provided: AuthenticationService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthenticationService", function() { return AuthenticationService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+
+
+
+
+let AuthenticationService = class AuthenticationService {
+    constructor(http) {
+        this.http = http;
+        this.currentUserSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](JSON.parse(localStorage.getItem('currentUser')));
+        this.currentUser = this.currentUserSubject.asObservable();
+    }
+    get currentUserValue() {
+        return this.currentUserSubject.value;
+    }
+    logout() {
+        // remove user from local storage to log user out
+        localStorage.removeItem('currentUser');
+        this.currentUserSubject.next(null);
+    }
+};
+AuthenticationService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+];
+AuthenticationService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' })
+], AuthenticationService);
 
 
 
