@@ -7,8 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "preinstall": "npm install @angular/cli @angular/compiler @angular/compiler-cli @angular-devkit/build-angular typescript@3.5.3"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -17,6 +16,9 @@
     "@angular/common": "~8.2.12",
     "@angular/compiler": "~8.2.12",
     "@angular/core": "~8.2.12",
+    "@angular-devkit/build-angular": "~0.803.14",
+    "@angular/cli": "~8.3.14",
+    "@angular/compiler-cli": "~8.2.12",
     "@angular/forms": "~8.2.12",
     "@angular/material": "8.2.3",
     "@angular/platform-browser": "~8.2.12",
@@ -40,9 +42,6 @@
   },
   "devDependencies": {
     "@angular-devkit/core": "^8.3.14",
-    "@angular-devkit/build-angular": "~0.803.14",
-    "@angular/cli": "~8.3.14",
-    "@angular/compiler-cli": "~8.2.12",
     "@angular/language-service": "~8.2.12",
     "@types/bson": "^4.0.0",
     "@types/jasmine": "~3.4.4",
