@@ -24,11 +24,11 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "preinstall": "npm install -g @angular/cli @angular/compiler-cli typescript",
+    "preinstall": "npm install -g @angular/cli @angular/compiler-cli @angular-devkit/build-angular typescript",
     "heroku-prebuild": "npm run studio:install && npm run marketplace:install && npm run simulator:install",
     "heroku-postbuild": "npm run studio:build && npm run marketplace:build && npm run simulator:build"
   },
-  "engines": {
+  "engines": {  
     "node": "12.13.0",
     "npm": "6.x"
   },
