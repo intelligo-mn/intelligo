@@ -642,10 +642,15 @@
                     translate.addLangs(['mn', 'en']);
                     translate.setDefaultLang('mn');
                     translate.use('mn');
-                    var user = {
-                        token: this.activatedRoute.snapshot.queryParamMap.get('token'),
-                    };
-                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    this.activatedRoute.queryParams.subscribe(function (params) {
+                        var token = params['token'];
+                        if (token) {
+                            var user = {
+                                token: token,
+                            };
+                            localStorage.setItem('currentUser', JSON.stringify(user));
+                        }
+                    });
                 }
                 AppComponent.prototype.loading = function () {
                     return this.global.loading;

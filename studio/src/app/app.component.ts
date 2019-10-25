@@ -20,10 +20,15 @@ export class AppComponent {
     translate.addLangs(['mn', 'en']);
     translate.setDefaultLang('mn');
     translate.use('mn');
-    const user: any = {
-      token: this.activatedRoute.snapshot.queryParamMap.get('token'),
-    };
-    localStorage.setItem('currentUser', JSON.stringify(user));
+    this.activatedRoute.queryParams.subscribe(params => {
+      const token = params['token'];
+      if (token) {
+        const user: any = {
+          token: token,
+        };
+        localStorage.setItem('currentUser', JSON.stringify(user));
+      }
+    });
   }
 
   loading() {
