@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "preinstall": "npm install @angular/cli @angular/compiler @angular/compiler-cli @angular-devkit/build-angular typescript@3.5.3"
   },
   "private": true,
   "dependencies": {
