@@ -5,7 +5,6 @@ import * as Express from 'express';
 import * as cors from 'cors';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { uptimeBot } from './integrations/uptime-bot';
 import * as vhost from 'vhost';
 import * as serveStatic from 'serve-static';
 
@@ -23,7 +22,6 @@ simulator.use(serveStatic('simulator/dist'));
 studio.use(serveStatic('studio/dist'));
 
 server.use(cors());
-server.use(uptimeBot);
 server.use(vhost('app.chatbots.mn', studio));
 server.use(vhost('simulator.chatbots.mn', simulator));
 server.use(serveStatic('marketplace/dist'));
