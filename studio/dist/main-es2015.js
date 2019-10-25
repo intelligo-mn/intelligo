@@ -615,10 +615,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-/* harmony import */ var _services_globals_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/globals.service */ "./src/app/services/globals.service.ts");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+/* harmony import */ var _services_globals_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./services/globals.service */ "./src/app/services/globals.service.ts");
 
 
 
@@ -626,14 +626,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let AppComponent = class AppComponent {
-    constructor(translate, global, router, dialog) {
+    constructor(translate, global, router, activatedRoute, dialog) {
         this.translate = translate;
         this.global = global;
         this.router = router;
+        this.activatedRoute = activatedRoute;
         this.dialog = dialog;
         translate.addLangs(['mn', 'en']);
         translate.setDefaultLang('mn');
         translate.use('mn');
+        const user = {
+            token: this.activatedRoute.snapshot.queryParamMap.get('token'),
+        };
+        localStorage.setItem('currentUser', user);
     }
     loading() {
         return this.global.loading;
@@ -646,10 +651,11 @@ let AppComponent = class AppComponent {
     }
 };
 AppComponent.ctorParameters = () => [
-    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"] },
-    { type: _services_globals_service__WEBPACK_IMPORTED_MODULE_3__["GlobalsService"] },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
-    { type: _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatDialog"] }
+    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"] },
+    { type: _services_globals_service__WEBPACK_IMPORTED_MODULE_5__["GlobalsService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] },
+    { type: _angular_material__WEBPACK_IMPORTED_MODULE_2__["MatDialog"] }
 ];
 AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -4502,12 +4508,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-/* harmony import */ var _services_info_dialog_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/info-dialog.service */ "./src/app/services/info-dialog.service.ts");
-/* harmony import */ var _services_globals_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/globals.service */ "./src/app/services/globals.service.ts");
-/* harmony import */ var _services_settings_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/settings.service */ "./src/app/services/settings.service.ts");
-/* harmony import */ var _models_chatflow_models__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../models/chatflow.models */ "./src/app/models/chatflow.models.ts");
-/* harmony import */ var bson__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! bson */ "./node_modules/bson/dist/bson.browser.esm.js");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+/* harmony import */ var bson__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! bson */ "./node_modules/bson/dist/bson.browser.esm.js");
+/* harmony import */ var _models_chatflow_models__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../models/chatflow.models */ "./src/app/models/chatflow.models.ts");
+/* harmony import */ var _services_globals_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/globals.service */ "./src/app/services/globals.service.ts");
+/* harmony import */ var _services_info_dialog_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/info-dialog.service */ "./src/app/services/info-dialog.service.ts");
+/* harmony import */ var _services_settings_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../services/settings.service */ "./src/app/services/settings.service.ts");
 
 
 
@@ -4518,18 +4524,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let LandingComponent = class LandingComponent {
-    constructor(router, globals, infoDialog, settings, translate, activatedRoute) {
+    constructor(router, globals, infoDialog, settings, translate) {
         this.router = router;
         this.globals = globals;
         this.infoDialog = infoDialog;
         this.settings = settings;
         this.translate = translate;
-        this.activatedRoute = activatedRoute;
         this.savedProjects = [];
-        const user = {
-            token: this.activatedRoute.snapshot.queryParamMap.get('token'),
-        };
-        localStorage.setItem('currentUser', user);
         this.globals.setPageTitle();
         this.loadSavedProjects();
     }
@@ -4571,13 +4572,13 @@ let LandingComponent = class LandingComponent {
                 return;
             let firstNode = {
                 Name: 'New Node',
-                Id: new bson__WEBPACK_IMPORTED_MODULE_7__["ObjectID"]().toHexString(),
+                Id: new bson__WEBPACK_IMPORTED_MODULE_4__["ObjectID"]().toHexString(),
                 Buttons: [],
                 Sections: [],
-                NodeType: _models_chatflow_models__WEBPACK_IMPORTED_MODULE_6__["NodeType"].Combination,
+                NodeType: _models_chatflow_models__WEBPACK_IMPORTED_MODULE_5__["NodeType"].Combination,
                 TimeoutInMs: 0,
             };
-            let _id = new bson__WEBPACK_IMPORTED_MODULE_7__["ObjectID"]().toHexString();
+            let _id = new bson__WEBPACK_IMPORTED_MODULE_4__["ObjectID"]().toHexString();
             let defaultFlow = {
                 ChatNodes: [firstNode],
                 CreatedOn: new Date(),
@@ -4621,11 +4622,10 @@ let LandingComponent = class LandingComponent {
 };
 LandingComponent.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
-    { type: _services_globals_service__WEBPACK_IMPORTED_MODULE_4__["GlobalsService"] },
-    { type: _services_info_dialog_service__WEBPACK_IMPORTED_MODULE_3__["InfoDialogService"] },
-    { type: _services_settings_service__WEBPACK_IMPORTED_MODULE_5__["SettingsService"] },
-    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateService"] },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] }
+    { type: _services_globals_service__WEBPACK_IMPORTED_MODULE_6__["GlobalsService"] },
+    { type: _services_info_dialog_service__WEBPACK_IMPORTED_MODULE_7__["InfoDialogService"] },
+    { type: _services_settings_service__WEBPACK_IMPORTED_MODULE_8__["SettingsService"] },
+    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('fileInput', { static: false })

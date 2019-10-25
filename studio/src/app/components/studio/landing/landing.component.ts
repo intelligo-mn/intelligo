@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { InfoDialogService } from '../../../services/info-dialog.service';
-import { GlobalsService } from '../../../services/globals.service';
-import { SettingsService } from '../../../services/settings.service';
-import * as models from '../../../models/chatflow.models';
-import { ObjectID } from 'bson';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { ObjectID } from 'bson';
+import * as models from '../../../models/chatflow.models';
+import { GlobalsService } from '../../../services/globals.service';
+import { InfoDialogService } from '../../../services/info-dialog.service';
+import { SettingsService } from '../../../services/settings.service';
 
 @Component({
   selector: 'app-studio-landing',
@@ -19,12 +19,7 @@ export class LandingComponent implements OnInit {
     private infoDialog: InfoDialogService,
     private settings: SettingsService,
     private translate: TranslateService,
-    private activatedRoute: ActivatedRoute,
   ) {
-    const user: any = {
-      token: this.activatedRoute.snapshot.queryParamMap.get('token'),
-    };
-    localStorage.setItem('currentUser', user);
     this.globals.setPageTitle();
     this.loadSavedProjects();
   }
