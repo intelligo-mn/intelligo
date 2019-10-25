@@ -12,12 +12,20 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "studio:install": "cd studio && npm install",
+    "studio:build": "cd studio && ng build",
+    "marketplace:install": "cd marketplace && npm install",
+    "marketplace:build": "cd marketplace && ng build",
+    "simulator:install": "cd simulator && npm install",
+    "simulator:build": "cd simulator && ng build",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "heroku-postbuild": "npm run studio:install && npm run marketplace:install && npm run simulator:install",
+    "postinstall": "npm run studio:build && npm run marketplace:build && npm run simulator:build"
   },
   "dependencies": {
     "@nestjs/common": "^6.8.4",
