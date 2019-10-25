@@ -24,13 +24,14 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "heroku-postbuild": "npm run studio:install && npm run marketplace:install && npm run simulator:install",
-    "postinstall": "npm run studio:build && npm run marketplace:build && npm run simulator:build"
+    "heroku-prebuild": "npm run studio:install && npm run marketplace:install && npm run simulator:install",
+    "heroku-postbuild": "npm run studio:build && npm run marketplace:build && npm run simulator:build"
   },
   "engines": {
     "node": "12.13.0",
     "npm": "6.x"
   },
+  "cacheDirectories": ["studio/node_modules", "node_modules", "marketplace/node_modules", "simulator/node_modules"],
   "dependencies": {
     "@nestjs/common": "^6.8.4",
     "@nestjs/core": "^6.8.4",
