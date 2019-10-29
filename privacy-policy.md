@@ -1,20 +1,25 @@
-Privacy Policy & Data Protection
-Last Updated on June 22, 2018.
+# Privacy Policy
 
-Introduction
+> Last Updated on June 22, 2018.
+
+## Introduction
+
 Chatbots.mn (“Chatbots.mn”) respects your right to privacy and takes your privacy seriously. We are committed to protecting and securing any personal information you give us. This Privacy Policy explains who we are; how we collect, use and share personal information about you; how you can manage the information you give us and exercise your privacy rights; and how we protect your information. This Privacy Policy relates to our use of any personal information we collect from you via our online services including our Website and App or give us in any other way (together, the “Services“).
 
 The Services are currently under intense development and different aspects of the Services will be deployed over the coming months. Some parts of this Privacy Policy refer to functions of the Services that have not yet been implemented or deployed. Once such functions are available for use, by accessing and continuing to use the Services thereafter, you agree that those parts of the Privacy Policy shall go into effect.
 
-External Links
+## External Links
+
 If any part of this website links you to other websites, those websites do not operate under this Privacy Policy. We recommend you examine the privacy statements posted on those other websites to understand their procedures for collecting, using, and disclosing personal information.
 
-Your Information Right
+## Your Information Right
 To delete your personal information, please contact us at the information in the “Contact Us” section at bottom of this Privacy Policy.
 You may receive communications from us related to our Services, including service announcements, administrative messages and surveys relating either to your experience or transactions on this Site, without offering you the opportunity to opt out of receiving them.
 You have the right to opt-out of marketing communications we send you at any time.You can exercise this right by clicking on the “unsubscribe” or “opt-out” link in the marketing e-mails we send you.  We reserve the right to email you with respect to important notices, even if you have requested not to receive emails from us.
 Please also note that we may retain certain information associated with you, including for analytical purposes as well as for record-keeping integrity.
-Your Data Protection Rights And Choices
+
+## Your Data Protection Rights And Choices
+
 If you wish to access your personal information that Chatbots.mn collects, you can do so at any time by contacting us using the contact details provided under “How to Contact Us” heading below.
 
 If you are a resident of the European Economic Area, you additionally have the following data protection rights:
@@ -30,7 +35,7 @@ What we collect depends largely on the interaction that takes place between you 
 ‍
 Using Chatbots.mn Software as a Service. When you use any Chatbots.mn Software as a Service, we store all the content you provide, including but not limited to accounts created for team members, files, pictures, project information, and any other information that you provide to the services you use. For any Chatbots.mn Software as a Service, we also collect data about usage of the software. This may include, but is not limited to, numbers of users, flows, broadcasts etc.
 
-Types of Personal Information:
+## Types of Personal Information:
 
 (i) Users: identification, publicly available social media profile information, e-mail, IT information (IP addresses, usage data, cookies data, browser data); financial information (credit card details, account details, payment information).
 
@@ -48,7 +53,8 @@ Information automatically collected. Our servers may automatically record certai
 
 Sensitive personal information. Subject to the following paragraph, we ask that you not send or disclose to us any sensitive personal information (e.g., social security numbers, information related to racial or ethnic origin, political opinions, religion or other beliefs, health, biometrics or genetic characteristics, criminal background or union membership) on or through the Service or otherwise.If you send or disclose any sensitive personal information to us (such as when you submit user generated content to the Site), you must consent to our processing and use of such sensitive personal information in accordance with this Privacy Policy. If you do not consent to our processing and use of such sensitive personal information, you must not provide it. You may use your data protection rights to object to or restrict processing of this sensitive personal information, or to delete such information, as detailed below under the heading “Your Data Protection Rights & Choices.”
 
-Why We Collect Your Personal Information
+## Why We Collect Your Personal Information
+
 For service operations (i) to operate, maintain, administer and improve the Service; (ii) to manage and communicate with you regarding your Service account, if you have one, including by sending you Service announcements, technical notices, updates, security alerts, and support and administrative messages; (iii) to process payments you make through the Service; (iv) to better understand your needs and interests, and personalize your experience with the Service; (v) o send you information about product by email (vi) to respond to your Service-related requests, questions and feedback.
 
 To communicate with you. If you request information from us, register for the Service or participate in our surveys, promotions or events, we may send you Chatbots.mn-related marketing communications if permitted by law but will provide you with the ability to opt out.
@@ -63,7 +69,8 @@ For compliance, fraud prevention and safety. We use your personal information as
 
 To provide, support, and improve the Services we offer. This includes our use of the data that our Members provide us in order to enable our Members to use the Services to communicate with their Subscribers. This also includes, for example, aggregating information from your use of the Services or visit to our Websites and sharing this information with third parties to improve our Services. This might also include sharing your information or the information you provide us about your Subscribers with third parties in order to provide and support our Services or to make certain features of the Services available to you. When we do have to share Personal Information with third parties, we take steps to protect your information by requiring these third parties to enter into a contract with us that requires them to use the personal information we transfer to them in a manner that is consistent with this Privacy Policy.
 
-How We Share Your Personal Information
+## How We Share Your Personal Information
+
 We may disclose your personal information to the following categories of recipients:
 
 Third party services providers who provide data processing services to us (for example, to support the delivery of; provide functionality on; or help to enhance the security of our Online Services), or who otherwise process personal information for purposes such as credit card processing, business analytics, customer service, marketing, distribution of surveys or sweepstakes programs, to facilitate the delivery of online advertising tailored to your interests and fraud prevention.  Where third-party service providers have access to data they will only collect information as needed to perform their functions. They are not permitted to share or use the information for any other purpose.
@@ -77,19 +84,24 @@ Business Transfers – As we develop our business, we might sell or buy business
 Data Retention
 We retain the personal information we collect from you where we have an ongoing legitimate business need to do so (for example, to provide you with a service you have requested or to comply with applicable legal, tax or accounting requirements). When we have no ongoing legitimate business need to process your personal information, we will either delete or anonymize the data or, if this is not possible (for example, because your personal information has been stored in backup archives), then we will securely store your personal information and isolate it from any further processing until deletion is possible.We will anonymize or aggregate your data if we intend to use it for analytical purposes or trend analysis over longer periods.
 
-Data Transfer
+## Data Transfer
+
 Your personal information may be stored and processed in any country where we have facilities or in which we engage service providers. By accepting the terms of this Privacy Policy, you acknowledge, agree and consent to (1) the transfer to and processing of personal information on servers located outside of the country where you reside and (2) our collection and use of your personal information as described herein and in accordance with the data protection laws of the United States, which may be different and may be less protective than those in your country. If you are a resident of the EEA or Switzerland, please note that we use standard contractual clauses approved by the European Commission to transfer your personal information from the EEA or Switzerland to the United States and other countries.
 
-Cookies And Beacons
+## Cookies And Beacons
+
 A cookie is a string of information that a website stores on a visitor’s computer, and that the visitor’s browser provides to the website each time the visitor returns. Chatbots.mn uses cookies to help Chatbots.mn identify and track visitors, their usage of Chatbots.mn website, and their website access preferences. Chatbots.mn visitors who do not wish to have cookies placed on their computers should set their browsers to refuse cookies before using Chatbots.mn’s websites, with the drawback that certain features of Chatbots.mn’s websites may not function properly without the aid of cookies.
 
-Children Information
+## Children Information
+
 This is a general audience site and does not offer services directed to children. Should a child whom we know to be under 16 send personal information to us, we will use that information only to respond directly to that child to inform him or her that we must have parental consent before receiving his or her personal information.
 
-Changes To This Document
+## Changes To This Document
+
 Changes to this Privacy Policy will be made when required in response to changing legal, technical or business developments. When we update our Privacy Policy, we will take appropriate measures to inform you, consistent with the significance of the changes we make.  We will obtain your consent to any material Privacy Policy changes if and where this is required by applicable data protection laws.You can see when this Privacy Policy was last updated by checking the “Last Updated” date displayed at the top of this Privacy Policy.
 
 If you have any questions about changes to this Privacy Policy, please contact us through the contact details found below.
 
-Contact Us
+## Contact Us
+
 If you require any more information or have any questions about our privacy policy, please feel free to contact us by email at info@chatbots.mn with the subject line “Privacy Policy Inquiry”.
