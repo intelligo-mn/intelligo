@@ -1,6 +1,6 @@
 # Privacy Policy
 
-> Last Updated on June 22, 2018.
+> Last Updated on October 29, 2019.
 
 ## Introduction
 
