@@ -1,8 +1,8 @@
 <mat-toolbar class="mat-elevation-z2" color="primary">
     <mat-toolbar-row>
-        <button mat-icon-button (click)="goBack()" *ngIf="!hideBackButton" class="back-button">
+        <!-- <button mat-icon-button (click)="goBack()" *ngIf="!hideBackButton" class="back-button">
             <mat-icon>arrow_back</mat-icon>
-        </button>
+        </button> -->
         <span>{{title}}</span>
         <span class="toolbar-spacer"></span>
         <span class="user-info" *ngIf="loggedInUser">
@@ -13,7 +13,7 @@
                 {{roles()}}
             </span>
         </span>
-        <span class="user-info" *ngIf="!loggedInUser">
+        <!-- <span class="user-info" *ngIf="!loggedInUser">
             <span class="user-name">
                 <button mat-raised-button (click)="loginDialog()" color="primary" class="inverse">{{ 'home.login' | translate }}</button>
             </span>
@@ -30,6 +30,6 @@
                 <mat-icon>exit_to_app</mat-icon>
                 <span>{{ 'home.logout' | translate }}</span>
             </button>
-        </mat-menu>
+        </mat-menu> -->
     </mat-toolbar-row>
 </mat-toolbar>
