@@ -30,9 +30,11 @@ If you request deletion of your personal information, we will erase it. Please d
 You can object to processing of your personal information, ask us to restrict processing of your personal information or request portability of your personal information. Again, you can exercise these rights by contacting us through the information found in the “How to Contact Us” section at bottom of this Privacy Policy.
 Similarly, if we have collected and processed your personal information with your consent, then you can withdraw your consent at any time.Withdrawing your consent will not affect the lawfulness of any processing we conducted prior to your withdrawal, nor will it affect processing of your personal information conducted in reliance on lawful processing grounds other than consent.
 You have the right to complain to a data protection authority about our collection and use of your personal information. For more information, please contact your local data protection authority. Contact details for data protection authorities in the European Economic Area, Switzerland and certain non-European countries (including the US and Canada) are available here).
-How We Collect Your Personal Information
+
+## How We Collect Your Personal Information
+
 What we collect depends largely on the interaction that takes place between you and Chatbots.mn, most of which can be categorized under the following:
-‍
+
 Using Chatbots.mn Software as a Service. When you use any Chatbots.mn Software as a Service, we store all the content you provide, including but not limited to accounts created for team members, files, pictures, project information, and any other information that you provide to the services you use. For any Chatbots.mn Software as a Service, we also collect data about usage of the software. This may include, but is not limited to, numbers of users, flows, broadcasts etc.
 
 ## Types of Personal Information:
@@ -86,7 +88,7 @@ We retain the personal information we collect from you where we have an ongoing 
 
 ## Data Transfer
 
-Your personal information may be stored and processed in any country where we have facilities or in which we engage service providers. By accepting the terms of this Privacy Policy, you acknowledge, agree and consent to (1) the transfer to and processing of personal information on servers located outside of the country where you reside and (2) our collection and use of your personal information as described herein and in accordance with the data protection laws of the United States, which may be different and may be less protective than those in your country. If you are a resident of the EEA or Switzerland, please note that we use standard contractual clauses approved by the European Commission to transfer your personal information from the EEA or Switzerland to the United States and other countries.
+Your personal information may be stored and processed in any country where we have facilities or in which we engage service providers. By accepting the terms of this Privacy Policy, you acknowledge, agree and consent to (1) the transfer to and processing of personal information on servers located outside of the country where you reside and (2) our collection and use of your personal information as described herein and in accordance with the data protection laws of the Mongolia, which may be different and may be less protective than those in your country. If you are a resident of the EEA or Switzerland, please note that we use standard contractual clauses approved by the European Commission to transfer your personal information from the EEA or Switzerland to the United States and other countries.
 
 ## Cookies And Beacons
 
