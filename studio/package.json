@@ -48,7 +48,7 @@
     "@types/jasminewd2": "~2.0.8",
     "@types/jsonpath": "^0.2.0",
     "@types/mousetrap": "^1.6.3",
-    "@types/node": "~12.12.1",
+    "@types/node": "~12.12.4",
     "@types/shelljs": "^0.8.5",
     "@types/underscore": "^1.9.3",
     "codelyzer": "^5.2.0",
