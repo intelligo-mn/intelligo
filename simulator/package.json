@@ -56,7 +56,7 @@
     "ts-node": "~8.4.1",
     "tslint": "~5.20.1",
     "typescript": "~3.5.3",
-    "@angular-devkit/core": "8.3.17",
+    "@angular-devkit/core": "8.3.18",
     "@types/jsonpath": "^0.2.0",
     "@types/sockjs-client": "^1.1.1",
     "@types/stompjs": "^2.3.4",
