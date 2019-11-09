@@ -66,7 +66,7 @@
     "@types/jest": "^24.0.22",
     "@types/mongoose": "^5.5.30",
     "@types/node": "^12.12.7",
-    "@types/passport-jwt": "^3.0.2",
+    "@types/passport-jwt": "^3.0.3",
     "@types/supertest": "^2.0.8",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
