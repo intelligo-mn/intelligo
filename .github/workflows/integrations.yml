@@ -35,7 +35,7 @@ jobs:
       working-directory: ./integrations/brain
       
     - name: integrations devmn
-       run: |
+      run: |
         npm install
       working-directory: ./integrations/devmn
       
