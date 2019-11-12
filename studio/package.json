@@ -38,6 +38,7 @@
     "ts-md5": "^1.2.7",
     "underscore": "^1.9.1",
     "tslib": "^1.10.0",
+    "intelligo": "^1.3.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
