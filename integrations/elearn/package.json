@@ -1,0 +1,13 @@
+{
+  "name": "api.chatbots.mn",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Chatbots.mn API",
+  "license": "MIT",
+  "dependencies": {
+    "intelligo": "^1.3.0"
+    "intelligo-cli": "1.2.39"
+    "neuro.js": "0.1.7"
+    "uptime.js": "^1.3.1"
+  }
+}
