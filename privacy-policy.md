@@ -13,10 +13,11 @@ The Services are currently under intense development and different aspects of th
 If any part of this website links you to other websites, those websites do not operate under this Privacy Policy. We recommend you examine the privacy statements posted on those other websites to understand their procedures for collecting, using, and disclosing personal information.
 
 ## Your Information Right
-To delete your personal information, please contact us at the information in the “Contact Us” section at bottom of this Privacy Policy.
-You may receive communications from us related to our Services, including service announcements, administrative messages and surveys relating either to your experience or transactions on this Site, without offering you the opportunity to opt out of receiving them.
-You have the right to opt-out of marketing communications we send you at any time.You can exercise this right by clicking on the “unsubscribe” or “opt-out” link in the marketing e-mails we send you.  We reserve the right to email you with respect to important notices, even if you have requested not to receive emails from us.
-Please also note that we may retain certain information associated with you, including for analytical purposes as well as for record-keeping integrity.
+
+- To delete your personal information, please contact us at the information in the “Contact Us” section at bottom of this Privacy Policy.
+- You may receive communications from us related to our Services, including service announcements, administrative messages and surveys relating either to your experience or transactions on this Site, without offering you the opportunity to opt out of receiving them.
+- You have the right to opt-out of marketing communications we send you at any time.You can exercise this right by clicking on the “unsubscribe” or “opt-out” link in the marketing e-mails we send you.  We reserve the right to email you with respect to important notices, even if you have requested not to receive emails from us.
+- Please also note that we may retain certain information associated with you, including for analytical purposes as well as for record-keeping integrity.
 
 ## Your Data Protection Rights And Choices
 
