@@ -40,7 +40,7 @@
     "@nestjs/passport": "^6.1.0",
     "@nestjs/platform-express": "^6.9.0",
     "@nestjs/swagger": "^3.1.0",
-    "@types/swagger-ui-express": "^3.0.1",
+    "@types/swagger-ui-express": "^4.1.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "intelligo": "^1.3.0",
