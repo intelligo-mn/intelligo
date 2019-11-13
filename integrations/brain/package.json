@@ -5,9 +5,9 @@
   "description": "Chatbots.mn API",
   "license": "MIT",
   "dependencies": {
-    "intelligo": "^1.3.0"
-    "intelligo-cli": "1.2.39"
-    "neuro.js": "0.1.7"
+    "intelligo": "^1.3.0",
+    "intelligo-cli": "1.2.39",
+    "neuro.js": "0.1.7", be
     "uptime.js": "^1.3.1"
   }
 }
