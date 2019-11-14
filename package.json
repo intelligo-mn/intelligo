@@ -44,7 +44,7 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "intelligo": "^1.3.0",
-    "mongoose": "^5.7.10",
+    "mongoose": "^5.7.11",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
