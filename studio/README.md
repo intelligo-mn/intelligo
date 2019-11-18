@@ -1,6 +1,15 @@
 # Chatbots.mn Studio
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.2.
+Conversational AI platform.
+
+### Platform Apps
+
+| Apps                    |                                                    Web |  Github Actions                                                                                                                                                              |
+| ----------------------- | -----------------------------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| Chatbots.mn Backend API |             [api.chatbots.mn](https://api.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/backend/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=backend)         |
+| **Chatbots.mn Studio**      |             **[app.chatbots.mn](https://app.chatbots.mn)** | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/studio/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=studio)           |
+| Chatbots.mn Simulator   | [simulator.chatbots.mn](https://simulator.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/simulator/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=simulator)     |
+| Chatbots.mn Marketplace |             [www.chatbots.mn](https://www.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/marketplace/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=marketplace) |
 
 ## Development server
 
