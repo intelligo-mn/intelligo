@@ -21,7 +21,7 @@ Conversational AI platform.
 | Neuro Framework        | [neuro.js.org](https://neuro.js.org)                   | [![Netlify Status](https://api.netlify.com/api/v1/badges/e50b93e2-67b8-4c6e-a4cc-c245b571f3cc/deploy-status)](https://app.netlify.com/sites/neurojs/deploys)          |
 
 
-### Other Projects 
+### Dev.mn  
 
 | Apps              | Web                                | Status                                                                                                                                                        |
 |-------------------|------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
