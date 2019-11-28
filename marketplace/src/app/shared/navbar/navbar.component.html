@@ -180,11 +180,17 @@
               </li>
             </ul>
           </div>
-          <a [routerLink]="['/login']" class="btn btn-neutral btn-icon">
+          <a [routerLink]="['/login']" class="btn btn-neutral btn-icon" *ngIf="!isLoggedIn">
             <span class="btn-inner--icon">
               <i class="fa fa-rocket mr-2"></i>
             </span>
             <span class="nav-link-inner--text">Нэвтрэх</span>
+          </a>
+          <a href="https://app.chatbots.mn/" target="_blank" class="btn btn-neutral btn-icon" *ngIf="isLoggedIn">
+            <span class="btn-inner--icon">
+              <i class="fa fa-rocket mr-2"></i>
+            </span>
+            <span class="nav-link-inner--text">Удирдлагын хэсэг</span>
           </a>
         </li>
       </ul>

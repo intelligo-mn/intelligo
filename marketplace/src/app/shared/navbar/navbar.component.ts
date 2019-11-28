@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router, NavigationEnd, NavigationStart } from "@angular/router";
 import { Location, PopStateEvent } from "@angular/common";
 import { TranslateService } from '@ngx-translate/core';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: "app-navbar",
@@ -15,7 +16,8 @@ export class NavbarComponent implements OnInit {
   constructor(
     public translate: TranslateService,
     public location: Location,
-    private router: Router
+    private router: Router,
+    private authService: AuthenticationService
   ) {
     
   }
@@ -36,6 +38,10 @@ export class NavbarComponent implements OnInit {
     this.location.subscribe((ev: PopStateEvent) => {
       this.lastPoppedUrl = ev.url;
     });
+  }
+
+  isLoggedIn(){
+    return this.authService.currentUserValue ? true : false;
   }
 
   isHome() {
