@@ -40,8 +40,8 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  isLoggedIn(){
-    return this.authService.currentUserValue ? true : false;
+  get isLoggedIn(){
+    return this.authService.currentUserValue !== null ? true : false;
   }
 
   isHome() {
