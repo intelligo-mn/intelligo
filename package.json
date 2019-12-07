@@ -34,7 +34,7 @@
   "cacheDirectories": ["studio/node_modules", "node_modules", "marketplace/node_modules", "simulator/node_modules"],
   "dependencies": {
     "@nestjs/common": "^6.10.7",
-    "@nestjs/core": "^6.10.2",
+    "@nestjs/core": "^6.10.7",
     "@nestjs/jwt": "^6.1.1",
     "@nestjs/mongoose": "^6.1.2",
     "@nestjs/passport": "^6.1.1",
