@@ -27,7 +27,7 @@
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "angular2-hotkeys": "^2.1.5",
-    "bootstrap": "^4.4.0",
+    "bootstrap": "^4.4.1",
     "bson": "^4.0.2",
     "core-js": "^3.4.5",
     "font-awesome": "^4.7.0",
