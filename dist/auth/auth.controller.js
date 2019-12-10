@@ -57,7 +57,7 @@ __decorate([
 ], AuthController.prototype, "register", null);
 AuthController = __decorate([
     common_1.Controller('auth'),
-    swagger_1.ApiUseTags('Chatbots.mn Auth'),
+    swagger_1.ApiTags('Chatbots.mn Auth'),
     __metadata("design:paramtypes", [user_service_1.UserService,
         auth_service_1.AuthService])
 ], AuthController);

@@ -13,11 +13,11 @@ const swagger_1 = require("@nestjs/swagger");
 class LoginDTO {
 }
 __decorate([
-    swagger_1.ApiModelProperty({ example: 'admin', description: 'The username of acount' }),
+    swagger_1.ApiProperty({ example: 'admin', description: 'The username of acount' }),
     __metadata("design:type", String)
 ], LoginDTO.prototype, "username", void 0);
 __decorate([
-    swagger_1.ApiModelProperty({
+    swagger_1.ApiProperty({
         example: 'password',
         description: 'The password of acount',
     }),
@@ -27,11 +27,11 @@ exports.LoginDTO = LoginDTO;
 class RegisterDTO {
 }
 __decorate([
-    swagger_1.ApiModelProperty({ example: 'admin', description: 'The username of acount' }),
+    swagger_1.ApiProperty({ example: 'admin', description: 'The username of acount' }),
     __metadata("design:type", String)
 ], RegisterDTO.prototype, "username", void 0);
 __decorate([
-    swagger_1.ApiModelProperty({ example: 'admin', description: 'The username of acount' }),
+    swagger_1.ApiProperty({ example: 'admin', description: 'The username of acount' }),
     __metadata("design:type", String)
 ], RegisterDTO.prototype, "password", void 0);
 exports.RegisterDTO = RegisterDTO;

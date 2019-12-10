@@ -1,10 +1,10 @@
 import { Address } from '../types/user';
-import { ApiModelProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class LoginDTO {
-  @ApiModelProperty({ example: 'admin', description: 'The username of acount' })
+  @ApiProperty({ example: 'admin', description: 'The username of acount' })
   username: string;
-  @ApiModelProperty({
+  @ApiProperty({
     example: 'password',
     description: 'The password of acount',
   })
@@ -12,10 +12,10 @@ export class LoginDTO {
 }
 
 export class RegisterDTO {
-  @ApiModelProperty({ example: 'admin', description: 'The username of acount' })
+  @ApiProperty({ example: 'admin', description: 'The username of acount' })
   username: string;
 
-  @ApiModelProperty({ example: 'admin', description: 'The username of acount' })
+  @ApiProperty({ example: 'admin', description: 'The username of acount' })
   password: string;
 
   seller?: boolean;
