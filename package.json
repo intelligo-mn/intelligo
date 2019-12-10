@@ -38,7 +38,7 @@
     "simulator/node_modules"
   ],
   "dependencies": {
-    "@nestjs/common": "^6.10.8",
+    "@nestjs/common": "^6.10.9",
     "@nestjs/core": "^6.10.9",
     "@nestjs/jwt": "^6.1.1",
     "@nestjs/mongoose": "^6.1.2",
