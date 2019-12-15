@@ -22,17 +22,17 @@
   height: inherit;
 }
 
-.ana-min.root {
+.intelligo-min.root {
   height: 57px !important;
 }
 
-.ana-min .chat-thread,
-.ana-min .chat-input-container {
+.intelligo-min .chat-thread,
+.intelligo-min .chat-input-container {
   height: 0 !important;
   display: none;
 }
 
-.ana-min .root {
+.intelligo-min .root {
   height: 57px !important;
 }
 
@@ -41,7 +41,7 @@
   height: 100%;
   flex-grow: 1;
   overflow-y: scroll;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
 .chat-message-group {
@@ -66,7 +66,7 @@
 }
 
 .chat-message-item.media.incoming * video.chat-media,
-.chat-message-item.media.incoming * .chat-media>audio {
+.chat-message-item.media.incoming * .chat-media > audio {
   border-radius: 0 10px 0 0 !important;
 }
 
@@ -75,7 +75,7 @@
 }
 
 .chat-message-item.media.outgoing * video.chat-media,
-.chat-message-item.media.outgoing * .chat-media>audio {
+.chat-message-item.media.outgoing * .chat-media > audio {
   border-radius: 10px 0 0 0 !important;
 }
 
@@ -116,7 +116,19 @@ app-chat-thread {
 .dots {
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(transparent 0px, transparent 2px, rgb(255, 255, 255) 2px, rgb(255, 255, 255) 20px), linear-gradient(to right, rgb(200, 195, 199) 0px, rgb(200, 195, 199) 2px, rgb(255, 255, 255) 2px, rgb(255, 255, 255) 20px);
+  background-image: linear-gradient(
+      transparent 0px,
+      transparent 2px,
+      rgb(255, 255, 255) 2px,
+      rgb(255, 255, 255) 20px
+    ),
+    linear-gradient(
+      to right,
+      rgb(200, 195, 199) 0px,
+      rgb(200, 195, 199) 2px,
+      rgb(255, 255, 255) 2px,
+      rgb(255, 255, 255) 20px
+    );
   background-position: 437px -2px;
   background-size: 20px 20px;
 }
@@ -132,7 +144,7 @@ app-chat-thread {
   right: 8px;
 }
 
-.chat-time>span {
+.chat-time > span {
   opacity: 0.4;
 }
 
@@ -143,7 +155,7 @@ app-chat-thread {
   display: none;
 }
 
-.incoming>.chat-stub {
+.incoming > .chat-stub {
   border-top-width: 13px;
   border-top-style: solid;
   border-left: 15px solid transparent;
@@ -151,7 +163,7 @@ app-chat-thread {
   left: -3px;
 }
 
-.outgoing>.chat-stub {
+.outgoing > .chat-stub {
   border-top-width: 13px;
   border-top-style: solid;
   border-right: 15px solid transparent;
@@ -163,7 +175,7 @@ app-chat-thread {
   margin-bottom: 15px;
 }
 
-.chat-message-last>.chat-stub {
+.chat-message-last > .chat-stub {
   display: block;
 }
 
@@ -187,13 +199,13 @@ app-chat-thread {
   border-radius: 0 0 10px 0;
 }
 
-.media>.chat-time {
+.media > .chat-time {
   color: white;
   opacity: 1;
   bottom: 5px;
 }
 
-.chat-media>audio {
+.chat-media > audio {
   width: 230px;
   margin-bottom: 19px;
 }
@@ -201,7 +213,6 @@ app-chat-thread {
 video.chat-media {
   margin-bottom: 19px;
 }
-
 
 /*
 Green dot up
@@ -211,7 +222,7 @@ bg white
 */
 
 .chat-input-container {
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   border-radius: 0 0 10px 10px;
 }
 
@@ -252,7 +263,7 @@ bg white
 }
 
 .chat-input button.btn-icon:disabled {
-  opacity: 0.10;
+  opacity: 0.1;
 }
 
 .chat-input i {
@@ -287,11 +298,11 @@ bg white
   background-color: white !important;
 }
 
-.ana-sent-tick {
+.intelligo-sent-tick {
   transform: translateY(1px);
 }
 
-.ana-delivered-tick {
+.intelligo-delivered-tick {
   transform: translateY(1px);
 }
 
@@ -300,7 +311,7 @@ bg white
   margin: 0 -20px;
 }
 
-.carousel-wrapper>.carousel-arrow {
+.carousel-wrapper > .carousel-arrow {
   position: absolute;
   top: 50%;
   padding: 5px 0 0;
@@ -310,17 +321,17 @@ bg white
   opacity: 0.85;
 }
 
-.carousel-wrapper>.carousel-arrow:hover {
+.carousel-wrapper > .carousel-arrow:hover {
   opacity: 1;
 }
 
-.carousel-wrapper>.carousel-arrow.right {
+.carousel-wrapper > .carousel-arrow.right {
   right: 0;
   box-shadow: -1px 0px 1px 1px rgba(0, 0, 0, 0.1);
   border-radius: 5px 0 0 5px;
 }
 
-.carousel-wrapper>.carousel-arrow.left {
+.carousel-wrapper > .carousel-arrow.left {
   left: 0;
   box-shadow: 1px 0px 1px 1px rgba(0, 0, 0, 0.1);
   border-radius: 0 5px 5px 0;
@@ -360,16 +371,14 @@ bg white
   flex-direction: row;
 }
 
-.carousel-item-media>img,
-.carousel-item-media>video,
-.carousel-item-media>audio {
+.carousel-item-media > img,
+.carousel-item-media > video,
+.carousel-item-media > audio {
   width: 100%;
   -moz-border-radius: inherit;
   -webkit-border-radius: inherit;
   border-radius: inherit;
 }
-
-
 
 .carousel-item-media {
   padding: 20px 0;
@@ -419,7 +428,7 @@ bg white
   margin: 2px 0 10px 0;
 }
 
-.carousel-item-button>button {
+.carousel-item-button > button {
   width: 100%;
   border-top: 1px solid #ccc;
   border-radius: 0;
@@ -435,11 +444,11 @@ bg white
   white-space: normal;
 }
 
-.carousel-container>table {
+.carousel-container > table {
   margin-bottom: 10px;
 }
 
-.ana-title {
+.intelligo-title {
   padding: 10px 15px;
   z-index: 100;
   position: relative;
@@ -448,20 +457,20 @@ bg white
   border-radius: 10px 10px 0 0;
 }
 
-.ana-min .ana-title {
+.intelligo-min .intelligo-title {
   margin-top: 20px;
   box-shadow: 0px 1px 6px 1px rgba(0, 0, 0, 0.36);
   margin-left: 6px;
   margin-right: 6px;
 }
 
-.ana-logo {
+.intelligo-logo {
   display: inline;
   float: left;
   margin: 0 15px -4px 0;
 }
 
-.ana-logo>img {
+.intelligo-logo > img {
   width: 35px;
   height: 35px;
   border-radius: 0 7px 7px 7px;
@@ -469,32 +478,32 @@ bg white
   margin-top: 4px;
 }
 
-.ana-content {
+.intelligo-content {
   display: flex;
   flex-direction: column;
   float: left;
   width: 63%;
 }
 
-.ana-content>.title {
+.intelligo-content > .title {
   font-weight: bold;
   font-size: 18px;
   position: relative;
 }
 
-.ana-content>.subtitle {
+.intelligo-content > .subtitle {
   font-size: 11px;
   opacity: 0.9;
 }
 
-.ana-actions {
+.intelligo-actions {
   display: flex;
   flex-direction: row;
   float: right;
   margin-top: 5px;
 }
 
-.ana-actions .ana-action {
+.intelligo-actions .intelligo-action {
   opacity: 0.6;
   height: 24px;
   width: 24px;
@@ -503,26 +512,26 @@ bg white
   cursor: pointer;
 }
 
-.ana-actions .ana-action:hover {
+.intelligo-actions .intelligo-action:hover {
   opacity: 1;
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.ana-actions .ana-action svg {
+.intelligo-actions .intelligo-action svg {
   height: 16px;
   width: 16px;
 }
 
-.ana-actions .ana-action svg path {
+.intelligo-actions .intelligo-action svg path {
   fill: #fff;
 }
 
-.ana-actions .ana-action.refresh svg {
+.intelligo-actions .intelligo-action.refresh svg {
   height: 14px;
   width: 14px;
 }
 
-.ana-minmax-btn {
+.intelligo-minmax-btn {
   border-radius: 3px;
   height: 3px;
   width: 15px;
@@ -532,18 +541,18 @@ bg white
   right: 10px;
 }
 
-.ana-min .ana-minmax-btn {
+.intelligo-min .intelligo-minmax-btn {
   border-radius: 2px;
   height: 11px;
   background-color: transparent;
   width: 11px;
 }
 
-.ana-min .ana-logo {
+.intelligo-min .intelligo-logo {
   transform: translateY(-22px);
 }
 
-.ana-min .ana-logo>img {
+.intelligo-min .intelligo-logo > img {
   box-shadow: 0px 1px 6px 1px rgba(0, 0, 0, 0.36);
 }
 
@@ -659,37 +668,37 @@ bg white
 
 .scrollbar::-webkit-scrollbar-thumb {
   border-radius: 10px !important;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3) !important;
-  background-color: rgba(0, 0, 0, .3) !important;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3) !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
 }
 
-.carousel-item-container:first-child>.carousel-item {
+.carousel-item-container:first-child > .carousel-item {
   margin-left: 16px;
 }
 
-.carousel-item-container:last-child>.carousel-item {
+.carousel-item-container:last-child > .carousel-item {
   margin-right: 16px;
 }
 
-.carousel-arrow>i {
-  color: rgba(0, 0, 0, .6);
+.carousel-arrow > i {
+  color: rgba(0, 0, 0, 0.6);
 }
 
-.ana-link {
+.intelligo-link {
   color: inherit;
   text-decoration: underline;
 }
 
-.chat-bottom-overlay>img {
+.chat-bottom-overlay > img {
   height: 12px;
   width: 12px;
 }
 
-.ana-online-dot {
+.intelligo-online-dot {
   border-radius: 5px;
   height: 6px;
   width: 6px;
-  background-color: #00DF50;
+  background-color: #00df50;
   border: 1px solid white;
   margin-top: 7px;
   margin-right: 5px;
@@ -705,20 +714,20 @@ bg white
   margin: 0 -20px 0 -15px;
 }
 
-.chat-history-loading>mat-progress-spinner {
+.chat-history-loading > mat-progress-spinner {
   display: inline-block;
   height: 50px;
   width: 50px;
 }
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .root {
     -moz-border-radius: 0;
     -webkit-border-radius: 0;
     border-radius: 0;
   }
 
-  .ana-title {
+  .intelligo-title {
     -moz-border-radius: 0;
     -webkit-border-radius: 0;
     border-radius: 0;
