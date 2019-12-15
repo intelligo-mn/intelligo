@@ -1,167 +1,181 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef, AfterViewInit, EventEmitter } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDatepicker, MatSelectionList } from '@angular/material';
-import { ANADate, ANATime, AddressInput, GeoLoc, ListItem, ANADateRange } from '../../models/ana-chat.models';
+import {
+  Component,
+  OnInit,
+  Inject,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDatepicker,
+} from '@angular/material';
+import {
+  ANADate,
+  ANATime,
+  AddressInput,
+  GeoLoc,
+  ListItem,
+  ANADateRange,
+} from '../../models/ana-chat.models';
 import { UtilitiesService } from '../../services/utilities.service';
 import * as agm from '@agm/core';
 
 @Component({
-	selector: 'app-complex-input',
-	templateUrl: './complex-input.component.html',
-	styleUrls: ['./complex-input.component.scss']
+  selector: 'app-complex-input',
+  templateUrl: './complex-input.component.html',
+  styleUrls: ['./complex-input.component.scss'],
 })
 export class ComplexInputComponent implements OnInit, AfterViewInit {
-	constructor(
-		public dialogRef: MatDialogRef<ComplexInputComponent>,
-		@Inject(MAT_DIALOG_DATA) public params: ComplexInputParams) { }
+  constructor(
+    public dialogRef: MatDialogRef<ComplexInputComponent>,
+    @Inject(MAT_DIALOG_DATA) public params: ComplexInputParams,
+  ) {}
 
-	ngOnInit() {
-		if (this.params.Type == ComplexType.Location) {
-			if (this.params.DefaultGeoLoc)
-				this.geoLoc = this.params.DefaultGeoLoc;
-		} else if (this.params.Type == ComplexType.List) {
-			this.listValues = this.params.ListValues;
-			this.listMultiple = this.params.ListMultiple;
-		} else if (this.params.Type == ComplexType.Time) {
-			let date = new Date();
-			this.choosenTime = `${UtilitiesService.pad(date.getHours(), 2)}:${UtilitiesService.pad(date.getMinutes(), 2)}`; //:${UtilitiesService.pad(date.getSeconds(), 2)}
-		}
-	}
+  ngOnInit() {
+    if (this.params.Type == ComplexType.Location) {
+      if (this.params.DefaultGeoLoc) this.geoLoc = this.params.DefaultGeoLoc;
+    } else if (this.params.Type == ComplexType.List) {
+      this.listValues = this.params.ListValues;
+      this.listMultiple = this.params.ListMultiple;
+    } else if (this.params.Type == ComplexType.Time) {
+      let date = new Date();
+      this.choosenTime = `${UtilitiesService.pad(
+        date.getHours(),
+        2,
+      )}:${UtilitiesService.pad(date.getMinutes(), 2)}`; //:${UtilitiesService.pad(date.getSeconds(), 2)}
+    }
+  }
 
-	ngAfterViewInit(): void {
-		Promise.resolve(null).then(() => {
-			if (this.params.Type == ComplexType.Date)
-				this.datePicker.open();
-		});
-	}
+  ngAfterViewInit(): void {
+    Promise.resolve(null).then(() => {
+      if (this.params.Type == ComplexType.Date) this.datePicker.open();
+    });
+  }
 
-	ComplexType = ComplexType;
+  ComplexType = ComplexType;
 
-	choosenTime: string;
-	getChoosenANATime(): ANATime {
-		let split = this.choosenTime.split(':');
-		return {
-			hour: split[0],
-			minute: split[1],
-			second: (split.length >= 3 ? split[2] : '0')
-		};
-	}
+  choosenTime: string;
+  getChoosenANATime(): ANATime {
+    let split = this.choosenTime.split(':');
+    return {
+      hour: split[0],
+      minute: split[1],
+      second: split.length >= 3 ? split[2] : '0',
+    };
+  }
 
-	@ViewChild("datePicker", { static: true })
-	datePicker: MatDatepicker<Date>;
+  @ViewChild('datePicker', { static: true })
+  datePicker: MatDatepicker<Date>;
 
-	choosenDate: Date;
-	getChoosenANADate(): ANADate {
-		return {
-			mday: this.choosenDate.getDate().toString(),
-			month: (this.choosenDate.getMonth() + 1).toString(),
-			year: this.choosenDate.getFullYear().toString()
-		};
-	}
+  choosenDate: Date;
 
-	givenAddress: AddressInput = {
-		area: "",
-		city: "",
-		country: "",
-		line1: "",
-		pin: "",
-		state: ""
-	};
+  getChoosenANADate(): ANADate {
+    return {
+      mday: this.choosenDate.getDate().toString(),
+      month: (this.choosenDate.getMonth() + 1).toString(),
+      year: this.choosenDate.getFullYear().toString(),
+    };
+  }
 
-	geoLoc: GeoLoc = {
-		lat: 0.0,
-		lng: 0.0
-	};
+  givenAddress: AddressInput = {
+    area: '',
+    city: '',
+    country: '',
+    line1: '',
+    pin: '',
+    state: '',
+  };
 
-	mapLocationUpdated(event: agm.MouseEvent) {
-		this.geoLoc.lat = event.coords.lat;
-		this.geoLoc.lng = event.coords.lng;
-	}
+  geoLoc: GeoLoc = {
+    lat: 0.0,
+    lng: 0.0,
+  };
 
-	selectedListItem: ListItem;
-	listValues: ListItem[];
-	listMultiple: boolean;
-	choosenListValues() {
-		if (this.listMultiple)
-			return this.listValues.filter(x => x.isSelected);
-		else
-			return [this.selectedListItem];
-	}
+  mapLocationUpdated(event: agm.MouseEvent) {
+    this.geoLoc.lat = event.coords.lat;
+    this.geoLoc.lng = event.coords.lng;
+  }
 
-	listItemsSearch: string;
-	searchedListValues() {
-		if (this.listItemsSearch) {
-			return this.listValues.filter(x => x.text && x.text.toLowerCase().includes(this.listItemsSearch.toLowerCase()))
-		}
-		return this.listValues;
-	}
+  selectedListItem: ListItem;
+  listValues: ListItem[];
+  listMultiple: boolean;
+  choosenListValues() {
+    if (this.listMultiple) return this.listValues.filter(x => x.isSelected);
+    else return [this.selectedListItem];
+  }
 
-	isValid(): boolean {
-		switch (this.params.Type) {
-			case ComplexType.Address:
-				{
-					if (this.givenAddress &&
-						this.givenAddress.area &&
-						this.givenAddress.city &&
-						this.givenAddress.country &&
-						this.givenAddress.line1 &&
-						this.givenAddress.pin &&
-						this.givenAddress.state) {
-						return true;
-					}
-					else
-						return false;
-				}
-			case ComplexType.Date:
-				{
-					if (this.choosenDate)
-						return true;
-					else
-						return false;
-				}
-			case ComplexType.Time:
-				{
-					if (this.choosenTime)
-						return true;
-					else
-						return false;
-				}
-			case ComplexType.List:
-				{
-					if (this.listMultiple) {
-						if (this.choosenListValues() && this.choosenListValues().length > 0)
-							return true;
-						else
-							return false;
-					} else {
-						return this.selectedListItem != null;
-					}
-				}
-			case ComplexType.Location:
-				{
-					if (this.geoLoc)
-						return true;
-					else
-						return false;
-				}
-			default:
-				return true;
-		}
-	}
+  listItemsSearch: string;
+  searchedListValues() {
+    if (this.listItemsSearch) {
+      return this.listValues.filter(
+        x =>
+          x.text &&
+          x.text.toLowerCase().includes(this.listItemsSearch.toLowerCase()),
+      );
+    }
+    return this.listValues;
+  }
 
-	dialogClose() {
-		this.dialogRef.close(true);
-	}
+  isValid(): boolean {
+    switch (this.params.Type) {
+      case ComplexType.Address: {
+        if (
+          this.givenAddress &&
+          this.givenAddress.area &&
+          this.givenAddress.city &&
+          this.givenAddress.country &&
+          this.givenAddress.line1 &&
+          this.givenAddress.pin &&
+          this.givenAddress.state
+        ) {
+          return true;
+        } else return false;
+      }
+      case ComplexType.Date: {
+        if (this.choosenDate) return true;
+        else return false;
+      }
+      case ComplexType.Time: {
+        if (this.choosenTime) return true;
+        else return false;
+      }
+      case ComplexType.List: {
+        if (this.listMultiple) {
+          if (this.choosenListValues() && this.choosenListValues().length > 0)
+            return true;
+          else return false;
+        } else {
+          return this.selectedListItem != null;
+        }
+      }
+      case ComplexType.Location: {
+        if (this.geoLoc) return true;
+        else return false;
+      }
+      default:
+        return true;
+    }
+  }
+
+  dialogClose() {
+    this.dialogRef.close(true);
+  }
 }
 
 export enum ComplexType {
-	Date, Time, Location, Address, List
+  Date,
+  Time,
+  Location,
+  Address,
+  List,
 }
 
 export interface ComplexInputParams {
-	Type: ComplexType;
-	DefaultGeoLoc?: GeoLoc;
-	ListValues?: ListItem[];
-	ListMultiple?: boolean;
-	AddressRequiredFields?: string[],
-	dateRange?: ANADateRange
+  Type: ComplexType;
+  DefaultGeoLoc?: GeoLoc;
+  ListValues?: ListItem[];
+  ListMultiple?: boolean;
+  AddressRequiredFields?: string[];
+  dateRange?: ANADateRange;
 }
