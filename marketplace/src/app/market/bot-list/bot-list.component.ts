@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BotListComponent implements OnInit {
 
+  focus: boolean;
+  focus1: boolean;
+
   constructor() { }
 
   ngOnInit() {

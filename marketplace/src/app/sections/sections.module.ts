@@ -14,7 +14,6 @@ import { NavigationSectionComponent } from './navigation-section/navigation-sect
 import { TabsSectionComponent } from './tabs-section/tabs-section.component';
 import { AlertsSectionComponent } from './alerts-section/alerts-section.component';
 import { TypographySectionComponent } from './typography-section/typography-section.component';
-import { AngularSectionComponent } from './angular-section/angular-section.component';
 import { NucleoSectionComponent } from './nucleo-section/nucleo-section.component';
 import { VersionsSectionComponent } from './versions-section/versions-section.component';
 import { NgbdModalComponent } from './modal/modal.component';
@@ -31,7 +30,6 @@ import { IntegrationSectionComponent } from './integration-section/integration-s
     TabsSectionComponent,
     AlertsSectionComponent,
     TypographySectionComponent,
-    AngularSectionComponent,
     NucleoSectionComponent,
     VersionsSectionComponent,
     NgbdModalComponent,
