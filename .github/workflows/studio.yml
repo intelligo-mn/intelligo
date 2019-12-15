@@ -23,7 +23,7 @@ jobs:
       run: npm install
       working-directory: ./studio
     - name: Build
-      run: npm run build
+      run: npm run build:prod
       working-directory: ./studio
     - name: integrations neuro
       run: npm install
