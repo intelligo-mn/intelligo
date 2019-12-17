@@ -61,7 +61,7 @@
     "@types/extend": "3.0.1",
     "@types/lodash": "4.14.147",
     "@types/node": "10.17.5",
-    "@types/request": "2.48.3",
+    "@types/request": "2.48.4",
     "@types/ws": "6.0.3",
     "chai": "4.2.0",
     "eslint": "6.5.1",
