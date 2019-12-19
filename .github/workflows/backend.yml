@@ -18,7 +18,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - uses: intelligo-systems/intelligo-actions@v1  
-    - name: Use intelligo action 
       with:
         packages: '["intelligo"]'  
     - name: npm install, build, and test
