@@ -19,7 +19,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - uses: intelligo-systems/intelligo-actions@v1  
       with:
-        packages: '["intelligo"]'  
+        packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "@devmn/stepper", "@devmn/image-viewer", "@devmn/multi-select"]'  
     - name: npm install, build, and test
       run: |
         npm ci
