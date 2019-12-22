@@ -19,6 +19,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.8
+    - uses: intelligo-systems/intelligo-actions@v1  
+      with:
+        packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "@devmn/stepper", "@devmn/image-viewer", "@devmn/multi-select"]'  
+
     - name: Install dependencies
       run: npm install
       working-directory: ./simulator
