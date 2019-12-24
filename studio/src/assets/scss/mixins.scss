@@ -1,0 +1,54 @@
+@mixin linkHover() {
+  --hover-box-translate-x: 120%;
+  --hover-box-skew: 0;
+
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    background: mat-color($primary, lighter, 0.3);
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    transition: transform 0.2s cubic-bezier(0.35, 0, 0.25, 1);
+    transform: skew(var(--hover-box-skew)) translateX(var(--hover-box-translate-x));
+  }
+
+  &:not(.active):hover::after {
+    --hover-box-translate-x: 200px;
+    --hover-box-skew: 20deg;
+  }
+
+  &.active {
+    color: mat-color($primary);
+    --hover-box-translate-x: 0;
+    --hover-box-skew: 0deg;
+  }
+}
+
+@mixin small-only {
+  @media (max-width: 599px) {
+    @content;
+  }
+}
+
+@mixin medium-up {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+
+@mixin large-up {
+  @media (min-width: 900px) {
+    @content;
+  }
+}
+
+@mixin for-desktop-up {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}

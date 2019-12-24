@@ -1,0 +1,45 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$custom-green: (
+  50: #e6fcf5,
+  100: #bff8e6,
+  200: #95f3d5,
+  300: #6beec4,
+  400: #4beab8,
+  500: #2be6ab,
+  600: #26e3a4,
+  700: #20df9a,
+  800: #1adb91,
+  900: #10d580,
+  A100: #ffffff,
+  A200: #cfffe9,
+  A400: #9cffd1,
+  A700: #83ffc5,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text
+  )
+);
+
+$app-primary: mat-palette($mat-deep-purple);
+$app-accent: mat-palette($custom-green, 600);
+$app-warn: mat-palette($mat-red);
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+$primary: map-get($app-theme, primary);
+$accent: map-get($app-theme, accent);
+$warn: map-get($app-theme, warn);

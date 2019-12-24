@@ -1,60 +1,50 @@
 <app-header-bar #appHeader [title]="'Chatbots.mn Studio'" [skipAuth]="true" [logoutNavigation]=""></app-header-bar>
-<div class="app-content">
-  <div class="center-block center-content">
-    <mat-card [hidden]="savedProjects.length != 0" class="text-center">
-      <mat-card-content>
-        {{ 'home.dont-have-projects' | translate }}
-      </mat-card-content>
-    </mat-card>
-    <mat-accordion [hidden]="savedProjects.length == 0">
-      <div class="page-title">
-        <h4 class="text">{{ 'home.projects' | translate }}</h4>
-        <div class="search">
-          <mat-form-field>
-            <input type="text" name="search" value="" matInput [(ngModel)]="search"
-              placeholder="{{ 'home.search' | translate }}" />
-          </mat-form-field>
-        </div>
-        <div class="page-title-actions">
-          <button matTooltip="{{ 'home.add-description' | translate }}" color="primary" mat-mini-fab
-            (click)="addProject()">
-            <mat-icon>add</mat-icon>
-          </button>
-          <button matTooltip="{{ 'home.import-description' | translate }}" mat-mini-fab (click)="fileInput.click()">
-            <mat-icon>arrow_downward</mat-icon>
-          </button>
-        </div>
+<main>
+  <div class="projects-header">
+    <div class="welcome-wrapper">
+      <div class="welcome-message">
+        <h1>Chatbots.mn platform!</h1>
+        <p class="welcome-subtitle">Build intelligent virtual assistants for your websites, facebook pages.</p>
       </div>
-      <mat-expansion-panel *ngFor="let projName of searchedProjects(); let i = index">
-        <mat-expansion-panel-header>
-          <mat-panel-title>{{ projName }}</mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-action-row>
-          <button mat-raised-button color="primary" (click)="openChatBotProject(projName)">
-            <span>{{'home.open' | translate}}</span>
-          </button>
-          <button mat-raised-button (click)="renameChatBotProject(projName)">
-            <span>{{'home.rename' | translate}}</span>
-          </button>
-          <button mat-raised-button (click)="downloadChatBotProject(projName)">
-            <span>{{'home.download' | translate}}</span>
-          </button>
-          <button mat-raised-button (click)="deleteChatBotProject(projName)">
-            <span>{{'home.delete' | translate}}</span>
-          </button>
-        </mat-action-row>
-      </mat-expansion-panel>
-    </mat-accordion>
-
-    <section class="bottom-actions" *ngIf="savedProjects.length == 0">
-      <button matTooltip="{{ 'home.add-description' | translate }}" color="primary" mat-raised-button
-        (click)="addProject()">
-        {{ 'home.add' | translate }}
-      </button>
-      <button matTooltip="{{'home.import-description' | translate}}" mat-raised-button (click)="fileInput.click()">
-        {{ 'home.import' | translate }}
-      </button>
-    </section>
+      <img src="../../../../assets/img/chatbots_studio_banner.svg" alt="Checklist" />
+    </div>
   </div>
-</div>
+  <div class="projects-list-wrapper">
+    <h5>Your Projects</h5>
+    <mat-form-field>
+      <input type="text" name="search" value="" matInput [(ngModel)]="search"
+        placeholder="{{ 'home.search' | translate }}" />
+    </mat-form-field>
+    <div class="projects-grid">
+      <mat-card matRipple (click)="addProject()" class="add-project-card">
+        <mat-icon>add</mat-icon>
+        Add Project
+      </mat-card>
+      <mat-card matRipple (click)="fileInput.click()" class="add-project-card">
+        <mat-icon>cloud_upload</mat-icon>
+        Import Project
+      </mat-card>
+      <mat-card (click)="openChatBotProject(projName)" *ngFor="let projName of searchedProjects(); let i = index">
+        <div class="card-ripple" matRipple></div>
+        <mat-card-content>
+          <h2 class="project-name">{{ projName }}</h2>
+        </mat-card-content>
+        <mat-card-actions align="right">
+          <button (click)="renameChatBotProject($event, projName)" (mousedown)="$event.stopPropagation()"
+            mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button (click)="downloadChatBotProject($event, projName)" (mousedown)="$event.stopPropagation()"
+            mat-icon-button>
+            <mat-icon>cloud_download</mat-icon>
+          </button>
+          <button (click)="deleteChatBotProject($event, projName)" (mousedown)="$event.stopPropagation()"
+            mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</main>
 <input type="file" name="f" style="display:none" #fileInput (change)="fileInputChange()" />

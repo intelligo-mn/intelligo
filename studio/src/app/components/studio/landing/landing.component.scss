@@ -1,59 +1,181 @@
+
+@import '../../../../assets/scss/variables.scss';
+@import '../../../../assets/scss/mixins';
+@import '~@angular/material/theming';
+
 :host {
   width: 100%;
 }
 
-mat-form-field,
-mat-select {
-  width: 100%;
+@mixin wrapper() {
+  --wrapper-width: 650px;
+  --padding-bottom: 20px;
+
+  margin: 0 auto;
+  max-width: var(--wrapper-width);
+  padding: 65px 12px var(--padding-bottom);
+
+  @include medium-up() {
+    --padding-bottom: 50px;
+  }
+
+  @include large-up() {
+    --wrapper-width: 850px;
+  }
 }
 
-.bottom-actions > button {
-  margin: 20px 10px;
-}
-
-button[color="primary"] {
-  color: white;
-}
-
-mat-action-row > button {
-  margin: 10px;
-}
-
-.bottom-actions {
-  display: block;
-  text-align: center;
-}
-
-.list-action-btn {
-  float: right;
-}
-
-.list-item {
-  width: 100%;
-}
-
-.mat-expansion-panel-body {
-  display: none !important;
-}
-
-.app-content {
-  width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 40px;
-  padding-bottom: 40px;
-}
-
-.page-title {
+:host {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  height: 100%;
 }
 
-.page-title .text {
-  flex-grow: 1;
+main {
+  flex: 1;
+  overflow: scroll;
+  background: #eceff1;
 }
 
-.page-title-actions button:first-child {
-  margin-left: 10px;
-  margin-right: 10px;
+.projects-header {
+  height: 300px;
+  background: white;
+  margin-bottom: -150px;
+}
+
+.welcome-message {
+  max-width: 350px;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+}
+
+.welcome-subtitle {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.welcome-wrapper {
+  position: relative;
+
+  img {
+    position: absolute;
+    left: 50%;
+    top: 25px;
+    height: 200px;
+    transform: translateX(100px);
+
+    @include small-only {
+      display: none;
+    }
+
+    @include large-up() {
+      transform: translateX(0px);
+    }
+  }
+}
+
+.welcome-wrapper,
+.projects-list-wrapper {
+  @include wrapper();
+}
+
+.projects-grid {
+  --grid-gap: 20px;
+  --column-template: 1fr;
+
+  display: grid;
+  grid-column-gap: var(--grid-gap);
+  grid-row-gap: var(--grid-gap);
+  grid-template-columns: var(--column-template);
+
+  @include medium-up() {
+    --column-template: 1fr 1fr;
+  }
+
+  @include large-up() {
+    --column-template: 1fr 1fr 1fr;
+  }
+}
+
+mat-card {
+  height: 130px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+
+  .card-ripple {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  &:hover {
+    background: whitesmoke;
+  }
+}
+
+mat-card-content {
+  flex: 1;
+}
+
+.projects-list-wrapper {
+  h5 {
+    margin: 0 0 15px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.54);
+  }
+}
+
+.project-name {
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.add-project-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: mat-color($primary);
+  font-weight: 500;
+
+  mat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+    margin-bottom: 5px;
+  }
+}
+
+mat-card-actions {
+  display: flex;
+  align-items: center;
+}
+
+.progress {
+  flex: 1;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+
+  .score {
+    margin-left: 10px;
+    font-weight: 100;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: mat-color($primary);
+  }
+
+  ac-score-chart {
+    width: 30px;
+  }
 }

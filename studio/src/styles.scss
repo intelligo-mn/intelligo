@@ -176,3 +176,17 @@ app-nodeeditor .mat-tab-body-wrapper {
 .mat-radio-label-content {
   font-weight: normal;
 }
+
+@import './assets/scss/theme.scss';
+
+html,
+body {
+  height: 100%;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  overflow: hidden;
+}
+
+a {
+  color: mat-color($primary);
+  text-decoration: none;
+}

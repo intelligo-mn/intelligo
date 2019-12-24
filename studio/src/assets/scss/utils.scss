@@ -1,0 +1,11 @@
+@mixin button-small() {
+  font-size: 12px;
+  height: 30px;
+  line-height: 30px;
+}
+
+@mixin truncate() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

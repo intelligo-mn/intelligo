@@ -117,7 +117,10 @@ export class LandingComponent implements OnInit {
       '/studio/designer?proj=' + encodeURIComponent(name),
     );
   }
-  renameChatBotProject(name: string) {
+
+  renameChatBotProject(event: MouseEvent, name: string) {
+    event.stopPropagation();
+
     this.infoDialog.prompt(
       this.translate.instant('home.rename'),
       this.translate.instant('home.enter-new-name'),
@@ -130,7 +133,9 @@ export class LandingComponent implements OnInit {
       name,
     );
   }
-  deleteChatBotProject(name: string) {
+  deleteChatBotProject(event: MouseEvent, name: string) {
+    event.stopPropagation();
+
     this.infoDialog.confirm(
       this.translate.instant('home.delete'),
       this.translate.instant('home.delete-description') + ' ' + name,
@@ -143,7 +148,9 @@ export class LandingComponent implements OnInit {
     );
   }
 
-  downloadChatBotProject(name: string) {
+  downloadChatBotProject(event: MouseEvent, name: string) {
+    event.stopPropagation();
+
     let pack = this.settings.getChatProject(name);
     this.globals.downloadTextAsFile(name + '.intelligo', JSON.stringify(pack));
   }
