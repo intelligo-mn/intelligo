@@ -18,11 +18,11 @@
     <div class="projects-grid">
       <mat-card matRipple (click)="addProject()" class="add-project-card">
         <mat-icon>add</mat-icon>
-        Add Project
+        {{ 'home.add' | translate }}
       </mat-card>
       <mat-card matRipple (click)="fileInput.click()" class="add-project-card">
         <mat-icon>cloud_upload</mat-icon>
-        Import Project
+        {{ 'home.import' | translate }}
       </mat-card>
       <mat-card (click)="openChatBotProject(projName)" *ngFor="let projName of searchedProjects(); let i = index">
         <div class="card-ripple" matRipple></div>
