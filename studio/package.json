@@ -17,7 +17,7 @@
     "@angular/common": "~8.2.12",
     "@angular/compiler": "~8.2.12",
     "@angular/core": "~8.2.12",
-    "@angular-devkit/build-angular": "~0.803.19",
+    "@angular-devkit/build-angular": "~0.803.21",
     "@angular/cli": "~8.3.20",
     "@angular/compiler-cli": "~8.2.12",
     "@angular/forms": "~8.2.12",
