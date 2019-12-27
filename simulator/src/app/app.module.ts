@@ -18,7 +18,7 @@ import {
 } from '@angular/material';
 
 import { AgmCoreModule, LAZY_MAPS_API_CONFIG } from '@agm/core';
-import { ImageViewerModule } from 'ngx-image-viewer';
+import { ImageViewerModule } from '@devmn/image-viewer';
 
 import { AppComponent } from './app.component';
 import { ChatThreadComponent } from './components/chat-thread/chat-thread.component';
