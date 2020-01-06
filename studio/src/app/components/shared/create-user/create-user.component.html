@@ -1,19 +1,22 @@
 <h2 matDialogTitle>{{title}}</h2>
 <mat-dialog-content>
     <div class="center-block center-content">
-        <form (ngSubmit)="save()" >
+        <form (ngSubmit)="save()">
             <fieldset class="form" [disabled]="param.mode == UserDialogMode.View">
                 <mat-form-field>
                     <input type="text" placeholder="Name" name="name" matInput [(ngModel)]="user.name" required />
                 </mat-form-field>
                 <mat-form-field>
-                    <input type="email" placeholder="Email" name="email" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" matInput [(ngModel)]="user.email" required #email="ngModel" />
+                    <input type="email" placeholder="Email" name="email"
+                        pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" matInput
+                        [(ngModel)]="user.email" required #email="ngModel" />
                     <mat-error align="start" *ngIf="email.invalid && (email.dirty || email.touched)">
                         Please enter a valid email address
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <input type="tel" placeholder="Phone" name="phone" matInput [(ngModel)]="user.phone" pattern="^\+?\d{6,15}$" #phone="ngModel" />
+                    <input type="tel" placeholder="Phone" name="phone" matInput [(ngModel)]="user.phone"
+                        pattern="^\+?\d{6,15}$" #phone="ngModel" />
                     <mat-error align="start" *ngIf="phone.invalid && (phone.dirty || phone.touched)">
                         Please enter a valid phone number
                     </mat-error>
@@ -29,11 +32,14 @@
                     <input type="text" placeholder="Roles" name="Roles" matInput [value]="userRoleDisplay()" required />
                 </mat-form-field>
                 <mat-form-field [hidden]="param.mode == UserDialogMode.View">
-                    <input type="password" placeholder="Password" name="password" matInput [(ngModel)]="user.password" required />
+                    <input type="password" placeholder="Password" name="password" matInput [(ngModel)]="user.password"
+                        required />
                 </mat-form-field>
                 <mat-form-field [hidden]="param.mode == UserDialogMode.View">
-                    <input type="password" placeholder="Confirm Password" name="confirmPassword" matInput [(ngModel)]="confirmPassword" required #pwd="ngModel" />
-                    <mat-hint align="start" *ngIf="(user.password!=confirmPassword) && (pwd.dirty || pwd.touched)" style="color:red">
+                    <input type="password" placeholder="Confirm Password" name="confirmPassword" matInput
+                        [(ngModel)]="confirmPassword" required #pwd="ngModel" />
+                    <mat-hint align="start" *ngIf="(user.password!=confirmPassword) && (pwd.dirty || pwd.touched)"
+                        style="color:red">
                         Passwords do not match
                     </mat-hint>
                 </mat-form-field>
@@ -43,6 +49,7 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button matTooltip="Save" color="primary" mat-raised-button (click)="save()" [hidden]="param.mode == UserDialogMode.View">Save</button>
+    <button matTooltip="Save" color="primary" mat-raised-button (click)="save()"
+        [hidden]="param.mode == UserDialogMode.View">Save</button>
     <button mat-raised-button matDialogClose>Dismiss</button>
 </mat-dialog-actions>

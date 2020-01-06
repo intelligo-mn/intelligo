@@ -2,7 +2,8 @@
 <mat-dialog-content>
     <div class="center-block center-content">
         <mat-card [hidden]="savedConnections.length!=0" class="text-center">
-            <h4>Looks like you don't have any saved Chatbots.mn chat server connections. <br /> Start by adding one.</h4>
+            <h4>Looks like you don't have any saved Chatbots.mn chat server connections. <br /> Start by adding one.
+            </h4>
         </mat-card>
 
         <mat-accordion [hidden]="savedConnections.length==0">
@@ -50,7 +51,8 @@
                     </mat-accordion>
                 </section>
                 <mat-action-row>
-                    <!--<button mat-raised-button (click)="addChatProjectToConn(conn)"><span>Add chat project</span></button>-->
+                    <button mat-raised-button (click)="addChatProjectToConn(conn)"><span>Add chat
+                            project</span></button>
                     <button mat-raised-button (click)="deleteConnection(conn)"><span>Delete server
                             connection</span></button>
                 </mat-action-row>
@@ -64,6 +66,7 @@
         (click)="saveConnections(true)">Save changes</button>
     <button matTooltip="Add new connection" [color]="savedConnections.length==0?'primary':''" mat-raised-button
         (click)="addConnection()">Add new server connection</button>
-    <!--<button matTooltip="Get an Chatbots.mn chat server" mat-raised-button (click)="getAnaChatServer()">Get an Chatbots.mn chat server</button>-->
+    <button matTooltip="Get an Chatbots.mn chat server" mat-raised-button (click)="getAnaChatServer()">Get an
+        Chatbots.mn chat server</button>
     <button mat-raised-button matDialogClose>Dismiss</button>
 </mat-dialog-actions>
