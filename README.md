@@ -210,6 +210,6 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 ## License
 
-> Copyright (C) 2019 Intelligo Systems.  
+> Copyright (C) 2018-present Turtuvshin Byambaa.  
 > Intelligo framework is open-sourced software licensed under the [MIT](https://opensource.org/licenses/MIT) license.  
 > (See the [LICENSE](https://github.com/intelligo-systems/intelligo/blob/master/LICENSE) file for the whole license text.)
