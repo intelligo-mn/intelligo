@@ -14,7 +14,6 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 const server = Express();
-const marketplace = Express();
 const studio = Express();
 const simulator = Express();
 
@@ -24,8 +23,8 @@ studio.use(serveStatic('studio/dist'));
 server.use(cors());
 server.use(vhost('app.chatbots.mn', studio));
 server.use(vhost('simulator.chatbots.mn', simulator));
+server.use(vhost('cdn.chatbots.mn', serveStatic('cdn')));
 server.use(serveStatic('marketplace/dist'));
-server.use(vhost('cdn.chatbots.mn'), serveStatic('cdn'));
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));

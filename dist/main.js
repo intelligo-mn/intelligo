@@ -14,7 +14,6 @@ if (process.env.NODE_ENV === 'test') {
     console.log('----------TESTING IN PROCESS----------');
 }
 const server = Express();
-const marketplace = Express();
 const studio = Express();
 const simulator = Express();
 simulator.use(serveStatic('simulator/dist'));
@@ -22,6 +21,7 @@ studio.use(serveStatic('studio/dist'));
 server.use(cors());
 server.use(vhost('app.chatbots.mn', studio));
 server.use(vhost('simulator.chatbots.mn', simulator));
+server.use(vhost('cdn.chatbots.mn', serveStatic('cdn')));
 server.use(serveStatic('marketplace/dist'));
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, new platform_express_1.ExpressAdapter(server));
