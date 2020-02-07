@@ -14,7 +14,7 @@ import { EditBusinessAccountComponent } from '../../shared/edit-business-account
 })
 export class BizAccountsComponent implements AfterViewInit {
 
-	@ViewChild('appHeader', { static: false })
+	@ViewChild('appHeader')
 	appHeader: AppHeaderBarComponent;
 
 	ngAfterViewInit(): void {

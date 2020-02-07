@@ -24,7 +24,7 @@ export class LandingComponent implements OnInit {
     this.loadSavedProjects();
   }
 
-  @ViewChild('fileInput', { static: false })
+  @ViewChild('fileInput')
   fileInput: ElementRef;
 
   loadSavedProjects() {

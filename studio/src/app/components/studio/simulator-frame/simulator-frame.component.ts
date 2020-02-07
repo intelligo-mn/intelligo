@@ -34,10 +34,10 @@ export class SimulatorFrameComponent implements OnInit {
   iframeUrl: SafeResourceUrl;
   isOpen: boolean = false;
 
-  @ViewChild("intelligoRoot", { static: false })
+  @ViewChild("intelligoRoot")
   intelligoRoot: ElementRef;
 
-  @ViewChild("simulatorIFrame", { static: false })
+  @ViewChild("simulatorIFrame")
   simulatorIFrame: ElementRef;
 
   frame() {

@@ -34,7 +34,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
 		};
 	}
 
-	@ViewChild(AppHeaderBarComponent, { static: false })
+	@ViewChild(AppHeaderBarComponent)
 	appHeader: AppHeaderBarComponent;
 
 	businessAccount: BusinessAccount;

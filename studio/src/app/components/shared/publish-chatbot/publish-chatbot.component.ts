@@ -29,7 +29,7 @@ export class PublishChatbotComponent implements OnInit {
 		this.loadChatProjects();
 	}
 
-	@ViewChild("chatProjectFormField", { static: false })
+	@ViewChild("chatProjectFormField")
 	chatProjectFormField: MatFormField;
 
 	chatProjects: ChatProject[] = [];
