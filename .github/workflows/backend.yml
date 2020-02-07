@@ -19,6 +19,12 @@ jobs:
       - uses: intelligo-systems/intelligo-actions@v1
         with:
           packages: '["intelligo", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo"]'
+      - uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-  
       - name: npm install, build, and test
         run: |
           npm ci
