@@ -6,7 +6,7 @@ import {
   ViewChild,
   ViewChildren
 } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 import * as hammer from "hammerjs";
 import * as vm from "../../models/ana-chat-vm.models";

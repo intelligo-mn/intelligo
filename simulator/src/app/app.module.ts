@@ -3,19 +3,17 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-	MatDialogModule,
-	MatDatepickerModule,
-	MatFormFieldModule,
-	MatNativeDateModule,
-	MatInputModule,
-	MatButtonModule,
-	MatListModule,
-	MatCheckboxModule,
-	MatCardModule,
-	MatRadioModule,
-	MatProgressBarModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { AgmCoreModule, LAZY_MAPS_API_CONFIG } from '@agm/core';
 import { ImageViewerModule } from '@devmn/image-viewer';

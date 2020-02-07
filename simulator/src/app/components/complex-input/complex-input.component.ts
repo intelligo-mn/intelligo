@@ -5,11 +5,8 @@ import {
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
-import {
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-  MatDatepicker,
-} from '@angular/material';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
   ANADate,
   ANATime,
