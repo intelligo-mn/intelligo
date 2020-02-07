@@ -124,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "marketplace"
+    }
+  },
+  "defaultProject": "marketplace",
+  "cli": {
+    "analytics": false
+  }
 }
