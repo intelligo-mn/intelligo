@@ -38,14 +38,14 @@
     "sockjs-client": "^1.4.0",
     "stompjs": "^2.3.3",
     "tslib": "^1.10.0",
-    "zone.js": "^0.10.2"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular/language-service": "~9.0.0",
-    "@types/node": "~13.7.0",
+    "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.3",
     "@types/jasminewd2": "~2.0.8",
-    "codelyzer": "^5.2.1",
+    "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.4.1",
