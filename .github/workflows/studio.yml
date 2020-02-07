@@ -57,11 +57,11 @@ jobs:
       with:
         packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "@devmn/stepper", "@devmn/image-viewer", "@devmn/multi-select"]'  
     - uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-  
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-  
     - name: Install dependencies
       run: npm install
       working-directory: ./studio
