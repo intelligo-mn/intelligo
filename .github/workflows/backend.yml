@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -12,48 +11,18 @@ jobs:
         node-version: [10.x, 11.x, 12.x, 13.x]
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - uses: intelligo-systems/intelligo-actions@v1  
-      with:
-        packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "@devmn/stepper", "@devmn/image-viewer", "@devmn/multi-select"]'  
-    - uses: intelligo-systems/intelligo-actions@v1  
-      with:
-        packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "@devmn/stepper", "@devmn/image-viewer", "@devmn/multi-select"]'  
-    - uses: intelligo-systems/intelligo-actions@v1  
-      with:
-        packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "@devmn/stepper", "@devmn/image-viewer", "@devmn/multi-select"]'  
-    - uses: intelligo-systems/intelligo-actions@v1  
-      with:
-        packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "@devmn/stepper", "@devmn/image-viewer", "@devmn/multi-select"]'  
-    - uses: intelligo-systems/intelligo-actions@v1  
-      with:
-        packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "@devmn/stepper", "@devmn/image-viewer", "@devmn/multi-select"]'  
-    - uses: intelligo-systems/intelligo-actions@v1  
-      with:
-        packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "@devmn/stepper", "@devmn/image-viewer", "@devmn/multi-select"]'  
-    - uses: intelligo-systems/intelligo-actions@v1  
-      with:
-        packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "@devmn/stepper", "@devmn/image-viewer", "@devmn/multi-select"]'  
-    - uses: intelligo-systems/intelligo-actions@v1  
-      with:
-        packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "@devmn/stepper", "@devmn/image-viewer", "@devmn/multi-select"]'  
-    - uses: intelligo-systems/intelligo-actions@v1  
-      with:
-        packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "@devmn/stepper", "@devmn/image-viewer", "@devmn/multi-select"]'  
-    - uses: intelligo-systems/intelligo-actions@v1  
-      with:
-        packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "@devmn/stepper", "@devmn/image-viewer", "@devmn/multi-select"]'  
-    - uses: intelligo-systems/intelligo-actions@v1  
-      with:
-        packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "@devmn/stepper", "@devmn/image-viewer", "@devmn/multi-select"]'  
-    - name: npm install, build, and test
-      run: |
-        npm ci
-        npm run build --if-present
-        npm test
-      env:
-        CI: true
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: intelligo-systems/intelligo-actions@v1
+        with:
+          packages: '["intelligo", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "intelligo", "intelligo""intelligo-cli", "intelligo", "intelligo", "intelligo""intelligo-cli", "intelligo", "intelligo", "intelligo"]'
+      - name: npm install, build, and test
+        run: |
+          npm ci
+          npm run build --if-present
+          npm test
+        env:
+          CI: true
