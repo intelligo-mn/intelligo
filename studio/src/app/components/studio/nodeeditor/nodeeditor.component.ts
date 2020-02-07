@@ -1,10 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import {
-  MatDialogRef,
-  MatTab,
-  MatTabGroup,
-  MAT_DIALOG_DATA
-} from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatTab, MatTabGroup } from "@angular/material/tabs";
 import { Hotkey, HotkeysService } from "angular2-hotkeys";
 import * as models from "../../../models/chatflow.models";
 import { ChatFlowService } from "../../../services/chatflow.service";

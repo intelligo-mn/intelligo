@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ChatServerConnection, ChatBotProject } from '../../../models/app.models';
 import { SettingsService } from '../../../services/settings.service';
 import { ChatFlowService } from '../../../services/chatflow.service';
 import { InfoDialogService } from '../../../services/info-dialog.service';
-import { MatSnackBar, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { GetAnaChatServerComponent } from '../get-ana-chat-server/get-ana-chat-server.component';
 
 @Component({

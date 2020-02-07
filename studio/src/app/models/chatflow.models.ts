@@ -6,7 +6,7 @@ import {
 import { NodeEditorComponent } from "../components/studio/nodeeditor/nodeeditor.component";
 import { GlobalsService } from "../services/globals.service";
 import { InfoDialogService } from "../services/info-dialog.service";
-import { MatButton } from "@angular/material";
+import { MatButton } from "@angular/material/button";
 import * as _ from "underscore";
 //Enum Start
 export enum SectionType {

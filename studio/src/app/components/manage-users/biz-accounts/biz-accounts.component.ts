@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Injectable, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from "@angular/router";
 import { BusinessAccount, BusinessAccountStatus } from '../../../models/data.models';
 import { DataService } from '../../../services/data.service';

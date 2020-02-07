@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatAutocompleteSelectedEvent, MatDialog, MatDialogRef, MatFormField, MAT_DIALOG_DATA } from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatFormField } from '@angular/material/form-field';
 import * as models from '../../../models/chatflow.models';
 import { ChatProject } from '../../../models/data.models';
 import { DataService } from '../../../services/data.service';

@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject, Optional } from '@angular/core';
 import { DataService } from '../../../services/data.service';
 import { InfoDialogService } from '../../../services/info-dialog.service';
-import { MatDialogRef, MAT_DIALOG_DATA, MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BusinessAccount, ChatProject } from '../../../models/data.models';
 import { AnalyticsWindowService } from '../../../services/analytics-window.service';
 import { Router } from '@angular/router';

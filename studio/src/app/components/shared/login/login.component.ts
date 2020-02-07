@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ChatBotReferance, ChatServerConnection } from '../../../models/app.models';
 import { SettingsService } from '../../../services/settings.service';
 import { ChatFlowService } from '../../../services/chatflow.service';

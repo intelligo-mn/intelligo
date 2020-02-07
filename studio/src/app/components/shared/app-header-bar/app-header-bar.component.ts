@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from "@angular/router";
 import { LoginData } from '../../../models/data.models';
 import { DataService } from '../../../services/data.service';

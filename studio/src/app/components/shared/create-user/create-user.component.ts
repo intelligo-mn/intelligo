@@ -3,7 +3,7 @@ import { UserRegisterModel, Role, User } from '../../../models/data.models';
 import { GlobalsService } from '../../../services/globals.service';
 import { InfoDialogService } from '../../../services/info-dialog.service';
 import { DataService } from '../../../services/data.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EditBusinessAccountComponent } from '../edit-business-account/edit-business-account.component';
 
 @Component({
