@@ -31,7 +31,6 @@
     "bootstrap": "^4.4.1",
     "core-js": "^3.6.4",
     "hammerjs": "^2.0.8",
-    "intelligo": "^1.3.0",
     "jsonpath": "^1.0.2",
     "net": "^1.0.2",
     "rxjs": "~6.5.4",
