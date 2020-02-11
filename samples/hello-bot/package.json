@@ -6,7 +6,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "config": "3.2.4",
+    "config": "3.2.5",
     "express": "4.17.1",
     "intelligo": "1.3.0"
   }
