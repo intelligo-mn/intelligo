@@ -1,0 +1,93 @@
+language: node_js
+node_js:
+  - "v9.5.0"
+
+os:
+  - linux
+  - osx
+
+matrix:
+  allow_failures:
+    - os: osx
+
+addons:
+  apt:
+    packages:
+      - graphviz
+
+sudo: true
+dist: trusty
+
+branches:
+  only:
+    - master
+    - s3-integrate
+
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install graphviz; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install yarn --without-node; fi
+  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew upgrade python; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then python --version; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip2 install --upgrade pip setuptools wheel; fi
+  # - if [ "$TRAVIS_OS_NAME" == "osx" ]; then curl -O https://bootstrap.pypa.io/get-pip.py; fi
+  # - if [ "$TRAVIS_OS_NAME" == "osx" ]; then python3 get-pip.py --user; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew upgrade libyaml; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then sudo easy_install setuptools; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then pip2 install -U PyYAML; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip2 install awscli --ignore-installed six; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip2 --version; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libxkbfile-dev; fi
+
+
+install:
+  - npm i -g npm@5.7.1 # this should be deleted once 5.7.X is out of "pre-release"
+  - npm ci             # instead of default npm install 
+  - npm i node-sass
+  - npm install -g @angular/cli@1.6.1
+
+script:
+  - ng build --prod --aot=false
+  - cd dist
+  - npm i
+  - npm i -g electron-builder@19.56.0
+  - npm install -g electron-rebuild
+  - electron-rebuild -v 1.8.2
+  - electron-builder && cd ..
+  - cd release
+  - ls -l
+after_success:
+  # - Upload here 
+  #Linux only Upload to s3
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then pip install awscli --upgrade --user; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then which python; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then ls -al /usr/local/bin/python; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then export PATH=~/.local/bin:$PATH; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then source ~/.bash_profile; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then aws s3 cp *.AppImage s3://ana-content/cdn/dist/agent-panel/linux-ia32/ --acl public-read; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then aws s3 cp *.AppImage s3://ana-content/cdn/dist/agent-panel/linux-x64/ --acl public-read; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then aws s3 cp latest-linux.yml s3://ana-content/cdn/dist/agent-panel/linux-ia32/ --acl public-read; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then aws s3 cp latest-linux.yml s3://ana-content/cdn/dist/agent-panel/linux-x64/ --acl public-read; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then aws s3 ls s3://ana-content/cdn/dist/agent-panel/linux-ia32/ --human-readable --summarize; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then aws s3 ls s3://ana-content/cdn/dist/agent-panel/linux-x64/ --human-readable --summarize; fi
+  # Mac only Upload to s3
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then aws --version; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then which python; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then ls -al /usr/local/bin/python; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export PATH=~/.local/bin:$PATH; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then source ~/.bash_profile; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then aws s3 cp *.dmg s3://ana-content/cdn/dist/agent-panel/mac-x64/ --acl public-read; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then aws s3 cp *.dmg.blockmap s3://ana-content/cdn/dist/agent-panel/mac-x64/ --acl public-read; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then aws s3 cp *.zip s3://ana-content/cdn/dist/agent-panel/mac-x64/ --acl public-read; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then aws s3 cp latest-mac.json s3://ana-content/cdn/dist/agent-panel/mac-x64/ --acl public-read; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then aws s3 cp latest-mac.yml s3://ana-content/cdn/dist/agent-panel/mac-x64/ --acl public-read; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then aws s3 ls s3://ana-content/cdn/dist/agent-panel/mac-x64/ --human-readable --summarize; fi
+notifications:
+  email:
+    - soumyajit.dutta@nowfloats.com
+    - khaja.nizamuddin@nowfloats.com
+  slack:
+    on_success: always
+    on_failure: always

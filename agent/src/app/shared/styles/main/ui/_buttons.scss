@@ -1,0 +1,633 @@
+// Bootstrap Button Styles
+// --------------------------
+//reset bt button styles
+.btn-danger.active,
+.btn-danger:active,
+.btn-danger:hover,
+.btn-default.active,
+.btn-default:active,
+.btn-default:hover,
+.btn-primary.active,
+.btn-primary.active.focus,
+.btn-primary.active:focus,
+.btn-primary.active:hover,
+.btn-primary:active,
+.btn-primary:active.focus,
+.btn-primary:active:focus,
+.btn-primary:active:hover,
+.btn-primary:hover,
+.btn-warning.active,
+.btn-warning:active,
+.btn-warning:hover,
+.open > .dropdown-toggle.btn-danger,
+.open > .dropdown-toggle.btn-default,
+.open > .dropdown-toggle.btn-primary.focus,
+.open > .dropdown-toggle.btn-primary:focus,
+.open > .dropdown-toggle.btn-primary:hover .open > .dropdown-toggle.btn-primary,
+.open > .dropdown-toggle.btn-warning {
+	outline: none;
+}
+
+.btn,
+.navbar .navbar-nav > li > a.btn {
+	border: none;
+	border-radius: $border-radius-base;
+	position: relative;
+	padding: 12px 30px;
+	margin: 10px 1px;
+	font-size: $mdb-btn-font-size-base;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0;
+	transition: box-shadow 0.2s $mdb-animation-curve-fast-out-linear-in,
+		background-color 0.2s $mdb-animation-curve-default;
+	outline: none;
+	border-color: none !important;
+	&::-moz-focus-inner {
+		border: 0;
+	}
+
+	&.btn-default,
+	&.btn-gray {
+		@include btn-styles($brand-default);
+	}
+
+	&.btn-blue,
+	&.btn-info {
+		@include btn-styles($mw-blue);
+	}
+
+	&.btn-success {
+		@include btn-styles($brand-success);
+	}
+
+	&.btn-warning,
+	&.btn-yellow {
+		@include btn-styles($mw-yellow);
+	}
+
+	&.btn-danger,
+	&.btn-red {
+		@include btn-styles($mw-red);
+	}
+
+	&.btn-royalBlue {
+		@include btn-styles($mw-royalBlue);
+	}
+	&.btn-white {
+		@include btn-styles($brand-white);
+		color: $mw_grayBlue !important;
+	}
+	&.btn-twitter {
+		@include btn-styles($twitter);
+	}
+
+	&.btn-facebook {
+		@include btn-styles($facebook);
+	}
+
+	&.btn-dribbble {
+		@include btn-styles($dribbble);
+	}
+
+	&.btn-add-gray {
+		@include btn-styles(transparent);
+		box-shadow: none;
+		border: dashed 2px $mw-gray;
+		color: $mw-gray !important;
+
+		&:hover {
+			@include btn-styles($mw-blue);
+			color: #fff !important;
+			border: solid 2px $mw-blue;
+			border: none;
+		}
+
+		&:focus {
+			box-shadow: none;
+		}
+	}
+
+	&.btn-flat {
+		color: $gray-light;
+		background: transparent;
+		box-shadow: none;
+
+		&:hover {
+			outline: 0;
+			outline: none;
+			background-color: transparent;
+			box-shadow: none;
+		}
+
+		&.btn-default {
+			color: #688696;
+		}
+
+		&.btn-default:hover,
+		&.btn-gray:hover {
+			background-color: rgba($brand-default, .2);
+			color: #688696;
+		}
+
+		&.btn-green:hover,
+		&.btn-success:hover {
+			background-color: rgba($mw-green, .1);
+		}
+
+		&.btn-blue:hover,
+		&.btn-info:hover {
+			background-color: rgba($mw-blue, .1);
+		}
+
+		&.btn-warning:hover,
+		&.btn-yellow:hover {
+			background-color: rgba($mw-yellow, .3);
+		}
+
+		&.btn-danger:hover,
+		&.btn-red:hover {
+			background-color: rgba($mw-red, .1);
+		}
+
+		&.btn-white-text:hover {
+			background-color: rgba(#fff, .2);
+		}
+	}
+
+	&.btn-alt {
+		color: #fff !important;
+	}
+
+	&:active,
+	&:active:focus,
+	&:focus {
+		outline: 0;
+		outline: none;
+	}
+
+	&.btn-round {
+		border-radius: $border-radius-extreme;
+	}
+
+	&:not(.btn-just-icon):not(.btn-fab) {
+		.fa {
+			font-size: 18px;
+			margin-top: -2px;
+			position: relative;
+			top: 2px;
+		}
+	}
+
+	&.btn-fab {
+		border-radius: 50%;
+		font-size: rem(20px) !important;
+		height: $mdb-btn-fab-size;
+		margin: auto;
+		min-width: $mdb-btn-fab-size;
+		width: $mdb-btn-fab-size;
+		padding: 0;
+		position: relative;
+		line-height: normal;
+
+		.ripple-container {
+			border-radius: 50%;
+		}
+
+		&.btn-fab-sm,
+		.btn-group-sm & {
+			height: $mdb-btn-fab-size-sm;
+			min-width: $mdb-btn-fab-size-sm;
+			width: $mdb-btn-fab-size-sm;
+			font-size: 20px;
+			line-height: 2em;
+
+			&.material-icons {
+				top: ($mdb-btn-icon-size-sm - $mdb-btn-fab-font-size) / 2;
+				left: ($mdb-btn-icon-size-sm - $mdb-btn-fab-font-size) / 2;
+			}
+
+			.material-icons {
+				font-size: $mdb-btn-icon-size-sm;
+			}
+		}
+
+		&.btn-fab-xs,
+		.btn-group-xs & {
+			height: $mdb-btn-fab-size-xs;
+			min-width: $mdb-btn-fab-size-xs;
+			width: $mdb-btn-fab-size-xs;
+			font-size: $mdb-btn-icon-size-xs;
+			line-height: 1.4em;
+
+			&.material-icons {
+				top: ($mdb-btn-icon-size-xs - $mdb-btn-fab-font-size) / 2;
+				left: ($mdb-btn-icon-size-xs - $mdb-btn-fab-font-size) / 2;
+			}
+
+			.material-icons {
+				font-size: $mdb-btn-icon-size-xs;
+			}
+		}
+
+		i.material-icons {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(
+				-($mdb-btn-fab-font-size / 2),
+				-($mdb-btn-fab-font-size / 2)
+			);
+			line-height: $mdb-btn-fab-font-size;
+			width: $mdb-btn-fab-font-size;
+			font-size: $mdb-btn-fab-font-size;
+		}
+	}
+
+	&.animate-fab i {
+		@include transition(all .5s);
+	}
+
+	&.animate-fab:hover i {
+		@include transform(rotate(360deg));
+	}
+
+	&.animate-fab[disabled="disabled"]:hover i {
+		@include transform(rotate(0deg));
+	}
+	// Size variations
+	&.btn-lg,
+	.btn-group-lg & {
+		font-size: $mdb-btn-font-size-lg;
+		padding: 18px 36px;
+	}
+
+	&.btn-sm,
+	.btn-group-sm & {
+		padding: 5px 20px;
+		font-size: $mdb-btn-font-size-sm;
+	}
+
+	&.btn-xs,
+	.btn-group-xs & {
+		padding: 4px 15px;
+		font-size: $mdb-btn-font-size-xs;
+	}
+
+	&.btn-just-icon {
+		font-size: 18px;
+		padding: 10px;
+		line-height: 1em;
+
+		i {
+			width: 20px;
+		}
+
+		&.btn-lg {
+			font-size: 22px;
+			padding: 13px 18px;
+		}
+	}
+}
+
+.btn.btn-warning {
+	color: #3e3e3e !important;
+
+	&:active,
+	&:focus,
+	&:hover,
+	&:visited {
+		color: #3e3e3e !important;
+	}
+}
+
+.btn.btn-warning.btn-flat {
+	color: #3e3e3e !important;
+}
+
+.btn {
+	.material-icons {
+		vertical-align: middle;
+		font-size: $mdb-btn-icon-size-sm;
+		top: -1px;
+		position: relative;
+	}
+}
+
+.navbar .navbar-nav > li >  {
+	a.btn {
+		margin-top: 2px;
+		margin-bottom: 2px;
+
+		&.btn-fab {
+			margin: 5px 2px;
+		}
+	}
+
+	a:not(.btn) {
+		.material-icons {
+			margin-top: -3px;
+			top: 0;
+			position: relative;
+			margin-right: 3px;
+		}
+	}
+
+	.profile-photo {
+		margin: 5px 2px;
+	}
+}
+
+.navbar-default:not(.navbar-transparent) .navbar-nav > li >  {
+	a.btn {
+		&.btn-white.flat {
+			color: $gray;
+		}
+	}
+}
+
+.btn-group,
+.btn-group-vertical {
+	position: relative;
+	margin: 10px 1px;
+
+	&.open {
+		& > .dropdown-toggle.btn {
+			//  @include variations(unquote(".btn"), unquote(""), background-color, $mdb-btn-background-color);
+		}
+	}
+
+	.dropdown-menu {
+		border-radius: 0 0 $border-radius-base $border-radius-base;
+	}
+
+	&.btn-group-raised {
+		@include shadow-2dp();
+	}
+
+	& .btn + .btn,
+	.btn,
+	.btn-group,
+	.btn:active {
+		margin: 0;
+	}
+}
+
+.close {
+	font-size: inherit;
+	color: $white-color;
+	opacity: 0.9;
+	text-shadow: none;
+
+	&:focus,
+	&:hover {
+		opacity: 1;
+		color: $white-color;
+	}
+
+	i {
+		font-size: 20px;
+	}
+}
+
+.btn:not(.btn-fab) i {
+	vertical-align: middle;
+	font-size: rem(24px);
+	position: relative;
+	padding: 0 3px;
+}
+
+.btn-demo .btn {
+	margin-right: 7px;
+}
+// Button Transistions
+
+button[data-transition] {
+	transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+	transform-origin: 50%;
+}
+
+a[data-transistion].close-fullscreen-transistion {
+	z-index: 99999;
+	color: #fff;
+	font-size: 45px;
+	position: absolute;
+	opacity: 0;
+	display: none;
+}
+
+button[data-transition].fullscreen {
+	transform: scale(70);
+	z-index: 999;
+	position: fixed;
+	cursor: default;
+
+	i {
+		display: none;
+	}
+}
+
+.input-group-btn .btn.btn-fab {
+	border-radius: 50%;
+}
+
+.form-group {
+	.btn-suffix {
+		position: absolute;
+		right: 0;
+		top: 10px;
+	}
+}
+
+/*
+*
+*  FAB MENU
+*/
+.btn-fab-group {
+	position: relative;
+	z-index: 99;
+	[data-fab="down"] + .nav-sub {
+		li {
+			margin: 10px;
+			bottom: -9px;
+			left: -3px;
+		}
+	}
+
+	[data-fab="up"] + .nav-sub {
+		li {
+			margin: 10px;
+			top: -67px;
+			left: -2px;
+		}
+	}
+
+	[data-fab="left"] + .nav-sub {
+		li {
+			left: 0;
+			top: -50px;
+		}
+	}
+
+	[data-fab="right"] + .nav-sub {
+		li {
+			right: -58px;
+			top: -50px;
+		}
+	}
+
+	.fab-menu {
+		z-index: 70;
+
+		i {
+			@include transition(all .5s);
+		}
+	}
+
+	.nav-sub {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		z-index: 49;
+		@include transform(scale(0,0));
+		@include transition(all .2s ease-in-out);
+
+		li {
+			position: absolute;
+
+			i {
+				@include transition(all .5s);
+			}
+		}
+	}
+
+	&.open {
+		.fab-menu {
+			i {
+				@include transition(all .5s);
+				@include transform(rotate(405deg));
+			}
+		}
+
+		.nav-sub {
+			display: block;
+			@include transform(scale(1,1));
+
+			li {
+				line-height: 40px;
+				position: absolute;
+
+				i {
+					@include transform(rotate(360deg));
+				}
+			}
+		}
+	}
+}
+
+.animate_plus_x {
+	@include transition(all .5s);
+	@include transform(rotate(0deg));
+
+	&.open {
+		@include transform(rotate(405deg));
+	}
+}
+//Social Media Buttons
+.btn.btn-facebook,
+.navbar .navbar-nav > li > a.btn.btn-facebook {
+	@include btn-styles($mbc-facebook);
+}
+
+.btn.btn-twitter,
+.navbar .navbar-nav > li > a.btn.btn-twitter {
+	@include btn-styles($mbc-twitter);
+}
+
+.btn.btn-pinterest,
+.navbar .navbar-nav > li > a.btn.btn-pinterest {
+	@include btn-styles($mbc-pinterest);
+}
+
+.btn.btn-google,
+.navbar .navbar-nav > li > a.btn.btn-google {
+	@include btn-styles($mbc-googleplus);
+}
+
+.btn.btn-linkedin,
+.navbar .navbar-nav > li > a.btn.btn-linkedin {
+	@include btn-styles($mbc-linkedin);
+}
+
+.btn.btn-dribbble,
+.navbar .navbar-nav > li > a.btn.btn-dribbble {
+	@include btn-styles($mbc-dribbble-2);
+}
+
+.btn.btn-github,
+.navbar .navbar-nav > li > a.btn.btn-github {
+	@include btn-styles($mbc-github);
+}
+
+.btn.btn-youtube,
+.navbar .navbar-nav > li > a.btn.btn-youtube {
+	@include btn-styles($mbc-youtube);
+}
+
+.btn.btn-instagram,
+.navbar .navbar-nav > li > a.btn.btn-instagram {
+	@include btn-styles($mbc-instagram);
+}
+
+.btn.btn-reddit,
+.navbar .navbar-nav > li > a.btn.btn-reddit {
+	@include btn-styles($mbc-reddit);
+}
+
+.btn.btn-tumblr,
+.navbar .navbar-nav > li > a.btn.btn-tumblr {
+	@include btn-styles($mbc-tumblr);
+}
+
+.btn.btn-behance,
+.navbar .navbar-nav > li > a.btn.btn-behance {
+	@include btn-styles($mbc-behance);
+}
+.btn.btn-skype,
+.navbar .navbar-nav > li > a.btn.btn-skype {
+	@include btn-styles($mbc-skype);
+}
+.btn.btn-slack,
+.navbar .navbar-nav > li > a.btn.btn-slack {
+	@include btn-styles($mbc-slack);
+}
+.btn.btn-soundcloud,
+.navbar .navbar-nav > li > a.btn.btn-soundcloud {
+	@include btn-styles($mbc-soundcloud);
+}
+.btn.btn-android,
+.navbar .navbar-nav > li > a.btn.btn-android {
+	@include btn-styles($mbc-android);
+}
+.btn.btn-vimeo,
+.navbar .navbar-nav > li > a.btn.btn-vimeo {
+	@include btn-styles($mbc-vimeo);
+}
+
+// Material Design Button Styles
+// ----------------------------------
+
+.mat-button-toggle-group {
+	box-shadow: none !important;
+	.mat-button-toggle {
+		label {
+			margin: 0;
+			.mat-button-toggle-label-content {
+				padding: 0;
+				margin: 0;
+				line-height: normal;
+			}
+		}
+	}
+}

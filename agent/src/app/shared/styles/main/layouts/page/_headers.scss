@@ -1,0 +1,86 @@
+.content {
+	.header-wrapper {
+		background: #fff;
+		padding: 0;
+		width: 100%;
+		position: relative;
+    box-shadow: 1px 0px 10px rgba(0, 0, 0, 0.10);
+		&.header-sm {
+			min-height: 70px;
+		}
+
+		&.header-md {
+			min-height: 140px;
+			h1 {
+				padding-top: 30px;
+			}
+		}
+
+		&.header-lg {
+			min-height: 220px;
+			h1 {
+				padding-top: 30px;
+			}
+		}
+		&.header-xl {
+			min-height: 300px;
+			h1 {
+				padding-top: 30px;
+			}
+		}
+		&.header-xxl {
+			min-height: 320px;
+			h1 {
+				padding-top: 30px;
+			}
+		}
+		&.overlay {
+			position: absolute;
+		}
+	
+	}
+	.header-wrapper + .tabpanel {
+		.nav-tabs {
+			li:first-child {
+				padding-left: 30px;
+			}
+		}
+	}
+	.content-header {
+		padding: 15px 30px;
+		width: 100%;
+		position: relative;
+	}
+
+	.header-wrapper {
+		&.header-md.overlay + .content-body {
+			padding-top: 60px;
+		}
+		&.header-lg.overlay + .content-body {
+			padding-top: 110px;
+		}
+		&.header-xl.overlay + .content-body {
+			padding-top: 180px;
+		}
+		&.header-xxl.overlay + .content-body {
+			padding-top: 220px;
+		}
+	}
+
+}
+
+@media (max-width: 768px) {
+	.content {
+		.header-wrapper {
+			&.header-md.overlay + .content-body {
+				padding-top: 65px;
+			}
+			&.header-lg.overlay + .content-body {
+				padding-top: 65px;
+			}
+			&.header-xl.overlay + .content-body {
+				padding-top: 65px;
+			}
+		}
+	}
+}

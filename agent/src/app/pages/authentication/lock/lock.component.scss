@@ -1,0 +1,152 @@
+@import "../../../shared/styles/main/util/index";
+
+	#login_wrapper {
+		position: relative;
+		margin: 10px auto auto;
+		width: 375px;
+
+		.logo {
+			z-index: 10;
+	    position: absolute;
+	    top: 10px;
+	    left: 30%;
+
+			img {
+				padding: 21px 24px;
+			}
+		}
+
+		#login_content {
+			position: relative;
+			overflow: hidden;
+			background: #fff;
+			-webkit-box-shadow: 0 5px 12px rgba(0, 0, 0, .2);
+			-moz-box-shadow: 0 5px 12px rgba(0, 0, 0, .2);
+			-ms-box-shadow: 0 5px 12px rgba(0, 0, 0, .2);
+			-o-box-shadow: 0 5px 12px rgba(0, 0, 0, .2);
+			box-shadow: 0 5px 12px rgba(0, 0, 0, .2);
+			position: relative;
+			width: 375px;
+			padding: 110px 30px 30px;
+		}
+
+		#register_wrapper {
+			padding: 110px 20px 20px;
+			margin-bottom: 0;
+			position: absolute;
+			background-color: #fff;
+			width: 100%;
+			background: #fff;
+			overflow: hidden;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			z-index: 3;
+			display: none;
+
+			&.toggleRegister {
+				display: block;
+			}
+		}
+
+		#login_content,
+		#register_wrapper {
+			h1 {
+				text-align: center;
+				font-size: 20px;
+				margin: 10px auto 50px;
+			}
+		}
+	}
+	// locked screen icon
+	.icon-locked {
+		font-size: 30px;
+		color: #f78d1f;
+		position: absolute;
+		margin-left: -30px;
+		margin-top: -14px;
+	}
+
+	.login-options {
+		text-align: center;
+		margin: 25px auto 0;
+		min-height: 15px;
+		position: relative;
+
+		span {
+			position: absolute;
+			top: -9px;
+			background: #fff;
+			padding: 0 15px;
+			margin: auto;
+			left: 42%;
+		}
+	}
+
+	.forgot-pass,
+	.mat-checkbox-label {
+		font-size: rem(14px);
+	}
+
+	a:link:not(.btn),
+	a:visited:not(.btn) {
+		color: $mw_blue;
+	}
+
+	a:active:not(.btn),
+	a:hover:not(.btn) {
+		color: darken($mw_blue, 12%);
+	}
+	@media (max-width: 768px) {
+		#login_wrapper {
+			position: absolute;
+			margin: 0;
+			width: 100%;
+			height: 100%;
+			bottom: 0;
+			top: 0;
+			left: 0;
+			right: 0;
+			background: #fff;
+			overflow-y: auto;
+
+			.logo {
+				width: 80px;
+				height: 80px;
+				border-radius: 0;
+				box-shadow: none;
+				z-index: 10;
+				position: relative;
+				top: initial;
+				left: initial;
+				margin: 0 auto;
+
+				img {
+					padding: 15px;
+				}
+			}
+
+			#login_content {
+				width: 100%;
+				padding: 0 20px;
+				overflow: hidden;
+				background: #fff;
+				box-shadow: none;
+				position: relative;
+			}
+
+			#register_wrapper {
+				padding: 85px 20px 20px;
+			}
+
+			#login_content,
+			#register_wrapper {
+				h1 {
+					text-align: center;
+					font-size: 20px;
+					margin: 10px 0;
+				}
+			}
+		}
+	}

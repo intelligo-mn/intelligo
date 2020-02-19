@@ -1,0 +1,52 @@
+<div class="card">
+	<header class="card-header border-bottom">
+		<h2 class="card-title">Messages</h2>
+		<small>This component list is being rendered from a json file</small>
+		<ul class="actions icons top-right">
+			<li>
+				<a href="javascript:void(0)" data-toggle="refresh">
+					<i class="zmdi zmdi-refresh-alt"></i>
+				</a>
+			</li>
+			<li class="dropdown">
+				<a href="javascript:void(0)" data-toggle="dropdown">
+					<i class="zmdi zmdi-more-vert"></i>
+				</a>
+				<ul class="dropdown-menu btn-primary dropdown-menu-right">
+					<li>
+						<a href="javascript:void(0)">Option One</a>
+					</li>
+					<li>
+						<a href="javascript:void(0)">Option Two</a>
+					</li>
+					<li>
+						<a href="javascript:void(0)">Option Three</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</header>
+	<div class="card-block p-0">
+		<ul class="list-group">
+			<li class="list-group-item" *ngFor="let item of listItems">
+				<span class="float-left"><img src="{{item.img}}" alt="" class="rounded-circle max-w-40 m-r-10"></span>
+				<div class="list-group-item-body">
+					<div class="list-group-item-heading">{{item.title}}</div>
+					<div class="list-group-item-text">{{item.text}}</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="card-footer border-top">
+		<ul class="more">
+			<li>
+				<a href="javascript:void(0)" class="btn btn-default btn-flat" md-ripple>View More</a>
+			</li>
+		</ul>
+		<ul class="actions icons right">
+			<li>
+				<button class="btn btn-primary btn-fab"><i class="zmdi zmdi-edit"></i></button>
+			</li>
+		</ul>
+	</div>
+</div>

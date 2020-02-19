@@ -1,0 +1,18 @@
+.appBackdrop {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+	background: rgba(131, 151, 172, .7);
+	z-index: $zindex_sidebarnav_app_backdrop;
+	-webkit-animation: fadeInFromNone 250ms ease-out;
+	-moz-animation: fadeInFromNone 250ms ease-out;
+	-o-animation: fadeInFromNone 250ms ease-out;
+	animation: fadeInFromNone 250ms ease-out;
+}
+
+.mat-sidenav-backdrop.mat-sidenav-shown{
+	background: rgba(131, 151, 172, .7)!important;
+}

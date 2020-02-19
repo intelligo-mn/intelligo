@@ -1,0 +1,10 @@
+<div class="card tabs-over-card {{tabColor}}">
+	<ngb-tabset>
+		<ngb-tab *ngFor="let tabsItem of filtered">
+			<ng-template ngbTabTitle>{{tabsItem.title}}</ng-template>
+			<ng-template ngbTabContent><div class="p-30">
+				{{tabsItem.content}}
+			</div></ng-template>
+		</ngb-tab>
+	</ngb-tabset>
+</div>

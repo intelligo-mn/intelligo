@@ -1,0 +1,181 @@
+<!-- Content Wrapper - Left Sidenav 2-->
+<div id="content_wrapper" class="leftSidenav2-wrapper chat-wrapper">
+	<!--// Sidenav component container-->
+	<md-sidenav-container class="sidenav-container">
+		<!-- Sidenav -->
+		<md-sidenav #leftSidenav2 mode="{{navMode}}" class="sidenav">
+			<aside id="leftSidenav2">
+				<header class="header">
+					<div>
+						<div class="title">{{agentName}}</div>
+						<div class="subtitle">{{agentRole}}</div>
+					</div>
+					<div>
+						<md-input-container floatPlaceholder="never" class="float-auto" style="margin-top: 10px; width: 100% !important">
+							<input mdInput class="block" placeholder="Search" name="searchText" [(ngModel)]="searchText" autocomplete="off" (keyup.enter)="searchChats()">
+						</md-input-container>
+						<section class="chats-range">
+							<span>
+								<button title="Previous page of chats" md-icon-button [disabled]="page<=0" (click)="chatsPrev()"><md-icon>keyboard_arrow_left</md-icon></button>
+							</span>
+							<span class="pages">
+								<span> {{page+1}}/{{totalChatPages}} </span>
+							</span>
+							<span>
+								<button title="Next page of chats" md-icon-button [disabled]="page>=(totalChatPages-1)" (click)="chatsNext()"><md-icon>keyboard_arrow_right</md-icon></button>
+							</span>
+						</section>
+					</div>
+				</header>
+				<nav class="submenu">
+					<ul class="list-group">
+						<li class="list-group-item" *ngFor="let customer of customersList" [class.list-item-selected]="isCustomerSelected(customer)" md-ripple (click)="onCustomerSelected(customer)">
+							<div class="list-group-item-body">
+								<div class="list-group-item-heading">
+									{{customer.customerId}}
+									<b *ngIf="customer.unreadCount" style="color:crimson">({{customer.unreadCount}})</b>
+								</div>
+								<div class="list-group-item-text">
+									{{latestMessage(customer)}}
+									<span *ngIf="usersTyping[customer.customerId]">
+										<br />
+										Typing...
+									</span>
+									<br />
+									<span class="list-group-item-text-time" style="font-size: 10px;font-style: italic">{{customer.assignedAt | date:'medium'}}</span>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</nav>
+			</aside>
+		</md-sidenav>
+		<div class="content">
+			<div class="header-wrapper header-sm">
+				<header class="container-fluid">
+					<div class="row">
+						<div class="col">
+							<h1></h1>
+						</div>
+					</div>
+				</header>
+				<ul class="actions icons top-left">
+					<li>
+						<a href="javascript:void(0)" (click)="leftSidenav2.toggle()">
+							<i class="zmdi zmdi-menu"></i>
+						</a>
+					</li>
+				</ul>
+				<ul class="activeProfile" *ngIf="selectedCustomer">
+					<li>
+						<a href="javascript:void(0)">
+							<img class="rounded-circle max-w-40" src="assets/img/profiles/avatar.png" />
+							<span class="display-name">{{selectedCustomer.customerId}}</span>
+							<span *ngIf="selectedCustomer && usersTyping[selectedCustomer.customerId]">Typing...</span>
+							<span *ngIf="getConnectionStatus()" style="color:crimson">Lost internet connection! Trying to reconnect...</span>
+						</a>
+					</li>
+				</ul>
+				<ul class="actions icons top-right">
+					<li>
+						<mat-slide-toggle color="primary" [checked]="'checked'" (change)="chatConnectDisconnect($event)" [(ngModel)]="chatConnected">
+							<p *ngIf="connect">Connected</p>
+							<p *ngIf="!connect">Disconnected</p>
+						</mat-slide-toggle>
+					</li>
+					<li>
+						<div>
+							<button md-icon-button [hidden]="!settings.disableSounds" (click)="settings.disableSounds=false; saveSettings()">
+								<md-icon>volume_off</md-icon>
+							</button>
+							<button md-icon-button [hidden]="settings.disableSounds" (click)="settings.disableSounds=true; saveSettings()">
+								<md-icon>volume_up</md-icon>
+							</button>
+						</div>
+					</li>
+					<li>
+						<button class="btn btn-default" (click)="logout()">
+							Logout
+						</button>
+					</li>
+				</ul>
+			</div>
+			<div class="content-body">
+				<div class="chat" *ngIf="selectedCustomer">
+					<div id="messages" class="bs-example" #scrollMe (scroll)="onScroll($event)">
+						<div *ngFor="let chatMsg of currentChatThread()">
+							<div class="bubble-wrapper" *ngIf="!isChatMessageHidden(chatMsg)">
+								<img [src]="getMsgImage(chatMsg.meta.senderType)" class="avatar" [class.you]="isYou(chatMsg.meta.senderType)" [class.me]="isMe(chatMsg.meta.senderType)" />
+								<div class="bubble" [class.chat-bubble-you]="isYou(chatMsg.meta.senderType)" [class.chat-bubble-me]="isMe(chatMsg.meta.senderType)">
+									<div [ngSwitch]="chatMsg.data.type">
+										<div *ngSwitchCase="0">
+											<p>{{chatMsg.data.content.text}}</p>
+										</div>
+										<div *ngSwitchCase="2">
+											<div [ngSwitch]="chatMsg.data.content.inputType">
+												<div *ngSwitchCase="0">
+													<p>{{chatMsg.data.content.input ? chatMsg.data.content.input.val : '-'}}</p>
+												</div>
+												<div *ngSwitchCase="1">
+													<p>{{chatMsg.data.content.input ? chatMsg.data.content.input.val : '-'}}</p>
+												</div>
+												<div *ngSwitchCase="2">
+													<p>{{chatMsg.data.content.input ? chatMsg.data.content.input.val : '-'}}</p>
+												</div>
+												<div *ngSwitchCase="3">
+													<p>{{chatMsg.data.content.input ? chatMsg.data.content.input.val : '-'}}</p>
+												</div>
+												<div *ngSwitchCase="10">
+													<!-- Options -->
+													<p>{{chatMsg.data.content.input ? optionsText(chatMsg) : '-'}}</p>
+												</div>
+												<div *ngSwitchDefault>
+													<p>Unsupported Format</p>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="author">
+										{{ chatMsg.meta.timestamp | date:"MM/dd/yyyy hh:mm a" }} {{chatMsg.customData ? '- ' + chatMsg.customData.status : ''}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<section class="chat-empty" *ngIf="!selectedCustomer">
+						<div class="chat-icon"></div>
+						<header>
+							<h3>Chat Application</h3>
+							<p>
+								Select a customer to begin chat.
+							</p>
+						</header>
+					</section>
+				</div>
+			</div>
+
+			<div id="chat_input_wrapper" *ngIf="selectedCustomer">
+				<form class="form-horizontal p-b-30">
+					<fieldset [disabled]="!stompServiceConnected()">
+						<div class="form-group row">
+							<div class="col">
+								<md-input-container [class.yellow]="!stompServiceConnected()" floatPlaceholder="auto" class="float-auto">
+									<input mdInput class="block" [placeholder]="stompServiceConnected()? 'Send a message' : 'Not connected!'" name="newMessage" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" autocomplete="off">
+									<button md-icon-button mdSuffix style="background: transparent !important" type="button" (click)="sendMessage()">
+										<i class="zmdi zmdi-mail-send"></i>
+									</button>
+								</md-input-container>
+							</div>
+							<div class="col-md-2 pull-right" style="text-align: right">
+								<button (click)="endChat()" type="button" class="btn btn-danger">
+									End Chat
+								</button>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</md-sidenav-container>
+</div>

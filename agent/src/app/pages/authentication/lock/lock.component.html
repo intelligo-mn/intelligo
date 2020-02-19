@@ -1,0 +1,43 @@
+<div id="login_wrapper">
+	<div class="logo">
+		<img src="assets/img/logo/ml-logo.png" alt="logo" class="logo-img">
+	</div>
+	<div id="login_content">
+		<header>
+			<h1 class="login-title m-b-20">
+				Your session is locked
+			</h1>
+		</header>
+		<figure class="text-center m-b-20">
+	
+			<img src="assets/img/profiles/06.jpg" alt="" class="rounded-circle max-w-100">
+				<span class="icon-locked"><i class="zmdi zmdi-lock"></i></span>
+		</figure>
+
+		<p class="text-center">
+			Due to inactivity your session has timed out, please enter your password to continue.
+		</p>
+		<div class="login-body">
+					<form class="form-horizontal">
+				<div class="form-group row">
+					<label class="sr-only">Email: </label>
+					<div class="col-md">
+						<md-input-container floatPlaceholder="auto" class="float-auto">
+							<input mdInput placeholder="Email (disabled)" class="form-control" type="email" disabled>
+						</md-input-container>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="sr-only">Password: </label>
+					<div class="col-md">
+						<md-input-container floatPlaceholder="auto" class="float-auto">
+							<input mdInput placeholder="Password" class="form-control" type="password">
+						</md-input-container>
+					</div>
+				</div>
+				<a href="javascript:void(0)" class="font-size-12 float-right" data-toggle="register">Not Rebecca Harris? </a>
+				<a href="javascript:void(0)" [routerLink]="['/dashboards']" class="btn btn-info btn-block m-t-40">Unlock</a>
+			</form>
+		</div>
+	</div>
+</div>
