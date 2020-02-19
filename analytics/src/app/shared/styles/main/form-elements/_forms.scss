@@ -1,0 +1,190 @@
+.form-horizontal {
+	.mat-input-container,
+	.mat-select {
+		display: block;
+	}
+}
+
+.form-inline {
+	.col-form-label {
+		padding-top: calc(.4rem - 1px * 2) !important;
+	}
+	.mat-input-container,
+	.mat-select {
+		display: inline-block;
+	}
+}
+
+.form-horizontal .form-group {
+	margin-right: -15px;
+	margin-left: -15px;
+}
+.form-vertical {
+	.mat-input-infix {
+		border-top: none !important;
+	}
+}
+.form-group {
+	padding-bottom: 0;
+	margin: 0 10px;
+	position: relative;
+
+	.float-never {
+		.mat-input-infix {
+			padding: rem(10px) 0 !important;
+		}
+	}
+
+	.float-never {
+		.mat-input-prefix + .mat-input-infix {
+			text-indent: 12px;
+			padding: rem(11px) 0 !important;
+		}
+	}
+
+	.float-always,
+	.float-auto {
+		.mat-input-prefix + .mat-input-infix {
+			padding: rem(12px) 0 0 !important;
+			text-indent: 12px;
+		}
+	}
+}
+
+.float-always,
+.float-auto {
+	.mat-input-wrapper {
+		padding-bottom: rem(30px) !important;
+		width: 100%;
+	}
+}
+
+.form-horizontal .checkbox,
+.form-horizontal .radio {
+	min-height: initial;
+}
+
+.form-horizontal .checkbox,
+.form-horizontal .checkbox-inline,
+.form-horizontal .radio,
+.form-horizontal .radio-inline {
+	padding-top: 0 !important;
+}
+
+.form-group.is-focused .radio label,
+.form-group.is-focused label.radio-inline {
+	color: #758396 !important;
+}
+
+.form-control:active,
+.form-control:focus {
+	outline: none;
+	box-shadow: none;
+	background: transparent;
+}
+
+.form-group.label-floating.is-empty {
+	.input-group .input-group-addon + .control-label {
+		left: 35px;
+	}
+}
+
+.form-group.label-floating.is-empty.is-focused {
+	.input-group .input-group-addon + .control-label {
+		left: 0;
+	}
+}
+
+.form-group label {
+	line-height: rem(30px);
+	font-weight: 600;
+	margin: 3px 0 0;
+	font-size: rem(14px);
+	white-space: nowrap;
+}
+
+.col-form-label {
+	padding-top: calc(1.1rem - 1px * 2) !important;
+}
+
+.input-group-addon {
+	font-size: 16px;
+	font-weight: 200;
+	color: inherit;
+}
+
+.input-group .input-group-btn.suffix-select {
+	padding: 0 !important;
+	width: 15%;
+}
+//Input Rounded
+.form-group {
+	.form-control.form-rounded {
+		background: #fff;
+		opacity: .8;
+		border-radius: 30px !important;
+		height: 40px;
+		padding: 5px 25px;
+		border: none;
+		&:focus {
+			opacity: 1;
+			@include shadow-2dp-color($mw-grayBlue);
+		}
+	}
+}
+
+//File input
+.form-group.fileinput {
+	margin: 0 15px 15px !important;
+	input[type=file] {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 100;
+		opacity: 0;
+		border-bottom: 1px dotted rgba(0, 0, 0, .12);
+		border: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 0;
+		padding: 4px 0;
+		width: 100%;
+		background: 16px;
+		text-align: left;
+		color: inherit;
+	}
+
+	.read-only {
+		background: transparent;
+		background-color: transparent;
+		box-shadow: none;
+		border: none;
+		border-bottom: 1px dotted rgba(0, 0, 0, 0.12);
+	}
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+	background: transparent !important;
+}
+
+//Checkbox and Radio
+
+.mat-checkbox-frame {
+	border-color: #cfd8e3 !important;
+}
+
+.mat-radio-button:not(.mat-radio-checked) {
+	.mat-radio-outer-circle {
+		border-color: #cfd8e3 !important;
+	}
+}
+.mat-input-prefix{
+	.mat-icon{
+		    vertical-align: bottom;
+	}
+}

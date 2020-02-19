@@ -1,0 +1,24 @@
+<h2 matDialogTitle>Please enter the following details</h2>
+<mat-dialog-content>
+    <div class="center-block center-content">
+        <form (ngSubmit)="done()" class="form">
+            <mat-form-field>
+                <input type="url" placeholder="Server Url" name="apiBase" matInput [(ngModel)]="details.apiBase" required />
+            </mat-form-field>
+            <mat-form-field>
+                <input type="text" placeholder="Business Id" name="businessId" matInput [(ngModel)]="details.businessId" required />
+            </mat-form-field>
+            <mat-form-field>
+                <input type="text" placeholder="Business Name" name="businessName" matInput [(ngModel)]="details.businessName" required />
+            </mat-form-field>
+            <input type="submit" name="submit" hidden />
+        </form>
+        <div *ngIf="error">
+            {{error}}
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button matTooltip="Submit" color="primary" mat-raised-button (click)="done()">Submit</button>
+    <button mat-raised-button matDialogClose>Dismiss</button>
+</mat-dialog-actions>

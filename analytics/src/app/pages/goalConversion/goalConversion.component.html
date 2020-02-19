@@ -1,0 +1,98 @@
+<div style="height:100%">
+    <div id="content_wrapper" class="fullWidth1-wrapper">
+        <div class="content">
+            <div class="header-wrapper header-sm">
+                <header class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <ul class="actions icons top-right">
+                                <li>
+                                    <div class="row" style="padding-right:30px;">
+                                        <div class="" style="padding-right:40px;">
+                                            <mat-form-field>
+                                                <input matInput [matDatepicker]="picker" [(ngModel)]="chosenStartDate" (focus)="picker.open()" readonly (change)="onClick($event)" placeholder="Start Date">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="" style="padding-right:40px">
+                                            <mat-form-field>
+                                                <input matInput [matDatepicker]="picker1" [(ngModel)]="chosenEndDate" (focus)="picker1.open()" readonly (change)="onClick($event)" placeholder="End Date">
+                                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                        <button mat-icon-button (click)="onClick($event)">
+                                            <mat-icon>done</mat-icon>
+                                        </button>
+                                        <button mat-icon-button (click)="refresh()">
+                                            <mat-icon *ngIf="loading" class=" gear">autorenew</mat-icon>
+                                            <mat-icon *ngIf="!loading">autorenew</mat-icon>
+                                        </button>
+                                    </div>
+
+                                </li>
+                                <li>
+                                </li>
+                            </ul>
+                            <h1>Goal Conversion</h1>
+                        </div>
+                    </div>
+                </header>
+            </div>
+            <div class="content-body">
+                
+                <div class="card text-center" *ngIf="!checkApi">
+                    <h1>No goal nodes have been set</h1>
+                </div>
+                <div *ngIf="checkApi">
+                    <div class="card" *ngIf="showDropdown">
+                        <h2 style="padding-left:10px;padding-top:10px;">Select Goal Node</h2>
+                        <div class="row">
+                            <div style="padding-left:25px;min-width:265px;padding-bottom:10px">
+                                <select class="form-control" style="background:white" [(ngModel)]="goalNode" (change)="getAnalytics()">
+                                    <option *ngFor="let NodeId of goalNodeId" [value]=NodeId>
+                                        {{goalData[NodeId]}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="showGraph">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <header class="card-header ">
+                                    <h2 class="card-title" *ngIf="(conversionPercentage >0)">Conversions - {{goalData[goalNode]}} ({{conversionPercentage}}%)</h2>
+                                    <h2 class="card-title" *ngIf="(conversionPercentage <= 0)">Conversions - {{goalData[goalNode]}} </h2>
+                                    <small class="card-subtitle">Users vs Views</small>
+
+                                </header>
+                                <div class="card-block">
+                                    <ng2-charts-barline *ngIf="hideChart" [barChartData]="usersData" [barChartLabels]="trimNameUser"></ng2-charts-barline>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--_________________________________________________________________________________-->
+                    <div class="row" *ngIf="showGraph">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <header class="card-header ">
+                                    <!-- <h2 class="card-title">Conversions - {{goalData[goalNode]}} ({{conversionPercentage}}%)</h2> -->
+                                    <h2 class="card-title">Conversions - {{goalData[goalNode]}}</h2>
+                                    <small class="card-subtitle">Users vs Clicks</small>
+                                </header>
+                                <div class="card-block">
+                                    <ng2-charts-barline *ngIf="hideChart" [barChartData]="usersDataNew" [barChartLabels]="trimNameClick"></ng2-charts-barline>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer_wrapper" class="footer_wrapper"></footer>
+</div>

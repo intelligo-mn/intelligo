@@ -1,0 +1,153 @@
+.noteapp {
+	position: relative;
+	width: 100%;
+
+	.noteapp__header {
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 99;
+	}
+
+	.noteapp__main {
+		position: relative;
+	}
+
+	.noteapp__footer {
+		position: relative;
+	}
+
+	.noteapp__overlay {
+		position: fixed;
+		left: 0;
+		top: 0;
+	}
+
+	.noteapp__deletemodal {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 101;
+	}
+}
+.note-list__item {
+	position: relative;
+}
+
+.card-footer .actions.icons.bottom-right {
+	top: 5px;
+
+	.btn {
+		padding: 5px;
+		margin: 0;
+
+		i {
+			font-size: rem(20px);
+		}
+	}
+}
+
+.item--editmode {
+	transition: 0.2s ease-in-out;
+	z-index: 101;
+	box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+	padding: 10px;
+}
+
+.item,
+.item--editmode {
+	position: relative;
+}
+
+.item .item__footer,
+.item--editmode .item__footer {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	bottom: 0;
+	transition: 0.2s ease-in-out;
+	opacity: 0;
+	transform: translateY(100%);
+	text-align: right;
+}
+
+.deletemodal {
+	background-color: #fff;
+	padding: 2em;
+	border-radius: 3px;
+	box-shadow: 0 2px 2em rgba(0, 0, 0, 0.30);
+	display: none;
+
+	&.active {
+		display: block;
+	}
+
+	.deletemodal__title {
+		margin-bottom: 0.5em;
+	}
+
+	.deletemodal__button-remove {
+		background-color: #ff5252;
+
+		&:hover {
+			background-color: darken(#ff5252, 5%);
+		}
+	}
+}
+
+.main {
+	padding: 0;
+
+	.main__editor {
+		position: relative;
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		padding: 2em 2em 4em;
+		align-items: flex-start;
+		background-color: darken(#f9f9fa, 8%);
+	}
+
+	.main__editor-form,
+	.main__editor-preview {
+		position: relative;
+		flex: 0 1 100%;
+		min-width: 0;
+		max-width: 32em;
+		@media screen and (min-width: 468px) {
+			flex: 0 1 48%;
+		}
+	}
+
+	.main__editor-form {
+		@media screen and (min-width: 468px) {
+			margin-right: 4%;
+		}
+		margin-bottom: 2em;
+	}
+
+	.main__editor-form-title,
+	.main__editor-preview-title {
+		text-align: left;
+		font-size: 1.4em;
+		margin-bottom: 0.6em;
+	}
+
+	.main__note-list {
+		position: relative;
+		width: 100%;
+	}
+}
+
+.bgoverlay {
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	background-color: rgba(#000, 0.5);
+	display: none;
+
+	&.active {
+		display: block;
+	}
+}

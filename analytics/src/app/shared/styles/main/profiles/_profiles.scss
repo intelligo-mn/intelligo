@@ -1,0 +1,104 @@
+.sidenav {
+	.card.profile-menu {
+		box-shadow: none;
+		background: transparent;
+		.accounts {
+			ul {
+				li {
+					a {
+						display: block;
+						vertical-align: middle;
+						padding: 0;
+
+						.switch {
+							width: 30px;
+							height: 30px;
+							margin-right: 10px;
+							margin-left: -5px;
+							vertical-align: middle;
+							display: inline-block;
+						}
+					}
+				}
+			}
+		}
+		.card-header.card-img a.info:link {
+			font-size: rem(12px);
+			padding: 8px 0;
+			margin: 5px 0 0;
+			display: block;
+			background-color: rgba(0, 0, 0, .5);
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			color: #fff;
+		}
+		.card-header.card-img {
+			min-height: 150px;
+			padding: 0;
+			width: 100%;
+			background-image: url('/assets/img/headers/header-md-02.jpg');
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center;
+		}
+
+		.card-block {
+			padding: 0;
+
+			.submenu {
+				ul {
+					margin: 0;
+					padding: 15px 0 0;
+
+					li {
+						padding: 0 0 0 25px;
+						position: relative;
+
+						a {
+							font-size: rem(15px);
+							display: block;
+							padding: 11px 5px 11px 0;
+
+							&:hover {
+								color: #516073;
+							}
+
+							i {
+								width: 25px;
+								font-size: rem(16px);
+								vertical-align: text-top;
+							}
+						}
+
+						&:active,
+						&:focus,
+						&:hover {
+							background: #eef5f9;
+							cursor: pointer;
+						}
+					}
+
+					li.title {
+						font-size: 13px;
+						font-weight: 200;
+						padding: 15px 0 5px 25px;
+
+						&:active,
+						&:focus,
+						&:hover {
+							background: none;
+							cursor: default;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.profile-mini {
+	width: 85px !important;
+	height: 85px !important;
+	margin-left: -45px !important;
+}

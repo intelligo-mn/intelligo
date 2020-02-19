@@ -1,0 +1,59 @@
+//ngx-perfect-scrollbar overwrites
+.ps {
+  &.ps--in-scrolling {
+    &.ps--x {
+      & > .ps__scrollbar-x-rail {
+        & > .ps__scrollbar-x {
+          height: 5px !important;
+          background-color: #6a7c94 !important;
+        }
+      }
+    }
+
+    &.ps--y {
+      & > .ps__scrollbar-y-rail {
+        & > .ps__scrollbar-y {
+          background-color: #6a7c94 !important;
+          width: 5px !important;
+        }
+      }
+    }
+  }
+
+  & > .ps__scrollbar-x-rail {
+    &:hover,
+    &:active {
+      & > .ps__scrollbar-x {
+        height: 5px !important;
+      }
+    }
+  }
+
+  & > .ps__scrollbar-y-rail {
+    &,
+    &:hover,
+    &:active {
+      & > .ps__scrollbar-y {
+        width: 5px !important;
+        right: 0 !important;
+      }
+    }
+  }
+
+  &.ps--in-scrolling {
+    &.ps--y {
+      & > .ps__scrollbar-y-rail {
+        & > .ps__scrollbar-y {
+          width: 5px !important;
+        }
+      }
+    }
+  }
+
+  & >.ps__scrollbar-y-rail {
+    width: 5px !important;
+  }
+}
+perfect-scrollbar {
+	height: 100%;
+}

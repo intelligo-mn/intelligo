@@ -1,0 +1,561 @@
+[
+    {
+      "businessName": "TEST",
+      "eventChannel": "WEB",
+      "nodeId": "59ad4a6d7a5b0119e899ddcd",
+      "nodeName": "Hi, We are glad you are here!!",
+      "numberOfViews": 107,
+      "numberOfClicks": 97,
+      "numberOfUsers": 86,
+      "numberOfSessions": 107,
+      "averageTimeSpent": 3.07,
+      "buttons": [
+        {
+          "buttonId": "59ad5a007a5b0119e899ddd8",
+          "buttonName": "goto",
+          "buttonType": "NextNode",
+          "numberOfClicks": 97
+        }
+      ]
+    },
+    {
+      "businessName": "TEST",
+      "eventChannel": "WEB",
+      "nodeId": "59ad4e797a5b0119e899ddd3",
+      "nodeName": "Let's get started.",
+      "numberOfViews": 97,
+      "numberOfClicks": 96,
+      "numberOfUsers": 81,
+      "numberOfSessions": 97,
+      "averageTimeSpent": 3.0,
+      "buttons": [
+        {
+          "buttonId": "59ad5a377a5b0119e899dddc",
+          "buttonName": "goto",
+          "buttonType": "NextNode",
+          "numberOfClicks": 96
+        }
+      ]
+    },
+    {
+      "businessName": "TEST",
+      "eventChannel": "WEB",
+      "nodeId": "5975d8ad7a5b011dd061c5a3",
+      "nodeName": "Q1 How likely are you to recommend NowFloats to other businesses in your network?",
+      "numberOfViews": 96,
+      "numberOfClicks": 29,
+      "numberOfUsers": 80,
+      "numberOfSessions": 96,
+      "averageTimeSpent": 16.79,
+      "buttons": [
+        {
+          "buttonId": "5975d9867a5b011dd061c5b0",
+          "buttonName": "I am not sure",
+          "buttonType": "NextNode",
+          "numberOfClicks": 5
+        },
+        {
+          "buttonId": "5975d9857a5b011dd061c5ac",
+          "buttonName": "I might recommend",
+          "buttonType": "NextNode",
+          "numberOfClicks": 8
+        },
+        {
+          "buttonId": "5975d9847a5b011dd061c5a8",
+          "buttonName": "I will definitely recommend",
+          "buttonType": "NextNode",
+          "numberOfClicks": 10
+        },
+        {
+          "buttonId": "5975d9867a5b011dd061c5b4",
+          "buttonName": "I might not recommend",
+          "buttonType": "NextNode",
+          "numberOfClicks": 3
+        },
+        {
+          "buttonId": "5975d9877a5b011dd061c5b8",
+          "buttonName": "I will definitely not recommend",
+          "buttonType": "NextNode",
+            "numberOfClicks": 3
+        }
+      ]
+    },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5975d9c17a5b011dd061c5c0",
+        "nodeName": "What went wrong with your NowFloats experience?",
+        "numberOfViews": 11,
+        "numberOfClicks": 9,
+        "numberOfUsers": 10,
+        "numberOfSessions": 11,
+        "averageTimeSpent": 16.89,
+        "buttons": [
+          {
+            "buttonId": "5975dd0a7a5b011dd061c5de",
+            "buttonName": "Customer Support",
+            "buttonType": "NextNode",
+            "numberOfClicks": 2
+          },
+          {
+            "buttonId": "5975dd097a5b011dd061c5d6",
+            "buttonName": "Your NowFloats Business Website",
+            "buttonType": "NextNode",
+            "numberOfClicks": 2
+          },
+          {
+            "buttonId": "5975dd087a5b011dd061c5d2",
+            "buttonName": "After-Sales Support",
+            "buttonType": "NextNode",
+            "numberOfClicks": 2
+          },
+          {
+            "buttonId": "5975dd067a5b011dd061c5ce",
+            "buttonName": "Sales Consultant",
+            "buttonType": "NextNode",
+            "numberOfClicks": 3
+          }
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5975de587a5b011dd061c5f0",
+        "nodeName": "Q7 What would you want us to improve about our Customer Support? (If applicable)",
+        "numberOfViews": 2,
+        "numberOfClicks": 2,
+        "numberOfUsers": 2,
+        "numberOfSessions": 2,
+        "averageTimeSpent": 8.0,
+        "buttons": [
+          {
+            "buttonId": "5975e83e7a5b011dd061c6cb",
+            "buttonName": "Any Other (Please specify)",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          },
+          {
+            "buttonId": "5975e83d7a5b011dd061c6c7",
+            "buttonName": "Poor communication skills",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          }
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5975f7357a5b011dd061c7cb",
+        "nodeName": "Others",
+        "numberOfViews": 4,
+        "numberOfClicks": 0,
+        "numberOfUsers": 4,
+        "numberOfSessions": 4,
+        "averageTimeSpent": 0.0,
+        "buttons": [
+          
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5975ff367a5b011dd061c880",
+        "nodeName": "Can we contact you to discuss your experience in detail?",
+        "numberOfViews": 15,
+        "numberOfClicks": 14,
+        "numberOfUsers": 14,
+        "numberOfSessions": 15,
+        "averageTimeSpent": 16.36,
+        "buttons": [
+          {
+            "buttonId": "597600e77a5b011dd061c88b",
+            "buttonName": "No",
+            "buttonType": "NextNode",
+            "numberOfClicks": 6
+          },
+          {
+            "buttonId": "597600dc7a5b011dd061c887",
+            "buttonName": "Yes",
+            "buttonType": "NextNode",
+            "numberOfClicks": 8
+          }
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "597601f27a5b011dd061c88f",
+        "nodeName": "Would you like to add anything else?",
+        "numberOfViews": 14,
+        "numberOfClicks": 14,
+        "numberOfUsers": 13,
+        "numberOfSessions": 14,
+        "averageTimeSpent": 7.14,
+        "buttons": [
+          {
+            "buttonId": "597602137a5b011dd061c898",
+            "buttonName": "No",
+            "buttonType": "NextNode",
+            "numberOfClicks": 9
+          },
+          {
+            "buttonId": "597602107a5b011dd061c894",
+            "buttonName": "Yes",
+            "buttonType": "NextNode",
+            "numberOfClicks": 5
+          }
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5976028b7a5b011dd061c8a4",
+        "nodeName": "Thank you for taking your valuable time to give us feedback. We may reach out to you to get some suggestions based on your feedback.",
+        "numberOfViews": 14,
+        "numberOfClicks": 14,
+        "numberOfUsers": 13,
+        "numberOfSessions": 14,
+        "averageTimeSpent": 3.0,
+        "buttons": [
+          {
+            "buttonId": "5979f3037a5b012e1cd37285",
+            "buttonName": "",
+            "buttonType": "NextNode",
+            "numberOfClicks": 14
+          }
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5975d9c07a5b011dd061c5bf",
+        "nodeName": "What did you like the most about your NowFloats experience?",
+        "numberOfViews": 18,
+        "numberOfClicks": 12,
+        "numberOfUsers": 16,
+        "numberOfSessions": 18,
+        "averageTimeSpent": 14.75,
+        "buttons": [
+          {
+            "buttonId": "5975df917a5b011dd061c602",
+            "buttonName": "NowFloats Boost App / Manage Portal",
+            "buttonType": "NextNode",
+            "numberOfClicks": 5
+          },
+          {
+            "buttonId": "5975df8f7a5b011dd061c5fa",
+            "buttonName": "After-Sales Support",
+            "buttonType": "NextNode",
+            "numberOfClicks": 2
+          },
+          {
+            "buttonId": "5975df907a5b011dd061c5fe",
+            "buttonName": "Your NowFloats Business Website",
+            "buttonType": "NextNode",
+            "numberOfClicks": 2
+          },
+          {
+            "buttonId": "5975df967a5b011dd061c60a",
+            "buttonName": "Product outcome (Return on Investment)",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          },
+          {
+            "buttonId": "5975df927a5b011dd061c606",
+            "buttonName": "Customer Support",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          },
+          {
+            "buttonId": "5975df8f7a5b011dd061c5f6",
+            "buttonName": "Sales Consultant",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          }
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5975dff87a5b011dd061c611",
+        "nodeName": "Q6 What did you like the most about our Manage Portal/BOOST App?",
+        "numberOfViews": 5,
+        "numberOfClicks": 4,
+        "numberOfUsers": 5,
+        "numberOfSessions": 5,
+        "averageTimeSpent": 12.0,
+        "buttons": [
+          {
+            "buttonId": "5975ea237a5b011dd061c72b",
+            "buttonName": "Ease of Update",
+            "buttonType": "NextNode",
+            "numberOfClicks": 3
+          },
+          {
+            "buttonId": "5975ea237a5b011dd061c72f",
+            "buttonName": "Social Sharing",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          }
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5975f01d7a5b011dd061c78e",
+        "nodeName": "Based on your recent experience would you like to renew subscription in your next cycle?",
+        "numberOfViews": 10,
+        "numberOfClicks": 10,
+        "numberOfUsers": 10,
+        "numberOfSessions": 10,
+        "averageTimeSpent": 14.2,
+        "buttons": [
+          {
+            "buttonId": "597f14797a5b010bf809506c",
+            "buttonName": "May renew",
+            "buttonType": "NextNode",
+            "numberOfClicks": 7
+          },
+          {
+            "buttonId": "5979f2377a5b012e1cd3727d",
+            "buttonName": "Definitely renew",
+            "buttonType": "NextNode",
+            "numberOfClicks": 3
+          }
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "59abd0607a5b0133d4460f1b",
+        "nodeName": "What is the single most important thing we can work on to improve your experience even more?",
+        "numberOfViews": 10,
+        "numberOfClicks": 8,
+        "numberOfUsers": 10,
+        "numberOfSessions": 10,
+        "averageTimeSpent": 18.62,
+        "buttons": [
+          {
+            "buttonId": "59abd0877a5b0133d4460f2c",
+            "buttonName": "Product Pricing",
+            "buttonType": "NextNode",
+            "numberOfClicks": 2
+          },
+          {
+            "buttonId": "59abd0c17a5b0133d4460f33",
+            "buttonName": "NowFloats Boost App / Manage Portal",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          },
+          {
+            "buttonId": "59abd0857a5b0133d4460f28",
+            "buttonName": "Sales Consultant",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          },
+          {
+            "buttonId": "59abd0c27a5b0133d4460f37",
+            "buttonName": "Customer Support",
+            "buttonType": "NextNode",
+            "numberOfClicks": 2
+          },
+          {
+            "buttonId": "59abd0847a5b0133d4460f24",
+            "buttonName": "After-Sales Support",
+            "buttonType": "NextNode",
+            "numberOfClicks": 2
+          }
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5975dffa7a5b011dd061c612",
+        "nodeName": "Q4 What did you like the most about our After Sales Support/Onboarding and Training?",
+        "numberOfViews": 2,
+        "numberOfClicks": 2,
+        "numberOfUsers": 2,
+        "numberOfSessions": 2,
+        "averageTimeSpent": 24.0,
+        "buttons": [
+          {
+            "buttonId": "5975e9ee7a5b011dd061c6ff",
+            "buttonName": "Adequate support from the Sales Consultant",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          },
+          {
+            "buttonId": "5975e9ef7a5b011dd061c703",
+            "buttonName": "Timely on-boarding and training",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          }
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5975de3d7a5b011dd061c5ec",
+        "nodeName": "Q5 What would you want us to improve about our Websites?",
+        "numberOfViews": 2,
+        "numberOfClicks": 2,
+        "numberOfUsers": 2,
+        "numberOfSessions": 2,
+        "averageTimeSpent": 16.0,
+        "buttons": [
+          {
+            "buttonId": "5975e80f7a5b011dd061c693",
+            "buttonName": "Any Other (Please specify)",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          },
+          {
+            "buttonId": "5975e80b7a5b011dd061c67f",
+            "buttonName": "Look and feel",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          }
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5975de447a5b011dd061c5ed",
+        "nodeName": "Q4 What would you want us to improve about our After Sales Support/On boarding and Training?",
+        "numberOfViews": 2,
+        "numberOfClicks": 2,
+        "numberOfUsers": 2,
+        "numberOfSessions": 2,
+        "averageTimeSpent": 81.5,
+        "buttons": [
+          {
+            "buttonId": "5975f7097a5b011dd061c7c7",
+            "buttonName": "Any Other (Please specify)",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          },
+          {
+            "buttonId": "5975e7fe7a5b011dd061c673",
+            "buttonName": "Inadequate support from the Sales Consultant",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          }
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5975dffc7a5b011dd061c613",
+        "nodeName": "Q5 What did you like the most about our Website?",
+        "numberOfViews": 2,
+        "numberOfClicks": 2,
+        "numberOfUsers": 2,
+        "numberOfSessions": 2,
+        "averageTimeSpent": 20.5,
+        "buttons": [
+          {
+            "buttonId": "5975e9fd7a5b011dd061c713",
+            "buttonName": "Look and feel",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          },
+          {
+            "buttonId": "59b4f0f17a5b013188299fc6",
+            "buttonName": "Visibility on search engines",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          }
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "597602257a5b011dd061c89e",
+        "nodeName": "Test Node",
+        "numberOfViews": 5,
+        "numberOfClicks": 0,
+        "numberOfUsers": 5,
+        "numberOfSessions": 5,
+        "averageTimeSpent": 0.0,
+        "buttons": [
+          
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5975dff57a5b011dd061c60f",
+        "nodeName": "Q8 What did you like the most about Product Outcome/Return On Investment (ROI)?",
+        "numberOfViews": 1,
+        "numberOfClicks": 1,
+        "numberOfUsers": 1,
+        "numberOfSessions": 1,
+        "averageTimeSpent": 57.0,
+        "buttons": [
+          {
+            "buttonId": "5975eb517a5b011dd061c763",
+            "buttonName": "Visibility on search engines",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          }
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5975dff77a5b011dd061c610",
+        "nodeName": "Q7 What did you like the most about our Customer Support?- (If applicable)",
+        "numberOfViews": 1,
+        "numberOfClicks": 0,
+        "numberOfUsers": 1,
+        "numberOfSessions": 1,
+        "averageTimeSpent": 0.0,
+        "buttons": [
+          
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5975de477a5b011dd061c5ee",
+        "nodeName": "Q3 What would you want us to improve most about our Sales Process/Team?",
+        "numberOfViews": 3,
+        "numberOfClicks": 2,
+        "numberOfUsers": 3,
+        "numberOfSessions": 3,
+        "averageTimeSpent": 11.0,
+        "buttons": [
+          {
+            "buttonId": "5975e7f07a5b011dd061c65b",
+            "buttonName": "Knowledge about company and product",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          },
+          {
+            "buttonId": "5975e7f57a5b011dd061c667",
+            "buttonName": "Any Other (Please specify)",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          }
+        ]
+      },
+      {
+        "businessName": "TEST",
+        "eventChannel": "WEB",
+        "nodeId": "5975dff27a5b011dd061c60e",
+        "nodeName": "Q3  What did you like the most about our Sales Process/Team?",
+        "numberOfViews": 1,
+        "numberOfClicks": 1,
+        "numberOfUsers": 1,
+        "numberOfSessions": 1,
+        "averageTimeSpent": 25.0,
+        "buttons": [
+          {
+            "buttonId": "5975e9e67a5b011dd061c6eb",
+            "buttonName": "Professional in their business conduct",
+            "buttonType": "NextNode",
+            "numberOfClicks": 1
+          }
+        ]
+      }
+    ]

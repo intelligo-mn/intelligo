@@ -1,0 +1,14 @@
+/*------------------------------------------------------------------------------
+  Material Lab - Angular 4 Seed Project
+------------------------------------------------------------------------------*/
+//== Vendor
+@import '../node_modules/multi-brand-colors/dist/scss/index.scss';
+@import '../node_modules/mdi/scss/materialdesignicons.scss';
+@import '../node_modules/material-design-iconic-font/dist/css/material-design-iconic-font.css';
+
+@import '../node_modules/@swimlane/ngx-datatable/release/index.css';
+@import '../node_modules/@swimlane/ngx-datatable/release/themes/material.css';
+@import '../node_modules/@swimlane/ngx-datatable/release/assets/icons.css';
+
+//== App
+@import "./app/shared/styles/app";

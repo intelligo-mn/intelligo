@@ -1,0 +1,75 @@
+/*
+ *
+ *   Material Lab - Multipurpose Admin Theme
+*/
+
+//Variables,Functions,Mixins,and helpers
+@import "./main/util/index";
+//Bootstrap and Material Design Overwrites
+@import "./main/overwrites/scrollbar";
+@import "./main/overwrites/materialdesign";
+//main styles
+@import "./main/base";
+@import "./main/cards/cards";
+@import "./main/cards/card-demos";
+@import "./main/layouts/app/top-navbar";
+@import "./main/layouts/app/left-sidebar";
+@import "./main/layouts/app/right-sidebar";
+@import "./main/layouts/page/content";
+@import "./main/layouts/page/headers";
+@import "./main/layouts/page/full-width-v1";
+@import "./main/layouts/page/full-width-v2";
+@import "./main/layouts/page/full-width-v3";
+@import "./main/layouts/page/boxed-layout-v1";
+@import "./main/layouts/page/boxed-layout-v2";
+@import "./main/layouts/page/boxed-layout-v3";
+@import "./main/layouts/page/left-sidenav-v1";
+@import "./main/layouts/page/left-sidenav-v2";
+@import "./main/layouts/page/left-sidenav-v3";
+@import "./main/layouts/page/right-sidenav-v1";
+@import "./main/layouts/page/right-sidenav-v2";
+@import "./main/layouts/page/right-sidenav-v3";
+@import "./main/layouts/page/footer";
+@import "./main/ui/material-colors";
+@import "./main/ui/extra-colors";
+@import "./main/ui/actions";
+@import "./main/ui/breadcrumbs";
+@import "./main/ui/buttons";
+@import "./main/ui/preloaders";
+@import "./main/ui/icons";
+@import "./main/ui/alerts";
+@import "./main/ui/avatars";
+@import "./main/ui/list-group";
+@import "./main/ui/progressbars";
+@import "./main/ui/labels";
+@import "./main/ui/badges";
+@import "./main/ui/backdrops";
+@import "./main/components/dropdowns";
+@import "./main/components/tabs";
+@import "./main/components/actions";
+@import "./main/components/date-time";
+@import "./main/components/modals";
+@import "./main/components/tooltips";
+//== Form Elemnts
+@import "./main/form-elements/forms";
+@import "./main/form-elements/daterange";
+//== Tables
+@import "./main/tables/datatables";
+//== Profiles
+@import "./main/profiles/profiles";
+//== Charts
+@import './main/charts/_charts';
+@import './main/charts/chartist/chartist';
+@import './main/charts/chartist/chartist-demo';
+//== Apps
+@import './main/apps/_notes';
+//== Demo
+@import './main/demo/demo-theme-colors';
+// @import './ana-theme';
+
+// h1,h2,h3,h4,h5,h6,tr,td,li{
+//      font-family: open-sans!important;
+// }
+.ngx-datatable.material .datatable-body .datatable-body-row .active .datatable-body-cell     {
+    color: white !important;
+}

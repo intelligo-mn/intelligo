@@ -1,0 +1,94 @@
+<div id="content_wrapper" class="fullWidth1-wrapper">
+	<div class="content">
+		<header class="header-wrapper header-sm">
+			<h1>Alerts</h1>
+		</header>
+		<div class="content-body">
+			<div class="card">
+				<header class="card-header">
+					<h2 class="card-title">Alerts</h2>
+					<small class="card-subtitle">Provides contextual feedback messages for typical user actions with the handful of available and flexible alert messages.</small>
+					<ul class="actions icons top-right">
+						<li>
+							<a href="javascript:void(0)" data-toggle-view="code">
+						   <i class="zmdi zmdi-code"></i>
+						  </a>
+						</li>
+					</ul>
+				</header>
+				<div class="card-block">
+					<p>
+						<ngb-alert [dismissible]="false">
+							<strong>Warning!</strong> Better check yourself, you're not looking too good.
+						</ngb-alert>
+					</p>
+				</div>
+			</div>
+			<div class="card">
+				<header class="card-header">
+					<h2 class="card-title">Dismissible Alerts</h2>
+					<small class="card-subtitle">Alerts have dismiss option. Enabling it will show close button to the right of the alert.</small>
+					<ul class="actions icons top-right">
+						<li>
+							<a href="javascript:void(0)" data-toggle-view="code">
+						   <i class="zmdi zmdi-code"></i>
+						  </a>
+						</li>
+					</ul>
+				</header>
+				<div class="card-block">
+					<p *ngFor="let alert of alerts">
+						<ngb-alert [type]="alert.type" (close)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+					</p>
+					<p>
+						<button type="button" class="btn btn-primary" (click)="reset()">Reset</button>
+					</p>
+				</div>
+			</div>
+			<div class="card">
+				<header class="card-header">
+					<h2 class="card-title">Self-Closing Alert</h2>
+					<ul class="actions icons top-right">
+						<li>
+							<a href="javascript:void(0)" data-toggle-view="code">
+							 <i class="zmdi zmdi-code"></i>
+							</a>
+						</li>
+					</ul>
+				</header>
+				<div class="card-block">
+					<p>
+						Static self-closing alert that disappears after 20 seconds (refresh the page if it has already disappeared)
+					</p>
+					<ngb-alert *ngIf="!staticAlertClosed" (close)="staticAlertClosed = true">Check out our awesome new features!</ngb-alert>
+					<hr/>
+					<p>
+						Show a self-closing success message that disappears after 5 seconds.
+					</p>
+					<ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+					<p>
+						<button class="btn btn-primary" (click)="changeSuccessMessage()">Change message</button>
+					</p>
+				</div>
+			</div>
+			<div class="card">
+				<header class="card-header">
+					<h2 class="card-title">Custom Alert</h2>
+					<ul class="actions icons top-right">
+						<li>
+							<a href="javascript:void(0)" data-toggle-view="code">
+							 <i class="zmdi zmdi-code"></i>
+							</a>
+						</li>
+					</ul>
+				</header>
+				<div class="card-block">
+					<p>
+						<ngb-alert type="custom" [dismissible]="false"><strong>Whoa!</strong> This is a custom alert.</ngb-alert>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<footer id="footer_wrapper" class="footer_wrapper"></footer>

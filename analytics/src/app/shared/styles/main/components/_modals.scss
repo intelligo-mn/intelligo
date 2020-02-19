@@ -1,0 +1,395 @@
+.modal {
+	-webkit-animation: scale 0.3s cubic-bezier(.25,.8,.25,1);
+	animation: scale 0.3s cubic-bezier(.25,.8,.25,1);
+}
+@-webkit-keyframes scale {
+	0% {
+		-webkit-transform: scale(0.3);
+		top: 5%;
+	}
+	
+	100% {
+		-webkit-transform: scale(1.0);
+		top: 0;
+	}
+}
+@keyframes scale {
+	0% {
+		transform: scale(0.3);
+		top: 5%;
+	}
+	
+	100% {
+		transform: scale(1.0);
+		top: 0;
+	}
+}
+
+.modal-backdrop.show {
+	opacity: 0.6;
+}
+/* DIALOG CONTENT */
+.modal-content {
+	border: none;
+	border-radius: 4px;
+	background: #fff;
+	box-shadow: none;
+}
+/* DIALOG HEADER */
+.modal-header {
+	min-height: 16px;
+	padding: 20px;
+	border-bottom: none;
+	background: #eef5f9;
+	border-radius: 4px 4px 0 0;
+}
+
+.modal-title {
+	font-weight: 400;
+	font-size: 21px;
+	color: inherit;
+}
+/* CLOSE BUTTON */
+.modal-header .close {
+	border-radius: 100%;
+	top: 21px;
+	right: 30px;
+	width: 30px;
+	height: 30px;
+	background-color: rgba(0, 0, 0, 0.1);
+	
+	&:active,
+	&:hover {
+		color: $mw_lightGray;
+		outline: none;
+		border: none;
+	}
+}
+/* DIALOG BODY */
+.modal-body {
+	padding: 20px;
+}
+
+.modal-body p {
+	font-size: rem(14px);
+	color: inherit;
+	line-height: 1.8em;
+}
+
+.modal-body .lead {
+	font-weight: 300;
+	font-size: 16px;
+	color: #757575;
+}
+
+.modal-body .lead:last-child,
+.modal-body p:last-child {
+	margin-bottom: 0;
+}
+
+.modal-body {
+	.tabpanel {
+		//box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.12), 0 2px 1px -1px rgba(0,0,0,.1);
+	}
+	
+	.nav-tabs li a {
+		font-size: rem(14px);
+	}
+}
+/* DIALOG FOOTER */
+.modal-footer {
+	padding: 10px 15px 15px;
+	text-align: right;
+	border-radius: 0 0 4px 4px;
+	border: none;
+	background: #fff;
+}
+
+.modal-footer .btn + .btn {
+	margin-bottom: 5px;
+}
+
+.modal-footer .btn + .btn:last-child {
+	margin-left: 5px;
+	margin-bottom: 10px;
+}
+@media (min-width: 768px) {
+	.modal-dialog {
+		width: 600px;
+		margin: 5% auto;
+	}
+}
+//  MODAL sizes
+// ----------------------------------------------------
+
+.bottom-sheet {
+	.modal-dialog {
+		max-width: none;
+	}
+}
+
+.fullscreen {
+	width: 100%;
+	max-width: 100%;
+	margin: 0;
+	
+	.modal-dialog {
+		width: 100%;
+		max-width: 100%;
+		margin: 0;
+	}
+}
+@media (min-width: 576px) {
+	.modal-dialog {
+		max-width: 500px;
+		margin: 30px auto;
+	}
+}
+@media (min-width: 768px) {
+	.modal-dialog.modal-xs {
+		width: 200px;
+		margin: 5% auto 0;
+	}
+}
+@media (min-width: 768px) {
+	.modal-dialog.modal-sm {
+		width: 400px;
+		margin: 5% auto 0;
+	}
+}
+@media (min-width: 768px) {
+	.modal-dialog.modal-md {
+		width: 600px;
+		margin: 5% auto 0;
+	}
+}
+@media (min-width: 768px) {
+	.modal-dialog.modal-lg {
+		width: 1000px;
+		margin: 5% auto 0;
+	}
+}
+@media (min-width: 768px) {
+	.modal-dialog.modal-xl {
+		width: 1200px;
+		margin: 5% auto 0;
+	}
+}
+// FULLSCREEN MODAL
+// ----------------------------------------------------
+
+.modal.fullscreen {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: hidden;
+	
+	.modal-dialog {
+		position: fixed;
+		margin: 0;
+		padding: 0;
+		height: 100%;
+		width: 100%;
+		
+		.modal-header {
+			height: 60px;
+			padding: 20px;
+			border-bottom: none;
+			border-radius: 0;
+			z-index: 99;
+			position: absolute;
+			width: 100%;
+			
+			.modal-title {
+				z-index: 99;
+				height: auto;
+			}
+		}
+		
+		.modal-content {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			border-radius: 0;
+		}
+		
+		.modal-body {
+			position: absolute;
+			top: 60px;
+			bottom: 0;
+			font-size: rem(15px);
+			overflow: auto;
+			margin-bottom: 60px;
+			padding: 15px;
+			width: 100%;
+			bottom: 10px;
+		}
+		
+		.modal-footer {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			height: 80px;
+			padding: 10px;
+			background: #fff;
+		}
+	}
+}
+// STEPPER MODAL
+// ----------------------------------------------------
+
+.modal.modal-stepper {
+	.modal-content {
+		padding-bottom: 55px;
+		
+		.stepper-body {
+			min-height: 100px;
+		}
+	}
+	
+	.modal-footer {
+		margin-top: 0;
+		padding: 10px 15px 0;
+		border-top: none;
+		position: absolute;
+		width: 100%;
+	}
+}
+// BOTTOM SHEET MODAL
+// ----------------------------------------------------
+
+.modal.bottom-sheet {
+	.modal-dialog {
+		margin: 0;
+		width: 100%;
+		bottom: 0;
+		height: 350px;
+		position: fixed;
+		
+		.modal-content {
+			height: 100%;
+			border-radius: 0;
+			
+			.modal-body {
+				bottom: -290px;
+				width: 100%;
+				-webkit-transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
+				-moz-transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
+				-o-transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
+				transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
+			}
+		}
+	}
+	
+	&.fade.show .modal-body {
+		bottom: 0;
+		overflow: auto !important;
+		height: 350px;
+		padding-bottom: 50px;
+	}
+	
+	button.close {
+		top: 21px;
+		right: 30px;
+		width: 30px;
+		height: 30px;
+		background-color: rgba(0, 0, 0, 0.1);
+	}
+}
+// BACK DROPS
+// ----------------------------------------------------
+
+html.backdrop-open {
+	position: fixed;
+}
+
+.backdrop {
+	position: fixed;
+	top: 65px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+	background: rgb(132, 150, 173);
+	z-index: $zindex_sidebarnav_backdrop;
+	-webkit-animation: fadeInFromNone 250ms ease-out;
+	-moz-animation: fadeInFromNone 250ms ease-out;
+	-o-animation: fadeInFromNone 250ms ease-out;
+	animation: fadeInFromNone 250ms ease-out;
+	opacity: 0.8;
+	z-index: $zindex_sidebarnav_backdrop;
+	
+	&.top {
+		top: 0;
+		z-index: $zindex_sidebarnav_backdrop_top;
+	}
+}
+@-webkit-keyframes fadeInFromNone {
+	0% {
+		display: none;
+		opacity: 0;
+	}
+	
+	1% {
+		display: block;
+		opacity: 0;
+	}
+	
+	100% {
+		display: block;
+		opacity: 0.8;
+	}
+}
+@-moz-keyframes fadeInFromNone {
+	0% {
+		display: none;
+		opacity: 0;
+	}
+	
+	1% {
+		display: block;
+		opacity: 0;
+	}
+	
+	100% {
+		display: block;
+		opacity: 0.8;
+	}
+}
+@-o-keyframes fadeInFromNone {
+	0% {
+		display: none;
+		opacity: 0;
+	}
+	
+	1% {
+		display: block;
+		opacity: 0;
+	}
+	
+	100% {
+		display: block;
+		opacity: 0.8;
+	}
+}
+@keyframes fadeInFromNone {
+	0% {
+		display: none;
+		opacity: 0;
+	}
+	
+	1% {
+		display: block;
+		opacity: 0;
+	}
+	
+	100% {
+		display: block;
+		opacity: 0.8;
+	}
+}

@@ -1,0 +1,37 @@
+{
+  "name": "ana-analytics-dashboard",
+  "version": "0.1.0",
+  "main": "electron.js",
+  "author": "Team Ana",
+  "description": "The Ana analytics app",
+  "homepage": "http://ana.chat",
+  "license": "GNU-GPLv3",
+  "build": {
+    "appId": "com.ana.analytics",
+    "productName": "Ana Analytics",
+    "directories": {
+      "output": "../release",
+      "app": ".",
+      "buildResources": "../build"
+    },
+    "mac": {
+      "icon": "favicon.icns",
+      "category": "public.app-category.graphics-design"
+    },
+    "win": {
+      "icon": "favicon.ico"
+    },
+    "linux": {
+      "category": "Graphics",
+      "icon": "favicon"
+    },
+    "electronVersion": "1.8.2-beta.3",
+    "publish": {
+      "provider": "generic",
+      "url": "https://cdn.ana.chat/dist/ana-analytics/${os}-${arch}"
+    }
+  },
+  "dependencies": {
+    "electron-updater": "^2.18.2"
+  }
+}

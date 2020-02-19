@@ -1,0 +1,49 @@
+:host /deep/ {
+	.form-wizard-wrapper {
+		.content-container {
+			padding: 10px;
+		}
+		.card {
+			height: 100%; //box-shadow: none!important;
+			box-shadow: 10px 5px 5px black !important;
+			padding-bottom: 70px;
+		}
+		.card-header {
+			background-color: #fff;
+			padding: 0;
+			font-size: 1.25rem;
+		}
+		.card-block {
+			overflow-y: auto
+		}
+		.card-footer {
+			background-color: #fff;
+			border-top: 0 none;
+		}
+		.nav-item {
+			padding: 1rem 0;
+			border-bottom: 0.2rem solid #d3dce8;
+		}
+		.active {
+			font-weight: bold;
+			color: black;
+			border-bottom-color: #1976D2 !important;
+		}
+		.enabled {
+			border-bottom-color: rgb(88, 162, 234);
+		}
+		.disabled {
+			color: #7c8490;
+		}
+		.example-h2 {
+			margin: 10px;
+		}
+		.example-radio-group {
+			display: inline-flex;
+			flex-direction: column;
+		}
+		.example-radio-button {
+			margin: 5px;
+		}
+	}
+}

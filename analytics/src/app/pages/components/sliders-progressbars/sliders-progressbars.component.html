@@ -1,0 +1,174 @@
+<div id="content_wrapper" class="boxedlayout2-wrapper">
+	<div class="content">
+		<div class="header-wrapper header-lg overlay">
+			<header class="container">
+				<div class="row">
+					<div class="col">
+						<h1 class="text-white">Sliders &amp; Progressbars</h1>
+					</div>
+				</div>
+
+			</header>
+		</div>
+		<div class="content-body container">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Sliders</h2>
+						</header>
+						<div class="card-block">
+							<p>
+
+								By default the minimum value of the slider is 0, the maximum value is 100, and the thumb moves in increments of 1. These values can be changed by setting the min, max, and step attributes respectively. The initial value is set to the minimum value unless
+								otherwise specified.
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div class="card">
+								<header class="card-header">
+									<h2 class="card-title">Basic Slider</h2>
+								</header>
+								<div class="card-block">
+									Label
+									<mat-slider #slidey aria-label="Basic slider"></mat-slider>
+									{{slidey.value}}
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="card">
+								<header class="card-header">
+									<h2 class="card-title">Colors</h2>
+								</header>
+								<div class="card-block">
+									<mat-slider color="primary" value="50" thumbLabel aria-label="Primary color slider"></mat-slider>
+									<mat-slider color="accent" value="50" thumbLabel aria-label="Accent color slider"></mat-slider>
+									<mat-slider color="warn" value="50" thumbLabel aria-label="Warn color slider"></mat-slider>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div class="card">
+								<header class="card-header">
+									<h2 class="card-title">Slider with Min and Max</h2>
+								</header>
+								<div class="card-block">
+									<input [(ngModel)]="min" type="number">
+					<mat-slider [min]="min" [max]="max" tickInterval="5" #slider2 aria-label="Min & max slider">
+					</mat-slider>
+					{{slider2.value}}
+					<input [(ngModel)]="max" type="number">
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="card">
+								<header class="card-header">
+									<h2 class="card-title">Vertical sliders</h2>
+								</header>
+								<div class="card-block">
+									<mat-slider vertical color="primary" value="50" thumbLabel aria-label="Primary color slider"></mat-slider>
+									<mat-slider vertical color="accent" value="50" thumbLabel aria-label="Accent color slider"></mat-slider>
+									<mat-slider vertical color="warn" value="50" thumbLabel aria-label="Warn color slider"></mat-slider>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col">
+							<div class="card">
+								<header class="card-header">
+									<h2 class="card-title">Progressbars</h2>
+								</header>
+								<div class="card-block">
+									
+									<mat-button-toggle-group class="btn-group btn-group" [(ngModel)]="color">
+									  <mat-button-toggle class="btn btn-primary" alue="primary">Primary Color</mat-button-toggle>
+									  <mat-button-toggle class="btn btn-accent" value="accent">Accent Color</mat-button-toggle>
+									  <mat-button-toggle class="btn btn-warn" value="warn">Warn Color</mat-button-toggle>
+									</mat-button-toggle-group>
+							
+
+									<div class="card alt-card block">
+										<header class="card-header">
+											<h2 class="card-title">Determinate</h2>
+										</header>
+										<div class="card-block">
+											<div class="demo-progress-bar-controls">
+												<span>Value: {{determinateProgressValue}}</span>
+												<button class="btn btn-default" mat-raised-button (click)="stepDeterminateProgressVal(10)">Increase</button>
+												<button class="btn btn-default" mat-raised-button (click)="stepDeterminateProgressVal(-10)">Decrease</button>
+											</div>
+
+											<div class="demo-progress-bar-container m-t-30">
+												<mat-progress-bar mode="determinate" [value]="determinateProgressValue" [color]="color">
+												</mat-progress-bar>
+											</div>
+										</div>
+									</div>
+									
+									
+									<div class="card alt-card block">
+										<header class="card-header">
+											<h2 class="card-title">Buffer</h2>
+										</header>
+										<div class="card-block">
+											<div class="demo-progress-bar-controls">
+												<span>Value: {{bufferProgressValue}}</span>
+												<button class="btn btn-default" mat-raised-button (click)="stepBufferProgressVal(10)">Increase</button>
+												<button class="btn btn-default" mat-raised-button (click)="stepBufferProgressVal(-10)">Decrease</button>
+												<span class="demo-progress-bar-spacer"></span>
+												<span>Buffer Value: {{bufferBufferValue}}</span>
+												<button class="btn btn-default" mat-raised-button (click)="stepBufferBufferVal(10)">Increase</button>
+												<button class="btn btn-default" mat-raised-button (click)="stepBufferBufferVal(-10)">Decrease</button>
+											</div>
+
+											<div class="demo-progress-bar-container m-t-30">
+												<mat-progress-bar [value]="bufferProgressValue" [bufferValue]="bufferBufferValue" mode="buffer"
+																				 [color]="color"></mat-progress-bar>
+											</div>
+										</div>
+									</div>
+									
+									
+									<div class="card alt-card block">
+										<header class="card-header">
+											<h2 class="card-title">Indeterminate</h2>
+										</header>
+										<div class="card-block">
+											<div class="demo-progress-bar-container">
+												<mat-progress-bar mode="indeterminate" [color]="color"></mat-progress-bar>
+											</div>
+
+										</div>
+									</div>
+									
+									
+									<div class="card alt-card block">
+										<header class="card-header">
+											<h2 class="card-title">Query</h2>
+										</header>
+										<div class="card-block">
+											<div class="demo-progress-bar-container">
+												<mat-progress-bar mode="query" [color]="color"></mat-progress-bar>
+											</div>
+										</div>
+									</div>
+									
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<footer id="footer_wrapper" class="footer_wrapper"></footer>

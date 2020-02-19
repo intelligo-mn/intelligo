@@ -1,0 +1,173 @@
+//
+// Base
+// --------------------------
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+body,
+html {
+	height: 100%;
+	width: 100%;
+	min-height: 100vh !important;
+	font-size: 100%;
+}
+body {
+	padding: 0;
+	margin: 0;
+	display: block !important;
+	font-family: $font-family-body;
+	font-weight: 400;
+	line-height: 1.6;
+	-webkit-overflow-scrolling: touch;
+	overflow-x: hidden;
+	background-color: #eef5f9;
+	color: #607188;
+}
+a:link,
+a:visited {
+	text-decoration: none;
+	outline: none;
+	@include transition(all 250ms);
+}
+a:active,
+a:hover {
+	outline: none;
+	text-decoration: none;
+}
+*,
+:focus,
+:active {
+	outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: $font-family-header !important;
+	font-weight: 300;
+	line-height: 1.6rem;
+}
+h1 {
+	font-size: rem(24px);
+}
+h2 {
+	font-size: rem(22px);
+}
+h3 {
+	font-size: rem(18px);
+}
+h4 {
+	font-size: rem(17px);
+}
+p {
+	font-size: rem(15px);
+	line-height: 1.9em;
+}
+hr {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+	font-family: $font-family-header;
+}
+.h1 .small,
+.h1 small,
+.h2 .small,
+.h2 small,
+.h3 .small,
+.h3 small,
+.h4 .small,
+.h4 small,
+.h5 .small,
+.h5 small,
+.h6 .small,
+.h6 small,
+h1 .small,
+h1 small,
+h2 .small,
+h2 small,
+h3 .small,
+h3 small,
+h4 .small,
+h4 small,
+h5 .small,
+h5 small,
+h6 .small,
+h6 small {
+	color: #575f6c;
+}
+.dl-horizontal,
+.dl-vertical {
+	margin-bottom: 12px;
+	dt {
+		font-weight: 600;
+	}
+	dt,
+	dd {
+		font-size: em(14);
+	}
+}
+small {
+	font-size: 11px;
+	font-weight: 600;
+}
+img {
+	max-width: 100%;
+}
+pre {
+	background-color: #e3ecf7;
+	border: 1px solid #cdd7e2;
+	color: #607188;
+	padding: 10px;
+}
+blockquote {
+	border-left: 5px solid #e3ecf7;
+	padding: 10px 20px;
+	margin: 0 0 20px;
+	font-size: rem(18px);
+}
+canvas {
+	display: block;
+	padding: 0;
+	margin: 0 auto;
+	max-width: 100%;
+}
+address {
+	line-height: 1.5em;
+	font-size: em(14);
+}
+button {
+	outline: none !important;
+}
+::-webkit-input-placeholder {
+	color: rgba(96, 113, 136, 0.6) !important;
+}
+:-moz-placeholder {
+	color: rgba(96, 113, 136, 0.6) !important;
+}
+::-moz-placeholder {
+	color: rgba(96, 113, 1364, 0.6) !important;
+}
+:-ms-input-placeholder {
+	color: rgba(96, 113, 136, 0.6) !important;
+}
+.mat-input-placeholder,
+::placeholder {
+	color: rgba(96, 113, 136, 0.6) !important;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+	font-family: $font-family-body;
+}

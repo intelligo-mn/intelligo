@@ -1,0 +1,73 @@
+<div style="height:100%">
+    <div id="content_wrapper" class="fullWidth1-wrapper">
+        <div class="content">
+            <div class="header-wrapper header-sm">
+                <header class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <h1>Agent Analytics</h1>
+                        </div>
+                    </div>
+                </header>
+            </div>
+        
+           
+            <div class="content-body"> 
+                    <div *ngIf="!errorMsg">
+                            <div class="card">
+                                <h1 class="text-center" style="padding-top:15px;padding-bottom:15px;"> No data found</h1>
+                            </div>
+                    </div>
+                    <div *ngIf="errorMsg">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <header class="card-header ">
+                                <h2 class="card-title">Number Of Chats Per Day</h2>
+                            </header>
+                            <div class="card-block">
+                                <div>
+                                        <ul class="actions icons top-left" style="padding-left:90%">
+                                                <li>
+                                                    <a href="javascript:void(0)" (click)="refresh1()" style="margin-top:3px; padding-top:6px;">
+                                                            <mat-icon *ngIf="loading" class="gear" style="color:#8cc83c!important;">autorenew</mat-icon>
+                                                            <mat-icon *ngIf="!loading" style="color:#8cc83c!important;">autorenew</mat-icon>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                    <bar-chart *ngIf="hideChart1" [barChartData]="chatSessionsData" [barChartLabels]="dates" [xlabel]="xlabel" [ylabel]="ylabel"></bar-chart>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <header class="card-header ">
+                                <h2 class="card-title">Number Of Chats Per Agent</h2>
+                                <ul class="actions icons top-left" style="padding-left:90%">
+                                        <li>
+                                            <a href="javascript:void(0)" (click)="refresh2()" style="margin-top:5px; padding-top:6px;">
+                                                <mat-icon *ngIf="loading" class="gear" style="color:#8cc83c!important;">autorenew</mat-icon>
+                                                <mat-icon *ngIf="!loading" style="color:#8cc83c!important;">autorenew</mat-icon>
+                                        </a>
+                                        </li>
+                                    </ul>
+                            </header>
+                            <div class="card-block p-15">
+                                <ng2-charts-bars *ngIf="hideChart2" [barChartData]="agentData" [barChartLabels]="agentNames" [xlabel]="xlabel" [ylabel]="ylabel"></ng2-charts-bars>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <!--////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            </div>
+        </div>
+        </div>
+
+
+    </div>
+    <footer id="footer_wrapper" class="footer_wrapper"></footer>
+</div>

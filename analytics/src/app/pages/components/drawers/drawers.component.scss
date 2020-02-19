@@ -1,0 +1,17 @@
+.mat-sidenav {
+	width: 250px;
+	padding: 20px 0;
+
+	.submenu {
+		ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			li {
+				position: relative;
+				display: block;
+				padding: 15px 15px 15px 25px;
+			}
+		}
+	}
+}

@@ -1,0 +1,53 @@
+.breadcrumb {
+	padding: 6px 0;
+	list-style: none;
+	background-color: transparent;
+	border-radius: 0;
+	font-size: rem(12px);
+
+	li a {
+		font-weight: 400;
+	}
+
+	&.white {
+		li.active {
+			color: rgba(255, 255, 255, .7);
+		}
+
+		a {
+			color: #fff;
+		}
+	}
+}
+
+.breadcrumb > li + li:before {
+	padding: 0 5px;
+	content: "\f2fb";
+	font-family: Material-Design-Iconic-Font;
+	font-size: 14px;
+	vertical-align: bottom;
+}
+
+.mega.breadcrumb {
+	padding: 5px 0 0 !important;
+	display: block !important;
+
+	li,
+	li a {
+		font-size: 25px;
+		font-weight: 200;
+	}
+
+	> li + li:before {
+		padding: 12px 8px;
+		content: "\f2fb";
+		font-family: Material-Design-Iconic-Font;
+		font-size: 20px;
+		vertical-align: initial;
+	}
+}
+@media only screen and (max-width: 768px) {
+	#header .breadcrumb {
+		display: none !important;
+	}
+}

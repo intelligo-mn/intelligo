@@ -1,0 +1,38 @@
+<mat-sidenav-container>
+	<mat-sidenav #focusSidenav>
+<profile></profile>
+	</mat-sidenav>
+	<div class="card card-contacts m-0">
+		<header class="card-header app_primary_bg mail-heading">
+			<ul class="actions icons  top-left">
+				<a href="javascript:void(0)" role="button" class="text-white" (click)="focusSidenav.toggle()">
+				<i class="zmdi zmdi-menu"></i>
+			</a>
+			</ul>
+			<h2 class="card-title p-l-30 text-white">Contacts</h2>
+		</header>
+		<div class="card-block p-0 max-h-400 scrollbar overflow-auto">
+			<ul class="list-group p-0">
+				<li class="list-group-item" *ngFor="let item of listItems" matRipple>
+					<span class="float-left"><img src="{{item.img}}" alt="" class="rounded-circle max-w-40 m-r-10 "></span>
+					<div class="list-group-item-body">
+						<div class="list-group-item-heading">{{item.name}}</div>
+						<div class="list-group-item-text">{{item.email}}</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="card-footer">
+			<ul class="more">
+				<li>
+					<a href="javascript:void(0)" class="btn btn-default btn-flat" matRipple>View More</a>
+				</li>
+			</ul>
+			<ul class="actions icons right">
+				<li>
+					<button class="btn btn-accent btn-fab" matRipple><i class="zmdi zmdi-account-add"></i></button>
+				</li>
+			</ul>
+		</div>
+	</div>
+</mat-sidenav-container>

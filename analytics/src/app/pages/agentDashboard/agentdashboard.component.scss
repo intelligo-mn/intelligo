@@ -1,0 +1,21 @@
+#maindata {
+    color: black;
+    font-size: 250%;
+}
+
+@-webkit-keyframes rotate {
+	from {
+	  -webkit-transform: rotate(0deg);
+	}
+	to { 
+	  -webkit-transform: rotate(360deg);
+	}
+  }
+  
+  .gear
+  {
+	  animation-name:             rotate; 
+	  animation-duration:         0.8s; 
+	  animation-iteration-count:  infinite;
+	  animation-timing-function: linear;
+  }

@@ -1,0 +1,86 @@
+@import "../../../../shared/styles/main/util/index";
+:host ::ng-deep{
+	.mat-drawer{
+		width: 50%;
+	}
+}
+.profile-menu {
+	width: 280px;
+	.card-header {
+		min-height: 150px;
+		padding: 0;
+		width: 100%;
+		background-image: url("/assets/img/headers/header-md-02.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
+
+		.profile {
+			min-height: 90px;
+			padding: 15px;
+
+			.card-title {
+				width: 50px;
+				height: 50px;
+				background: #f04e1b;
+				border-radius: 50%;
+				font-size: rem(18px);
+				color: #fff;
+				line-height: 46px;
+				text-indent: 9px;
+			}
+			.card-img {
+				width: 80px;
+				height: 80px;
+				border-radius: 50%;
+			}
+		}
+
+		a.info:link {
+			font-size: rem(12px);
+			padding: 8px 0;
+			margin: 5px 0 0;
+			display: block;
+			background-color: rgba(0, 0, 0, .35);
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			color: #fff;
+
+			span {
+				padding: 0 15px;
+			}
+		}
+	}
+
+	.card-block {
+		.submenu {
+			li {
+				position: relative;
+			}
+		}
+	}
+
+	ul {
+		@include unstyled-list();
+		padding: 15px 0 0;
+
+		li a {
+			font-size: rem(14px);
+			line-height: 44px;
+			height: 44px;
+			padding: 0 20px;
+			display: block;
+
+			&:hover {
+				background-color: lighten($mw_lightGray, 2%);
+			}
+		}
+
+		li i {
+			font-size: rem(20px);
+			vertical-align: text-bottom;
+			width: 20px;
+		}
+	}
+}

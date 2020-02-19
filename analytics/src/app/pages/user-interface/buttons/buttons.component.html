@@ -1,0 +1,466 @@
+<div id="content_wrapper" class="fullWidth1-wrapper">
+	<div class="content">
+		<header class="header-wrapper header-sm">
+			<h1>{{title}}</h1>
+		</header>
+		<div class="content-body">
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Flat Buttons</h2>
+							<small class="card-subtitle">Flat buttons are used for basic functions and usually used for actions within a card or modal so there aren't too many overlapping shadows.</small>
+							<ul class="actions icons top-right">
+								<li>
+									<a href="javascript:void(0)" data-toggle-view="code">
+										<i class="zmdi zmdi-code"></i>
+									</a>
+								</li>
+							</ul>
+						</header>
+						<div class="card-block">
+							<a href="javascript:void(0)" matRipple class="btn btn-default btn-flat">Default</a>
+							<a href="javascript:void(0)" matRipple class="btn btn-primary btn-flat">Primary</a>
+							<a href="javascript:void(0)" matRipple class="btn btn-accent btn-flat">Accent</a>
+							<a href="javascript:void(0)" matRipple class="btn btn-success btn-flat">Success</a>
+							<a href="javascript:void(0)" matRipple class="btn btn-info btn-flat">Info</a>
+							<a href="javascript:void(0)" matRipple class="btn btn-warning btn-flat">Warning</a>
+							<a href="javascript:void(0)" matRipple class="btn btn-danger btn-flat">Danger</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Raised Buttons</h2>
+							<small class="card-subtitle">Raised buttons are used to add dimension and emphasizes important functions.</small>
+							<ul class="actions icons top-right">
+								<li>
+									<a href="javascript:void(0)" data-toggle-view="code">
+										<i class="zmdi zmdi-code"></i>
+									</a>
+								</li>
+							</ul>
+						</header>
+						<div class="card-block">
+							<button matRipple class="btn btn-default">Default</button>
+							<button matRipple class="btn btn-primary">Primary</button>
+							<button matRipple class="btn btn-accent">Accent</button>
+							<button matRipple class="btn btn-info">Info</button>
+							<button matRipple class="btn btn-success">Success</button>
+							<button matRipple class="btn btn-warning">Warning</button>
+							<button matRipple class="btn btn-danger">Danger</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Floating Buttons</h2>
+							<small class="card-subtitle"></small>
+							<ul class="actions icons top-right">
+								<li>
+									<a href="javascript:void(0)" data-toggle-view="code">
+										<i class="zmdi zmdi-code"></i>
+									</a>
+								</li>
+							</ul>
+						</header>
+						<div class="card-block">
+							<div class="btn-demo m-b-20">
+								<h3>Default</h3>
+								<button matRipple class="btn btn-default btn-fab"><i class="zmdi zmdi-more-vert"></i></button>
+								<button matRipple class="btn btn-primary btn-fab"><i class="zmdi zmdi-plus"></i></button>
+								<button matRipple class="btn btn-accent btn-fab"><i class="zmdi zmdi-plus"></i></button>
+								<button matRipple class="btn btn-info btn-fab"><i class="zmdi zmdi-edit"></i></button>
+								<button matRipple class="btn btn-success btn-fab"><i class="zmdi zmdi-check-all"></i></button>
+								<button matRipple class="btn btn-warning btn-fab"><i class="zmdi zmdi-search"></i></button>
+								<button matRipple class="btn btn-danger btn-fab"><i class="zmdi zmdi-apps"></i></button>
+							</div>
+							<div class="btn-demo m-b-20">
+								<h3>Small</h3>
+								<button matRipple class="btn btn-default btn-fab btn-fab-sm"><i class="zmdi zmdi-more-vert"></i></button>
+								<button matRipple class="btn btn-primary btn-fab btn-fab-sm"><i class="zmdi zmdi-plus"></i></button>
+								<button matRipple class="btn btn-accent btn-fab btn-fab-sm"><i class="zmdi zmdi-plus"></i></button>
+								<button matRipple class="btn btn-info btn-fab btn-fab-sm"><i class="zmdi zmdi-edit"></i></button>
+								<button matRipple class="btn btn-success btn-fab btn-fab-sm"><i class="zmdi zmdi-check-all"></i></button>
+								<button matRipple class="btn btn-warning btn-fab btn-fab-sm"><i class="zmdi zmdi-search"></i></button>
+								<button matRipple class="btn btn-danger btn-fab btn-fab-sm"><i class="zmdi zmdi-apps"></i></button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<header class="card-header card-primary">
+							<h2 class="card-title">Fab Speed Dial</h2>
+							<small class="card-subtitle"></small>
+							<ul class="actions icons top-right">
+								<li>
+									<a href="javascript:void(0)" data-toggle-view="code">
+										<i class="zmdi zmdi-code"></i>
+									</a>
+								</li>
+							</ul>
+						</header>
+						<div class="card-block">
+							<div class="row">
+								<div class="col">
+									<div class="m-t-20 m-b-20">
+										Direction:
+										<mat-radio-group [(ngModel)]="direction" name="direction">
+											<mat-radio-button value="up">Up</mat-radio-button>
+											<mat-radio-button value="down">Down</mat-radio-button>
+											<mat-radio-button value="left">Left</mat-radio-button>
+											<mat-radio-button value="right">Right</mat-radio-button>
+										</mat-radio-group>
+									</div>
+									<div class="m-t-20 m-b-20">
+										Animation Mode:
+										<mat-radio-group [(ngModel)]="animationMode" name="animationMode">
+											<mat-radio-button value="fling">fling</mat-radio-button>
+											<mat-radio-button value="scale">scale</mat-radio-button>
+										</mat-radio-group>
+									</div>
+									<div class="m-t-20 m-b-20">
+										<mat-slide-toggle [(ngModel)]="fixed">Fixed</mat-slide-toggle>
+										<mat-slide-toggle [(ngModel)]="spin">Enable Spinning</mat-slide-toggle>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<div class="card">
+										<div class="card-header card-default">
+											<h2 class="card-title">
+												Click me
+											</h2>
+										</div>
+										<div class="card-block">
+											<mat-slide-toggle [(ngModel)]="open">Open</mat-slide-toggle>
+											<smat-fab-speed-dial [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
+												<smat-fab-trigger [spin]="spin">
+													<button mat-fab (click)="_click('trigger')"><mat-icon>check</mat-icon></button>
+												</smat-fab-trigger>
+												<smat-fab-actions>
+													<button mat-mini-fab (click)="_click('action1')"><mat-icon>add</mat-icon></button>
+													<button mat-mini-fab (click)="_click('action2')"><mat-icon>edit</mat-icon></button>
+													<button mat-mini-fab (click)="_click('action3')"><mat-icon>menu</mat-icon></button>
+												</smat-fab-actions>
+											</smat-fab-speed-dial>
+										</div>
+									</div>
+								</div>
+								<div class="col">
+									<div class="card">
+										<div class="card-header card-default">
+											<h2 class="card-title">
+												Hover me
+											</h2>
+										</div>
+										<div class="card-block">
+											<smat-fab-speed-dial #myFab [direction]="direction" [animationMode]="animationMode" [fixed]="fixed" (mouseenter)="myFab.open = true" (mouseleave)="myFab.open = false">
+												<smat-fab-trigger [spin]="spin">
+													<button mat-fab (click)="_click('trigger')"><mat-icon>check</mat-icon></button>
+												</smat-fab-trigger>
+												<smat-fab-actions>
+													<button mat-mini-fab (click)="_click('action1')"><mat-icon>add</mat-icon></button>
+													<button mat-mini-fab (click)="_click('action2')"><mat-icon>edit</mat-icon></button>
+													<button mat-mini-fab (click)="_click('action3')"><mat-icon>menu</mat-icon></button>
+												</smat-fab-actions>
+											</smat-fab-speed-dial>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Button Sizes</h2>
+							<small class="card-subtitle"></small>
+							<ul class="actions icons top-right">
+								<li>
+									<a href="javascript:void(0)" data-toggle-view="code">
+										<i class="zmdi zmdi-code"></i>
+									</a>
+								</li>
+							</ul>
+						</header>
+						<div class="card-block">
+							<button matRipple class="btn btn-accent btn-lg">Large Button</button>
+							<button matRipple class="btn btn-accent">Default Button</button>
+							<button matRipple class="btn btn-accent btn-sm">Small Button</button>
+							<button matRipple class="btn btn-accent btn-xs">Tiny Button</button>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Button Styles</h2>
+							<small class="card-subtitle"></small>
+							<ul class="actions icons top-right">
+								<li>
+									<a href="javascript:void(0)" data-toggle-view="code">
+										<i class="zmdi zmdi-code"></i>
+									</a>
+								</li>
+							</ul>
+						</header>
+						<div class="card-block">
+							<button matRipple class="btn btn-primary">Default</button>
+							<button matRipple class="btn btn-primary btn-round">Round</button>
+							<button matRipple class="btn btn-primary"><i class="zmdi zmdi-favorite"></i> With Icon</button>
+							<button matRipple class="btn btn-primary btn-flat">Flat</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Social Media Buttons</h2>
+							<small class="card-subtitle"></small>
+							<ul class="actions icons top-right">
+								<li>
+									<a href="javascript:void(0)" data-toggle-view="code">
+										<i class="zmdi zmdi-code"></i>
+									</a>
+								</li>
+							</ul>
+						</header>
+						<div class="card-block">
+							<div class="row m-b-15">
+								<div class="col btn-demo">
+									<h3>Default</h3>
+									<button matRipple class="btn btn-twitter"><i class="zmdi zmdi-twitter"></i></button>
+									<button matRipple class="btn btn-facebook"><i class="zmdi zmdi-facebook"></i></button>
+									<button matRipple class="btn btn-instagram"><i class="zmdi zmdi-instagram"></i></button>
+									<button matRipple class="btn btn-dribbble"><i class="zmdi zmdi-dribbble"></i></button>
+									<button matRipple class="btn btn-behance"><i class="zmdi zmdi-behance"></i></button>
+									<button matRipple class="btn btn-github"><i class="zmdi zmdi-github"></i></button>
+									<button matRipple class="btn btn-google"><i class="zmdi zmdi-google-plus"></i></button>
+									<button matRipple class="btn btn-linkedin"><i class="zmdi zmdi-linkedin"></i></button>
+									<button matRipple class="btn btn-pinterest"><i class="zmdi zmdi-pinterest"></i></button>
+									<button matRipple class="btn btn-skype"><i class="zmdi zmdi-skype"></i></button>
+									<button matRipple class="btn btn-soundcloud"><i class="zmdi zmdi-soundcloud"></i></button>
+									<button matRipple class="btn btn-tumblr"><i class="zmdi zmdi-tumblr"></i></button>
+									<button matRipple class="btn btn-android"><i class="zmdi zmdi-android"></i></button>
+									<button matRipple class="btn btn-vimeo"><i class="zmdi zmdi-vimeo"></i></button>
+									<button matRipple class="btn btn-youtube"><i class="zmdi zmdi-youtube"></i></button>
+								</div>
+							</div>
+							<div class="row m-b-15">
+								<div class="col btn-demo">
+									<h3>Circle</h3>
+									<button matRipple class="btn btn-fab btn-fab-sm btn-twitter"><i class="zmdi zmdi-twitter"></i></button>
+									<button matRipple class="btn btn-fab btn-fab-sm btn-facebook"><i class="zmdi zmdi-facebook"></i></button>
+									<button matRipple class="btn btn-fab btn-fab-sm btn-instagram"><i class="zmdi zmdi-instagram"></i></button>
+									<button matRipple class="btn btn-fab btn-fab-sm btn-dribbble"><i class="zmdi zmdi-dribbble"></i></button>
+									<button matRipple class="btn btn-fab btn-fab-sm btn-behance"><i class="zmdi zmdi-behance"></i></button>
+									<button matRipple class="btn btn-fab btn-fab-sm btn-github"><i class="zmdi zmdi-github"></i></button>
+									<button matRipple class="btn btn-fab btn-fab-sm btn-google"><i clmatRipple ass="zmdi zmdi-google-plus"></i></button>
+									<button matRipple class="btn btn-fab btn-fab-sm btn-linkedin"><i class="zmdi zmdi-linkedin"></i></button>
+									<button matRipple class="btn btn-fab btn-fab-sm btn-pinterest"><i class="zmdi zmdi-pinterest"></i></button>
+									<button matRipple class="btn btn-fab btn-fab-sm btn-skype"><i class="zmdi zmdi-skype"></i></button>
+									<button matRipple class="btn btn-fab btn-fab-sm btn-soundcloud"><i class="zmdi zmdi-soundcloud"></i></button>
+									<button matRipple class="btn btn-fab btn-fab-sm btn-tumblr"><i class="zmdi zmdi-tumblr"></i></button>
+									<button matRipple class="btn btn-fab btn-fab-sm btn-android"><i class="zmdi zmdi-android"></i></button>
+									<button matRipple class="btn btn-fab btn-fab-sm btn-vimeo"><i class="zmdi zmdi-vimeo"></i></button>
+									<button matRipple class="btn btn-fab btn-fab-sm btn-youtube"><i class="zmdi zmdi-youtube"></i></button>
+								</div>
+							</div>
+							<div class="row m-b-15">
+								<div class="col btn-demo">
+									<h3>Flat</h3>
+									<button matRipple class="btn btn-flat btn-twitter"><i class="zmdi zmdi-twitter"></i></button>
+									<button matRipple class="btn btn-flat btn-facebook"><i class="zmdi zmdi-facebook"></i></button>
+									<button matRipple class="btn btn-flat btn-instagram"><i class="zmdi zmdi-instagram"></i></button>
+									<button matRipple class="btn btn-flat btn-dribbble"><i class="zmdi zmdi-dribbble"></i></button>
+									<button matRipple class="btn btn-flat btn-behance"><i class="zmdi zmdi-behance"></i></button>
+									<button matRipple class="btn btn-flat btn-github"><i class="zmdi zmdi-github"></i></button>
+									<button matRipple class="btn btn-flat btn-google"><i class="zmdi zmdi-google-plus"></i></button>
+									<button matRipple class="btn btn-flat btn-linkedin"><i class="zmdi zmdi-linkedin"></i></button>
+									<button matRipple class="btn btn-flat btn-pinterest"><i class="zmdi zmdi-pinterest"></i></button>
+									<button matRipple class="btn btn-flat btn-skype"><i class="zmdi zmdi-skype"></i></button>
+									<button matRipple class="btn btn-flat btn-soundcloud"><i class="zmdi zmdi-soundcloud"></i></button>
+									<button matRipple class="btn btn-flat btn-tumblr"><i class="zmdi zmdi-tumblr"></i></button>
+									<button matRipple class="btn btn-flat btn-android"><i class="zmdi zmdi-android"></i></button>
+									<button matRipple class="btn btn-flat btn-vimeo"><i class="zmdi zmdi-vimeo"></i></button>
+									<button matRipple class="btn btn-flat btn-youtube"><i class="zmdi zmdi-youtube"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Button Groups</h2>
+							<small class="card-subtitle"></small>
+							<ul class="actions icons top-right">
+								<li>
+									<a href="javascript:void(0)" data-toggle-view="code">
+										<i class="zmdi zmdi-code"></i>
+									</a>
+								</li>
+							</ul>
+						</header>
+						<div class="card-block">
+							<div class="row m-b-15">
+								<div class="col">
+									<h3>Basic Example</h3>
+									<div class="btn-group-wrapper">
+										<div class="btn-group">
+											<button type="button" class="btn btn-default" matRipple>Left</button>
+											<button type="button" class="btn btn-default" matRipple>Middle</button>
+											<button type="button" class="btn btn-default" matRipple>Right</button>
+										</div>
+										<div class="btn-group">
+											<button type="button" class="btn btn-primary" matRipple>Left</button>
+											<button type="button" class="btn btn-primary" matRipple>Middle</button>
+											<button type="button" class="btn btn-primary" matRipple>Right</button>
+										</div>
+										<div class="btn-group">
+											<button type="button" class="btn btn-info" matRipple>Left</button>
+											<button type="button" class="btn btn-info" matRipple>Middle</button>
+											<button type="button" class="btn btn-info" matRipple>Right</button>
+										</div>
+										<div class="btn-group">
+											<button type="button" class="btn btn-success" matRipple>Left</button>
+											<button type="button" class="btn btn-success" matRipple>Middle</button>
+											<button type="button" class="btn btn-success" matRipple>Right</button>
+										</div>
+										<div class="btn-group">
+											<button type="button" class="btn btn-warning" matRipple>Left</button>
+											<button type="button" class="btn btn-warning" matRipple>Middle</button>
+											<button type="button" class="btn btn-warning" matRipple>Right</button>
+										</div>
+										<div class="btn-group">
+											<button type="button" class="btn btn-danger" matRipple> Left</button>
+											<button type="button" class="btn btn-danger" matRipple>Middle</button>
+											<button type="button" class="btn btn-danger" matRipple>Right</button>
+										</div>
+									</div>
+								</div>
+								<div class="col">
+									<h3>Button Group Sizing</h3>
+									<div class="btn-group-wrapper">
+										<div class="btn-group btn-group-lg" role="group">
+											<button type="button" class="btn btn-default" matRipple>Left</button>
+											<button type="button" class="btn btn-default" matRipple>Middle</button>
+											<button type="button" class="btn btn-default" matRipple>Right</button>
+										</div>
+										<div class="btn-group btn-group-lg" role="group">
+											<button type="button" class="btn btn-info" matRipple>Left</button>
+											<button type="button" class="btn btn-info" matRipple>Middle</button>
+											<button type="button" class="btn btn-info"> matRippleRight</button>
+										</div>
+									</div>
+									<div class="btn-group-wrapper">
+										<div class="btn-group btn-group" role="group">
+											<button type="button" class="btn btn-default" matRipple>Left</button>
+											<button type="button" class="btn btn-default" matRipple>Middle</button>
+											<button type="button" class="btn btn-default" matRipple> Right</button>
+										</div>
+										<div class="btn-group btn-group" role="group">
+											<button type="button" class="btn btn-info" matRipple>Left</button>
+											<button type="button" class="btn btn-info" matRipple>Middle</button>
+											<button type="button" class="btn btn-info" matRipple>Right</button>
+										</div>
+									</div>
+									<div class="btn-group-wrapper">
+										<div class="btn-group btn-group-sm" role="group">
+											<button type="button" class="btn btn-default" matRipple>Left</button>
+											<button type="button" class="btn btn-default" matRipple>Middle</button>
+											<button type="button" class="btn btn-default" matRipple>Right</button>
+										</div>
+										<div class="btn-group btn-group-sm" role="group">
+											<button type="button" class="btn btn-info" matRipple>Left</button>
+											<button type="button" class="btn btn-info" matRipple>Middle</button>
+											<button type="button" class="btn btn-info" matRipple>Right</button>
+										</div>
+									</div>
+									<div class="btn-group-wrapper">
+										<div class="btn-group btn-group-xs" role="group">
+											<button type="button" class="btn btn-default" matRipple>Left</button>
+											<button type="button" class="btn btn-default" matRipple>Middle</button>
+											<button type="button" class="btn btn-default" matRipple>Right</button>
+										</div>
+										<div class="btn-group btn-group-xs" role="group">
+											<button type="button" class="btn btn-info" matRipple>Left</button>
+											<button type="button" class="btn btn-info" matRipple>Middle</button>
+											<button type="button" class="btn btn-info" matRipple>Right</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row m-b-15">
+								<div class="col-xs-12 col-sm-6">
+									<h3>Justified Button Groups</h3>
+									<div class="btn-group-wrapper">
+										<div class="btn-group btn-group-justified" role="group">
+											<div class="btn-group" role="group">
+												<button type="button" class="btn btn-default" matRipple>Left</button>
+											</div>
+											<div class="btn-group" role="group">
+												<button type="button" class="btn btn-default" matRipple>Middle</button>
+											</div>
+											<div class="btn-group" role="group">
+												<button type="button" class="btn btn-default" matRipple>Right</button>
+											</div>
+										</div>
+										<div class="btn-group btn-group-justified" role="group">
+											<div class="btn-group" role="group">
+												<button type="button" class="btn btn-primary" matRipple>Left</button>
+											</div>
+											<div class="btn-group" role="group">
+												<button type="button" class="btn btn-primary" matRipple>Middle</button>
+											</div>
+											<div class="btn-group" role="group">
+												<button type="button" class="btn btn-primary" matRipple>Right</button>
+											</div>
+										</div>
+										<div class="btn-group btn-group-justified" role="group">
+											<div class="btn-group" role="group">
+												<button type="button" class="btn btn-info" matRipple>Left</button>
+											</div>
+											<div class="btn-group" role="group">
+												<button type="button" class="btn btn-info" matRipple>Middle</button>
+											</div>
+											<div class="btn-group" role="group">
+												<button type="button" class="btn btn-info" matRipple>Right</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-6">
+									<h3>Block Level Buttons</h3>
+									
+									<a href="javascript:void(0)" class="btn btn-default btn-block" matRipple>Default</a>
+									<a href="javascript:void(0)" class="btn btn-primary btn-block" matRipple>Primary</a>
+									<a href="javascript:void(0)" class="btn btn-info btn-block" matRipple>info</a>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer id="footer_wrapper" class="footer_wrapper"></footer>

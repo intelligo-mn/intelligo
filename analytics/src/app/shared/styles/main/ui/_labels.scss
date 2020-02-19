@@ -1,0 +1,26 @@
+.label {
+	border-radius: 20px;
+	padding: 5px 12px;
+	text-transform: uppercase;
+	font-size: em(9);
+	color: #fff;
+	font-weight: 800;
+}
+.label.label-default {
+	background-color: $mw_gray;
+}
+.label.label-primary {
+	background-color: $mw_blue;
+}
+.label.label-success {
+	background-color: $mw_green;
+}
+.label.label-info {
+	background-color: $mw_lightBlue;
+}
+.label.label-warning {
+	background-color: $mw_yellow;
+}
+.label.label-danger {
+	background-color: $mw_red;
+}

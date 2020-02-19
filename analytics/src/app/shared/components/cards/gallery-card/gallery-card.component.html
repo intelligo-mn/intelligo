@@ -1,0 +1,44 @@
+<div class="card card-gallery">
+	<header class="card-header">
+		<h2 class="card-title">{{title}}</h2>
+		<ul class="actions icons top-right">
+			<li>
+				<a href="javascript:void(0)">
+					<i class="zmdi zmdi-refresh-alt"></i>
+				</a>
+			</li>
+			<li class="dropdown" ngbDropdown>
+						<a href="javascript:void(0)" ngbDropdownToggle>
+							<i class="zmdi zmdi-more-vert"></i>
+						</a>
+						<ul class="dropdown-menu btn-primary dropdown-menu-right">
+							<li>
+								<a href="javascript:void(0)">Option One</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)">Option Two</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)">Option Three</a>
+							</li>
+						</ul>
+					</li>
+		</ul>
+	</header>
+	<div class="card-block p-0">
+		<div class="row">
+			<div class="col-3" *ngFor="let imageSrc of images">
+				<a href="javascript:void(0)">
+					<img src="{{imageSrc}}" alt="">
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="card-footer border-top">
+		<ul class="more">
+			<li>
+				<a href="javascript:void(0)" class="btn btn-default btn-flat" matRipple>View More</a>
+			</li>
+		</ul>
+	</div>
+</div>

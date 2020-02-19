@@ -1,0 +1,13 @@
+{
+    "totalUsers": 86,
+    "totalSessions": 107,
+    "channelwiseTotalUsers": {
+      "WEB": 86,
+      "ANDROID":50
+    },
+    "activeUsers": 0,
+    "channelwiseRecentUsers": {
+      "WEB": 6,
+      "ANDROID":20
+    }
+}

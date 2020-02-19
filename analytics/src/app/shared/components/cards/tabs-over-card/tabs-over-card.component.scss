@@ -1,0 +1,26 @@
+@import "../../../../shared/styles/main/util/index";
+
+:host /deep/ {
+	margin-top: 45px;
+	display: inline-block;
+	position: relative;
+
+
+	.nav-tabs > li.active > a,
+	.nav-tabs > li.active > a:focus,
+	.nav-tabs > li.active > a:hover {
+		color: #fff;
+		background-color: rgba(255, 255, 255, .2) !important;
+		transition: all 250ms;
+		border-radius: 3px;
+	}
+
+	.nav-tabs li a:after {
+		height: 0;
+		bottom: 0;
+	}
+
+	.tab-content {
+		padding: 15px 20px;
+	}
+}

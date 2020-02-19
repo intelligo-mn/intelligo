@@ -1,0 +1,24 @@
+<div class="card profile-menu" id="profile-menu" >
+	<header class="card-header card-img alt-heading"*ngFor="let profileAttr of profile" [ngClass]="{'open' : isProfileVisible}" [ngStyle]="{background: 'url(' + 'assets/img/headers/' + profileAttr.backgroundImg  + ')'}">
+		<div class="profile">
+			<header class="card-heading card-background" id="card_img_02">
+				<img src="assets/img/profiles/{{profileAttr.profileImg}}" alt="" class="rounded-circle max-w-75">
+			</header>
+			<a href="javascript:void(0)" class="info" [ngClass]="{'open' : isProfileSubmenuVisible}" (click)="isProfileSubmenuVisible = !isProfileSubmenuVisible;"><span>{{profileAttr.email}}</span></a>
+		</div>
+	</header>
+	<ul class="submenu" [ngClass]="{'open' : isProfileSubmenuVisible}">
+		<li>
+			<a href="javascript:void(0)" matRipple><i class="zmdi zmdi-account"></i> Profile</a>
+		</li>
+		<li>
+			<a href="javascript:void(0)"  matRipple><i class="zmdi zmdi-email"></i> Messages</a>
+		</li>
+		<li>
+			<a href="javascript:void(0)"  matRipple><i class="zmdi zmdi-settings"></i> Account Settings</a>
+		</li>
+		<li>
+			<a href="javascript:void(0)"  matRipple><i class="zmdi zmdi-sign-in"></i> Sign Out</a>
+		</li>
+	</ul>
+</div>

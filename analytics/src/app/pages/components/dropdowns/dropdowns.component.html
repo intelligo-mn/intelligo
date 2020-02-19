@@ -1,0 +1,154 @@
+<div id="content_wrapper" class="boxedlayout2-wrapper">
+	<div class="content">
+		<header class="header-wrapper header-lg overlay app_primary_bg">
+			<!-- <h1 class="text-white">Page Title</h1> -->
+		</header>
+		<div class="content-body container">
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Dropdowns</h2>
+						</header>
+						<div class="card-block">
+							<p>
+								The Drawer slides in from the side. It is a common pattern found in Google apps and follows the keylines and metrics for lists. A sidenav is typically used for navigation, but can contain any content.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="card min-h-200">
+						<header class="card-header">
+							<h2 class="card-title">Single button dropdowns
+							</h2>
+						</header>
+						<div class="card-block">
+							<ul ngbDropdown placement="bottom-right" class="style-none inline-block">
+								<li class="dropdown" ngbDropdown>
+									<a href="javascript:void(0)" class="btn btn-accent dropdown-toggle caret" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</a>
+									<ul ngbDropdownMenu class="dropdown-menu btn-primary">
+										<li>
+											<a href="javascript:void(0)">Option One</a>
+										</li>
+										<li>
+											<a href="javascript:void(0)">Option Two</a>
+										</li>
+										<li>
+											<a href="javascript:void(0)">Option Three</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card min-h-200">
+						<header class="card-header">
+							<h2 class="card-title">Flat button dropdowns</h2>
+						</header>
+						<div class="card-block">
+							<div ngbDropdown placement="top-right" class="d-inline-block">
+								<button class="btn btn-primary" id="dropdownBasic2" ngbDropdownToggle>Toggle dropup</button>
+								<ul ngbDropdownMenu class="dropdown-menu btn-primary">
+									<li>
+										<a href="javascript:void(0)">Option One</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)">Option Two</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)">Option Three</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="card min-h-200">
+						<header class="card-header">
+							<h2 class="card-title">Manual triggers
+							</h2>
+						</header>
+						<div class="card-block">
+							<p>
+								You can easily control dropdowns programmatically using the exported dropdown instance.
+							</p>
+							<div class="col">
+								<button class="btn btn-primary btn-flat" (click)="$event.stopPropagation(); myDrop.open();">Open from outside</button>
+								<button class="btn btn-primary btn-flat" (click)="$event.stopPropagation(); myDrop.close();">Close from outside</button>
+							</div>
+							<div class="col">
+								<ul class="d-inline-block dropdown" ngbDropdown #myDrop="ngbDropdown">
+									<a href="javascript:void(0)" class="btn btn btn-accent" id="dropdownManual" ngbDropdownToggle>Toggle dropdown</a>
+									<ul ngbDropdownMenu class="dropdown-menu btn-primary">
+										<li>
+											<a href="javascript:void(0)">Option One</a>
+										</li>
+										<li>
+											<a href="javascript:void(0)">Option Two</a>
+										</li>
+										<li>
+											<a href="javascript:void(0)">Option Three</a>
+										</li>
+									</ul>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card min-h-200">
+						<header class="card-header">
+							<h2 class="card-title">Button groups and split buttons
+							</h2>
+						</header>
+						<div class="card-block ">
+							<p>
+								Bootstrap split buttons and dropdowns on button groups are supported with the existing dropdown directives.
+							</p>
+							<div class="btn-group dropdown" ngbDropdown>
+								<button type="button" class="btn btn btn-accent">Plain ol' button</button>
+								<button class="btn btn-accent" ngbDropdownToggle class="btn btn-accent dropdown-toggle caret">Drop me</button>
+								<ul ngbDropdownMenu class="dropdown-menu btn-primary">
+									<li>
+										<a href="javascript:void(0)">Option One</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)">Option Two</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)">Option Three</a>
+									</li>
+								</ul>
+							</div>
+							<div class="btn-group dropdown" ngbDropdown>
+								<button type="button" class="btn btn-primary">Split me</button>
+								<button class="btn btn-primary dropdown-toggle-split caret" ngbDropdownToggle></button>
+								<ul ngbDropdownMenu class="dropdown-menu btn-primary">
+									<li>
+										<a href="javascript:void(0)">Option One</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)">Option Two</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)">Option Three</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+<footer id="footer_wrapper" class="footer_wrapper"></footer>

@@ -1,0 +1,24 @@
+<div class="card">
+	<header class="card-header">
+		<h2 class="card-title">Task List</h2>
+		<ul class="actions icons header-actions top-right">
+			<li>
+				<a href="javascript:void(0)" (click)="triggerToggleInput = !triggerToggleInput"><i class="zmdi zmdi-plus animate-fab"></i> </a>
+			</li>
+		</ul>
+	</header>
+	<div class="card-block">
+		<form novalidate [formGroup]="form" (ngSubmit)="onSubmit(form)" class="slider" [ngClass]="{'closed' : triggerToggleInput}">
+			<div class="form-group" [ngClass]="form.get('newTask').hasError('required') && isSubmitted ? 'has-danger' : ''">
+				<mat-form-field floatPlaceholder="auto" class="float-auto">
+					<input matInput class="form-control" type="text" id="task" placeholder="Add a task" formControlName="newTask" autocomplete="off">
+				</mat-form-field>
+			</div>
+		</form>
+		<section dnd-sortable-container [sortableData]="tasks">
+			<div class="card card-task-mini shadow-none" *ngFor="let item of tasks; let i = index" dnd-sortable [sortableIndex]="i">
+				<app-task [task]="item"  (notify)="onNotify($event)"></app-task>
+			</div>
+		</section>
+	</div>
+</div>
