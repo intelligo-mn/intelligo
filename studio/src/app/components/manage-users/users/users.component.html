@@ -1,48 +1,73 @@
 <app-header-bar [title]="'User Management'" #appHeader></app-header-bar>
 <div class="app-content">
-    <div class="app-content-header">
-        <h4 class="app-content-header-text">{{businessAccount ? 'Users of ' + businessAccount.name : 'Users'}}</h4>
-        <div class="app-content-header-actions">
-            <mat-form-field floatLabel="never" class="search-text">
-                <mat-label>Search</mat-label>
-                <input type="text" matInput name="search" [(ngModel)]="search" (keyup.enter)="searchStart()" />
-                <button mat-icon-button matSuffix (click)="searchStart()">
-                    <mat-icon>search</mat-icon>
-                </button>
-            </mat-form-field>
-            <button mat-raised-button color="primary" (click)="createUserDialog()" [disabled]="!bizId">Create new user</button>
-        </div>
+  <div class="app-content-header">
+    <h4 class="app-content-header-text">
+      {{ businessAccount ? 'Users of ' + businessAccount.name : 'Users' }}
+    </h4>
+    <div class="app-content-header-actions">
+      <mat-form-field floatLabel="never" class="search-text">
+        <mat-label>Search</mat-label>
+        <input
+          type="text"
+          matInput
+          name="search"
+          [(ngModel)]="search"
+          (keyup.enter)="searchStart()"
+        />
+        <button mat-icon-button matSuffix (click)="searchStart()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="createUserDialog()"
+        [disabled]="!bizId"
+      >
+        Create new user
+      </button>
     </div>
-    <mat-card *ngIf="!users || users.length<=0">
-        <mat-card-content>
-            Looks like there are no users yet.
-        </mat-card-content>
-    </mat-card>
-    <div class="ana-pagination" *ngIf="users && users.length>0">
-        <div class="info">
-            Page {{page+1}}/{{totalPages}}
-        </div>
-        <div class="buttons">
-            <button mat-icon-button (click)="prevPage()" [disabled]="page<=0">
-                <mat-icon>navigate_before</mat-icon>
-            </button>
-            <button mat-icon-button (click)="nextPage()" [disabled]="page>=totalPages-1">
-                <mat-icon>navigate_next</mat-icon>
-            </button>
-        </div>
+  </div>
+  <mat-card *ngIf="!users || users.length <= 0">
+    <mat-card-content>
+      Looks like there are no users yet.
+    </mat-card-content>
+  </mat-card>
+  <div class="intelligo-pagination" *ngIf="users && users.length > 0">
+    <div class="info">Page {{ page + 1 }}/{{ totalPages }}</div>
+    <div class="buttons">
+      <button mat-icon-button (click)="prevPage()" [disabled]="page <= 0">
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        (click)="nextPage()"
+        [disabled]="page >= totalPages - 1"
+      >
+        <mat-icon>navigate_next</mat-icon>
+      </button>
     </div>
+  </div>
 
-    <mat-list *ngIf="users && users.length>0">
-        <mat-list-item class="mat-elevation-z2 list-item" *ngFor="let user of users">
-            <div class="list-item-text">
-                {{user.name || user.userName }} <span class="list-item-hint"> {{userRole(user)}}</span>
-            </div>
-            <button matTooltip="View Details" mat-icon-button (click)="view(user)">
-                <mat-icon>remove_red_eye</mat-icon>
-            </button>
-            <button matTooltip="Update Password" mat-icon-button (click)="updateUserPassword(user)">
-                <mat-icon>border_color</mat-icon>
-            </button>
-        </mat-list-item>
-    </mat-list>
+  <mat-list *ngIf="users && users.length > 0">
+    <mat-list-item
+      class="mat-elevation-z2 list-item"
+      *ngFor="let user of users"
+    >
+      <div class="list-item-text">
+        {{ user.name || user.userName }}
+        <span class="list-item-hint"> {{ userRole(user) }}</span>
+      </div>
+      <button matTooltip="View Details" mat-icon-button (click)="view(user)">
+        <mat-icon>remove_red_eye</mat-icon>
+      </button>
+      <button
+        matTooltip="Update Password"
+        mat-icon-button
+        (click)="updateUserPassword(user)"
+      >
+        <mat-icon>border_color</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
 </div>

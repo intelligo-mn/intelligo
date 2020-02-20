@@ -30,7 +30,6 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HotkeyModule } from 'angular2-hotkeys';
 import { ClipboardModule } from 'ngx-clipboard';
-import { AnaCloudSignupComponent } from './components/shared/ana-cloud-signup/ana-cloud-signup.component';
 import { AppHeaderBarComponent } from './components/shared/app-header-bar/app-header-bar.component';
 import { BusinessPickerComponent } from './components/shared/business-picker/business-picker.component';
 import { ChangePasswordComponent } from './components/shared/change-password/change-password.component';
@@ -38,7 +37,6 @@ import { ChatServerManagerComponent } from './components/shared/chat-server-mana
 import { CreateChatbotComponent } from './components/shared/create-chatbot/create-chatbot.component';
 import { CreateUserComponent } from './components/shared/create-user/create-user.component';
 import { EditBusinessAccountComponent } from './components/shared/edit-business-account/edit-business-account.component';
-import { GetAnaChatServerComponent } from './components/shared/get-ana-chat-server/get-ana-chat-server.component';
 import { InfoDialogComponent } from './components/shared/info-dialog/info-dialog.component';
 import { LoadingIndicatorComponent } from './components/shared/loading-indicator/loading-indicator.component';
 import { LoadingMaskComponent } from './components/shared/loading-mask/loading-mask.component';
@@ -56,6 +54,8 @@ import { InfoDialogService } from './services/info-dialog.service';
 import { LoginService } from './services/login.service';
 import { SettingsService } from './services/settings.service';
 import { SimulatorService } from './services/simulator.service';
+import { GetAnaChatServerComponent } from './components/shared/get-ana-chat-server/get-ana-chat-server.component';
+import { AnaCloudSignupComponent } from './components/shared/ana-cloud-signup/ana-cloud-signup.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
 	return new TranslateHttpLoader(httpClient);

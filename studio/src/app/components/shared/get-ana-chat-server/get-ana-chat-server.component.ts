@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AnaCloudSignupComponent } from '../ana-cloud-signup/ana-cloud-signup.component';
 @Component({
-  selector: 'app-get-ana-chat-server',
-  templateUrl: './get-ana-chat-server.component.html',
-  styleUrls: ['./get-ana-chat-server.component.scss'],
+  selector: 'app-get-intelligo-chat-server',
+  templateUrl: './get-intelligo-chat-server.component.html',
+  styleUrls: ['./get-intelligo-chat-server.component.scss'],
 })
 export class GetAnaChatServerComponent implements OnInit {
   constructor(private dialog: MatDialog) {}

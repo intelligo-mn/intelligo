@@ -5,9 +5,9 @@ import { InfoDialogService } from '../../../services/info-dialog.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-	selector: 'app-ana-cloud-signup',
-	templateUrl: './ana-cloud-signup.component.html',
-	styleUrls: ['./ana-cloud-signup.component.scss']
+	selector: 'app-intelligo-cloud-signup',
+	templateUrl: './intelligo-cloud-signup.component.html',
+	styleUrls: ['./intelligo-cloud-signup.component.scss']
 })
 export class AnaCloudSignupComponent implements OnInit {
 

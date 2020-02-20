@@ -1,6 +1,6 @@
 @import '~@angular/material/theming';
 @include mat-core();
-$mat-ana-green: (50: #5a3cc8,
+$mat-intelligo-green: (50: #5a3cc8,
   100: #5e72e4,
   200: #5e72e4,
   300: #5e72e4,
@@ -30,8 +30,8 @@ $mat-ana-green: (50: #5a3cc8,
     A700: $white-87-opacity,
   ));
 
-$ana-app-primary: mat-palette($mat-ana-green);
-$ana-app-accent: mat-palette($mat-ana-green, A200, A100, A400);
-$ana-app-warn: mat-palette($mat-red);
-$ana-app-theme: mat-light-theme($ana-app-primary, $ana-app-accent, $ana-app-warn);
-@include angular-material-theme($ana-app-theme);
+$intelligo-app-primary: mat-palette($mat-intelligo-green);
+$intelligo-app-accent: mat-palette($mat-intelligo-green, A200, A100, A400);
+$intelligo-app-warn: mat-palette($mat-red);
+$intelligo-app-theme: mat-light-theme($intelligo-app-primary, $intelligo-app-accent, $intelligo-app-warn);
+@include angular-material-theme($intelligo-app-theme);
