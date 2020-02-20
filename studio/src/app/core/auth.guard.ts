@@ -6,6 +6,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -22,6 +23,9 @@ export class AuthGuard implements CanActivate {
     }
 
     // this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    if(environment.local){
+      return true;
+    }
     window.location.href = 'https://chatbots.mn';
     return false;
   }

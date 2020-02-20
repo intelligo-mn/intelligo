@@ -4,7 +4,7 @@ import { ChatFlowComponent } from './chatflow/chatflow.component';
 import { NodeEditorComponent } from './nodeeditor/nodeeditor.component';
 import { SimulatorFrameComponent } from './simulator-frame/simulator-frame.component';
 import { LandingComponent } from './landing/landing.component';
-import { SharedModule } from '../../shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { AuthGuard } from 'src/app/core/auth.guard';
 
 export const STUDIO_ROUTES: Routes = [

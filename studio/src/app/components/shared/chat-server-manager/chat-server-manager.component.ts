@@ -10,7 +10,7 @@ import { ChatFlowService } from '../../../services/chatflow.service';
 import { InfoDialogService } from '../../../services/info-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { GetAnaChatServerComponent } from '../get-ana-chat-server/get-ana-chat-server.component';
+import { GetChatServerComponent } from '../get-chat-server/get-chat-server.component';
 
 @Component({
   selector: 'app-chat-server-manager',
@@ -145,7 +145,7 @@ export class ChatServerManagerComponent implements OnInit {
   }
 
   getAnaChatServer() {
-    this.dialog.open(GetAnaChatServerComponent, {
+    this.dialog.open(GetChatServerComponent, {
       width: 'auto',
       disableClose: true,
     });
