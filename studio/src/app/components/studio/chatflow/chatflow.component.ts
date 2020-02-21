@@ -519,7 +519,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
       backdropClass: "dark-overlay",
       data: chatNodeVM.chatNode
     });
-    dialogRef.afterOpen().subscribe(x => {
+    dialogRef.afterOpened().subscribe(x => {
       this.unbindDesignerShortcuts();
     });
     dialogRef.afterClosed().subscribe(x => {
