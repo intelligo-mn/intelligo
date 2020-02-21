@@ -4,6 +4,6 @@ import { CreateOrderDTO } from './order.dto';
 export declare class OrderController {
     private orderService;
     constructor(orderService: OrderService);
-    listOrders({ id }: UserDocument): Promise<any>;
-    createOrder(order: CreateOrderDTO, { id }: UserDocument): Promise<any>;
+    listOrders({ id }: UserDocument): Promise<import("../types/order").Order[]>;
+    createOrder(order: CreateOrderDTO, { id }: UserDocument): Promise<import("../types/order").Order>;
 }

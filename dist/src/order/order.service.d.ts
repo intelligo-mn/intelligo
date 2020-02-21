@@ -4,6 +4,6 @@ import { CreateOrderDTO } from './order.dto';
 export declare class OrderService {
     private orderModel;
     constructor(orderModel: Model<Order>);
-    listOrdersByUser(userId: string): Promise<any>;
-    createOrder(orderDTO: CreateOrderDTO, userId: string): Promise<any>;
+    listOrdersByUser(userId: string): Promise<Order[]>;
+    createOrder(orderDTO: CreateOrderDTO, userId: string): Promise<Order>;
 }

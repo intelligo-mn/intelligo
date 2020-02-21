@@ -1,1 +1,2 @@
-export declare const UserSchema: any;
+import * as mongoose from 'mongoose';
+export declare const UserSchema: mongoose.Schema<any>;

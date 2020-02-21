@@ -1,1 +1,2 @@
-export declare const OrderSchema: any;
+import * as mongoose from 'mongoose';
+export declare const OrderSchema: mongoose.Schema<any>;
