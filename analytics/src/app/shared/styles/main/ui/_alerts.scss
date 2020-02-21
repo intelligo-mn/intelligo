@@ -1,0 +1,90 @@
+
+.alert {
+    @include border-radius(3px);
+    b,
+    optgroup,
+    strong {
+        font-weight: 600;
+    }
+}
+
+.alert .alert-link,
+.close {
+    font-weight: 400;
+    outline: none!important;
+}
+
+.alert-success {
+    background-color: $brand-success;
+    border: none;
+    color: #fff;
+}
+
+.alert-success hr {
+    border-top-color: darken($brand-success,5%);
+}
+
+.alert-success .alert-link {
+    color: rgba(255,255,255,.9);
+    text-decoration: underline;
+}
+
+.alert-info {
+    background-color: $brand-info;
+    border: none;
+    color: #fff;
+}
+
+.alert-info hr {
+    border-top-color: darken($brand-info,5%);
+}
+
+.alert-info .alert-link {
+      color: rgba(255,255,255,.9);
+    text-decoration: underline;
+}
+
+.alert-warning {
+    background-color: $brand-warning;
+    border: none;
+    color: #fff;
+
+    .alert .alert-link,
+    .close {
+        color: #fff;
+    }
+}
+
+.alert-warning hr {
+    border-top-color:#fff;
+}
+
+.alert-warning .alert-link {
+    color: rgba(255,255,255,.9);
+    text-decoration: underline;
+}
+
+.alert-danger {
+    background-color: $brand-danger;
+    border: none;
+    color: #fff;
+}
+
+.alert-danger hr {
+    border-top-color: darken($brand-danger,5%);
+}
+
+.alert-danger .alert-link {
+    color: rgba(255,255,255,.9);
+    text-decoration: underline;
+}
+.alert.alert-light{
+	background-color: #EBF3F8;
+	border: none;
+}
+
+.alert.alert-dark{
+	background-color: darken(#EBF3F8,60%);
+	border: none;
+	color: #fff;
+}

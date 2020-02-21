@@ -1,0 +1,65 @@
+/*
+ *
+ *   Material Lab - Bootstrap + Material Design Admin Theme
+*/
+$materialDesignIconic: 'Material-Design-Iconic-Font'!default;
+$materialDesignIcons: "Material Icons"!default;
+$font-family-header: 'Poppins', sans-serif!default;
+$font-family-body: 'Open Sans', sans-serif!default;
+$font-family-handwriting: 'Covered By Your Grace', cursive!default;
+
+//== Import Material Design Colors
+@import '_var-material-colors'; //== Skin Colors
+$mw_green: #28bebd!default;
+$mw_blue: #42a5f5!default;
+$mw_royalBlue: #4285f4!default;
+$mw_lightBlue: #2ebaee!default;
+$mw_red: #ef5350!default;
+$mw_yellow: #f8c200!default;
+$mw_paleYellow: #fddd7e!default;
+$mw_lightGray: #e3ecf7!default;
+$mw_gray: #8f9eb5!default;
+$mw_drakGray: #707c94!default;
+$mw_grayBlue: #59779b!default;
+$mw_purple: #6b79c4!default;
+$mw_turquoise: #00c5dc!default;
+$mw_peach: #feb38d!default;
+$mw_salmon: #ee6e73!default;
+$mw_cyan: #26c6da!default;
+$twitter: #2ea4fb!default;
+$facebook: #2855aa!default;
+$dribbble: #ff5c93!default;
+// Bootstrap brand color customization
+$white-color: #ffffff !default;
+$gray-color: #999999 !default;
+$brand-default: #9daec4!default;
+$brand-primary: #28bebd !default;
+$brand-accent: $md-pink-400 !default;
+$brand-success: #009688;
+$brand-danger: $md-red-400!default;
+$brand-warning: $md-yellow-500 !default;
+$brand-info: $md-blue-400 !default;
+$brand-white: #ffffff !default;
+//== Border Radius
+$border-radius-base: 2px !default;
+$border-radius-small: 1px !default;
+$border-radius-huge: 10px !default;
+$border-radius-extreme: 30px !default;
+//== Keep control of zindex :)
+$zindex_ul_action: 3!default;
+$zindex_sidebar_panel_right: 5!default;
+$zindex_content_sidebarnav: 10!default;
+$zindex_topnavbar_search: 20!default;
+$zindex_sidebar_menu_wrapper: 65!default;
+$zindex_sidebarnav_backdrop: 70!default;
+$zindex_toggle_sidebars: 80!default;
+$zindex_toggle_drawers: 80!default;
+$zindex_app_topnavbar-wrapper: 85!default;
+$zindex_sidebarnav_backdrop_top: 90!default;
+$zindex_header_action_bar: 96!default;
+$zindex_leftsidebar_wrapper: 100!default;
+$zindex_sidebarnav_app_backdrop: 110!default;
+$zindex_leftsidebar_mobile_wrapper: 112!default;
+$zindex_rightsidebar_wrapper: 115!default; //== Cards with background images
+$card_img_01: '/assets/img/headers/header-md-02.jpg'!default;
+$card_img_02: '/assets/img/gallery/full/full-33.jpg'!default;

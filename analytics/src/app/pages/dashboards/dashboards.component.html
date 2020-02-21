@@ -1,0 +1,108 @@
+<div id="content_wrapper" class="fullWidth1-wrapper">
+	<div class="content">
+		<div class="header-wrapper header-sm">
+			<header class="container-fluid">
+				<div class="row">
+					<div class="col">
+							<ul class="actions icons top-right">
+                                    <li>
+                                        <a href="javascript:void(0)" style="padding-top:9px!important;" (click)="refresh()">
+												<mat-icon *ngIf="loading" class="gear">autorenew</mat-icon>
+                                                <mat-icon *ngIf="!loading">autorenew</mat-icon>
+                                        </a>
+                                    </li>
+                                </ul>
+						<h1>Dashboard</h1>
+					</div>
+				</div>
+			</header>
+		</div>
+		<div class="content-body">
+			<div class="row">
+				<div class="col-lg-6">
+					<div  class="card" style="min-height:486px;">
+							<div *ngIf="!errorMsg1">
+									<div class="card">
+										<h1 class="text-center" style="margin-top:15px;margin-bottom:15px;"> There is no data present</h1>
+									</div>
+								</div>
+						<div *ngIf="errorMsg1">		
+						<header class="card-header">
+						</header>
+								<div class="row">
+									<div class="col-md-12">
+								<div class="text-center">
+									<strong>
+										<h2 class="text-center">ACTIVE USERS</h2>
+									</strong>
+									<p class="text-center" id="maindata">{{data.activeUsers}}</p>
+								</div>
+								</div>
+							</div>
+								<div *ngIf="active">
+										<h1 *ngIf="data.activeUsers != 0 " class="text-center" style="margin-top:15px;margin-bottom:15px">ACTIVE USERS PER CHANNEL</h1>
+								<table class="table text-center borderless">
+									<tr class="text-center">
+										<th class="subdata text-center" *ngFor="let channel of activeChannels" align="center"> {{channel}}</th>
+									</tr>
+									<tr class="text-center" >
+										<td *ngFor="let channel of activeChannels" id="subdata">{{data.channelwiseRecentUsers[channel]}}
+										</td>
+									</tr>
+								</table>
+						</div>
+						
+						</div>
+					</div>
+				</div>
+			
+				<div class="col-lg-6">
+					<div class="card" style="min-height:486px;">
+							<div *ngIf="!errorMsg1">
+										<h1 class="text-center" style="margin-top:15px;margin-bottom:15px;"> There is no data present</h1>
+								</div>
+						<div *ngIf="errorMsg1">
+						<header class="card-header">
+						</header>
+						<div class="row">
+							<div class="col-md-4">
+								<strong>
+									<h2 class="text-center">USERS</h2>
+								</strong>
+								<p class="text-center" id="maindata">{{data.totalUsers}}</p>
+							</div>
+							<div class="col-md-4">
+								<strong>
+									<h2 class="text-center">SESSIONS</h2>
+								</strong>
+								<p class="text-center" id="maindata">{{data.totalSessions}}</p>
+
+							</div>
+							<div class="col-md-4">
+								<strong>
+									<h2 class="text-center">INTERACTIONS</h2>
+								</strong>
+								<p class="text-center" id="maindata">{{data.totalInteractions}}</p>
+
+							</div>
+						</div>
+						<div *ngIf="node">
+							<h1 class="text-center" style="margin-top:15px;margin-bottom:15px">TOTAL USERS PER CHANNEL</h1>
+							<table class="table text-center borderless">
+								<tr class="text-center">
+									<th *ngFor="let channel of nodeChannels" class="subdata text-center">{{channel}}</th>
+								</tr>
+								<tr class="text-center">
+									<td *ngFor="let channel of nodeChannels" id="subdata">{{data.channelwiseTotalUsers[channel]}}
+									</td>
+								</tr>
+							</table>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<footer id="footer_wrapper" class="footer_wrapper"></footer>

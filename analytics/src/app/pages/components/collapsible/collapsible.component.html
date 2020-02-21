@@ -1,0 +1,63 @@
+<div id="content_wrapper" class="fullWidth1-wrapper">
+	<div class="content">
+		<header class="header-wrapper header-sm">
+			<h1>Collapsible</h1>
+		</header>
+		<div class="content-body">
+			<mat-expansion-panel class="md-expansion-demo-width" #myPanel>
+				<mat-expansion-panel-header>
+					
+					<mat-panel-title>Panel Title</mat-panel-title>
+				</mat-expansion-panel-header>
+				<p>
+					This is the content text that makes sense here.
+				</p>
+				<mat-action-row>
+					<button mat-button (click)="myPanel.expanded = false">CANCEL</button>
+					<button mat-button>SAVE</button>
+				</mat-action-row>
+			</mat-expansion-panel>
+			<br>
+			<h1>Accordion</h1>
+			<div>
+				<p>Accordion Options</p>
+				<div>
+					<mat-slide-toggle [(ngModel)]="multi">Allow Multi Expansion</mat-slide-toggle>
+					<mat-slide-toggle [(ngModel)]="hideToggle">Hide Indicators</mat-slide-toggle>
+					<mat-slide-toggle [(ngModel)]="showPanel3">Show Panel 3</mat-slide-toggle>
+				</div>
+				<p>Accordion Style</p>
+				<mat-radio-group [(ngModel)]="displayMode">
+					<mat-radio-button value="default">Default</mat-radio-button>
+					<mat-radio-button value="flat">Flat</mat-radio-button>
+				</mat-radio-group>
+				<p>Accordion Panel(s)</p>
+				<div>
+					<mat-checkbox [(ngModel)]="panel1.expanded">Panel 1</mat-checkbox>
+					<mat-checkbox [(ngModel)]="panel2.expanded">Panel 2</mat-checkbox>
+				</div>
+			</div>
+			<br>
+			<mat-accordion [displayMode]="displayMode" [multi]="multi" class="md-expansion-demo-width">
+				<mat-expansion-panel #panel1 [hideToggle]="hideToggle">
+					<mat-expansion-panel-header>Section 1</mat-expansion-panel-header>
+					<p>This is the content text that makes sense here.</p>
+				</mat-expansion-panel>
+				<mat-expansion-panel #panel2 [hideToggle]="hideToggle">
+					<mat-expansion-panel-header>Section 2</mat-expansion-panel-header>
+					<p>This is the content text that makes sense here.</p>
+				</mat-expansion-panel>
+				<mat-expansion-panel #panel3 *ngIf="showPanel3" [hideToggle]="hideToggle">
+					<mat-expansion-panel-header>Section 3</mat-expansion-panel-header>
+					<mat-checkbox #showButtons>Reveal Buttons Below</mat-checkbox>
+					<mat-action-row *ngIf="showButtons.checked">
+						<button mat-button (click)="panel2.expanded = true">OPEN SECTION 2</button>
+						<button mat-button (click)="panel3.expanded = false">CLOSE</button>
+					</mat-action-row>
+				</mat-expansion-panel>
+			</mat-accordion>
+		</div>
+	</div>
+	
+</div>
+<footer id="footer_wrapper" class="footer_wrapper"></footer>

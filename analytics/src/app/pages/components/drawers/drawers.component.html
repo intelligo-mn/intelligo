@@ -1,0 +1,80 @@
+<div id="content_wrapper" class="boxedlayout2-wrapper">
+	<div class="content">
+		<header class="header-wrapper header-lg overlay app_primary_bg">
+			<!-- <h1 class="text-white">Page Title</h1> -->
+		</header>
+		<div class="content-body container">
+			<div class="row">
+				<div class="col">
+				<div class="card">
+					<header class="card-header">
+						<h2 class="card-title">Drawers</h2>
+					</header>
+					<div class="card-block">
+						<p>
+							The Drawer slides in from the side. It is a common pattern found in Google apps and follows the keylines and metrics for lists.
+							A sidenav is typically used for navigation, but can contain any content.
+						</p>
+					</div>
+				</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col m-b-30">
+					<mat-sidenav-container>
+						<mat-sidenav #leftSidenav>
+							<aside class="drawer">
+								<nav class="submenu">
+									<ul>
+										<li matRipple><a href="javascript:void(0)"><i class="zmdi zmdi-inbox"></i> Inbox</a></li>
+										<li matRipple><a href="javascript:void(0)"><i class="zmdi zmdi-mail-send"></i> Sent</a></li>
+										<li matRipple><a href="javascript:void(0)"><i class="zmdi zmdi-archive"></i> Archived</a></li>
+										<li matRipple><a href="javascript:void(0)"><i class="zmdi zmdi-delete"></i> Trash</a></li>
+										<li matRipple><a href="javascript:void(0)"><i class="zmdi zmdi-settings"></i> Settings</a></li>
+									</ul>
+								</nav>
+							</aside>
+						</mat-sidenav>
+						<div class="card m-b-0 h-400">
+							<header class="card-header">
+								<h2 class="card-title">Drawer Left</h2>
+								<small class="card-subtitle">Paleo flexitarian bushwick letterpress</small>
+							</header>
+							<div class="card-block">
+								<button class="btn btn-info btn-block" (click)="leftSidenav.toggle()">Toggle Drawer Left</button>
+							</div>
+						</div>
+					</mat-sidenav-container>
+				</div>
+				<div class="col m-b-30">
+					<mat-sidenav-container>
+						<mat-sidenav #rightSidenav align="end">
+							<aside class="drawer">
+								<nav class="submenu">
+									<ul>
+										<li matRipple><a href="javascript:void(0)"><i class="zmdi zmdi-inbox"></i> Inbox</a></li>
+										<li matRipple><a href="javascript:void(0)"><i class="zmdi zmdi-mail-send"></i> Sent</a></li>
+										<li matRipple><a href="javascript:void(0)"><i class="zmdi zmdi-archive"></i> Archived</a></li>
+										<li matRipple><a href="javascript:void(0)"><i class="zmdi zmdi-delete"></i> Trash</a></li>
+										<li matRipple><a href="javascript:void(0)"><i class="zmdi zmdi-settings"></i> Settings</a></li>
+									</ul>
+								</nav>
+							</aside>
+						</mat-sidenav>
+						<div class="card m-b-0 h-400">
+							<header class="card-header">
+								<h2 class="card-title">Drawer Right</h2>
+								<small class="card-subtitle">Paleo flexitarian bushwick letterpress</small>
+							</header>
+							<div class="card-block">
+								<button class="btn btn-info btn-block" (click)="rightSidenav.toggle()">Toggle Drawer Right</button>
+							</div>
+						</div>
+					</mat-sidenav-container>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+<footer id="footer_wrapper" class="footer_wrapper"></footer>

@@ -1,0 +1,80 @@
+@import "../../shared/styles/main/util/index";
+:host /deep/ {
+	.doughnut-chart {
+		height: 350px;
+		width: 350px;
+		max-height: 350px;
+		max-width: 350px;
+	}
+}
+
+.weather-widget {
+	li {
+		font-size: rem(14px);
+	}
+}
+
+.container {
+	width: 1000px;
+}
+
+.user {
+	padding-left: 15px;
+}
+
+.data {
+	font-size: 50px;
+	color: black;
+}
+
+.label {
+	font-size: 15px;
+}
+
+.table-borderless {
+	border: 0;
+}
+
+#maindata {
+	color: black;
+	font-size: 250%;
+}
+
+.subdata {
+	font-size: 120%;
+	font-weight:100;
+	margin-bottom: 50px;
+	padding-top: 5%;
+	padding-bottom: 5%;
+	color:#516073;
+}
+
+.borderless td,
+.borderless th,
+.borderless tr{
+	border-width: 0px !important ;
+}
+
+#subdata {
+	color: black;
+	font-size: 200%; //padding-right: 30px;
+	max-width: 30%;
+	
+}
+
+@-webkit-keyframes rotate {
+	from {
+	  -webkit-transform: rotate(0deg);
+	}
+	to { 
+	  -webkit-transform: rotate(360deg);
+	}
+  }
+  
+  .gear
+  {
+	  animation-name:             rotate; 
+	  animation-duration:         0.8s; 
+	  animation-iteration-count:  infinite;
+	  animation-timing-function: linear;
+  }

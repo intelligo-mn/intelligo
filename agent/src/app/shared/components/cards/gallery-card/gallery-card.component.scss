@@ -1,0 +1,18 @@
+@import "../../../../shared/styles/main/util/index";
+.card .card-footer ul.more {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	left: 0;
+
+	li {
+		line-height: 1.5rem;
+
+		a {
+			font-size: rem(12px);
+			text-transform: uppercase;
+		}
+	}
+}

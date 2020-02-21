@@ -1,0 +1,11 @@
+<h2 md-dialog-title>{{options.title}}</h2>
+<md-dialog-content>
+    <p>{{options.message}}</p>
+    <md-form-field [hidden]="options.dialogType!=InfoDialogType.Prompt">
+        <input type="text" name="text" mdInput [(ngModel)]="inputText" (keypress)="inputKeypress($event)" />
+    </md-form-field>
+</md-dialog-content>
+<md-dialog-actions>
+    <button md-raised-button color="primary" (click)="primaryClick()" *ngIf="primaryButtonText">{{primaryButtonText}}</button>
+    <button md-raised-button [color]="options.dialogType==InfoDialogType.Alert?'primary':''" [md-dialog-close]="false">{{secondaryButtonText}}</button>
+</md-dialog-actions>

@@ -1,0 +1,58 @@
+@import "../../../shared/styles/main/util/index";
+:host /deep/ {
+	.navbar-form {
+		position: absolute;
+		top: -150%;
+		left: 0;
+		right: 0;
+		margin: 0;
+		padding: 0;
+		height: 65px;
+		z-index: $zindex_topnavbar_search;
+		-webkit-transition: all 0.2s;
+		-o-transition: all 0.2s;
+		transition: all 0.2s;
+		border: 0;
+		box-shadow: 0 2px 2px rgba(0, 0, 0, .1);
+		background: #fff;
+		left: 0;
+	}
+
+	.navbar-form .form-group {
+		height: 100%;
+		width: 100%;
+		margin-top: 0;
+		padding-bottom: 0;
+	}
+
+	.navbar-form .form-control {
+		height: 100%;
+		border: 0;
+		border-radius: 0;
+		width: 100%;
+		background-image: none !important;
+		padding-left: 20px;
+	}
+
+	.navbar-form.open {
+		top: 0;
+	}
+
+	.navbar-form .close-search {
+		height: 30px;
+		cursor: pointer;
+		top: 50%;
+		margin-top: -15px;
+		line-height: 30px;
+		margin-right: 10px;
+		font-size: rem(22px);
+		position: absolute;
+		right: 30px;
+	}
+
+	@media (max-width: 992px) {
+		.navbar-form.open {
+			left: 0;
+		}
+	}
+}

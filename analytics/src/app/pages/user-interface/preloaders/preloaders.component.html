@@ -1,0 +1,98 @@
+<div id="content_wrapper" class="fullWidth1-wrapper">
+	<div class="content">
+		<header class="header-wrapper header-sm">
+			<h1>{{title}}</h1>
+		</header>
+		<div class="content-body">
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Progress spinners</h2>
+						</header>
+						<div class="card-block">
+							<p>The progress-spinner supports two modes, "determinate" and "indeterminate". The mat-spinner component is an alias for mat-progress-spinner mode="indeterminate".</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Determinate</h2>
+						</header>
+						<div class="card-block">
+							<div class="demo-progress-spinner-controls">
+								<p><b>Value: {{progressValue}}</b></p>
+								<button class="btn btn-primary" (click)="step(10)">Increase</button>
+								<button class="btn btn-default" (click)="step(-10)">Decrease</button>
+								<mat-checkbox class="m-l-10" [(ngModel)]="modeToggle">Is determinate</mat-checkbox>
+							</div>
+							<div class="row m-t-30 b-b-30">
+								<div class="col-4">
+									<mat-progress-spinner [mode]="modeToggle ? 'indeterminate' : 'determinate'" [value]="progressValue" color="primary" [strokeWidth]="1"></mat-progress-spinner>
+								</div>
+								<div class="col-8">
+									<mat-progress-spinner [mode]="modeToggle ? 'indeterminate' : 'determinate'" [value]="progressValue" color="accent"></mat-progress-spinner>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Indeterminate</h2>
+						</header>
+						<div class="card-block">
+							<mat-button-toggle-group class="demo-progress-spinner-controls" [(ngModel)]="color">
+								<mat-button-toggle class="btn btn-primary" value="primary">Primary Color</mat-button-toggle>
+								<mat-button-toggle class="btn btn-accent" value="accent">Accent Color</mat-button-toggle>
+								<mat-button-toggle class="btn btn-danger" value="warn">Danager Color</mat-button-toggle>
+							</mat-button-toggle-group>
+							<div class="row  m-t-30 b-b-30">
+								<div class="col">
+									<mat-progress-spinner mode="indeterminate" [color]="color"></mat-progress-spinner>
+								</div>
+								<div class="col">
+									<mat-progress-spinner mode="indeterminate" [color]="color"></mat-progress-spinner>
+								</div>
+								<div class="col">
+									<mat-spinner [color]="color"></mat-spinner>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<header class="card-header ">
+							<h2 class="card-title">Linear</h2>
+							<small class="card-subtitle">Indeterminate linear preloaders</small>
+						</header>
+						<div class="card-block loader-demo">
+							<div class="loader loader-pink"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="card">
+						<header class="card-header ">
+							<h2 class="card-title"></h2>
+						</header>
+						<div class="card-block">
+							<p>Top bar Progress Linear</p>
+							<div aria-busy="true" aria-label="Loading, please wait." role="progressbar"></div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<footer id="footer_wrapper" class="footer_wrapper"></footer>

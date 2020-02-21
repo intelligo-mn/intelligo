@@ -1,0 +1,67 @@
+@import "../../../shared/styles/main/util/index";
+:host /deep/ {
+	.nav-tabs {
+		li a {
+			font-size: rem(14px) !important;
+		}
+	}
+	//vertical tabs
+	.vertical-tabs.align-left {
+		display: flex;
+		.nav-stacked {
+			display: inline-block;
+			flex-direction: column;
+			flex: 1;
+			order: 1;
+		}
+		.tab-content {
+			flex-direction: column;
+			flex: 2;
+			order: 2;
+		}
+	}
+	.vertical-tabs.align-right {
+		display: flex;
+		.nav-stacked {
+			display: inline-block;
+			flex-direction: column;
+			flex: 1;
+			order: 2;
+		}
+		.tab-content {
+			flex-direction: column;
+			flex: 2;
+			order: 1;
+		}
+	}
+	.nav-pills {
+		li {
+			a {
+				i {
+					padding: 3px 5px 5px 0;
+				}
+			}
+		}
+	}
+	.nav-block-pills {
+		.nav-pills {
+			li {
+				a {
+					line-height: 22px;
+					text-transform: uppercase;
+					font-size: rem(14px);
+					font-weight: 600;
+					min-width: 100px;
+					text-align: center;
+					transition: all .3s;
+					border-radius: 3px;
+					i {
+						display: block;
+						font-size: rem(30px);
+						padding: 15px 0;
+					}
+				}
+			}
+		}
+	}
+}

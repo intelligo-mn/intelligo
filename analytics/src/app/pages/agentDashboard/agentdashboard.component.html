@@ -1,0 +1,88 @@
+<div id="content_wrapper" class="fullWidth1-wrapper">
+    <div class="content">
+        <div class="header-wrapper header-sm">
+            <header class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                            <ul class="actions icons top-right">
+                                    <li>
+                                        <a href="javascript:void(0)"  (click)="refresh()">
+                                                <mat-icon *ngIf="loading" class="gear">autorenew</mat-icon>
+                                                <mat-icon *ngIf="!loading">autorenew</mat-icon>
+                                        </a>
+                                    </li>
+                                </ul>
+                        <h1> Agent Dashboard</h1>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="content-body">
+                <div *ngIf="!errorMsg">
+                        <div class="card">
+                                <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card" style="min-height:358px;">
+                                                <header class="card-header">
+                                                </header>
+                                                <strong>
+                                                    <h1 class="text-center">ACTIVE AGENTS </h1>
+                                                </strong>
+                                                <p class="text-center" id="maindata">0</p>
+                                                <strong>
+                                                    <h1 class="text-center">ACTIVE USERS</h1>
+                                                </strong>
+                                                <p class="text-center" id="maindata">0</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card" style="min-height:358px;">
+                                                <header class="card-header">
+                                                </header>
+                                                <div class="text-center">
+                                                    <h1>Average Chat Duration</h1>
+                                                    <p id="maindata"> 00:00:00</p>
+                                                    <h1>Average Number of Messages Per Session</h1>
+                                                    <p id="maindata">0</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                        
+                                    </div>
+                        </div>
+                </div>
+            <div *ngIf="errorMsg">
+            <div *ngIf="dataLoading" class="row">
+                <div class="col-md-6">
+                    <div class="card" style="min-height:358px;">
+                        <header class="card-header">
+                        </header>
+                        <strong>
+                            <h1 class="text-center">ACTIVE AGENTS </h1>
+                        </strong>
+                        <p class="text-center" id="maindata">{{activeChatDetails.activeAgents}}</p>
+                        <strong>
+                            <h1 class="text-center">ACTIVE USERS</h1>
+                        </strong>
+                        <p class="text-center" id="maindata">{{activeChatDetails.activeUsers}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card" style="min-height:358px;">
+                        <header class="card-header">
+                        </header>
+                        <div class="text-center">
+                            <h1>Average Chat Duration</h1>
+                            <p id="maindata"> {{activeStats.averageChatSessionDuration}} </p>
+                            <h1>Average Number of Messages Per Session</h1>
+                            <p id="maindata"> {{activeStats.averageNumberOfMessagesPerChatSession}} </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer id="footer_wrapper" class="footer_wrapper"></footer>

@@ -1,0 +1,63 @@
+<div id="content_wrapper" class="fullWidth1-wrapper">
+	<div class="content">
+		<header class="header-wrapper header-sm">
+			<h1 innerHtml="{{title}}"></h1>
+		</header>
+		<div class="content-body">
+			<div class="card">
+				<header class="card-header">
+					<h2 class="card-title">Sweet Alerts</h2>
+					<small class="card-subtitle">A sweetalert2 service for Angular</small>
+					<ul class="actions icons top-right">
+						<li>
+							<a href="javascript:void(0)">
+								<i class="zmdi zmdi-refresh-alt"></i>
+							</a>
+						</li>
+						<li class="dropdown" ngbDropdown>
+									<a href="javascript:void(0)" ngbDropdownToggle>
+										<i class="zmdi zmdi-more-vert"></i>
+									</a>
+									<ul class="dropdown-menu btn-primary dropdown-menu-right">
+										<li>
+											<a href="javascript:void(0)">Option One</a>
+										</li>
+										<li>
+											<a href="javascript:void(0)">Option Two</a>
+										</li>
+										<li>
+											<a href="javascript:void(0)">Option Three</a>
+										</li>
+									</ul>
+								</li>
+					</ul>
+				</header>
+				<div class="card-block">
+					<p>
+						Sweet Alert automatically centers itself on the page and looks great no matter if you're using a desktop computer, mobile or tablet. It's even highly customizeable, as you can see below.
+					</p>
+					<a href="javascript:void(0)" class="btn btn-default sweet-message" (click)="sweetMessage()">Here's a simple message</a>
+					<a href="javascript:void(0)" class="btn btn-danger sweet-error" (click)="sweetError()">Show error message</a>
+					<a href="javascript:void(0)" class="btn btn-success sweet-success" (click)="sweetSuccess()">Show success message</a>
+
+				
+						<h6>Text:</h6>
+						<a href="javascript:void(0)" class="btn btn-info" (click)="sweetText()">Try Me</a>
+				
+			
+						<h6>Email:</h6>
+						<a href="javascript:void(0)" class="btn btn-info" (click)="sweetEmail()">Try Me</a>
+				
+						<h6>URL:</h6>
+						<a href="javascript:void(0)" class="btn btn-info" (click)="sweetUrl()">Try Me</a>
+			
+						<h6>Textarea:</h6>
+						<a href="javascript:void(0)" class="btn btn-info" (click)="sweetTextarea()">Try Me</a>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<footer id="footer_wrapper" class="footer_wrapper"></footer>

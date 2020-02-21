@@ -1,0 +1,55 @@
+<div class="card">
+	<header class="card-header card-image app_primary_bg p-0">
+		<!-- IMAGE GOES HERE -->
+		<img src="{{imgPath}}" alt="">
+		<h2 class="card-title left-bottom overlay text-white">{{title}}</h2>
+		<ul class="actions icons top-right">
+			<li class="dropdown" ngbDropdown>
+				<a href="javascript:void(0)" ngbDropdownToggle>
+					<i class="zmdi zmdi-more-vert text-white"></i>
+				</a>
+				<ul class="dropdown-menu dropdown-menu-right btn-primary">
+					<li>
+						<a href="javascript:void(0)">Option One</a>
+					</li>
+					<li>
+						<a href="javascript:void(0)">Option Two</a>
+					</li>
+					<li>
+						<a href="javascript:void(0)">Option Three</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</header>
+	<div class="card-block">
+		<small class="block text-muted today p-t-10 p-b-10"></small>
+		<ng-content></ng-content>
+		</div>
+		<div class="card-footer border-top">
+			<ul class="actions bottom-left">
+				<li>
+					<a href="javascript:void(0)" class="btn btn-default btn-flat"  matRipple>
+						Read More
+					</a>
+				</li>
+			</ul>
+			<ul class="actions icons bottom-right">
+				<li>
+					<a href="javascript:void(0)">
+						<i class="zmdi zmdi-favorite"></i>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:void(0)">
+						<i class="zmdi zmdi-bookmark"></i>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:void(0)">
+						<i class="zmdi zmdi-share"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>

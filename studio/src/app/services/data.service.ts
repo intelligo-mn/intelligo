@@ -1,10 +1,10 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { Router } from "@angular/router";
-import { Observable } from "rxjs";
-import { environment } from "../../environments/environment";
-import { ChatServerConnection } from "../models/app.models";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { ChatServerConnection } from '../models/app.models';
 import {
   APIResponse,
   BusinessAccount,
@@ -16,9 +16,9 @@ import {
   RegisterOnAnaCloudDetails,
   Role,
   User,
-  UserRegisterModel
-} from "../models/data.models";
-import { InfoDialogService } from "./info-dialog.service";
+  UserRegisterModel,
+} from '../models/data.models';
+import { InfoDialogService } from './info-dialog.service';
 
 @Injectable()
 export class DataService {
@@ -26,17 +26,17 @@ export class DataService {
     private http: HttpClient,
     private infoDialog: InfoDialogService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
   ) {
-    let connJSON = localStorage.getItem("conn");
+    let connJSON = localStorage.getItem('conn');
     if (connJSON) this.conn = JSON.parse(connJSON);
   }
   private conn: ChatServerConnection;
   loggedInUser: LoginData;
 
   getAnalyticsApiBase() {
-    if (!this.conn || !this.conn.ServerUrl) return "";
-    return this.conn.ServerUrl + "analytics";
+    if (!this.conn || !this.conn.ServerUrl) return '';
+    return this.conn.ServerUrl + 'analytics';
   }
 
   get chatServer() {
@@ -46,14 +46,14 @@ export class DataService {
   isSuperAdmin() {
     if (!this.loggedInUser || !this.loggedInUser.roles) return false;
     return (
-      this.loggedInUser.roles.map(x => x.role).indexOf("SUPER_ADMIN") != -1
+      this.loggedInUser.roles.map(x => x.role).indexOf('SUPER_ADMIN') != -1
     );
   }
 
   isBizAdmin() {
     if (!this.loggedInUser || !this.loggedInUser.roles) return false;
     return (
-      this.loggedInUser.roles.map(x => x.role).indexOf("BUSINESS_ADMIN") != -1
+      this.loggedInUser.roles.map(x => x.role).indexOf('BUSINESS_ADMIN') != -1
     );
   }
 
@@ -62,20 +62,20 @@ export class DataService {
     return (
       this.loggedInUser.roles
         .map(x => x.role)
-        .indexOf("BUSINESS_FLOW_MANAGER") != -1
+        .indexOf('BUSINESS_FLOW_MANAGER') != -1
     );
   }
 
   private normalizeBaseUrl(baseUrl: string) {
-    baseUrl = baseUrl.replace(/\\$/, ""); //Remove ending \ char if any
-    if (!baseUrl.endsWith("/")) baseUrl += "/";
+    baseUrl = baseUrl.replace(/\\$/, ''); //Remove ending \ char if any
+    if (!baseUrl.endsWith('/')) baseUrl += '/';
     return baseUrl;
   }
 
   private getHeaders() {
     if (this.loggedInUser && this.loggedInUser.accessToken)
       return new HttpHeaders({
-        "access-token": this.loggedInUser.accessToken
+        'access-token': this.loggedInUser.accessToken,
       });
     return new HttpHeaders();
   }
@@ -83,28 +83,28 @@ export class DataService {
   setConnection(conn: ChatServerConnection) {
     if (conn && conn.ServerUrl)
       conn.ServerUrl = this.normalizeBaseUrl(conn.ServerUrl);
-    localStorage.setItem("conn", JSON.stringify(conn));
+    localStorage.setItem('conn', JSON.stringify(conn));
     this.conn = conn;
   }
 
   getRoles(): Observable<APIResponse<Role[]>> {
     let h = this.getHeaders();
     return this.http.get<any>(`${this.conn.ServerUrl}auth/roles`, {
-      headers: h
+      headers: h,
     });
   }
 
   getBusinessAccounts(
-    searchText: string = "",
+    searchText: string = '',
     page: number = 0,
-    size: number = 10
+    size: number = 10,
   ): Observable<APIResponse<ListContent<BusinessAccount>>> {
     let h = this.getHeaders();
     return this.http.get<any>(
       `${this.conn.ServerUrl}business/accounts?searchText=${encodeURIComponent(
-        searchText
+        searchText,
       )}&page=${page}&size=${size}`,
-      { headers: h }
+      { headers: h },
     );
   }
 
@@ -112,40 +112,40 @@ export class DataService {
     let h = this.getHeaders();
     return this.http.get<any>(
       `${this.conn.ServerUrl}business/accounts/${bizId}`,
-      { headers: h }
+      { headers: h },
     );
   }
 
   updateBusinessAccountStatus(
     account: BusinessAccount,
-    status: BusinessAccountStatus
+    status: BusinessAccountStatus,
   ): Observable<APIResponse<BusinessAccount>> {
     let h = this.getHeaders();
     return this.http.put<any>(
       this.conn.ServerUrl +
-        "business/accounts/" +
+        'business/accounts/' +
         account.id +
-        "/status/" +
+        '/status/' +
         BusinessAccountStatus[<number>status],
-      { headers: h }
+      { headers: h },
     );
   }
 
   saveBusinessAccount(
     account: BusinessAccount,
-    create: boolean
+    create: boolean,
   ): Observable<APIResponse<BusinessAccount>> {
     if (create) {
       return this.http.post<any>(
-        this.conn.ServerUrl + "business/accounts",
+        this.conn.ServerUrl + 'business/accounts',
         account,
-        { headers: this.getHeaders() }
+        { headers: this.getHeaders() },
       );
     } else {
       return this.http.put<any>(
-        this.conn.ServerUrl + "business/accounts/" + account.id,
+        this.conn.ServerUrl + 'business/accounts/' + account.id,
         account,
-        { headers: this.getHeaders() }
+        { headers: this.getHeaders() },
       );
     }
   }
@@ -153,44 +153,44 @@ export class DataService {
   getChatProjects(
     businessId: string,
     page: number = 0,
-    size: number = 10
+    size: number = 10,
   ): Observable<APIResponse<ListContent<ChatProject>>> {
     let h = this.getHeaders();
     return this.http.get<any>(
       `${this.conn.ServerUrl}business/flows?page=${page}&size=${size}&businessId=${businessId}`,
-      { headers: h }
+      { headers: h },
     );
   }
 
   createChatProject(
-    chatProject: ChatProject
+    chatProject: ChatProject,
   ): Observable<APIResponse<ChatProject>> {
     let h = this.getHeaders();
 
     return this.http.post<any>(
       `${this.conn.ServerUrl}business/flows`,
       chatProject,
-      { headers: h }
+      { headers: h },
     );
   }
 
   registerOnAnaCloud(
-    request: RegisterOnAnaCloudDetails
+    request: RegisterOnAnaCloudDetails,
   ): Observable<APIResponse<RegisterOnAnaCloudDetails>> {
     let h = this.getHeaders();
-    let serverUrl = "http://gateway.api.dev.ana.chat/";
+    let serverUrl = 'http://gateway.api.dev.ana.chat/';
     if (environment.production) {
-      serverUrl = "http://gateway.api.ana.chat/";
+      serverUrl = 'http://gateway.api.ana.chat/';
     }
     return this.http.post<any>(
       `${serverUrl}business/accounts/publicRegister`,
       request,
-      { headers: h }
+      { headers: h },
     );
   }
 
   saveChatProject(
-    chatProject: ChatProject
+    chatProject: ChatProject,
   ): Observable<APIResponse<ChatProject>> {
     let h = this.getHeaders();
 
@@ -209,22 +209,22 @@ export class DataService {
     return this.http.put<any>(
       `${this.conn.ServerUrl}business/flows/${chatProject.id}`,
       chatProject,
-      { headers: h }
+      { headers: h },
     );
   }
 
   getUsers(
     bizid: string,
-    searchText: string = "",
+    searchText: string = '',
     page: number = 0,
-    size: number = 10
+    size: number = 10,
   ): Observable<ListContent<User>> {
     let h = this.getHeaders();
     return this.http.get<any>(
       `${this.conn.ServerUrl}auth/users?searchText=${encodeURIComponent(
-        searchText
+        searchText,
       )}&page=${page}&size=${size}&businessId=${bizid}`,
-      { headers: h }
+      { headers: h },
     );
   }
 
@@ -233,72 +233,72 @@ export class DataService {
     return this.http.post<any>(
       `${this.conn.ServerUrl}auth/users/accounts/register`,
       user,
-      { headers: h }
+      { headers: h },
     );
   }
 
   login(
     username: string,
-    password: string
+    password: string,
   ): Observable<APIResponse<LoginData>> {
-    return this.http.post<any>(this.conn.ServerUrl + "auth/login", {
+    return this.http.post<any>(this.conn.ServerUrl + 'auth/login', {
       username: username,
-      password: password
+      password: password,
     });
   }
 
   updatePassword(
     userId: string,
-    password: string
+    password: string,
   ): Observable<APIResponse<LoginData>> {
     let h = this.getHeaders();
     return this.http.put<any>(
       `${this.conn.ServerUrl}auth/credentials/${userId}`,
       {
-        newPassword: password
+        newPassword: password,
       },
-      { headers: h }
+      { headers: h },
     );
   }
 
   changeCurrentUserPassword(
     password: string,
-    newPassword: string
+    newPassword: string,
   ): Observable<APIResponse<LoginData>> {
     let h = this.getHeaders();
     return this.http.put<any>(
       `${this.conn.ServerUrl}auth/credentials/reset`,
       {
         newPassword: newPassword,
-        password: password
+        password: password,
       },
-      { headers: h }
+      { headers: h },
     );
   }
 
   checkLogin(data: LoginData): Observable<APIResponse<LoginData>> {
-    return this.http.get<any>(this.conn.ServerUrl + "auth/me", {
-      headers: { "access-token": data.accessToken }
+    return this.http.get<any>(this.conn.ServerUrl + 'auth/me', {
+      headers: { 'access-token': data.accessToken },
     });
   }
 
   logout() {
-    localStorage.removeItem("user");
+    localStorage.removeItem('user');
     let h = this.getHeaders();
     delete this.loggedInUser;
     return this.http
-      .get(this.conn.ServerUrl + "auth/logout", {
-        headers: h
+      .get(this.conn.ServerUrl + 'auth/logout', {
+        headers: h,
       })
       .subscribe(x => x);
   }
 
   userLoggedinCheck(
     callback: (loggedin: boolean) => void,
-    hardCheck: boolean = false
+    hardCheck: boolean = false,
   ) {
     if (this.conn && this.conn.ServerUrl) {
-      let userJSON = localStorage.getItem("user");
+      let userJSON = localStorage.getItem('user');
       if (userJSON) {
         let user = JSON.parse(userJSON) as LoginData;
         if (user.accessToken && !hardCheck) {

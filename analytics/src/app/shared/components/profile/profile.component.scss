@@ -1,0 +1,116 @@
+.profile-menu {
+	margin: 0;
+	.card-img {
+		margin: -5px 0 0 !important;
+		height: 0;
+		overflow: hidden;
+		transition: all 200ms linear;
+		-webkit-transition: all,250ms;
+		-khtml-transition: all,250ms;
+		-moz-transition: all,250ms;
+		-ms-transition: all,250ms;
+		-o-transition: all,250ms;
+		transition: all,250ms;
+		padding: 0;
+		width: 100%;
+		background-repeat: no-repeat!important;
+		background-size: cover!important;
+		background-position: center!important;
+		
+		.profile {
+			min-height: 90px;
+			padding: 15px;
+			
+			.card-heading {
+				position: relative;
+				padding: 0 5px;
+			}
+		}
+		
+		a.info:link {
+			font-size: 0.8125em;
+			padding: 8px 0;
+			margin: 5px 0 0;
+			display: block;
+			background-color: rgba(0,0,0,.5);
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			color: #fff;
+			
+			span {
+				padding: 0 15px;
+			}
+		}
+		
+		.info.open:after {
+			-webkit-transform: rotate(180deg);
+			-moz-transform: rotate(180deg);
+			-ms-transform: rotate(180deg);
+			-o-transform: rotate(180deg);
+			transform: rotate(180deg);
+		}
+		
+		&.open {
+			min-height: 150px;
+			height: 150px;
+			margin: 0 !important;
+		}
+	}
+	
+	.card.profile-menu.open a.info:after,
+	a.info:after {
+		font-family: Material-Design-Iconic-Font;
+		right: 10px;
+		top: 0;
+		font-size: 25px;
+		font-style: normal;
+		font-weight: 400;
+		pointer-events: none;
+		position: absolute;
+		color: #fff;
+	}
+	
+	.submenu {
+		margin: 0;
+		padding: 0;
+		height: 0;
+		overflow: hidden;
+		transition: all 100ms linear;
+		
+		li {
+			position: relative;
+			max-height: 45px;
+			
+			a {
+				border-radius: 0!important;
+				font-size: 13px;
+				border-left: solid 3px transparent;
+				padding: 10px 15px;
+				width: 100%;
+				display: block;
+				position: relative;
+				
+				&:hover {
+					background-color: #eaf3f8;
+					color: #252d38;
+				}
+				
+				i {
+					width: 25px;
+					font-size: 20px;
+					vertical-align: text-top;
+					display: inline-block;
+				}
+			}
+		}
+		
+		&.open {
+			display: block;
+			padding: 0 0 40px 0;
+			height: auto;
+			overflow: visible;
+		}
+	}
+}

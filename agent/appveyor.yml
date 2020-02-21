@@ -1,0 +1,53 @@
+environment:
+    nodejs_version: 9.5.0
+    matrix:
+        -   PYTHON: 'C:\Python33'
+            PYTHON_VERSION: 3.3.x
+            PYTHON_ARCH: '32'
+
+build:
+    parallel: true
+install:
+    - 'SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%'
+    - 'SET NODE_PATH=%AppData%\npm\node_modules'
+    - 'python --version'
+    - 'python -c "import struct; print(struct.calcsize(''P'') * 8)"'
+    - 'python -m pip install --upgrade pip'
+    - '%PYTHON%\python.exe -m pip install wheel'
+    - '%CMD_IN_ENV% pip install awscli'
+    - 'aws --version'
+    - 'npm i -g npm@5.7.1'
+    - 'npm i -g typings'
+    - 'npm i node-sass'
+    - 'npm install -g @angular/cli@1.6.1'
+    - 'npm install'
+test_script:
+    - 'node --version && npm --version'
+build_script:
+    - 'ng build --prod --aot=false'
+    - cd dist
+    - npm i
+    - npm i -g electron-builder@19.56.0
+    - npm install -g electron-rebuild
+    - electron-rebuild -v 1.8.2
+    # - node_modules/.bin/electron-rebuild.cmd -v 1.8.2
+    - electron-builder && cd ..
+    - cd release
+    # - 'aws s3 cp latest.yml s3://ana-content/cdn/dist/agent-panel/win-x64/ --acl public-read'
+    - cd ..
+    - 'aws s3 cp release s3://ana-content/cdn/dist/agent-panel/win-x64/ --exclude "win*" --include "Ana*.exe.blockmap" --recursive --acl public-read'
+    - 'aws s3 cp release s3://ana-content/cdn/dist/agent-panel/win-x64/ --exclude "win*" --include "*.yml" --recursive --acl public-read'
+    - 'aws s3 cp release s3://ana-content/cdn/dist/agent-panel/win-x64/ --exclude "win*" --include "Ana*.exe" --recursive --acl public-read'
+    - 'ECHO "File upload to S3 Successfull"'
+cache:
+    - 'node_modules -> package.json'
+    - '%LOCALAPPDATA%\Yarn'
+notifications:
+    -
+        provider: Email
+        to:
+            - soumyajit.dutta@nowfloats.com
+            - khaja.nizamuddin@nowfloats.com
+        on_build_success: false
+        on_build_failure: true
+        on_build_status_changed: true

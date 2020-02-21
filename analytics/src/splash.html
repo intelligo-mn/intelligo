@@ -1,0 +1,73 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Ana Analytics</title>
+    <base href="./">
+    <style>
+        .title {
+            color: white;
+            text-align: center;
+            margin: 0;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .chatflow-loading {
+            z-index: 20;
+            padding: 10px 50px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: #8cc83c;
+        }
+
+            .chatflow-loading > .loading-content {
+                width: 200px;
+                height: 200px;
+                position: fixed;
+                top: 40%;
+                left: 50%;
+                -moz-transform: translate(-50%,-50%);
+                -ms-transform: translate(-50%,-50%);
+                -o-transform: translate(-50%,-50%);
+                -webkit-transform: translate(-50%,-50%);
+                transform: translate(-50%,-50%);
+            }
+
+    </style>
+</head>
+<body>
+    <div class="chatflow-loading">
+        <div class="loading-content">
+            <img src="assets/img/ana.svg" />
+            <div class="title">Ana Analytics</div>
+            <br />
+            <br />
+            <svg class="lds-message" style="transform: translateY(-82px);" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                <g transform="translate(20 50)">
+                    <circle cx="0" cy="0" r="6" fill="#ffffff" transform="scale(0.977039 0.977039)">
+                        <animateTransform attributeName="transform" type="scale" begin="-0.375s" calcMode="spline" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" values="0;1;0" keyTimes="0;0.5;1" dur="1s" repeatCount="indefinite"></animateTransform>
+                    </circle>
+                </g>
+                <g transform="translate(40 50)">
+                    <circle cx="0" cy="0" r="6" fill="#ffffff" transform="scale(0.730912 0.730912)">
+                        <animateTransform attributeName="transform" type="scale" begin="-0.25s" calcMode="spline" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" values="0;1;0" keyTimes="0;0.5;1" dur="1s" repeatCount="indefinite"></animateTransform>
+                    </circle>
+                </g>
+                <g transform="translate(60 50)">
+                    <circle cx="0" cy="0" r="6" fill="#ffffff" transform="scale(0.37591 0.37591)">
+                        <animateTransform attributeName="transform" type="scale" begin="-0.125s" calcMode="spline" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" values="0;1;0" keyTimes="0;0.5;1" dur="1s" repeatCount="indefinite"></animateTransform>
+                    </circle>
+                </g>
+                <g transform="translate(80 50)">
+                    <circle cx="0" cy="0" r="6" fill="#ffffff" transform="scale(0.0819473 0.0819473)">
+                        <animateTransform attributeName="transform" type="scale" begin="0s" calcMode="spline" keySplines="0.3 0 0.7 1;0.3 0 0.7 1" values="0;1;0" keyTimes="0;0.5;1" dur="1s" repeatCount="indefinite"></animateTransform>
+                    </circle>
+                </g>
+            </svg>
+        </div>
+    </div>
+</body>
+</html>

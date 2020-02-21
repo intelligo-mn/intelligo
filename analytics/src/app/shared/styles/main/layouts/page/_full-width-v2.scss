@@ -1,0 +1,20 @@
+.fullWidth2-wrapper {
+	.tab-header {
+		.nav-tabs li a:after {
+			bottom: 2px;
+		}
+		.nav-link {
+			padding: 15px 30px;
+			font-weight: 400;
+			font-size: rem(14px);
+		}
+	}
+	.content {
+		h1 {
+			padding: 20px 30px;
+		}
+		.content-body {
+			padding: 30px;
+		}
+	}
+}

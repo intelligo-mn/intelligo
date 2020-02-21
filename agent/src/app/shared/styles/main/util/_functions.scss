@@ -1,0 +1,23 @@
+// Convert PX to EM
+// =============================================================================
+$browser-context: 16; // Default
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em;
+}
+@function material-color($color-name, $color-variant: '500') {
+  $color: map-get(map-get($material-colors, $color-name),$color-variant);
+  @if $color {
+    @return $color;
+  } @else {
+    // Libsass still doesn't seem to support @error
+    @warn "=> ERROR: COLOR NOT FOUND! <= | Your $color-name, $color-variant combination did not match any of the values in the $material-colors map.";
+  }
+}
+@function mdi($name) {
+    @return char(map-get($mdi-icons, $name));
+}
+
+@function rem($size) {
+  $remSize: $size / 16px;
+  @return #{$remSize}rem;
+}

@@ -1,0 +1,490 @@
+//--------------------------------------------
+// Actions - is used for the header icons on
+// the content header, side panels and cards
+//--------------------------------------------
+//Card Actions
+//------------------------------------------------------------------------------
+
+ul.actions.bottom-left,
+ul.actions.top-left,
+ul.actions.bottom-right,
+ul.actions.top-right {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+
+	> li {
+		display: inline-block;
+
+		a {
+			font-size: rem(18px);
+			text-transform: uppercase;
+		}
+
+		a.btn,
+		button.btn {
+			font-size: rem(13px);
+		}
+	}
+}
+
+ul.actions.top-right {
+	right: 20px;
+	top: 20px;
+}
+
+ul.actions.top-left {
+	left: 20px;
+	top: 20px;
+
+	> li {
+		margin-right: 10px;
+	}
+
+	i {
+		font-size: rem(18px);
+	}
+}
+
+ul.actions.bottom-right {
+	right: 10px;
+	bottom: 0;
+
+	> li {
+		.btn {
+			margin: 7px 0;
+			padding: 10px;
+		}
+
+		a {
+			margin: 15px 0;
+		}
+	}
+}
+
+ul.actions.bottom-left {
+	left: 10px;
+	bottom: 0;
+
+	> li {
+		.btn {
+			margin: 7px 0;
+			padding: 10px;
+		}
+
+		a {
+			margin: 15px 0;
+		}
+	}
+}
+
+ul.actions.icons {
+	position: absolute;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+
+	li {
+		display: inline-block;
+
+		i {
+			font-size: rem(18px);
+		}
+
+		ul {
+			li {
+				display: block;
+			}
+		}
+	}
+
+	li a i {
+		font-size: rem(18px);
+	}
+
+	li {
+		.btn-fab {
+			i {
+				font-size: 24px !important;
+			}
+		}
+	}
+}
+
+//Card Toolbars with buttons
+ul.actions.buttons.top-right {
+	right: 20px;
+	top: 0;
+	li {
+		.btn {
+			font-size: 14px;
+		}
+	}
+	li.dropdown {
+		a {
+			font-size: 14px;
+		}
+	}
+}
+
+#header_wrapper {
+	.actions.icons > a,
+	.actions.icons > li > a {
+		width: 40px;
+		height: 40px;
+		padding-top: 11px;
+	}
+
+	.actions.top-left {
+		left: 21px !important;
+		top: 10px !important;
+		z-index: 10;
+
+		li {
+			padding-right: 8px;
+		}
+	}
+
+	.actions.top-right {
+		right: 20px !important;
+		top: 10px !important;
+		z-index: 10;
+
+		li {
+			padding-left: 8px;
+		}
+	}
+}
+@media (max-width: 767px) {
+	#header_wrapper {
+		.actions.top-right {
+			right: 20px !important;
+			top: 10px !important;
+			z-index: 10;
+
+			li {
+				padding-left: 8px;
+			}
+		}
+	}
+}
+.actions.icons > a,
+.actions.icons > li > a {
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	text-align: center;
+	padding-top: 5px;
+	position: relative;
+}
+
+.actions.icons > a:hover,
+.actions.icons > li > a:hover {
+	color: #3e4c5e;
+}
+
+.actions.icons > a:before,
+.actions.icons > li > a:before {
+	left: 0;
+	top: 0;
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	-webkit-transform: scale3d(0, 0, 0);
+	-moz-transform: scale3d(0, 0, 0);
+	-ms-transform: scale3d(0, 0, 0);
+	-o-transform: scale3d(0, 0, 0);
+	transform: scale3d(0, 0, 0);
+	-webkit-transition: all;
+	-o-transition: all;
+	transition: all;
+	-webkit-transition-duration: 250ms;
+	transition-duration: 250ms;
+	background-color: rgba(0, 0, 0, 0.1);
+	z-index: 0;
+	border-radius: 50%;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+
+.actions.icons > a.open:before,
+.actions.icons > a:hover:before,
+.actions.icons > li > a.open:before,
+.actions.icons > li > a:hover:before {
+	-webkit-transform: scale3d(1, 1, 1);
+	-moz-transform: scale3d(1, 1, 1);
+	-ms-transform: scale3d(1, 1, 1);
+	-o-transform: scale3d(1, 1, 1);
+	transform: scale3d(1, 1, 1);
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
+
+.actions.icons.lg > a,
+.actions.icons.lg > li > a {
+	font-size: rem(23px);
+}
+
+.actions.icons.lg > a:before,
+.actions.icons.lg > li > a:before {
+	top: 3px;
+}
+
+.actions.icons.lg > a.open:before,
+.actions.icons.lg > a:hover:before,
+.actions.icons.lg > li > a.open:before,
+.actions.icons.lg > li > a:hover:before {
+	-webkit-transform: scale3d(1.2, 1.2, 1.2);
+	-moz-transform: scale3d(1.2, 1.2, 1.2);
+	-ms-transform: scale3d(1.2, 1.2, 1.2);
+	-o-transform: scale3d(1.2, 1.2, 1.2);
+	transform: scale3d(1.2, 1.2, 1.2);
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
+
+.actions.icons > li.open > a > i,
+.actions.icons.open > a > i {
+	color: #000;
+}
+
+.actions.icons > li.open > a:before,
+.actions.icons.open > a:before {
+	-webkit-transform: scale(1);
+	-ms-transform: scale(1);
+	-o-transform: scale(1);
+	transform: scale(1);
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
+
+.actions.icons.alt-actions > li > a > i {
+	color: rgba(255, 255, 255, .9);
+}
+
+.actions.icons.alt-actions > li > a:hover > i {
+	color: rgba(255, 255, 255, 1);
+}
+
+.actions.icons.alt-actions > li.open > a > i {
+	color: rgba(255, 255, 255, 1);
+}
+
+.actions.icons.open {
+	z-index: 3;
+}
+
+ul.actions.icons.top-right {
+	right: 10px;
+	top: 15px;
+}
+
+ul.actions.icons.top-left {
+	left: 10px;
+	top: 15px;
+}
+
+ul.actions.icons.bottom-right {
+	right: 15px;
+	z-index: 2;
+	position: absolute;
+	z-index: 2;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+ul.actions.icons.bottom-left {
+	left: 15px;
+	z-index: 2;
+	position: absolute;
+	z-index: 2;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.card-footer,
+.card-heading {
+	ul.actions.icons {
+		position: absolute;
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	ul.actions.icons.right {
+		right: 20px;
+		bottom: 20px;
+
+		&.fab-action {
+			bottom: 30px;
+		}
+	}
+
+	ul.actions.icons.left {
+		left: 20px;
+		bottom: 20px;
+
+		&.fab-action {
+			bottom: 30px;
+		}
+	}
+}
+//Content Header
+//------------------------------------------------------------------------------
+
+#header_wrapper.header-md {
+	#header {
+		ul.actions.icons.top-right {
+			top: 40px;
+			right: 10px;
+		}
+
+		ul.actions.icons.top-left {
+			top: 20px;
+			left: 0;
+		}
+
+		ul.actions.fab-action {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		ul.actions.right.fab-action {
+			right: 20px;
+			bottom: -57px;
+			position: absolute;
+		}
+
+		ul.actions.left.fab-action {
+			left: 20px;
+			bottom: -85px;
+			position: absolute;
+		}
+	}
+}
+
+#header_wrapper.header-xl {
+	ul.actions {
+		z-index: 99;
+	}
+
+	ul.actions.icons.top-right {
+		top: 40px;
+		right: 10px;
+	}
+
+	ul.actions.icons.top-left {
+		top: 40px;
+		left: 10px;
+	}
+
+	ul.actions.fab-action {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	ul.actions.right.fab-action {
+		right: 3%;
+		bottom: -27px;
+		position: absolute;
+	}
+
+	ul.actions.left.fab-action {
+		left: 10%;
+		bottom: -27px;
+		position: absolute;
+	}
+}
+
+#header_wrapper {
+	#header {
+		ul.actions.bottom-left > li a,
+		ul.actions.top-left > li a,
+		ul.actions.bottom-right > li a,
+		ul.actions.top-right > li a {
+			font-size: rem(22px);
+		}
+
+		.actions.icons > a,
+		.actions.icons > li > a {
+			width: 40px;
+			height: 40px;
+		}
+	}
+}
+@media (max-width: 767px) {
+	#header_wrapper {
+		ul.actions.right.fab-action {
+			right: 15px !important;
+			bottom: 15px !important;
+			position: fixed !important;
+		}
+
+		ul.actions.left.fab-action {
+			left: 15px !important;
+			bottom: 15px !important;
+			position: fixed !important;
+		}
+	}
+}
+//Content Sidebar Navs
+//------------------------------------------------------------------------------
+
+#content_sidebarnav-left,
+#content_sidebarnav-right {
+	.header_wrapper {
+		ul.actions.icons.top-right {
+			top: 15px;
+			right: 25px;
+		}
+
+		ul.actions.icons.bottom-right {
+			bottom: 15px;
+			right: 25px;
+		}
+
+		ul.actions.icons.top-left {
+			top: 15px;
+			left: 25px;
+		}
+
+		ul.actions.icons.bottom-left {
+			bottom: 15px;
+			left: 25px;
+		}
+	}
+
+	.card {
+		margin-bottom: 10px;
+
+		.card-footer {
+			ul.actions.icons.bottom-left {
+				bottom: 6px;
+				left: 8px;
+			}
+
+			ul.actions.icons.bottom-right {
+				bottom: 6px;
+				right: 8px;
+			}
+		}
+	}
+}
+
+#rightnav .card .card-heading {
+	ul.actions.icons.top-right {
+		right: 10px;
+		top: 8px;
+	}
+}
+
+ul.actions.icons.top-left {
+	.content_sidebarnav-left-trigger {
+		display: none;
+	}
+}

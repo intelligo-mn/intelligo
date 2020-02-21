@@ -1,0 +1,52 @@
+.badge {
+	width: 25px;
+	height: 25px;
+	font-size: 12px;
+	font-weight: 600;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 100%;
+	padding: 0;
+	line-height: 24px;
+}
+
+.status.badge {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	font-size: 10px;
+	font-weight: 200;
+	color: #fff;
+	text-align: center;
+	vertical-align: middle;
+	background-color: #e5eff5;
+	border-radius: 100%;
+	padding: 0;
+	line-height: 20px;
+	&.default {
+		background-color: $mw_gray;
+	}
+	&.primary {
+		background-color: $mw_blue;
+	}
+	&.warning {
+		background-color: $mw_yellow;
+	}
+	&.success {
+		background-color: $mw_green;
+	}
+	&.danger {
+		background-color: $mw_red;
+	}
+	&.info {
+		background-color: $mw_blue;
+	}
+	&.purple {
+		background-color: $mw_purple;
+	}
+}
+
+.mini.status.badge {
+	width: 10px;
+	height: 10px;
+}

@@ -1,0 +1,43 @@
+@import "../../styles/main/util/index";
+
+ul.task-list {
+	margin-left: -16px;
+	margin-right: -16px;
+  
+	li {
+		padding: 10px 20px;
+
+		.check {
+			margin-right: 5px;
+		}
+
+		.task {}
+
+		.actions {
+			a {
+				i {
+					font-size: rem(22px);
+				}
+			}
+
+			.edit {
+				padding: 0 20px 0 0;
+			}
+
+			.delete,
+			.edit {
+				visibility: hidden;
+			}
+		}
+	}
+	&:hover{
+			li {
+						.actions {
+				.delete,
+				.edit {
+					visibility: visible;
+				}
+			}
+			}
+	}
+}

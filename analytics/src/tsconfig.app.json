@@ -1,0 +1,17 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"outDir": "../out-tsc/app",
+		"module": "es2015",
+		"baseUrl": "",
+		"types": [
+			"node",
+			"hammerjs",
+			"jquery"
+		 ]
+	},
+	// "include": [
+	// 	"src/**/*"
+	// ],
+	"exclude": ["test.ts", "**/*.spec.ts"]
+}

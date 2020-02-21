@@ -1,0 +1,60 @@
+:host /deep/ {
+	.actions.icons.header-actions.top-right {
+		right: 10px;
+		top: 3px;
+	}
+	
+	form.slider {
+		overflow-y: hidden;
+		max-height: 200px;
+		transition-property: all;
+		transition-duration: 0.5s;
+		transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+		
+		&.closed {
+			max-height: 0;
+		}
+	}
+	
+	.form-group {
+		padding: 0;
+		margin: 0;
+	}
+	
+	.mat-form-field {
+		display: block;
+	}
+	
+	.card.card-task-mini {
+		margin-bottom: 15px !important;
+		
+		.card-header {
+			height: 40px;
+			padding: 15px 10px !important;
+			z-index: 5;
+			
+			ul.actions.top-right {
+				top: 0;
+			}
+			
+			ul.actions.top-left {
+				top: 5px;
+				left: 12px;
+			}
+			
+			&:hover {
+				cursor: move;
+			}
+		}
+		
+		.task-done {
+			text-decoration: line-through;
+			color: rgb(211, 211, 211);
+		}
+		
+		.task-spinner {
+			font-size: 15px;
+			color: rgb(60, 141, 188);
+		}
+	}
+}

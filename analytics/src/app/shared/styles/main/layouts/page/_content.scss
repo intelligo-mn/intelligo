@@ -1,0 +1,51 @@
+#app_wrapper {
+	position: relative;
+	min-height: 100%;
+	#content_outer_wrapper {
+		padding: 0px 0 0 240px;
+		@include transition(all 250ms);
+		.content_inner_wrapper {
+			#content_wrapper {
+				.content {
+					position: relative;
+					min-height: calc(100vh - 165px);
+				}
+			}
+		}
+	}
+}
+
+.app_sidebar-menu-collapsed {
+	#app_wrapper {
+		position: relative;
+		min-height: 100%;
+
+		#content_outer_wrapper {
+			min-height: 100%;
+			padding-left: 50px;
+			@include transition(all 250ms);
+		}
+		@media (max-width: 992px) {
+			#content_outer_wrapper {
+				padding-left: 0;
+				@include transition(all 250ms);
+			}
+		}
+	}
+}
+@media (max-width: 992px) {
+	#app_wrapper {
+	#content_outer_wrapper {
+		padding-left: 0 !important;
+		@include transition(all 250ms);
+		.content_inner_wrapper {
+			#content_wrapper {
+				.content {
+					position: relative;
+					min-height: calc(100vh - 145px);
+				}
+			}
+		}
+	}
+}
+}

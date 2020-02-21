@@ -1,0 +1,48 @@
+:host /deep/ {
+	.mdIcons {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		li {
+			display: inline-block;
+			width: 112px;
+			max-width: 112px;
+			min-width: 112px;
+			text-align: center;
+			margin: 17px;
+			.material-icons {
+				font-size: 48px;
+				width: 48px;
+				height: 48px;
+			}
+			.icon-name {
+				font-size: 13px;
+				display: block;
+				padding: 6px 0;
+			}
+		}
+	}
+	.iconic-fonts {
+		.icon {
+			display: inline-block;
+			width: 112px;
+			max-width: 112px;
+			min-width: 112px;
+			text-align: center;
+			margin: 17px;
+			i {
+				font-size: 48px;
+				width: 48px;
+				height: 48px;
+			}
+			span {
+				font-size: 13px;
+				display: block;
+				padding: 6px 0;
+			}
+		}
+		.page-header {
+			padding: 20px;
+		}
+	}
+}

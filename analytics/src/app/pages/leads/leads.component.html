@@ -1,0 +1,100 @@
+<div id="content_wrapper" class="fullWidth1-wrapper">
+  <div class="content">
+    
+    <header class="header-wrapper header-sm">
+        <ul class="actions icons top-right">
+            <li>
+                <a href="javascript:void(0)" (click)="exportDataAsExcel()">
+                    <i class="zmdi zmdi-download"></i>
+                </a>
+            </li>
+        </ul>
+      <h1>User Data</h1>
+    </header>
+    <div *ngIf="!errorMsg">
+      <div class="content-body">
+        <div class="card">
+            <h2> There is no data present please try later</h2>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="errorMsg">
+    <div class="content-body">
+            <div class="row">
+                <div class="col-md-3">
+                        <div class="card">
+                        <mat-form-field>
+                                <input matInput [matDatepicker]="picker" [(ngModel)]="chosenStartDate"  (focus)="picker.open()" readonly placeholder="Start Date">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field>
+                                    <input matInput [matDatepicker]="picker1" [(ngModel)]="chosenEndDate" (focus)="picker1.open()" readonly placeholder="End Date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker> 
+                                </mat-form-field>
+                                <button mat-button (click)="onClick($event)">Apply</button>
+                </div>
+            </div>
+                <div class="col-md-3">
+                   <div class="card">
+                        <h3>Select channel</h3>
+                            <mat-checkbox *ngFor="let channel of channels" value="{{channel}}" (change)="onCheckChanged($event)">{{channel}}</mat-checkbox>
+                    </div>
+                </div>
+        </div>
+      <div class="row" *ngIf="Loading">
+        <div class="col-md-6">
+          <!-- <ngx-datatable #table align="center" class="material striped table" [rows]="filteredRecords" [columns]="columns" [columnMode]="'force'" [headerHeight]="50"
+            [footerHeight]="50" [rowHeight]="'auto'" [limit]="15" (select)='onSelect($event)' [selectionType]="'single'">
+            <ngx-datatable-column [width]="100" name="Sl. No." [prop]="'slNo'"></ngx-datatable-column>
+            <ngx-datatable-column [width]="150" name="Date" [prop]="'date'"></ngx-datatable-column>
+            <ngx-datatable-column [width]="150" name="Channel" [prop]="'channel'"></ngx-datatable-column>
+            <ngx-datatable-column [width]="150" name="Time Spent" [prop]="'timeSpan'"></ngx-datatable-column>
+            <ngx-datatable-column [width]="170" name="Interactions" [prop]="'noOfInteractions'"></ngx-datatable-column>
+        </ngx-datatable> -->
+        <ngx-datatable
+        #table
+        class='material striped table'
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [limit]="10"
+        [selectionType]="'single'"
+        (select)='onSelect($event)'
+        [rows]='rows'>
+        <ngx-datatable-column [width]="100" resizeable="true" name="Sl. No." [prop]="'slNo'"></ngx-datatable-column>
+        <ngx-datatable-column [width]="150" resizeable="true" name="Date" [prop]="'date'"></ngx-datatable-column>
+        <ngx-datatable-column [width]="150" resizeable="true" name="Channel" [prop]="'channel'"></ngx-datatable-column>
+        <ngx-datatable-column [width]="150" resizeable="true" name="Time Spent" [prop]="'timeSpan'"></ngx-datatable-column>
+        <ngx-datatable-column [width]="170" resizeable="true" name="Interactions" [prop]="'noOfInteractions'"></ngx-datatable-column>
+        
+      </ngx-datatable>
+          
+        </div>
+        <div class="col-md-6" *ngIf="isSelected">
+          <div class="card" >
+            <table border="0" class="table"style="overflow-x:scroll">
+              <tr>
+                  <th>Serial Number: </th>
+                  <th>{{slno}}</th>
+              </tr>
+                <tr *ngFor="let key of displayData">
+                <td style="font-weight:bold">
+                  {{key}}:
+                </td>
+                <td style="word-wrap:break-word;word-break:break-all">
+                  {{varData[key]}}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+</div>
+<footer id="footer_wrapper" class="footer_wrapper"></footer>

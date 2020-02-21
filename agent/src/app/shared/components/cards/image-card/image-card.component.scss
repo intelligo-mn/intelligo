@@ -1,0 +1,13 @@
+.card .card-header.card-image {
+	.card-title.overlay {
+		width: 100%;
+		left: 0;
+		text-indent: 20px;
+		height: 30px;
+		padding: 15px 0;
+		bottom: 0;
+		background: rgba(0, 0, 0, .35);
+		border-bottom: solid 20px rgba(0, 0, 0, .02);
+		position: absolute;
+	}
+}

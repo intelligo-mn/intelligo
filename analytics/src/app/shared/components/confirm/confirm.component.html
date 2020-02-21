@@ -1,0 +1,5 @@
+<div mat-dialog-content>{{confirmMessage}}</div>
+<div mat-dialog-actions class="p-20">
+	  <button mat-button (click)="dialogRef.close(false)">Cancel</button>
+    <button mat-raised-button class="mat-accent mr-15" (click)="dialogRef.close(true)">Confirm</button>
+</div>

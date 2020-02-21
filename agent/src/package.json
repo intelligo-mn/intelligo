@@ -1,0 +1,42 @@
+{
+  "name": "ana-agent-panel",
+  "version": "0.1.9",
+  "main": "electron.js",
+  "author": "Team Ana",
+  "description": "Ana Agent Panel",
+  "homepage": "http://ana.chat",
+  "license": "GNU-GPLv3",
+  "scripts": {
+    "linux-prebuild": "sudo apt-get install libxext-dev libxtst-dev libxkbfile-dev",
+    "pack": "npm i && electron-rebuild -v 1.7.9 && electron-builder"
+  },
+  "build": {
+    "appId": "com.ana.agent-panel",
+    "productName": "Ana Agent Panel",
+    "directories": {
+      "output": "../release",
+      "app": ".",
+      "buildResources": "../build"
+    },
+    "mac": {
+      "icon": "favicon.icns",
+      "category": "public.app-category.graphics-design"
+    },
+    "win": {
+      "icon": "favicon.ico"
+    },
+    "linux": {
+      "category": "Graphics",
+      "icon": "favicon"
+    },
+    "electronVersion": "1.7.9",
+    "publish": {
+      "provider": "generic",
+      "url": "https://cdn.ana.chat/dist/agent-panel/${os}-${arch}"
+    }
+  },
+  "dependencies": {
+    "electron-spellchecker": "^1.1.2",
+    "electron-updater": "^2.18.2"
+  }
+}

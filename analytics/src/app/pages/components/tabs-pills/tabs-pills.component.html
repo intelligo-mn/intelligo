@@ -1,0 +1,423 @@
+<div id="content_wrapper" class="fullWidth1-wrapper">
+	<div class="content">
+		<div class="header-wrapper header-sm">
+			<header class="container-fluid">
+				<div class="row">
+					<div class="col">
+						<h1>Tabs &amp; Pills</h1>
+					</div>
+				</div>
+			</header>
+		</div>
+		<div class="content-body">
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Information</h2>
+						</header>
+						<div class="card-block">
+							<p>
+								Make it easy to explore and switch between different views or functional aspects of an app or to browse categorized data sets.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Basic Tabs</h2>
+						</header>
+						<div class="card-block">
+							<ngb-tabset>
+								<ngb-tab title="Home">
+									<ng-template ngbTabContent>
+										<div class="tab-content p-20">
+											<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.
+												Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+											</div>
+										</ng-template>
+									</ngb-tab>
+									<ngb-tab title="About">
+										<ng-template ngbTabContent>
+											<div class="tab-content p-20">
+												<p> Mlkshk tilde church-key literally jean shorts heirloom. Venmo scenester air plant narwhal ennui, ethical fashion axe small batch raclette bicycle rights asymmetrical 3 wolf moon art party listicle. Street art lo-fi snackwave, cliche chartreuse
+													pug drinking vinegar hashtag pok pok asymmetrical la croix. Tilde distillery meditation waistcoat vaporware, selfies mumblecore schlitz brunch try-hard gluten-free wolf</p>
+												</div>
+											</ng-template>
+										</ngb-tab>
+										<ngb-tab title="Task">
+											<ng-template ngbTabContent>
+												<div class="tab-content p-20">
+													<p> Poutine tumblr wayfarers salvia. Quinoa twee raclette VHS. Enamel pin cornhole kale chips freegan meggings poutine kinfolk swag. Yuccie tumeric pok pok taxidermy affogato food truck. Enamel pin affogato next level occupy cliche, PBR&B +1 edison
+														bulb master cleanse. Williamsburg edison bulb bitters, venmo vexillologist tattooed keffiyeh ennui four dollar toast tofu. Yr microdosing biodiesel meggings venmo actually.</p>
+													</div>
+												</ng-template>
+											</ngb-tab>
+										</ngb-tabset>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="card">
+									<header class="card-header">
+										<h2 class="card-title">Tab Animation</h2>
+									</header>
+									<div class="card-block">
+										<mat-tab-group class="demo-tab-group">
+											<mat-tab label="Home">
+												<div class="tab-content p-20">
+													<p>
+														Schlitz enamel pin neutra succulents bespoke, dreamcatcher tattooed flannel man bun la croix YOLO readymade chicharrones poke. Selfies ramps brooklyn microdosing church-key sustainable, keytar next level chicharrones PBR&B. Mlkshk schlitz whatever, twee
+														wolf godard banh mi try-hard meh bitters irony. Cronut williamsburg shabby chic, typewriter vape skateboard post-ironic lo-fi YOLO shoreditch iceland. Lyft tumblr prism.
+													</p>
+												</div>
+											</mat-tab>
+											<mat-tab label="About">
+												<div class="tab-content p-20">
+													<p>
+														Poutine tumblr wayfarers salvia. Quinoa twee raclette VHS. Enamel pin cornhole kale chips freegan meggings poutine kinfolk swag. Yuccie tumeric pok pok taxidermy affogato food truck. Enamel pin affogato next level occupy cliche, PBR&B +1 edison bulb master
+														cleanse. Williamsburg edison bulb bitters, venmo vexillologist tattooed keffiyeh ennui four dollar toast tofu. Yr microdosing biodiesel meggings venmo actually.
+													</p>
+												</div>
+											</mat-tab>
+											<mat-tab label="Task">
+												<div class="tab-content p-20">
+													<p>
+														Helvetica letterpress bicycle rights banh mi keffiyeh af. Food truck shabby chic actually mixtape twee. Pabst blog messenger bag, four loko vape post-ironic paleo freegan. Twee raw denim brooklyn cornhole, polaroid cardigan 8-bit cred pinterest biodiesel.
+														Seitan woke vinyl, hoodie fingerstache irony bicycle rights vape sustainable DIY skateboard. Quinoa tumeric venmo, af lyft fashion axe slow-carb. Fashion axe occupy.
+													</p>
+												</div>
+											</mat-tab>
+											<mat-tab label="Settings">
+												<div class="tab-content p-20">
+													<p>
+														Mlkshk tilde church-key literally jean shorts heirloom. Venmo scenester air plant narwhal ennui, ethical fashion axe small batch raclette bicycle rights asymmetrical 3 wolf moon art party listicle. Street art lo-fi snackwave, cliche chartreuse pug drinking
+														vinegar hashtag pok pok asymmetrical la croix. Tilde distillery meditation waistcoat vaporware, selfies mumblecore schlitz brunch try-hard gluten-free wolf.
+													</p>
+												</div>
+											</mat-tab>
+										</mat-tab-group>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div class="card">
+									<header class="card-header">
+										<h2 class="card-title">Tabs Justified</h2>
+									</header>
+									<div class="card-block p-0">
+										<ngb-tabset [justify]="currentJustify">
+											<ngb-tab title='Home'>
+												<ng-template ngbTabContent>
+													<div class="tab-content p-20">
+														<p>
+															Schlitz enamel pin neutra succulents bespoke, dreamcatcher tattooed flannel man bun la croix YOLO readymade chicharrones poke. Selfies ramps brooklyn microdosing church-key sustainable, keytar next level chicharrones PBR&B. Mlkshk schlitz whatever, twee
+															wolf godard banh mi try-hard meh bitters irony. Cronut williamsburg shabby chic, typewriter vape skateboard post-ironic lo-fi YOLO shoreditch iceland. Lyft tumblr prism.
+														</p>
+													</div>
+												</ng-template>
+											</ngb-tab>
+											<ngb-tab title='About'>
+												<ng-template ngbTabContent>
+													<div class="tab-content p-20">
+														<p>
+															Helvetica letterpress bicycle rights banh mi keffiyeh af. Food truck shabby chic actually mixtape twee. Pabst blog messenger bag, four loko vape post-ironic paleo freegan. Twee raw denim brooklyn cornhole, polaroid cardigan 8-bit cred pinterest biodiesel.
+															Seitan woke vinyl, hoodie fingerstache irony bicycle rights vape sustainable DIY skateboard. Quinoa tumeric venmo, af lyft fashion axe slow-carb. Fashion axe occupy.
+														</p>
+													</div>
+												</ng-template>
+											</ngb-tab>
+											<ngb-tab title='Task'>
+												<ng-template ngbTabContent>
+													<div class="tab-content p-20">
+														<p>
+															Poutine tumblr wayfarers salvia. Quinoa twee raclette VHS. Enamel pin cornhole kale chips freegan meggings poutine kinfolk swag. Yuccie tumeric pok pok taxidermy affogato food truck. Enamel pin affogato next level occupy cliche, PBR&B +1 edison bulb master
+															cleanse. Williamsburg edison bulb bitters, venmo vexillologist tattooed keffiyeh ennui four dollar toast tofu. Yr microdosing biodiesel meggings venmo actually.
+														</p>
+													</div>
+												</ng-template>
+											</ngb-tab>
+											<ngb-tab title='Settings'>
+												<ng-template ngbTabContent>
+													<div class="tab-content p-20">
+														<p>
+															Mlkshk tilde church-key literally jean shorts heirloom. Venmo scenester air plant narwhal ennui, ethical fashion axe small batch raclette bicycle rights asymmetrical 3 wolf moon art party listicle. Street art lo-fi snackwave, cliche chartreuse pug drinking
+															vinegar hashtag pok pok asymmetrical la croix. Tilde distillery meditation waistcoat vaporware, selfies mumblecore schlitz brunch try-hard gluten-free wolf.
+														</p>
+													</div>
+												</ng-template>
+											</ngb-tab>
+										</ngb-tabset>
+									</div>
+								</div>
+							</div>
+							<div class="col">
+								<div class="card">
+									<header class="card-header">
+										<h2 class="card-title">Nav Pills Left</h2>
+									</header>
+									<div class="card-block">
+										<ngb-tabset class="pills-left" type="pills" [orientation]="verticalOrientation">
+											<ngb-tab title="Home">
+												<ng-template ngbTabContent>
+													<div class="tab-content p-20">
+														<p> Poutine tumblr wayfarers salvia. Quinoa twee raclette VHS. Enamel pin cornhole kale chips freegan meggings poutine kinfolk swag. Yuccie tumeric pok pok taxidermy affogato food truck. Enamel pin affogato next level occupy cliche, PBR&B +1 edison
+															bulb master cleanse. Williamsburg edison bulb bitters, venmo vexillologist tattooed keffiyeh ennui four dollar toast tofu. Yr microdosing biodiesel meggings venmo actually.</p>
+														</div>
+													</ng-template>
+												</ngb-tab>
+												<ngb-tab title="About">
+													<ng-template ngbTabContent>
+														<div class="tab-content p-20">
+															<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.
+																Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+															</div>
+														</ng-template>
+													</ngb-tab>
+													<ngb-tab title="Task">
+														<ng-template ngbTabContent>
+															<div class="tab-content p-20">
+																<p> Mlkshk tilde church-key literally jean shorts heirloom. Venmo scenester air plant narwhal ennui, ethical fashion axe small batch raclette bicycle rights asymmetrical 3 wolf moon art party listicle. Street art lo-fi snackwave, cliche chartreuse
+																	pug drinking vinegar hashtag pok pok asymmetrical la croix. Tilde distillery meditation waistcoat vaporware, selfies mumblecore schlitz brunch try-hard gluten-free wolf.</p>
+																</div>
+															</ng-template>
+														</ngb-tab>
+													</ngb-tabset>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col">
+											<div class="card">
+												<header class="card-header">
+													<h2 class="card-title">Tabs right</h2>
+												</header>
+												<div class="card-block p-0">
+													<ngb-tabset [justify]="justifyRight">
+														<ngb-tab title='Home'>
+															<ng-template ngbTabContent>
+																<div class="tab-content p-20">
+																	<p>
+																		Schlitz enamel pin neutra succulents bespoke, dreamcatcher tattooed flannel man bun la croix YOLO readymade chicharrones poke. Selfies ramps brooklyn microdosing church-key sustainable, keytar next level chicharrones PBR&B. Mlkshk schlitz whatever, twee
+																		wolf godard banh mi try-hard meh bitters irony. Cronut williamsburg shabby chic, typewriter vape skateboard post-ironic lo-fi YOLO shoreditch iceland. Lyft tumblr prism.
+																	</p>
+																</div>
+															</ng-template>
+														</ngb-tab>
+														<ngb-tab title='About'>
+															<ng-template ngbTabContent>
+																<div class="tab-content p-20">
+																	<p>
+																		Helvetica letterpress bicycle rights banh mi keffiyeh af. Food truck shabby chic actually mixtape twee. Pabst blog messenger bag, four loko vape post-ironic paleo freegan. Twee raw denim brooklyn cornhole, polaroid cardigan 8-bit cred pinterest biodiesel.
+																		Seitan woke vinyl, hoodie fingerstache irony bicycle rights vape sustainable DIY skateboard. Quinoa tumeric venmo, af lyft fashion axe slow-carb. Fashion axe occupy.
+																	</p>
+																</div>
+															</ng-template>
+														</ngb-tab>
+														<ngb-tab title='Task'>
+															<ng-template ngbTabContent>
+																<div class="tab-content p-20">
+																	<p>
+																		Poutine tumblr wayfarers salvia. Quinoa twee raclette VHS. Enamel pin cornhole kale chips freegan meggings poutine kinfolk swag. Yuccie tumeric pok pok taxidermy affogato food truck. Enamel pin affogato next level occupy cliche, PBR&B +1 edison bulb master
+																		cleanse. Williamsburg edison bulb bitters, venmo vexillologist tattooed keffiyeh ennui four dollar toast tofu. Yr microdosing biodiesel meggings venmo actually.
+																	</p>
+																</div>
+															</ng-template>
+														</ngb-tab>
+														<ngb-tab title='Settings'>
+															<ng-template ngbTabContent>
+																<div class="tab-content p-20">
+																	<p>
+																		Mlkshk tilde church-key literally jean shorts heirloom. Venmo scenester air plant narwhal ennui, ethical fashion axe small batch raclette bicycle rights asymmetrical 3 wolf moon art party listicle. Street art lo-fi snackwave, cliche chartreuse pug drinking
+																		vinegar hashtag pok pok asymmetrical la croix. Tilde distillery meditation waistcoat vaporware, selfies mumblecore schlitz brunch try-hard gluten-free wolf.
+																	</p>
+																</div>
+															</ng-template>
+														</ngb-tab>
+													</ngb-tabset>
+												</div>
+											</div>
+										</div>
+										<div class="col">
+											<div class="card">
+												<header class="card-header">
+													<h2 class="card-title">Nav Pills Right</h2>
+												</header>
+												<div class="card-block">
+													<ngb-tabset class="pills-right" type="pills" [orientation]="verticalOrientation">
+														<ngb-tab title="Home">
+															<ng-template ngbTabContent>
+																<div class="tab-content p-20">
+																	<p> Poutine tumblr wayfarers salvia. Quinoa twee raclette VHS. Enamel pin cornhole kale chips freegan meggings poutine kinfolk swag. Yuccie tumeric pok pok taxidermy affogato food truck. Enamel pin affogato next level occupy cliche, PBR&B +1 edison
+																		bulb master cleanse. Williamsburg edison bulb bitters, venmo vexillologist tattooed keffiyeh ennui four dollar toast tofu. Yr microdosing biodiesel meggings venmo actually.</p>
+																	</div>
+																</ng-template>
+															</ngb-tab>
+															<ngb-tab title="About">
+																<ng-template ngbTabContent>
+																	<div class="tab-content p-20">
+																		<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.
+																			Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+																		</div>
+																	</ng-template>
+																</ngb-tab>
+																<ngb-tab title="Task">
+																	<ng-template ngbTabContent>
+																		<div class="tab-content p-20">
+																			<p> Mlkshk tilde church-key literally jean shorts heirloom. Venmo scenester air plant narwhal ennui, ethical fashion axe small batch raclette bicycle rights asymmetrical 3 wolf moon art party listicle. Street art lo-fi snackwave, cliche chartreuse
+																				pug drinking vinegar hashtag pok pok asymmetrical la croix. Tilde distillery meditation waistcoat vaporware, selfies mumblecore schlitz brunch try-hard gluten-free wolf.</p>
+																			</div>
+																		</ng-template>
+																	</ngb-tab>
+																</ngb-tabset>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col">
+														<div class="card">
+															<header class="card-header">
+																<h2 class="card-title">Nav Pills Right</h2>
+															</header>
+															<div class="card-block">
+																<ngb-tabset type="pills" [orientation]="horizontalOrientation">
+																	<ngb-tab title="Home">
+																		<ng-template ngbTabContent>
+																			<div class="tab-content p-20">
+																				<p> Poutine tumblr wayfarers salvia. Quinoa twee raclette VHS. Enamel pin cornhole kale chips freegan meggings poutine kinfolk swag. Yuccie tumeric pok pok taxidermy affogato food truck. Enamel pin affogato next level occupy cliche, PBR&B +1 edison
+																					bulb master cleanse. Williamsburg edison bulb bitters, venmo vexillologist tattooed keffiyeh ennui four dollar toast tofu. Yr microdosing biodiesel meggings venmo actually.</p>
+																				</div>
+																			</ng-template>
+																		</ngb-tab>
+																		<ngb-tab title="About">
+																			<ng-template ngbTabContent>
+																				<div class="tab-content p-20">
+																					<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.
+																						Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+																					</div>
+																				</ng-template>
+																			</ngb-tab>
+																			<ngb-tab title="Task">
+																				<ng-template ngbTabContent>
+																					<div class="tab-content p-20">
+																						<p> Mlkshk tilde church-key literally jean shorts heirloom. Venmo scenester air plant narwhal ennui, ethical fashion axe small batch raclette bicycle rights asymmetrical 3 wolf moon art party listicle. Street art lo-fi snackwave, cliche chartreuse
+																							pug drinking vinegar hashtag pok pok asymmetrical la croix. Tilde distillery meditation waistcoat vaporware, selfies mumblecore schlitz brunch try-hard gluten-free wolf.</p>
+																						</div>
+																					</ng-template>
+																				</ngb-tab>
+																			</ngb-tabset>
+																		</div>
+																	</div>
+																</div>
+																<div class="col">
+																	<div class="card">
+																		<header class="card-header">
+																			<h2 class="card-title">Nav Pills with icons</h2>
+																		</header>
+																		<div class="card-block">
+																			<ngb-tabset type="pills" [orientation]="horizontalOrientation">
+																				<ngb-tab>
+																					<ng-template ngbTabTitle><i class="zmdi zmdi-home float-left"></i> Home</ng-template>
+																					<ng-template ngbTabContent>
+																						<div class="tab-content p-20">
+																							<p> Poutine tumblr wayfarers salvia. Quinoa twee raclette VHS. Enamel pin cornhole kale chips freegan meggings poutine kinfolk swag. Yuccie tumeric pok pok taxidermy affogato food truck. Enamel pin affogato next level occupy cliche, PBR&B +1 edison
+																								bulb master cleanse. Williamsburg edison bulb bitters, venmo vexillologist tattooed keffiyeh ennui four dollar toast tofu. Yr microdosing biodiesel meggings venmo actually.</p>
+																							</div>
+																						</ng-template>
+																					</ngb-tab>
+																					<ngb-tab>
+																						<ng-template ngbTabTitle><i class="zmdi zmdi-calendar-note float-left"></i> About</ng-template>
+																						<ng-template ngbTabContent>
+																							<div class="tab-content p-20">
+																								<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.
+																									Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+																								</div>
+																							</ng-template>
+																						</ngb-tab>
+																						<ngb-tab>
+																							<ng-template ngbTabTitle><i class="zmdi zmdi-settings float-left"></i> Settings</ng-template>
+																							<ng-template ngbTabContent>
+																								<div class="tab-content p-20">
+																									<p> Mlkshk tilde church-key literally jean shorts heirloom. Venmo scenester air plant narwhal ennui, ethical fashion axe small batch raclette bicycle rights asymmetrical 3 wolf moon art party listicle. Street art lo-fi snackwave, cliche chartreuse
+																										pug drinking vinegar hashtag pok pok asymmetrical la croix. Tilde distillery meditation waistcoat vaporware, selfies mumblecore schlitz brunch try-hard gluten-free wolf.</p>
+																									</div>
+																								</ng-template>
+																							</ngb-tab>
+																						</ngb-tabset>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="row">
+																			<div class="col">
+																				<div class="card tabs-over-card tabs-primary">
+																					<ngb-tabset>
+																						<ngb-tab title="Home">
+																							<ng-template ngbTabContent>
+																								<div class="tab-content p-20">
+																									<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.
+																										Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+																									</div>
+																								</ng-template>
+																							</ngb-tab>
+																							<ngb-tab title="About">
+																								<ng-template ngbTabContent>
+																									<div class="tab-content p-20">
+																										<p> Mlkshk tilde church-key literally jean shorts heirloom. Venmo scenester air plant narwhal ennui, ethical fashion axe small batch raclette bicycle rights asymmetrical 3 wolf moon art party listicle. Street art lo-fi snackwave, cliche chartreuse
+																											pug drinking vinegar hashtag pok pok asymmetrical la croix. Tilde distillery meditation waistcoat vaporware, selfies mumblecore schlitz brunch try-hard gluten-free wolf</p>
+																										</div>
+																									</ng-template>
+																								</ngb-tab>
+																								<ngb-tab title="Task">
+																									<ng-template ngbTabContent>
+																										<div class="tab-content p-20">
+																											<p> Poutine tumblr wayfarers salvia. Quinoa twee raclette VHS. Enamel pin cornhole kale chips freegan meggings poutine kinfolk swag. Yuccie tumeric pok pok taxidermy affogato food truck. Enamel pin affogato next level occupy cliche, PBR&B +1 edison
+																												bulb master cleanse. Williamsburg edison bulb bitters, venmo vexillologist tattooed keffiyeh ennui four dollar toast tofu. Yr microdosing biodiesel meggings venmo actually.</p>
+																											</div>
+																										</ng-template>
+																									</ngb-tab>
+																								</ngb-tabset>
+																							</div>
+																						</div>
+																						<div class="col">
+																							<div class="card tabs-over-card tabs-accent">
+																								<ngb-tabset>
+																									<ngb-tab title="Home">
+																										<ng-template ngbTabContent>
+																											<div class="tab-content p-20">
+																												<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.
+																													Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+																												</div>
+																											</ng-template>
+																										</ngb-tab>
+																										<ngb-tab title="About">
+																											<ng-template ngbTabContent>
+																												<div class="tab-content p-20">
+																													<p> Mlkshk tilde church-key literally jean shorts heirloom. Venmo scenester air plant narwhal ennui, ethical fashion axe small batch raclette bicycle rights asymmetrical 3 wolf moon art party listicle. Street art lo-fi snackwave, cliche chartreuse
+																														pug drinking vinegar hashtag pok pok asymmetrical la croix. Tilde distillery meditation waistcoat vaporware, selfies mumblecore schlitz brunch try-hard gluten-free wolf</p>
+																													</div>
+																												</ng-template>
+																											</ngb-tab>
+																											<ngb-tab title="Task">
+																												<ng-template ngbTabContent>
+																													<div class="tab-content p-20">
+																														<p> Poutine tumblr wayfarers salvia. Quinoa twee raclette VHS. Enamel pin cornhole kale chips freegan meggings poutine kinfolk swag. Yuccie tumeric pok pok taxidermy affogato food truck. Enamel pin affogato next level occupy cliche, PBR&B +1 edison
+																															bulb master cleanse. Williamsburg edison bulb bitters, venmo vexillologist tattooed keffiyeh ennui four dollar toast tofu. Yr microdosing biodiesel meggings venmo actually.</p>
+																														</div>
+																													</ng-template>
+																												</ngb-tab>
+																											</ngb-tabset>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																						</div>
+																					</div>
+																					<footer id="footer_wrapper" class="footer_wrapper"></footer>

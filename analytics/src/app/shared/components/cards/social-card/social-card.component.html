@@ -1,0 +1,35 @@
+<div class="card type--profile">
+	<header class="card-header card-background" [ngStyle]="{background: 'url(' + backgroundImg  + ')'}">
+		<img src="{{avatarImgPath}}" alt="" class="rounded-circle">
+		<ul class="actions icons top-right">
+			<li class="dropdown" ngbDropdown>
+						<a href="javascript:void(0)" ngbDropdownToggle>
+							<i class="zmdi zmdi-more-vert"></i>
+						</a>
+						<ul class="dropdown-menu btn-primary dropdown-menu-right">
+							<li>
+								<a href="javascript:void(0)">Option One</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)">Option Two</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)">Option Three</a>
+							</li>
+						</ul>
+					</li>
+		</ul>
+	</header>
+	<div class="card-block">
+		<h3 class="name">{{title}}</h3>
+		<span class="title">{{subtitle}}</span>
+		<button type="button" class="btn btn-accent btn-round" matRipple>Connect</button>
+	</div>
+	<footer class="card-footer border-top m-t-50">
+		<div class="row p-t-10 p-b-10">
+			<div class="col"><span class="count">{{postCount}}</span><span>Post</span></div>
+			<div class="col"><span class="count">{{followersCount}}</span><span>Followers</span></div>
+			<div class="col"><span class="count">{{followingCount}}</span><span>Following</span></div>
+		</div>
+	</footer>
+</div>

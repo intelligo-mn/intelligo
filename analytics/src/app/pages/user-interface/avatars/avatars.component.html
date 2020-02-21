@@ -1,0 +1,35 @@
+<div id="content_wrapper" class="fullWidth1-wrapper">
+	<div class="content">
+		<header class="header-wrapper header-sm">
+			<h1>Page Title</h1>
+		</header>
+		<div class="content-body">
+			<div class="card">
+				<header class="card-header">
+					<h2 class="card-title">Utility for Angular Material Avatars</h2>
+					<small class="card-subtitle">Material design avatars using canvas </small>
+					<ul class="actions icons top-right">
+						<li>
+							<a href="javascript:void(0)" data-toggle-view="code">
+						   <i class="zmdi zmdi-code"></i>
+						  </a>
+						</li>
+					</ul>
+				</header>
+				<div class="card-block">
+					<ul class="list-group ">
+						<li class="list-group-item" *ngFor="let avatar of avatarList.avatars">
+							<span class="float-left"><ngu-letter-avatar avatar-data={{avatar.name}} class="avatar"></ngu-letter-avatar></span>
+							<div class="list-group-item-body">
+								<div class="list-group-item-heading">{{avatar.name}}</div>
+								<div class="list-group-item-text"><small class="muted">{{avatar.title}}</small></div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<footer id="footer_wrapper" class="footer_wrapper"></footer>

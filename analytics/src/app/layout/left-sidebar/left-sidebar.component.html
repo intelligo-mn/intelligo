@@ -1,0 +1,74 @@
+<nav id="app_main-menu-wrapper">
+    <!-- <ul class="nav-logo nav-mobile">
+        <li class="nav-item logo-wrapper">
+            <a href="javascript:void(0)" [routerLink]="['/dashboards']">
+                <h1 class="brand-text">Analytics</h1>
+            </a>
+        </li>
+    </ul> -->
+    <div class="sidebar-inner sidebar-push">
+        <profile></profile>
+        <ul class="nav nav-pills flex-column" style="line-height:1.4rem;">
+            <li class="sidebar-header" style="color:#516073">MENU
+                	
+				<a matRipple href="javascript:void(0)" style="float:left;" role="button" (click)="toggleMenuSideabar()" class="nav-link menu-trigger">
+					<i class="mdi mdi-backburger"></i></a>
+            </li>
+            <li routerLinkActive="active">
+                <a matRipple href="javascript:void(0)" [routerLink]="['/dashboards']" class="">
+                    <i class="zmdi zmdi-view-dashboard"></i>Dashboard
+                </a>
+            </li>
+            <li routerLinkActive="active open" appNavDropdown class="nav-dropdown">
+                <a matRipple href="javascript:void(0)" class="" appNavDropdownToggle><i class="zmdi zmdi-chart"></i>Analytics</a>
+                <ul class="nav-sub">
+                        <li routerLinkActive="active open">
+                                <a matRipple href="javascript:void(0)" [routerLink]="['/behaviourflow']" class="">
+                                    <i class="zmdi zmdi-arrow-split"></i>Behaviour Flow</a>
+                            </li>
+                    <li routerLinkActive="active">
+                        <a matRipple href="javascript:void(0)" [routerLink]="['/goalconversion']" class="">
+                            <i class="zmdi zmdi-star-circle"></i>Goal Conversion
+                        </a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a matRipple href="javascript:void(0)" [routerLink]="['/analytics']" class="">
+                            <i class="zmdi zmdi-trending-up"></i>Node Analytics
+                        </a>
+                    </li>
+                    
+                </ul>
+            </li>
+
+            <li routerLinkActive="active open" appNavDropdown class="nav-dropdown">
+                <a matRipple href="javascript:void(0)" class="" appNavDropdownToggle><i class="zmdi zmdi-headset-mic"></i>Agent</a>
+                <!-- <a matRipple href="javascript:void(0)" class="" appNavDropdownToggle><img src="../../../assets/img/download.png" width="25px" height="25px" style="padding-right:10px; margin-right:4px;">Agent</a> -->
+                <ul class="nav-sub">
+                    <li>
+                        <a matRipple href="javascript:void(0)" [routerLink]="['/agentdashboard']" class="">
+                            <i class="zmdi zmdi-view-dashboard"></i>Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a matRipple href="javascript:void(0)" [routerLink]="['/agentanalytics']" class="">
+                            <i class="zmdi zmdi-chart"></i>Analytics
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+          
+
+            <li routerLinkActive="active open">
+                <a matRipple href="javascript:void(0)" [routerLink]="['/usersdata']" class="">
+                    <i class="zmdi zmdi-accounts"></i>User Data</a>
+            </li>
+            <li routerLinkActive="active open">
+                <a matRipple href="javascript:void(0)" [routerLink]="['/support']" class="">
+                    <i class="zmdi zmdi-help"></i>Support
+                </a>
+            </li>
+           
+        </ul>
+    </div>
+</nav>

@@ -130,6 +130,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "studio"
+    }
+  },
+  "defaultProject": "studio",
+  "cli": {
+    "analytics": "49a38bbc-e0ce-422f-990a-03f71ecd102a"
+  }
 }

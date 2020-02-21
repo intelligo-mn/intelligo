@@ -1,0 +1,542 @@
+$white: white;
+$black: black;
+$background: #f5f7fa;
+$text: #607188;
+$text-button: #6b737c;
+$grey: #607188;
+$dark: #333333;
+$border: #9da3a6;
+$border-light: #d4dade;
+$blue: #0070ba;
+$blue-light: #acd5ed;
+$blue-icon: #0d79b1;
+$blue-secondary: #1546a0;
+
+$gradient: linear-gradient(100deg, $blue, $blue-secondary);
+
+$green: #2b8a3e;
+$teal: #28bebd;
+$cyan: #0b7285;
+$grape: #862e9c;
+$red: #c92a2a;
+$gray: #607188;
+
+@mixin unselectable {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.cdk-overlay-container{
+			z-index: 1055!important;
+}
+
+.ng-daterangepicker {
+	width: 300px;
+	height: 50px;
+	background: $white;
+	display: inline-block;
+	border: none !important;
+	border-radius: 7px;
+	position: relative;
+	&.is-active {
+		border: 1px solid $blue;
+	}
+	.input-section {
+		width: calc(100% / 2);
+		height: 50px;
+		display: block;
+		float: left;
+		outline: none;
+		padding: 7px 10px;
+		color: $text !important;
+		cursor: pointer;
+		position: relative;
+		&:first-child {
+			border-right: 1px solid $border-light;
+		}
+		.label-txt,
+		.value-txt {
+			display: block;
+		}
+		.label-txt {
+			color: $blue;
+			font-size: 11px;
+		}
+		.value-txt {
+			color: $text;
+			font-size: 13px;
+			border-bottom: 1px solid transparent;
+		}
+		.cal-icon {
+			position: absolute;
+			display: block;
+			right: 10px;
+			bottom: 5px;
+			svg {
+				width: 20px;
+				height: 20px;
+				path {
+					fill: #607188 !important;
+				}
+			}
+		}
+	}
+	.calendar {
+		@include unselectable;
+		width: 500px;
+		border: 1px solid $blue;
+		border-radius: 7px;
+		background: $white;
+		position: absolute;
+		top: 75px;
+		left: 0;
+		z-index: 100;
+		display: none;
+		&:after {
+			content: "";
+			position: absolute;
+			display: block;
+			width: 30px;
+			height: 30px;
+			top: -16px;
+			left: 65px;
+			transform: rotate(45deg);
+			border-top: 1px solid $blue;
+			border-left: 1px solid $blue;
+			background: $white;
+			transition: left 0.5s;
+		}
+		&.is-opened {
+			display: block;
+		}
+		&.is-to {
+			&:after {
+				left: 215px;
+			}
+		}
+		.calendar-container {
+			display: inline-block;
+			width: 340px;
+			height: 100%;
+			padding: 20px;
+			border-right: 1px solid $border-light;
+			float: left;
+			.controls {
+				width: 100%;
+				height: 20px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				.control-icon {
+					display: block;
+					width: 12px;
+					height: 20px;
+					cursor: pointer;
+				}
+				.control-title {
+					font-size: 17px;
+					color: $text;
+				}
+			}
+			.day-names {
+				display: inline-block;
+				width: 300px;
+				margin-top: 30px;
+				margin-bottom: 20px;
+				.day-name {
+					width: calc(300px / 7);
+					font-size: 13px;
+					color: $grey !important;
+					display: block;
+					float: left;
+					text-align: center;
+					font-weight: bold;
+				}
+			}
+			.days {
+				display: inline-block;
+				width: 300px;
+				.day {
+					width: calc(300px / 7);
+					font-size: 13px;
+					color: $grey !important;
+					display: block;
+					float: left;
+					text-align: center;
+					margin-bottom: 15px;
+					cursor: pointer;
+					font-weight: bold;
+					&.is-within-range {
+						background: $blue-light;
+						color: $dark;
+					}
+					&.is-from,
+					&.is-first-weekday {
+						border-top-left-radius: 50%;
+						border-bottom-left-radius: 50%;
+					}
+					&.is-to,
+					&.is-last-weekday {
+						border-top-right-radius: 50%;
+						border-bottom-right-radius: 50%;
+					}
+					.day-num {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						float: left;
+						width: calc(300px / 7);
+						height: 100%;
+						border-radius: 50%;
+						padding: 10px 15px;
+						&:hover,
+						&.is-active {
+							background: $blue;
+							color: $white;
+						}
+					}
+				}
+			}
+		}
+		.side-container {
+			width: 158px;
+			min-height: 390px;
+			padding: 10px;
+			display: flex;
+			align-items: center;
+			position: relative;
+			.side-container-buttons {
+				width: 138px;
+				.side-button {
+					background: $white;
+					border-radius: 15px;
+					border: 1px solid $blue;
+					height: 30px;
+					width: 138px;
+					display: block;
+					text-align: center;
+					outline: none;
+					margin-bottom: 15px;
+					color: $text-button;
+					font-size: 13px;
+					cursor: pointer;
+					&:hover,
+					&.is-active {
+						background: $blue;
+						color: $white;
+					}
+				}
+			}
+			.close-icon {
+				position: absolute;
+				width: 20px;
+				height: 20px;
+				top: 20px;
+				right: 15px;
+				cursor: pointer;
+			}
+		}
+	}
+	&.theme-green {
+		&.is-active {
+			border-color: $cyan;
+		}
+		.input-section {
+			.label-txt {
+				color: $cyan;
+			}
+			.cal-icon {
+				svg {
+					path {
+						fill: #607188 !important;
+					}
+				}
+			}
+		}
+		.calendar {
+			border-color: $cyan;
+			&:after {
+				border-top-color: $cyan;
+				border-left-color: $cyan;
+			}
+			.calendar-container {
+				.days {
+					.day {
+						&.is-within-range {
+							background: lighten($cyan, 20);
+						}
+						.day-num {
+							&:hover,
+							&.is-active {
+								background: $cyan;
+							}
+						}
+					}
+				}
+			}
+			.side-container {
+				.side-container-buttons {
+					.side-button {
+						border-color: $cyan;
+						&:hover,
+						&.is-active {
+							background: $cyan;
+						}
+					}
+				}
+			}
+		}
+	}
+	&.theme-teal {
+		&.is-active {
+			border-color: $teal !important;
+		}
+		.input-section {
+			.label-txt {
+				color: $teal !important;
+			}
+			.cal-icon {
+				svg {
+					path {
+						fill: #607188 !important;
+					}
+				}
+			}
+		}
+		.calendar {
+			border-color: $teal !important;
+			&:after {
+				border-top-color: $teal !important;
+				border-left-color: $teal !important;
+			}
+			.calendar-container {
+				.days {
+					.day {
+						&.is-within-range {
+							background: rgba(lighten($teal, 10%), .5) !important;
+						}
+						.day-num {
+							&:hover,
+							&.is-active {
+								background: $teal !important;
+							}
+						}
+					}
+				}
+			}
+			.side-container {
+				.side-container-buttons {
+					.side-button {
+						border-color: $teal !important;
+						&:hover,
+						&.is-active {
+							background: $teal !important;
+						}
+					}
+				}
+			}
+		}
+	}
+	&.theme-cyan {
+		&.is-active {
+			border-color: $cyan;
+		}
+		.input-section {
+			.label-txt {
+				color: $cyan;
+			}
+			.cal-icon {
+				svg {
+					path {
+						fill: #607188 !important;
+					}
+				}
+			}
+		}
+		.calendar {
+			border-color: $cyan;
+			&:after {
+				border-top-color: $cyan;
+				border-left-color: $cyan;
+			}
+			.calendar-container {
+				.days {
+					.day {
+						&.is-within-range {
+							background: lighten($cyan, 20);
+						}
+						.day-num {
+							&:hover,
+							&.is-active {
+								background: $cyan;
+							}
+						}
+					}
+				}
+			}
+			.side-container {
+				.side-container-buttons {
+					.side-button {
+						border-color: $cyan;
+						&:hover,
+						&.is-active {
+							background: $cyan;
+						}
+					}
+				}
+			}
+		}
+	}
+	&.theme-grape {
+		&.is-active {
+			border-color: $grape;
+		}
+		.input-section {
+			.label-txt {
+				color: $grape;
+			}
+			.cal-icon {
+				svg {
+					path {
+						fill: #607188 !important;
+					}
+				}
+			}
+		}
+		.calendar {
+			border-color: $grape;
+			&:after {
+				border-top-color: $grape;
+				border-left-color: $grape;
+			}
+			.calendar-container {
+				.days {
+					.day {
+						&.is-within-range {
+							background: lighten($grape, 20);
+						}
+						.day-num {
+							&:hover,
+							&.is-active {
+								background: $grape;
+							}
+						}
+					}
+				}
+			}
+			.side-container {
+				.side-container-buttons {
+					.side-button {
+						border-color: $grape;
+						&:hover,
+						&.is-active {
+							background: $grape;
+						}
+					}
+				}
+			}
+		}
+	}
+	&.theme-red {
+		&.is-active {
+			border-color: $red;
+		}
+		.input-section {
+			.label-txt {
+				color: $red;
+			}
+			.cal-icon {
+				svg {
+					path {
+						fill: #607188 !important;
+					}
+				}
+			}
+		}
+		.calendar {
+			border-color: $red;
+			&:after {
+				border-top-color: $red;
+				border-left-color: $red;
+			}
+			.calendar-container {
+				.days {
+					.day {
+						&.is-within-range {
+							background: lighten($red, 20);
+						}
+						.day-num {
+							&:hover,
+							&.is-active {
+								background: $red;
+							}
+						}
+					}
+				}
+			}
+			.side-container {
+				.side-container-buttons {
+					.side-button {
+						border-color: $red;
+						&:hover,
+						&.is-active {
+							background: $red;
+						}
+					}
+				}
+			}
+		}
+	}
+	&.theme-gray {
+		&.is-active {
+			border-color: $gray !important;
+		}
+		.input-section {
+			.label-txt {
+				color: $gray !important;
+			}
+			.cal-icon {
+				svg {
+					path {
+						fill: #607188 !important;
+					}
+				}
+			}
+		}
+		.calendar {
+			border-color: $gray !important;
+			&:after {
+				border-top-color: $gray !important;
+				border-left-color: $gray !important;
+			}
+			.calendar-container {
+				.days {
+					.day {
+						&.is-within-range {
+							background: lighten($gray, 20) !important;
+						}
+						.day-num {
+							&:hover,
+							&.is-active {
+								background: $gray;
+							}
+						}
+					}
+				}
+			}
+			.side-container {
+				.side-container-buttons {
+					.side-button {
+						border-color: $gray;
+						&:hover,
+						&.is-active {
+							background: $gray;
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -127,27 +127,27 @@ ${this.webSnippet}
 				this._oldVal = newVal;
 			}
 		} catch (e) { }
-		return `<script type="text/javascript" id="ana-web-chat-script"
+		return `<script type="text/javascript" id="intelligo-web-chat-script"
 
-src="${this.n(this.webOptions.websdkUrl)}assets/embed/ana-web-chat-plugin.js" 
-ana-api-endpoint="${this.n(this.dataService.chatServer).ServerUrl}"
-ana-endpoint="${this.n(this.webOptions.webSocketsUrl)}/wscustomers/chatcustomers-websocket"
-ana-iframe-src="${this.n(this.webOptions.websdkUrl)}index.html"
-ana-businessid="${this.n(this.webOptions.businessId)}"
-ana-flowid="${this.n(this.webOptions.flowId)}"
+src="${this.n(this.webOptions.websdkUrl)}assets/embed/intelligo-web-chat-plugin.js" 
+intelligo-api-endpoint="${this.n(this.dataService.chatServer).ServerUrl}"
+intelligo-endpoint="${this.n(this.webOptions.webSocketsUrl)}/wscustomers/chatcustomers-websocket"
+intelligo-iframe-src="${this.n(this.webOptions.websdkUrl)}index.html"
+intelligo-businessid="${this.n(this.webOptions.businessId)}"
+intelligo-flowid="${this.n(this.webOptions.flowId)}"
 
-ana-logo-url="${this.n(this.webOptions.logoUrl)}"
-ana-primary-bg="${this.n(this.webOptions.accentColor)}"
-ana-agent-name="${this.n(this.webOptions.title)}"
-ana-agent-desc="${this.n(this.webOptions.desc)}"
-ana-frame-height="${this.n(this.webOptions.height)}"
-ana-frame-width="${this.n(this.webOptions.width)}"
+intelligo-logo-url="${this.n(this.webOptions.logoUrl)}"
+intelligo-primary-bg="${this.n(this.webOptions.accentColor)}"
+intelligo-agent-name="${this.n(this.webOptions.title)}"
+intelligo-agent-desc="${this.n(this.webOptions.desc)}"
+intelligo-frame-height="${this.n(this.webOptions.height)}"
+intelligo-frame-width="${this.n(this.webOptions.width)}"
 
-ana-primary-fg="${this.n(this.webOptions.foregroundColor)}"
-ana-secondary-bg="${this.n(this.webOptions.secondaryColor)}"
-ana-gmaps-key="${this.n(this.webOptions.gmapsKey)}"
+intelligo-primary-fg="${this.n(this.webOptions.foregroundColor)}"
+intelligo-secondary-bg="${this.n(this.webOptions.secondaryColor)}"
+intelligo-gmaps-key="${this.n(this.webOptions.gmapsKey)}"
 
-${this.webOptions.isFullPage ? '\nana-fullpage="true"' : ''} ${this.webOptions.allowChatReset ? '\nana-allow-chat-reset="true"' : ''} ${this.webOptions.enableHtmlMessages ? '\nana-html-messages="true"' : ''} ${this.webOptions.showPoweredByAna ? '\nana-show-branding="true"' : ''} ${this.webOptions.autoOpenSecs ? '\nana-auto-open="' + this.webOptions.autoOpenSecs + '"' : ''}>
+${this.webOptions.isFullPage ? '\nintelligo-fullpage="true"' : ''} ${this.webOptions.allowChatReset ? '\nintelligo-allow-chat-reset="true"' : ''} ${this.webOptions.enableHtmlMessages ? '\nintelligo-html-messages="true"' : ''} ${this.webOptions.showPoweredByAna ? '\nintelligo-show-branding="true"' : ''} ${this.webOptions.autoOpenSecs ? '\nintelligo-auto-open="' + this.webOptions.autoOpenSecs + '"' : ''}>
 </script>`;
 	}
 }

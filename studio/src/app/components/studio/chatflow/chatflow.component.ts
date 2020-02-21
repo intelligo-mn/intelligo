@@ -4,34 +4,38 @@ import {
   HostListener,
   OnDestroy,
   OnInit,
-  ViewChild
-} from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from "@angular/material/snack-bar";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Hotkey, HotkeysService } from "angular2-hotkeys";
-import { ObjectID } from "bson";
-import * as models from "../../../models/chatflow.models";
-import { ChatFlowService } from "../../../services/chatflow.service";
-import { DataService } from "../../../services/data.service";
-import { GlobalsService } from "../../../services/globals.service";
-import { InfoDialogService } from "../../../services/info-dialog.service";
-import { LoginService } from "../../../services/login.service";
-import { SettingsService } from "../../../services/settings.service";
-import { SimulatorService } from "../../../services/simulator.service";
+  ViewChild,
+} from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import {
+  MatSnackBar,
+  MatSnackBarRef,
+  SimpleSnackBar,
+} from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Hotkey, HotkeysService } from 'angular2-hotkeys';
+import { ObjectID } from 'bson';
+import * as models from '../../../models/chatflow.models';
+import { ChatFlowService } from '../../../services/chatflow.service';
+import { DataService } from '../../../services/data.service';
+import { GlobalsService } from '../../../services/globals.service';
+import { InfoDialogService } from '../../../services/info-dialog.service';
+import { LoginService } from '../../../services/login.service';
+import { SettingsService } from '../../../services/settings.service';
+import { SimulatorService } from '../../../services/simulator.service';
 import {
   BusinessPickerComponent,
   BusinessPickerParam,
-  ChoosenBizAccChatProj
-} from "../../shared/business-picker/business-picker.component";
-import { PublishChatbotComponent } from "../../shared/publish-chatbot/publish-chatbot.component";
-import { NodeEditorComponent } from "../nodeeditor/nodeeditor.component";
-import { SimulatorFrameComponent } from "../simulator-frame/simulator-frame.component";
+  ChoosenBizAccChatProj,
+} from '../../shared/business-picker/business-picker.component';
+import { PublishChatbotComponent } from '../../shared/publish-chatbot/publish-chatbot.component';
+import { NodeEditorComponent } from '../nodeeditor/nodeeditor.component';
+import { SimulatorFrameComponent } from '../simulator-frame/simulator-frame.component';
 
 @Component({
-  selector: "app-chatflow",
-  templateUrl: "./chatflow.component.html",
-  styleUrls: ["./chatflow.component.scss"]
+  selector: 'app-chatflow',
+  templateUrl: './chatflow.component.html',
+  styleUrls: ['./chatflow.component.scss'],
 })
 export class ChatFlowComponent implements OnInit, OnDestroy {
   constructor(
@@ -46,12 +50,12 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
     private hotkeys: HotkeysService,
     public globalsService: GlobalsService,
     public simulatorService: SimulatorService,
-    public settings: SettingsService
+    public settings: SettingsService,
   ) {
     this.chatFlowNetwork = new ChatFlowNetwork(
       this,
       this.infoDialog,
-      this.snakbar
+      this.snakbar,
     );
     this.chatFlowNetwork.newChatNodeConnection.isHidden = true;
     this._viewBoxX = 0;
@@ -66,21 +70,21 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
   chatFlowNetwork: ChatFlowNetwork;
   MH: models.ModelHelpers;
 
-  @ViewChild("chatflowRoot", { static: true })
+  @ViewChild('chatflowRoot', { static: true })
   chatflowRoot: ElementRef;
 
-  @ViewChild("simulator", { static: true })
+  @ViewChild('simulator', { static: true })
   simulator: SimulatorFrameComponent;
 
-  projName: string = "";
+  projName: string = '';
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(x => {
-      this.projName = x.get("proj");
+      this.projName = x.get('proj');
       if (this.projName) {
         this.globalsService.setPageTitle(this.projName);
         let proj = this.settings.getChatProject(this.projName);
         if (proj) this.loadChatFlowPack(proj);
-        else this.router.navigateByUrl("/studio");
+        else this.router.navigateByUrl('/studio');
       }
     });
     this.bindDesignerShortcuts();
@@ -96,87 +100,87 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 
   keymapOnDesigner: Hotkey[] = [
     new Hotkey(
-      ["command+s", "ctrl+s"],
+      ['command+s', 'ctrl+s'],
       (e, s) => {
         this.saveChatFlow();
         return false;
       },
       [],
-      "Save the chat flow"
+      'Save the chat flow',
     ),
     new Hotkey(
-      ["command+r", "ctrl+r"],
+      ['command+r', 'ctrl+r'],
       (e, s) => {
         this.playChatFlow();
         return false;
       },
       [],
-      "Run the chat"
+      'Run the chat',
     ),
     new Hotkey(
-      "n",
+      'n',
       (e, s) => {
         this.addNewNode();
         return false;
       },
       [],
-      "Add a new node"
+      'Add a new node',
     ),
     new Hotkey(
-      "c",
+      'c',
       (e, s) => {
         this.cloneSelectedNodes();
         return false;
       },
       [],
-      "Clone selected nodes"
+      'Clone selected nodes',
     ),
     new Hotkey(
-      "esc",
+      'esc',
       (e, s) => {
         this.clearSelection();
         return false;
       },
       [],
-      "Clear selection"
+      'Clear selection',
     ),
     new Hotkey(
-      "del",
+      'del',
       (e, s) => {
         this.deleteSelectedNodes();
         return false;
       },
       [],
-      "Delete selected nodes"
+      'Delete selected nodes',
     ),
     new Hotkey(
-      "alt+f",
+      'alt+f',
       (e, s) => {
         this.fitViewToAllNodes();
         return false;
       },
       [],
-      "Fit to screen"
+      'Fit to screen',
     ),
     new Hotkey(
-      "alt+w",
+      'alt+w',
       (e, s) => {
         this.gotoStartup();
         return false;
       },
       [],
-      "Close the designer"
-    )
+      'Close the designer',
+    ),
   ];
 
-  @HostListener("document:keydown", ["$event"])
+  @HostListener('document:keydown', ['$event'])
   documentKeyDown(event: KeyboardEvent) {
     if (event.keyCode == 17) {
       this.ctrlDown = true;
     }
   }
 
-  @HostListener("document:keyup", ["$event"])
+  @HostListener('document:keyup', ['$event'])
   documentKeyUp(event: KeyboardEvent) {
     if (event.keyCode == 17) {
       this.ctrlDown = false;
@@ -231,7 +235,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
       let newNodeVM = new ChatNodeVM(
         this.chatFlowNetwork,
         cloneNode,
-        this.snakbar
+        this.snakbar,
       );
       newNodeVM._x = node._x + 100;
       newNodeVM._y = node._y + 100;
@@ -246,7 +250,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
     for (let i = 0; i < nodesVMs.length; i++) {
       let nodeVM = nodesVMs[i];
       var elementIdxToDel = this.chatFlowNetwork.chatNodeVMs.findIndex(
-        x => x.chatNode.Id == nodeVM.chatNode.Id
+        x => x.chatNode.Id == nodeVM.chatNode.Id,
       );
       this.chatFlowNetwork.chatNodeVMs.splice(elementIdxToDel, 1);
     }
@@ -280,7 +284,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 
   updateNodeLayout(chatNodeVM: ChatNodeVM): boolean {
     let btnsTable = this.chatFlowRootSVG().querySelector(
-      `table[node-id='${chatNodeVM.chatNode.Id}']`
+      `table[node-id='${chatNodeVM.chatNode.Id}']`,
     ) as HTMLTableElement;
     if (btnsTable) {
       if (!chatNodeVM._layoutUpdated)
@@ -295,7 +299,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 
       window.requestAnimationFrame(() => {
         let nodeRoot = this.chatFlowRootSVG().querySelector(
-          `div[node-id='${chatNodeVM.chatNode.Id}']`
+          `div[node-id='${chatNodeVM.chatNode.Id}']`,
         ) as HTMLDivElement;
         chatNodeVM._height = nodeRoot.clientHeight;
         chatNodeVM._layoutUpdated = true;
@@ -322,7 +326,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
         let targetXY = this.transformCoordinates(
           event.pageX,
           event.pageY,
-          event
+          event,
         );
         let offset = this.chatFlowNetwork.draggingChatNodeOffset;
         this.chatFlowNetwork.draggingChatNode._x = targetXY.x - offset.x;
@@ -411,7 +415,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
       x,
       y,
       width,
-      height
+      height,
     );
   }
   zoomCancel() {
@@ -425,7 +429,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
     x2: number,
     y2: number,
     width2: number,
-    height2: number
+    height2: number,
   ) {
     let step =
       Config.viewBoxAnimStep *
@@ -455,7 +459,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
           x2,
           y2,
           width2,
-          height2
+          height2,
         );
       });
     else this.animationFrameId = 0;
@@ -515,9 +519,9 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 
   openEditor(chatNodeVM: ChatNodeVM) {
     let dialogRef = this.dialog.open(NodeEditorComponent, {
-      width: "60%",
-      backdropClass: "dark-overlay",
-      data: chatNodeVM.chatNode
+      width: '60%',
+      backdropClass: 'dark-overlay',
+      data: chatNodeVM.chatNode,
     });
     dialogRef.afterOpened().subscribe(x => {
       this.unbindDesignerShortcuts();
@@ -531,13 +535,13 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
     var newNodeVM = new ChatNodeVM(
       this.chatFlowNetwork,
       {
-        Name: "New Node",
+        Name: 'New Node',
         Id: new ObjectID().toHexString(),
         Buttons: [],
         Sections: [],
-        NodeType: models.NodeType.Combination
+        NodeType: models.NodeType.Combination,
       },
-      this.snakbar
+      this.snakbar,
     );
 
     newNodeVM._x = this._viewBoxX + this._viewBoxWidth / 2 + Math.random() * 50;
@@ -613,7 +617,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 
       nodeLocs[item.chatNode.Id] = {
         X: item._x,
-        Y: item._y
+        Y: item._y,
       };
     }
 
@@ -623,11 +627,11 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
       NodeLocations: nodeLocs,
       _id: this.chatFlowNetwork.chatFlowPack._id,
       CreatedOn: this.chatFlowNetwork.chatFlowPack.CreatedOn,
-      UpdatedOn: this.chatFlowNetwork.chatFlowPack.UpdatedOn
+      UpdatedOn: this.chatFlowNetwork.chatFlowPack.UpdatedOn,
     };
     this.settings.saveChatProject(this.projName, pack, true);
-    this.snakbar.open(`Chatbot project '${this.projName}' saved`, "Dismiss", {
-      duration: 2000
+    this.snakbar.open(`Chatbot project '${this.projName}' saved`, 'Dismiss', {
+      duration: 2000,
     });
     return pack;
   }
@@ -635,8 +639,8 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
   exportChatFlow() {
     let pack = this.saveChatFlow();
     this.globalsService.downloadTextAsFile(
-      this.projName + ".intelligo",
-      JSON.stringify(pack)
+      this.projName + '.intelligo',
+      JSON.stringify(pack),
     );
   }
 
@@ -645,8 +649,8 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
     let pack = this.saveChatFlow();
     if (pack.ChatNodes.filter(x => x.IsStartNode).length <= 0) {
       this.infoDialog.alert(
-        "Start node not set!",
-        `Tick 'Mark as start node' for the initial node of your chatbot.`
+        'Start node not set!',
+        `Tick 'Mark as start node' for the initial node of your chatbot.`,
       );
       return;
     }
@@ -663,28 +667,28 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
       if (this.dataService.loggedInUser) {
         if (this.dataService.isBizAdmin() || this.dataService.isFlowManager()) {
           this.dialog.open(PublishChatbotComponent, {
-            width: "auto",
+            width: 'auto',
             data: {
               pack: this.saveChatFlow(),
-              bizId: this.dataService.loggedInUser.businessId
-            }
+              bizId: this.dataService.loggedInUser.businessId,
+            },
           });
         } else {
           let d = this.dialog.open(BusinessPickerComponent, {
-            width: "30%",
+            width: '30%',
             data: <BusinessPickerParam>{
-              askFlowId: false
-            }
+              askFlowId: false,
+            },
           });
           d.afterClosed().subscribe((x: ChoosenBizAccChatProj) => {
             if (x && x.bizAccount) {
               let ba = x.bizAccount;
               this.dialog.open(PublishChatbotComponent, {
-                width: "auto",
+                width: 'auto',
                 data: {
                   pack: this.saveChatFlow(),
-                  bizId: ba.id
-                }
+                  bizId: ba.id,
+                },
               });
             }
           });
@@ -695,12 +699,12 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 
   gotoStartup() {
     this.infoDialog.confirm(
-      "Save?",
-      "Do you want to save any unsaved changes before you close?",
+      'Save?',
+      'Do you want to save any unsaved changes before you close?',
       ok => {
         if (ok) this.saveChatFlow();
-        this.router.navigateByUrl("/studio");
-      }
+        this.router.navigateByUrl('/studio');
+      },
     );
   }
 }
@@ -709,7 +713,7 @@ class ChatFlowNetwork {
   constructor(
     public parent: ChatFlowComponent,
     public infoDialog: InfoDialogService,
-    public snackbar: MatSnackBar
+    public snackbar: MatSnackBar,
   ) {}
 
   updateChatNodeConnections(): void {
@@ -717,17 +721,17 @@ class ChatFlowNetwork {
 
     this.chatNodeVMs.forEach(chatNodeVM => {
       chatNodeVM.chatNode.Buttons.forEach(srcBtn => {
-        if (srcBtn.NextNodeId != null || srcBtn.NextNodeId != "") {
+        if (srcBtn.NextNodeId != null || srcBtn.NextNodeId != '') {
           let destNode = this.chatNodeVMs.filter(
-            x => x.chatNode.Id == srcBtn.NextNodeId
+            x => x.chatNode.Id == srcBtn.NextNodeId,
           );
           if (destNode && destNode.length > 0)
             this.chatNodeConnections.push(
               new ChatNodeConnection(
                 new ChatButtonConnector(chatNodeVM, srcBtn, this.snackbar),
                 destNode[0],
-                this.infoDialog
-              )
+                this.infoDialog,
+              ),
             );
         }
       });
@@ -758,7 +762,7 @@ class ChatNodeConnection {
   constructor(
     public srcButtonConnector: ChatButtonConnector,
     public destChatNodeVM: ChatNodeVM,
-    public infoDialog: InfoDialogService
+    public infoDialog: InfoDialogService,
   ) {}
 
   srcConnectorX() {
@@ -814,7 +818,7 @@ class ChatNodeConnection {
     let xy = this.destChatNodeVM.network.parent.transformCoordinates(
       event.pageX,
       event.pageY,
-      event
+      event,
     );
     this.closeButtonPointX = xy.x; //some offset from the cursor
     this.closeButtonPointY = xy.y; //some offset from the cursor
@@ -830,17 +834,17 @@ class ChatNodeConnection {
 
   remove(event: MouseEvent) {
     this.infoDialog.confirm(
-      "Delete connection?",
+      'Delete connection?',
       `This will delete the connection between the button '${this
         .srcButtonConnector.button.ButtonName ||
-        "Unnamed Button"}' and node '${this.destChatNodeVM.chatNode.Name ||
-        "Unnamed Node"}'. Are you sure?`,
+        'Unnamed Button'}' and node '${this.destChatNodeVM.chatNode.Name ||
+        'Unnamed Node'}'. Are you sure?`,
       ok => {
         if (ok) {
           this.srcButtonConnector.setButtonNextNodeId(null);
           this.destChatNodeVM.network.updateChatNodeConnections();
         }
-      }
+      },
     );
   }
 }
@@ -885,7 +889,7 @@ class ChatNodeNewConnection {
   }
 
   path() {
-    if (this.isHidden) return "M 0,0";
+    if (this.isHidden) return 'M 0,0';
 
     return `M${this.srcConnectorX()},${this.srcConnectorY()} 
                 C${this.calcSrcTangentX()},${this.calcSrcTangentY()} 
@@ -900,7 +904,7 @@ class ChatButtonConnector {
   constructor(
     public chatNodeVM: ChatNodeVM,
     public button: models.Button,
-    public snackbar: MatSnackBar
+    public snackbar: MatSnackBar,
   ) {}
 
   x() {
@@ -952,7 +956,7 @@ class ChatButtonConnector {
 
     this.chatNodeVM.network.clickConnectionStartSnackbar = this.snackbar.open(
       `Connection started at button '${this.button.ButtonName}' of node '${this.chatNodeVM.chatNode.Name}'. Click on the target node to connect.`,
-      "Abort"
+      'Abort',
     );
     this.chatNodeVM.network.clickConnectionStartSnackbar
       .onAction()
@@ -965,7 +969,7 @@ class ChatButtonConnector {
     return (
       this.button.NextNodeId &&
       this.chatNodeVM.network.chatNodeVMs.filter(
-        x => x.chatNode.Id == this.button.NextNodeId
+        x => x.chatNode.Id == this.button.NextNodeId,
       ).length > 0
     );
   }
@@ -975,7 +979,7 @@ export class ChatNodeVM {
   constructor(
     public network: ChatFlowNetwork,
     public chatNode: models.ChatNode,
-    public snackbar: MatSnackBar
+    public snackbar: MatSnackBar,
   ) {
     this.network.chatNodeVMs.push(this);
 
@@ -1021,7 +1025,7 @@ export class ChatNodeVM {
     let targetXY = this.network.parent.transformCoordinates(
       event.pageX,
       event.pageY,
-      event
+      event,
     );
     let mouseOffsetX = targetXY.x - this._x;
     let mouseOffsetY = targetXY.y - this._y;
@@ -1033,12 +1037,12 @@ export class ChatNodeVM {
       selectedNodes.forEach(n => {
         let mouseOffset = {
           x: targetXY.x - n._x,
-          y: targetXY.y - n._y
+          y: targetXY.y - n._y,
         };
 
         this.network.selectedNodeOffsets[n.chatNode.Id] = new Point(
           mouseOffset.x,
-          mouseOffset.y
+          mouseOffset.y,
         );
       });
     }
@@ -1048,7 +1052,7 @@ export class ChatNodeVM {
     let nw = this.network;
     if (!nw.newChatNodeConnection.isHidden) {
       nw.newChatNodeConnection.srcButtonConnector.setButtonNextNodeId(
-        this.chatNode.Id
+        this.chatNode.Id,
       );
     }
   }
@@ -1069,7 +1073,7 @@ export class ChatNodeVM {
 
   chatButtonConnectors() {
     return this.chatNode.Buttons.map(
-      btn => new ChatButtonConnector(this, btn, this.snackbar)
+      btn => new ChatButtonConnector(this, btn, this.snackbar),
     );
   }
 
@@ -1088,7 +1092,7 @@ export class ChatNodeVM {
   nodeClick() {
     if (this.clickConnectionActive()) {
       this.network.clickConnectionStartButton.setButtonNextNodeId(
-        this.chatNode.Id
+        this.chatNode.Id,
       );
       this.network.clickConnectionStartButton = null;
       this.network.clickConnectionStartSnackbar.dismiss();

@@ -1,0 +1,15 @@
+@media (max-width:1200px){
+    .sidebar-inner.sidebar-push:hover
+    {
+        width:100%;
+    }
+}
+
+@media (min-width:1200px)
+{
+    .sidebar-inner.sidebar-push:hover
+    {
+       
+        width:20%;
+    }
+}

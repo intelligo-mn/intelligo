@@ -1,0 +1,491 @@
+.dropdown-menu {
+	position: absolute;
+	top: 100%;
+	z-index: 1000;
+	display: none;
+	float: left;
+	min-width: 220px;
+	width: 100%;
+	padding: 10px;
+	margin: 0;
+	font-size: rem(14px);
+	text-align: left;
+	list-style: none;
+	background-color: #fff;
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
+	border: 0;
+	border-radius: 2px;
+	@include transition(all 150ms linear);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .20);
+	transform: translateY(-2px);
+	color: #a5b5cb;
+	
+	.dropdown-menu-header {
+		position: relative;
+		padding: 20px;
+		margin-bottom: 10px;
+		background-color: #fff;
+		border-bottom: 1px solid #e4eaec;
+		border-top: 1px solid #e4eaec;
+		text-align: center;
+		
+		.label {
+			position: absolute;
+			top: 50%;
+			right: 20px;
+			-webkit-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+			-o-transform: translateY(-50%);
+			transform: translateY(-50%);
+		}
+		
+		ul.actions.icons.top-left {
+			left: 10px;
+			top: -15px;
+			
+			li {
+				margin: 20px 0 0;
+				padding: 0 5px !important;
+				
+				a {
+					padding: 0 !important;
+					line-height: 2.9em !important;
+					width: 30px;
+					height: 30px;
+					border-radius: 100%;
+					font-weight: 600;
+					
+					i {
+						line-height: normal !important;
+						font-size: rem(20px) !important;
+					}
+				}
+			}
+		}
+		
+		ul.actions.icons.top-right {
+			right: 10px;
+			top: 0px;
+			
+			li {
+				margin: 20px 0 0;
+				padding: 0 5px !important;
+				
+				a {
+					padding: 0 !important;
+					line-height: 2.9em !important;
+					width: 30px;
+					height: 30px;
+					border-radius: 100%;
+					
+					i {
+						line-height: normal !important;
+						font-size: rem(20px) !important;
+					}
+				}
+			}
+		}
+	}
+	
+	.dropdown-menu-footer {
+		padding: 5px 20px;
+		min-height: 30px;
+		border-top: 1px solid rgba(215, 225, 237, .6);
+		background: #fff;
+		text-align: center;
+		margin-top: 10px;
+		
+		a {
+			line-height: normal !important;
+			
+			&:active,
+			&:focus,
+			&:hover {
+				background-color: transparent !important;
+				color: #688696 !important;
+				box-shadow: none !important;
+			}
+		}
+	}
+
+}
+.dropup{
+	.dropdown-menu{
+		transition:none;
+	}
+}
+.dropdown-menu.dropdown-menu-right {
+	-webkit-transform-origin: top right;
+	-ms-transform-origin: top right;
+	transform-origin: top right;
+	top: 64px;
+	right: 0;
+}
+
+.dropdown-menu.dropdown-menu-left {
+	-webkit-transform-origin: top left;
+	-ms-transform-origin: top left;
+	transform-origin: top left;
+	top: 64px;
+	left: 0;
+}
+
+.dropdown-menu-right,
+.dropdown-menu.pull-right {
+	right: 0;
+	left: auto;
+}
+
+.dropdown-menu.dropdown-alt {
+	background: #eef5f9 !important;
+	padding: 0 !important;
+}
+
+.dropdown-menu .divider {
+	background-color: rgba(0, 0, 0, 0.10);
+}
+
+.dropdown-menu li {
+	position: relative;
+	display: block !important;
+	
+	&.title {
+		color: #607188;
+		text-transform: uppercase;
+		font-weight: 400;
+		padding: 0 0 5px;
+		border-bottom: solid 2px #ebf0f5;
+		margin-bottom: 5px;
+	}
+}
+
+.dropdown-menu li > a {
+	font-size: rem(14px) !important;
+	padding: 10px;
+	margin: 0;
+	border-radius: 2px;
+	@include transition(all 150ms linear);
+	color: #a5b5cb;
+	display: block !important;
+	font-weight: 600;
+}
+
+.dropdown-menu.flat li:hover {
+	background-color: #eef5f9;
+	cursor: pointer;
+	color: #607188;
+}
+
+.dropdown-menu {
+	li.no-results {
+		padding: 10px;
+		color: #607188;
+		font-weight: 600;
+		margin: 40px 0 0;
+		
+		&:hover {
+			background-color: transparent !important;
+			cursor: default;
+		}
+	}
+}
+
+.btn-default + .dropdown-menu > li > a:active,
+.btn-default + .dropdown-menu > li > a:focus,
+.btn-default + .dropdown-menu > li > a:hover,
+.btn-default + .dropdown-menu li a:active,
+.btn-default + .dropdown-menu li a:focus,
+.btn-default + .dropdown-menu li a:hover,
+.btn-default.dropdown-menu > li > a:active,
+.btn-default.dropdown-menu > li > a:focus,
+.btn-default.dropdown-menu > li > a:hover,
+.btn-default.dropdown-menu li a:active,
+.btn-default.dropdown-menu li a:focus,
+.btn-default.dropdown-menu li a:hover {
+	background-color: $brand-primary;
+	color: #fff;
+	box-shadow: 0 14px 26px -12px rgba($brand-primary, 0.42), 0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba($brand-primary, 0.2);
+}
+
+.btn-info + .dropdown-menu > li > a:active,
+.btn-info + .dropdown-menu > li > a:focus,
+.btn-info + .dropdown-menu > li > a:hover,
+.btn-info + .dropdown-menu li a:active,
+.btn-info + .dropdown-menu li a:focus,
+.btn-info + .dropdown-menu li a:hover,
+.btn-info.dropdown-menu > li > a:active,
+.btn-info.dropdown-menu > li > a:focus,
+.btn-info.dropdown-menu > li > a:hover,
+.btn-info.dropdown-menu li a:active,
+.btn-info.dropdown-menu li a:focus,
+.btn-info.dropdown-menu li a:hover {
+	background-color: $brand-info;
+	color: #fff;
+	box-shadow: 0 14px 26px -12px rgba($brand-info, 0.42), 0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba($brand-info, 0.2);
+}
+
+.btn-green + .dropdown-menu > li > a:active,
+.btn-green + .dropdown-menu > li > a:focus,
+.btn-green + .dropdown-menu > li > a:hover,
+.btn-green + .dropdown-menu li a:active,
+.btn-green + .dropdown-menu li a:focus,
+.btn-green + .dropdown-menu li a:hover,
+.btn-green.dropdown-menu > li > a:active,
+.btn-green.dropdown-menu > li > a:focus,
+.btn-green.dropdown-menu > li > a:hover,
+.btn-green.dropdown-menu li a:active,
+.btn-green.dropdown-menu li a:focus,
+.btn-green.dropdown-menu li a:hover {
+	background-color: $brand-success;
+	color: #fff;
+	box-shadow: 0 14px 26px -12px rgba($brand-success, 0.42), 0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba($brand-success, 0.2);
+}
+
+.btn-warning + .dropdown-menu > li > a:active,
+.btn-warning + .dropdown-menu > li > a:focus,
+.btn-warning + .dropdown-menu > li > a:hover,
+.btn-warning + .dropdown-menu li a:active,
+.btn-warning + .dropdown-menu li a:focus,
+.btn-warning + .dropdown-menu li a:hover,
+.btn-warning.dropdown-menu > li > a:active,
+.btn-warning.dropdown-menu > li > a:focus,
+.btn-warning.dropdown-menu > li > a:hover,
+.btn-warning.dropdown-menu li a:active,
+.btn-warning.dropdown-menu li a:focus,
+.btn-warning.dropdown-menu li a:hover {
+	background-color: $brand-warning;
+	color: #fff;
+	box-shadow: 0 14px 26px -12px rgba($brand-warning, 0.42), 0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba($brand-warning, 0.2);
+}
+
+.btn-danger + .dropdown-menu > li > a:active,
+.btn-danger + .dropdown-menu > li > a:focus,
+.btn-danger + .dropdown-menu > li > a:hover,
+.btn-danger + .dropdown-menu li a:active,
+.btn-danger + .dropdown-menu li a:focus,
+.btn-danger + .dropdown-menu li a:hover,
+.btn-danger.dropdown-menu > li > a:active,
+.btn-danger.dropdown-menu > li > a:focus,
+.btn-danger.dropdown-menu > li > a:hover,
+.btn-danger.dropdown-menu li a:active,
+.btn-danger.dropdown-menu li a:focus,
+.btn-danger.dropdown-menu li a:hover {
+	background-color: $brand-danger;
+	color: #fff;
+	box-shadow: 0 14px 26px -12px rgba($brand-danger, 0.42), 0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba($brand-danger, 0.2);
+}
+
+.btn-purple + .dropdown-menu > li > a:active,
+.btn-purple + .dropdown-menu > li > a:focus,
+.btn-purple + .dropdown-menu > li > a:hover,
+.btn-purple + .dropdown-menu li a:active,
+.btn-purple + .dropdown-menu li a:focus,
+.btn-purple + .dropdown-menu li a:hover,
+.btn-purple.dropdown-menu > li > a:active,
+.btn-purple.dropdown-menu > li > a:focus,
+.btn-purple.dropdown-menu > li > a:hover,
+.btn-purple.dropdown-menu li a:active,
+.btn-purple.dropdown-menu li a:focus,
+.btn-purple.dropdown-menu li a:hover {
+	background-color: $mw-purple;
+	color: #fff;
+	box-shadow: 0 14px 26px -12px rgba($mw-purple, 0.42), 0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba($mw-purple, 0.2);
+}
+
+.btn-yellow + .dropdown-menu > li > a:active,
+.btn-yellow + .dropdown-menu > li > a:focus,
+.btn-yellow + .dropdown-menu > li > a:hover,
+.btn-yellow + .dropdown-menu li a:active,
+.btn-yellow + .dropdown-menu li a:focus,
+.btn-yellow + .dropdown-menu li a:hover,
+.btn-yellow.dropdown-menu > li > a:active,
+.btn-yellow.dropdown-menu > li > a:focus,
+.btn-yellow.dropdown-menu > li > a:hover,
+.btn-yellow.dropdown-menu li a:active,
+.btn-yellow.dropdown-menu li a:focus,
+.btn-yellow.dropdown-menu li a:hover {
+	background-color: $mw-yellow;
+	color: #fff;
+	box-shadow: 0 14px 26px -12px rgba($mw-yellow, 0.42), 0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba($mw-yellow, 0.2);
+}
+
+.btn-salmon + .dropdown-menu > li > a:active,
+.btn-salmon + .dropdown-menu > li > a:focus,
+.btn-salmon + .dropdown-menu > li > a:hover,
+.btn-salmon + .dropdown-menu li a:active,
+.btn-salmon + .dropdown-menu li a:focus,
+.btn-salmon + .dropdown-menu li a:hover,
+.btn-salmon.dropdown-menu > li > a:active,
+.btn-salmon.dropdown-menu > li > a:focus,
+.btn-salmon.dropdown-menu > li > a:hover,
+.btn-salmon.dropdown-menu li a:active,
+.btn-salmon.dropdown-menu li a:focus,
+.btn-salmon.dropdown-menu li a:hover {
+	background-color: $mw-salmon;
+	color: #fff;
+	box-shadow: 0 14px 26px -12px rgba($mw-salmon, 0.42), 0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba($mw-salmon, 0.2);
+}
+
+.btn-green + .dropdown-menu > li > a:active,
+.btn-green + .dropdown-menu > li > a:focus,
+.btn-green + .dropdown-menu > li > a:hover,
+.btn-green + .dropdown-menu li a:active,
+.btn-green + .dropdown-menu li a:focus,
+.btn-green + .dropdown-menu li a:hover,
+.btn-green.dropdown-menu > li > a:active,
+.btn-green.dropdown-menu > li > a:focus,
+.btn-green.dropdown-menu > li > a:hover,
+.btn-green.dropdown-menu li a:active,
+.btn-green.dropdown-menu li a:focus,
+.btn-green.dropdown-menu li a:hover {
+	background-color: $mw-green;
+	color: #fff;
+	box-shadow: 0 14px 26px -12px rgba($mw-green, 0.42), 0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba($mw-green, 0.2);
+}
+
+.dropdown.white {
+	> a {
+		color: #fff;
+	}
+}
+
+.dropdown-menu .divider {
+	margin: 5px 0;
+	padding: 0;
+}
+
+.dropdown .dropdown-menu {
+	@include transition(all 150ms linear);
+	margin-top: -15px;
+	opacity: 0;
+	visibility: hidden;
+	display: block;
+}
+
+.dropdown.show .dropdown-menu {
+	opacity: 1;
+	visibility: visible;
+	margin-top: 1px;
+	background: #fff;
+	top: 45px;
+}
+.dropup.show .dropdown-menu{
+	opacity: 1;
+	visibility: visible;
+	margin-top: 1px;
+	background: #fff;
+}
+.dropdown-toggle.caret{
+	    padding: 12px 45px 12px 30px;
+}
+.dropdown-toggle::after,
+ .dropdown-toggle-split::after{
+	display: inline-block;
+	width: auto;
+	height: auto;
+	margin-left: -5px;
+	vertical-align: 0;
+	content: "";
+	border: none;
+	position: absolute;
+	right: 15px;
+top: 20px;
+}
+
+.dropdown-toggle.caret::after ,
+.dropdown-toggle-split.caret::after {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 0.255em;
+	vertical-align: 0.255em;
+	content: "";
+	border-top: 0.3em solid;
+	border-right: 0.3em solid transparent;
+	border-left: 0.3em solid transparent;
+}
+
+.dropdownjs {
+	position: relative;
+}
+
+.dropdownjs * {
+	box-sizing: border-box;
+}
+
+.dropdownjs > input {
+	width: 100%;
+	padding-right: 30px;
+	padding-left: 0;
+	padding-bottom: 15px;
+	text-overflow: ellipsis;
+}
+/* Theme */
+.dropdownjs > input[readonly] {
+	cursor: pointer;
+	outline: none;
+	color: #758396;
+}
+
+select[data-dropdownjs][disabled] + .dropdownjs > input[readonly] {
+	cursor: default;
+	outline: none;
+}
+
+.dropdownjs > ul {
+	background: #fff;
+	border-radius: 4px;
+	@include transition(all 150ms linear);
+	box-shadow: 0 20px 25px rgba(0, 0, 0, .15);
+	padding: 5px 0;
+	overflow: auto;
+	width: 100%;
+	top: 0;
+}
+
+.dropdownjs > ul > li {
+	cursor: pointer;
+	word-wrap: break-word;
+	font-size: rem(13px);
+	padding: 10px 20px;
+	margin: 0 5px;
+	border-radius: 2px;
+	@include transition(all 150ms linear);
+}
+
+.dropdownjs > ul > li > .close:before {
+	content: "\00d7";
+	display: block;
+	position: absolute;
+	right: 15px;
+	float: right;
+	font-size: rem(21px);
+	font-weight: 700;
+	line-height: 1;
+	text-shadow: 0 1px 0 #fff;
+	opacity: 0.6;
+}
+
+.dropdownjs > ul > li:h > .close:hover:before {
+	opacity: 0.9;
+}
+
+.dropdownjs::after {
+	font-family: $materialDesignIconic;
+	right: 10px;
+	top: 3px;
+	font-size: rem(25px);
+	font-style: normal;
+	font-weight: 400;
+	pointer-events: none;
+	color: #6f829c;
+	content: "\f2f2";
+	position: absolute;
+}
+
+ul {
+	li.selected {
+		background-color: #eef5f9;
+	}
+}

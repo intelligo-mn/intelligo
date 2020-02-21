@@ -1,0 +1,480 @@
+<div id="content_wrapper" class="boxedlayout1-wrapper">
+	<div class="content">
+		<header class="header-wrapper header-sm">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<h1>Modals</h1>
+					</div>
+				</div>
+			</div>
+		</header>
+		<div class="content-body container">
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Demos</h2>
+						</header>
+						<div class="card-block">
+							<p>
+								Modals are streamlined, but flexible, dialog prompts with the minimum required functionality and smart defaults. You can use a modal for dialog boxes, confirmation messages, or other content that can be called up.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Basic Modal</h2>
+						</header>
+						<div class="card-block">
+							<button class="btn btn-info btn-block" (click)="open(basic)">Trigger</button>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Modal With Tabs</h2>
+						</header>
+						<div class="card-block">
+							<button class="btn btn-info btn-block" (click)="open(tabModal)">Trigger</button>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Modal Full Screen</h2>
+						</header>
+						<div class="card-block">
+							<button class="btn btn-info btn-block" (click)="openFullscreen(fullscreen)">Trigger</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Modal Toolbar</h2>
+						</header>
+						<div class="card-block">
+							<button class="btn btn-info btn-block" (click)="open(toolbarModal)">Trigger</button>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Modal Stepper</h2>
+						</header>
+						<div class="card-block">
+							<button class="btn btn-info btn-block" (click)="open(modalStepper)">Trigger</button>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card">
+						<header class="card-header">
+							<h2 class="card-title">Modal Bottom Sheet Style</h2>
+						</header>
+						<div class="card-block">
+							<button class="btn btn-info btn-block" (click)="openBottomSheetModal(bottomSheetModal)">Trigger</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<footer id="footer_wrapper" class="footer_wrapper"></footer>
+
+<!-- Modal Basic ===========================================================-->
+
+<ng-template #basic let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title">Modal title</h4>
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in ligula id sem tristique ultrices eget id neque. Duis enim turpis, tempus at accumsan vitae, lobortis id sapien. Pellentesque nec orci mi, in pharetra ligula. Nulla facilisi. Nulla
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary" (click)="c('Close click')">Close</button>
+		</div>
+	</ng-template>
+	
+	<!-- Modal Tabs ===========================================================-->
+	
+	
+	<ng-template #tabModal let-c="close" let-d="dismiss">
+		<div class="modal-header">
+			<h4 class="modal-title">Modal title</h4>
+			<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body p-0">
+			<mat-tab-group mat-stretch-tabs>
+				<mat-tab label="Tab 1">
+					<div class="tab-content p-20">
+						<h4>Craft beer vice master cleanse kinfolk pickled.</h4>
+						<figure><img src="assets/img/headers/header-sm-01.jpg" alt="" class="img-thumbnail float-left m-r-10 " /></figure>
+						<p>Air plant letterpress meh scenester readymade, raw denim jianbing bespoke meditation live-edge banjo microdosing iceland. Vinyl portland tumeric photo booth farm-to-table chia try-hard. Sustainable pabst roof party, tilde four loko cornhole activated
+							charcoal artisan put a bird on it XOXO locavore. Jean shorts hashtag fashion axe keytar sartorial, jianbing bushwick. Sriracha man braid church-key enamel pin, tumeric etsy try-hard freegan fingerstache hella hoodie leggings. Lumbersexual bicycle
+							rights vegan poke swag hell of, tote bag irony tofu chia green juice. Austin gentrify microdosing forage keytar, paleo lo-fi.</p>
+						</div>
+					</mat-tab>
+					<mat-tab label="Tab 2">
+						<div class="tab-content p-20">
+							<h4>Vape plaid forage, iPhone truffaut vegan pok.</h4>
+							<figure><img src="assets/img/headers/header-sm-04.jpg" alt="" class="img-thumbnail float-left m-r-10 " /></figure>
+							<p>Air plant letterpress meh scenester readymade, raw denim jianbing bespoke meditation live-edge banjo microdosing iceland. Vinyl portland tumeric photo booth farm-to-table chia try-hard. Sustainable pabst roof party, tilde four loko cornhole activated
+								charcoal artisan put a bird on it XOXO locavore. Jean shorts hashtag fashion axe keytar sartorial, jianbing bushwick. Sriracha man braid church-key enamel pin, tumeric etsy try-hard freegan fingerstache hella hoodie leggings. Lumbersexual bicycle
+								rights vegan poke swag hell of, tote bag irony tofu chia green juice. Austin gentrify microdosing forage keytar, paleo lo-fi.</p>
+							</div>
+						</mat-tab>
+						<mat-tab label="Tab 3">
+							<div class="tab-content p-20">
+								<h4>Meditation chartreuse street art, hella cliche.</h4>
+								<figure><img src="assets/img/headers/header-sm-05.jpg" alt="" class="img-thumbnail float-left m-r-10 " /></figure>
+								<p>Air plant letterpress meh scenester readymade, raw denim jianbing bespoke meditation live-edge banjo microdosing iceland. Vinyl portland tumeric photo booth farm-to-table chia try-hard. Sustainable pabst roof party, tilde four loko cornhole activated
+									charcoal artisan put a bird on it XOXO locavore. Jean shorts hashtag fashion axe keytar sartorial, jianbing bushwick. Sriracha man braid church-key enamel pin, tumeric etsy try-hard freegan fingerstache hella hoodie leggings. Lumbersexual bicycle
+									rights vegan poke swag hell of, tote bag irony tofu chia green juice. Austin gentrify microdosing forage keytar, paleo lo-fi.</p>
+								</div>
+							</mat-tab>
+						</mat-tab-group>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary btn-flat" (click)="c('Close click')">Close</button>
+						<button type="button" class="btn btn-primary">Ok</button>
+					</div>
+				</ng-template>
+				
+				
+				<!-- Modal Fullscreen ===========================================================-->
+				<ng-template #fullscreen let-c="close" let-d="dismiss">
+					<div class="modal-header">
+						<h4 class="modal-title">Modal title</h4>
+						<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<h4>Meditation chartreuse street art, hella cliche.</h4>
+						<figure><img src="assets/img/headers/header-md-05.jpg" alt="" class="img-thumbnail float-left m-r-10 " /></figure>
+						<p>Salvia artisan pork belly, pitchfork YOLO selfies live-edge brunch pug fashion axe raclette portland meditation. Listicle mlkshk messenger bag, copper mug tacos drinking vinegar truffaut four dollar toast health goth taxidermy vape hella. DIY ethical
+							whatever, XOXO snackwave kickstarter leggings williamsburg pinterest bespoke waistcoat. Af fingerstache +1, banh mi kogi leggings fixie food truck stumptown twee snackwave next level. Bitters direct trade small batch, lyft franzen fixie live-edge neutra
+							next level pop-up blog tofu. VHS man bun la croix, bespoke banh mi intelligentsia celiac sriracha mixtape. Leggings gentrify biodiesel, meditation pitchfork ramps butcher 8-bit small batch pork belly plaid.</p>
+							<p>Fingerstache quinoa try-hard truffaut, iPhone celiac cold-pressed raw denim hammock intelligentsia. Tumblr kinfolk authentic, dreamcatcher letterpress skateboard bushwick intelligentsia actually shoreditch flexitarian copper mug bespoke lo-fi roof party.
+								Glossier everyday carry flannel ugh vegan, vape marfa. Irony tofu next level knausgaard, fashion axe occupy everyday carry post-ironic literally semiotics locavore kogi franzen pitchfork. Seitan photo booth la croix af fap prism. Fashion axe vice wayfarers
+								aesthetic, distillery polaroid microdosing blog umami mustache quinoa bespoke photo booth. Ramps you probably haven't heard of them humblebrag forage tbh hexagon typewriter disrupt.</p>
+								<p>Lyft selfies organic fingerstache ramps squid, portland kinfolk chicharrones twee pork belly. Fanny pack PBR&amp;B pork belly hammock, cornhole slow-carb church-key cold-pressed next level microdosing. Organic lumbersexual meditation locavore. Squid
+									pok pok kickstarter, DIY hoodie edison bulb kitsch migas vinyl dreamcatcher cardigan. Pug helvetica mlkshk roof party shoreditch, street art offal stumptown. Quinoa lyft blue bottle, knausgaard pop-up swag leggings letterpress iceland. Mumblecore messenger
+									bag put a bird on it, try-hard ramps kickstarter beard hashtag tilde.
+								</p>
+								<p>Shoreditch aesthetic cornhole hot chicken. Vice distillery artisan lumbersexual. Pitchfork roof party cold-pressed, you probably haven't heard of them listicle flexitarian pork belly raclette cray waistcoat. Tousled hashtag kinfolk try-hard yr, fingerstache
+									selvage keffiyeh gochujang direct trade deep v etsy aesthetic plaid. 3 wolf moon jianbing bicycle rights, iceland semiotics church-key hoodie fixie dreamcatcher. Vaporware chartreuse live-edge affogato jianbing. Lo-fi polaroid iceland, beard tofu subway
+									tile humblebrag heirloom seitan.</p>
+									<h4>Meditation chartreuse street art, hella cliche.</h4>
+									<p>Salvia artisan pork belly, pitchfork YOLO selfies live-edge brunch pug fashion axe raclette portland meditation. Listicle mlkshk messenger bag, copper mug tacos drinking vinegar truffaut four dollar toast health goth taxidermy vape hella. DIY ethical
+										whatever, XOXO snackwave kickstarter leggings williamsburg pinterest bespoke waistcoat. Af fingerstache +1, banh mi kogi leggings fixie food truck stumptown twee snackwave next level. Bitters direct trade small batch, lyft franzen fixie live-edge neutra
+										next level pop-up blog tofu. VHS man bun la croix, bespoke banh mi intelligentsia celiac sriracha mixtape. Leggings gentrify biodiesel, meditation pitchfork ramps butcher 8-bit small batch pork belly plaid.</p>
+										<p>Fingerstache quinoa try-hard truffaut, iPhone celiac cold-pressed raw denim hammock intelligentsia. Tumblr kinfolk authentic, dreamcatcher letterpress skateboard bushwick intelligentsia actually shoreditch flexitarian copper mug bespoke lo-fi roof party.
+											Glossier everyday carry flannel ugh vegan, vape marfa. Irony tofu next level knausgaard, fashion axe occupy everyday carry post-ironic literally semiotics locavore kogi franzen pitchfork. Seitan photo booth la croix af fap prism. Fashion axe vice wayfarers
+											aesthetic, distillery polaroid microdosing blog umami mustache quinoa bespoke photo booth. Ramps you probably haven't heard of them humblebrag forage tbh hexagon typewriter disrupt.</p>
+											<p>Lyft selfies organic fingerstache ramps squid, portland kinfolk chicharrones twee pork belly. Fanny pack PBR&amp;B pork belly hammock, cornhole slow-carb church-key cold-pressed next level microdosing. Organic lumbersexual meditation locavore. Squid
+												pok pok kickstarter, DIY hoodie edison bulb kitsch migas vinyl dreamcatcher cardigan. Pug helvetica mlkshk roof party shoreditch, street art offal stumptown. Quinoa lyft blue bottle, knausgaard pop-up swag leggings letterpress iceland. Mumblecore messenger
+												bag put a bird on it, try-hard ramps kickstarter beard hashtag tilde.
+											</p>
+											<p>Shoreditch aesthetic cornhole hot chicken. Vice distillery artisan lumbersexual. Pitchfork roof party cold-pressed, you probably haven't heard of them listicle flexitarian pork belly raclette cray waistcoat. Tousled hashtag kinfolk try-hard yr, fingerstache
+												selvage keffiyeh gochujang direct trade deep v etsy aesthetic plaid. 3 wolf moon jianbing bicycle rights, iceland semiotics church-key hoodie fixie dreamcatcher. Vaporware chartreuse live-edge affogato jianbing. Lo-fi polaroid iceland, beard tofu subway
+												tile humblebrag heirloom seitan.</p>
+												<h4>Meditation chartreuse street art, hella cliche.</h4>
+												<figure><img src="assets/img/headers/header-md-07.jpg" alt="" class="img-thumbnail pull-left m-r-10 " /></figure>
+												<p>Salvia artisan pork belly, pitchfork YOLO selfies live-edge brunch pug fashion axe raclette portland meditation. Listicle mlkshk messenger bag, copper mug tacos drinking vinegar truffaut four dollar toast health goth taxidermy vape hella. DIY ethical
+													whatever, XOXO snackwave kickstarter leggings williamsburg pinterest bespoke waistcoat. Af fingerstache +1, banh mi kogi leggings fixie food truck stumptown twee snackwave next level. Bitters direct trade small batch, lyft franzen fixie live-edge neutra
+													next level pop-up blog tofu. VHS man bun la croix, bespoke banh mi intelligentsia celiac sriracha mixtape. Leggings gentrify biodiesel, meditation pitchfork ramps butcher 8-bit small batch pork belly plaid.</p>
+													<p>Fingerstache quinoa try-hard truffaut, iPhone celiac cold-pressed raw denim hammock intelligentsia. Tumblr kinfolk authentic, dreamcatcher letterpress skateboard bushwick intelligentsia actually shoreditch flexitarian copper mug bespoke lo-fi roof party.
+														Glossier everyday carry flannel ugh vegan, vape marfa. Irony tofu next level knausgaard, fashion axe occupy everyday carry post-ironic literally semiotics locavore kogi franzen pitchfork. Seitan photo booth la croix af fap prism. Fashion axe vice wayfarers
+														aesthetic, distillery polaroid microdosing blog umami mustache quinoa bespoke photo booth. Ramps you probably haven't heard of them humblebrag forage tbh hexagon typewriter disrupt.</p>
+														<p>Lyft selfies organic fingerstache ramps squid, portland kinfolk chicharrones twee pork belly. Fanny pack PBR&amp;B pork belly hammock, cornhole slow-carb church-key cold-pressed next level microdosing. Organic lumbersexual meditation locavore. Squid
+															pok pok kickstarter, DIY hoodie edison bulb kitsch migas vinyl dreamcatcher cardigan. Pug helvetica mlkshk roof party shoreditch, street art offal stumptown. Quinoa lyft blue bottle, knausgaard pop-up swag leggings letterpress iceland. Mumblecore messenger
+															bag put a bird on it, try-hard ramps kickstarter beard hashtag tilde.
+														</p>
+														<p>Shoreditch aesthetic cornhole hot chicken. Vice distillery artisan lumbersexual. Pitchfork roof party cold-pressed, you probably haven't heard of them listicle flexitarian pork belly raclette cray waistcoat. Tousled hashtag kinfolk try-hard yr, fingerstache
+															selvage keffiyeh gochujang direct trade deep v etsy aesthetic plaid. 3 wolf moon jianbing bicycle rights, iceland semiotics church-key hoodie fixie dreamcatcher. Vaporware chartreuse live-edge affogato jianbing. Lo-fi polaroid iceland, beard tofu subway
+															tile humblebrag heirloom seitan.</p>
+															<h4>Meditation chartreuse street art, hella cliche.</h4>
+															<p>Salvia artisan pork belly, pitchfork YOLO selfies live-edge brunch pug fashion axe raclette portland meditation. Listicle mlkshk messenger bag, copper mug tacos drinking vinegar truffaut four dollar toast health goth taxidermy vape hella. DIY ethical
+																whatever, XOXO snackwave kickstarter leggings williamsburg pinterest bespoke waistcoat. Af fingerstache +1, banh mi kogi leggings fixie food truck stumptown twee snackwave next level. Bitters direct trade small batch, lyft franzen fixie live-edge neutra
+																next level pop-up blog tofu. VHS man bun la croix, bespoke banh mi intelligentsia celiac sriracha mixtape. Leggings gentrify biodiesel, meditation pitchfork ramps butcher 8-bit small batch pork belly plaid.</p>
+																<p>Fingerstache quinoa try-hard truffaut, iPhone celiac cold-pressed raw denim hammock intelligentsia. Tumblr kinfolk authentic, dreamcatcher letterpress skateboard bushwick intelligentsia actually shoreditch flexitarian copper mug bespoke lo-fi roof party.
+																	Glossier everyday carry flannel ugh vegan, vape marfa. Irony tofu next level knausgaard, fashion axe occupy everyday carry post-ironic literally semiotics locavore kogi franzen pitchfork. Seitan photo booth la croix af fap prism. Fashion axe vice wayfarers
+																	aesthetic, distillery polaroid microdosing blog umami mustache quinoa bespoke photo booth. Ramps you probably haven't heard of them humblebrag forage tbh hexagon typewriter disrupt.</p>
+																	<p>Lyft selfies organic fingerstache ramps squid, portland kinfolk chicharrones twee pork belly. Fanny pack PBR&amp;B pork belly hammock, cornhole slow-carb church-key cold-pressed next level microdosing. Organic lumbersexual meditation locavore. Squid
+																		pok pok kickstarter, DIY hoodie edison bulb kitsch migas vinyl dreamcatcher cardigan. Pug helvetica mlkshk roof party shoreditch, street art offal stumptown. Quinoa lyft blue bottle, knausgaard pop-up swag leggings letterpress iceland. Mumblecore messenger
+																		bag put a bird on it, try-hard ramps kickstarter beard hashtag tilde.
+																	</p>
+																	<p>Shoreditch aesthetic cornhole hot chicken. Vice distillery artisan lumbersexual. Pitchfork roof party cold-pressed, you probably haven't heard of them listicle flexitarian pork belly raclette cray waistcoat. Tousled hashtag kinfolk try-hard yr, fingerstache
+																		selvage keffiyeh gochujang direct trade deep v etsy aesthetic plaid. 3 wolf moon jianbing bicycle rights, iceland semiotics church-key hoodie fixie dreamcatcher. Vaporware chartreuse live-edge affogato jianbing. Lo-fi polaroid iceland, beard tofu subway
+																		tile humblebrag heirloom seitan.</p>
+																	</div>
+																	<div class="modal-footer">
+																		<button type="button" class="btn btn-primary" (click)="c('Close click')">Close</button>
+																	</div>
+																</ng-template>
+																
+																
+																<!-- Modal Toolbar ===========================================================-->
+																<ng-template #toolbarModal let-c="close" let-d="dismiss">
+																	<div class="modal-header">
+																		<ul class="actions alt-actions icons top-left">
+																			<li>
+																				<a href="javascript:void(0)">
+																					<i class="zmdi zmdi-menu"></i>
+																				</a>
+																			</li>
+																		</ul>
+																		<h4 class="modal-title m-l-40">Toolbar</h4>
+																		<div class="card-search">
+																			<div class="form-group">
+																				<a href="#" class="close-search" data-card-search="close" data-toggle="tooltip" data-placement="top" title="" data-original-title="Close"> <i class="zmdi zmdi-close"></i></a>
+																				<input type="text" placeholder="Search and press enter..." class="form-control" autocomplete="off">
+																			</div>
+																		</div>
+																		<ul class="actions alt-actions icons top-right">
+																			<li>
+																				<a href="#" data-card-search="open">
+																					<i class="zmdi zmdi-search"></i>
+																				</a>
+																			</li>
+																			<li class="dropdown" ngbDropdown>
+																				<a href="javascript:void(0)" ngbDropdownToggle>
+																					<i class="zmdi zmdi-more-vert"></i>
+																				</a>
+																				<ul class="dropdown-menu btn-primary dropdown-menu-right">
+																					<li>
+																						<a href="javascript:void(0)">Option One</a>
+																					</li>
+																					<li>
+																						<a href="javascript:void(0)">Option Two</a>
+																					</li>
+																					<li>
+																						<a href="javascript:void(0)">Option Three</a>
+																					</li>
+																				</ul>
+																			</li>
+																			<li>
+																				<a href="javascript:void(0)" aria-label="Close" (click)="d('Cross click')">
+																					<i aria-hidden="true" class="zmdi zmdi-close"></i>
+																				</a>
+																			</li>
+																		</ul>
+																		
+																	</div>
+																	<div class="modal-body">
+																		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in ligula id sem tristique ultrices eget id neque. Duis enim turpis, tempus at accumsan vitae, lobortis id sapien. Pellentesque nec orci mi, in pharetra ligula. Nulla facilisi. Nulla
+																		</div>
+																		<div class="modal-footer">
+																			<button type="button" class="btn btn-primary" (click)="c('Close click')">Close</button>
+																		</div>
+																	</ng-template>
+																	
+																	<!-- Modal Stepper ===========================================================-->
+																	
+																	<ng-template #modalStepper let-c="close" let-d="dismiss">
+																		<div class="modal-header">
+																			<h4 class="modal-title">Modal title</h4>
+																			<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+																				<span aria-hidden="true">&times;</span>
+																			</button>
+																		</div>
+																		<div class="modal-body form-wizard-wrapper p-0">
+																			<form-wizard>
+																				<wizard-step [title]="'Step1'" (onNext)="onStep1Next($event)">
+																					<section class="content-container">
+																						<h1>Step 1</h1>
+																						<form novalidate #stepOne [formGroup]="myform" class="form-horizontal">
+																							<fieldset formGroupName="name">
+																								<div class="form-group row">
+																									<label class="col-2 col-form-label text-right" for="name">First Name:</label>
+																									<div class="col-10">
+																										<mat-form-field floatPlaceholder="auto" class="float-auto">
+																											<input matInput class="form-control" type="text" name="name" id="name" formControlName="firstName" placeholder="First Name">
+																										</mat-form-field>
+																									</div>
+																								</div>
+																								<div class="form-group row">
+																									<label class="col-2 col-form-label text-right" for="name">Last Name:</label>
+																									<div class="col-10">
+																										<mat-form-field floatPlaceholder="auto" class="float-auto">
+																											<input matInput class="form-control" type="text" name="name" id="name" formControlName="lastName" placeholder="Last Name">
+																										</mat-form-field>
+																									</div>
+																								</div>
+																							</fieldset>
+																						</form>
+																					</section>
+																				</wizard-step>
+																				<wizard-step [title]="'Step2'" (onNext)="onStep2Next($event)">
+																					<section class="content-container">
+																						<h1>Step 2</h1>
+																						<form novalidate #stepTwo [formGroup]="myform" class="form-horizontal">
+																							<div class="form-group row">
+																								<label class="col-2 col-form-label text-right" for="email">Your Email:</label>
+																								<div class="col-10">
+																									<mat-form-field floatPlaceholder="auto" class="float-auto">
+																										<input matInput class="form-control" type="email" name="email" id="email" formControlName="email" placeholder="@email.com">
+																									</mat-form-field>
+																								</div>
+																							</div>
+																							<div class="form-group row">
+																								<label class="col-2 col-form-label text-right" for="language">Language:</label>
+																								<div class="col-10">
+																									<mat-select class="block m-t-20" placeholder="Select your language" formControlName="language">
+																										<mat-option>None</mat-option>
+																										<mat-option *ngFor="let lang of language" [value]="lang">
+																											{{ lang }}
+																										</mat-option>
+																									</mat-select>
+																								</div>
+																							</div>
+																						</form>
+																					</section>
+																				</wizard-step>
+																				<wizard-step [title]="'Step3'" (onComplete)="onComplete($event)">
+																					<section class="content-container">
+																						<div [ngSwitch]="isCompleted">
+																							<div *ngSwitchDefault>
+																								<h1>Step 3</h1>
+																								<form novalidate #stepThree [formGroup]="myform" class="form-horizontal">
+																									<fieldset formGroupName="address">
+																										<div class="form-group row">
+																											<label class="col-2 col-form-label text-right" for="addressOne">Address One:</label>
+																											<div class="col-10">
+																												<mat-form-field floatPlaceholder="auto" class="float-auto">
+																													<input matInput class="form-control" type="text" name="addressOne" id="addressOne" formControlName="addressOne" placeholder="Address One">
+																												</mat-form-field>
+																											</div>
+																										</div>
+																										<div class="form-group row">
+																											<label class="col-2 col-form-label text-right" for="addressTwo">Address Two:</label>
+																											<div class="col-10">
+																												<mat-form-field floatPlaceholder="auto" class="float-auto">
+																													<input matInput class="form-control" type="text" name="addressTwo" id="addressTwo" formControlName="addressTwo" placeholder="Address Two">
+																												</mat-form-field>
+																											</div>
+																										</div>
+																									</fieldset>
+																									<div class="form-group row">
+																										<label class="col-2 col-form-label text-right" for="city">City:</label>
+																										<div class="col-10">
+																											<mat-form-field floatPlaceholder="auto" class="float-auto">
+																												<input matInput class="form-control" type="text" name="city" id="city" formControlName="city" placeholder="City">
+																											</mat-form-field>
+																										</div>
+																									</div>
+																								</form>
+																							</div>
+																							<div *ngSwitchCase="true">
+																								<h4>Thank you! You have completed all the steps.</h4>
+																								<pre>
+																									{{myform.value | json}}
+																								</pre>
+																							</div>
+																						</div>
+																					</section>
+																				</wizard-step>
+																			</form-wizard>
+																		</div>
+																	</ng-template>
+																	
+																	<!-- Modal Bottom Sheet ===========================================================-->
+																	<ng-template #bottomSheetModal let-c="close" let-d="dismiss">
+																		<div class="modal-header">
+																			<h4 class="modal-title">Modal title</h4>
+																			<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+																				<span aria-hidden="true">&times;</span>
+																			</button>
+																		</div>
+																		<div class="modal-body p-0">
+																			<div class="list-group">
+																				<div class="list-group-item">
+																					<div class="row-action-primary">
+																						<i class="zmdi zmdi-folder circle mw-salmon"></i>
+																					</div>
+																					<div class="row-content">
+																						<div class="least-content"><i class="zmdi zmdi-info"></i></div>
+																						<h4 class="list-group-item-heading">List item with icon</h4>
+																						<p class="list-group-item-text">Fashion axe kitsch marfa, art party gluten-free beard meditation lumbersexual pinterest sapiente. </p>
+																					</div>
+																				</div>
+																				<div class="list-group-separator"></div>
+																				<div class="list-group-item">
+																					<div class="row-action-primary">
+																						<i class="zmdi zmdi-folder circle mw-salmon"></i>
+																					</div>
+																					<div class="row-content">
+																						<div class="least-content"><i class="zmdi zmdi-info"></i></div>
+																						<h4 class="list-group-item-heading">List item with icon</h4>
+																						<p class="list-group-item-text">Fashion axe kitsch marfa, art party gluten-free beard meditation lumbersexual pinterest sapiente. </p>
+																					</div>
+																				</div>
+																				<div class="list-group-separator"></div>
+																				<div class="list-group-item">
+																					<div class="row-action-primary">
+																						<i class="zmdi zmdi-folder circle mw-salmon"></i>
+																					</div>
+																					<div class="row-content">
+																						<div class="least-content"><i class="zmdi zmdi-info"></i></div>
+																						<h4 class="list-group-item-heading">List item with icon</h4>
+																						<p class="list-group-item-text">Fashion axe kitsch marfa, art party gluten-free beard meditation lumbersexual pinterest sapiente. </p>
+																					</div>
+																				</div>
+																				<div class="list-group-separator"></div>
+																				<div class="list-group-item">
+																					<div class="row-action-primary">
+																						<i class="zmdi zmdi-folder circle mw-salmon"></i>
+																					</div>
+																					<div class="row-content">
+																						<div class="least-content"><i class="zmdi zmdi-info"></i></div>
+																						<h4 class="list-group-item-heading">List item with icon</h4>
+																						<p class="list-group-item-text">Fashion axe kitsch marfa, art party gluten-free beard meditation lumbersexual pinterest sapiente. </p>
+																					</div>
+																				</div>
+																				<div class="list-group-separator"></div>
+																				<div class="list-group-item">
+																					<div class="row-action-primary">
+																						<i class="zmdi zmdi-folder circle mw-salmon"></i>
+																					</div>
+																					<div class="row-content">
+																						<div class="least-content"><i class="zmdi zmdi-info"></i></div>
+																						<h4 class="list-group-item-heading">List item with icon</h4>
+																						<p class="list-group-item-text">Fashion axe kitsch marfa, art party gluten-free beard meditation lumbersexual pinterest sapiente. </p>
+																					</div>
+																				</div>
+																				<div class="list-group-separator"></div>
+																				<div class="list-group-item">
+																					<div class="row-action-primary">
+																						<i class="zmdi zmdi-folder circle mw-salmon"></i>
+																					</div>
+																					<div class="row-content">
+																						<div class="least-content"><i class="zmdi zmdi-info"></i></div>
+																						<h4 class="list-group-item-heading">List item with icon</h4>
+																						<p class="list-group-item-text">Fashion axe kitsch marfa, art party gluten-free beard meditation lumbersexual pinterest sapiente. </p>
+																					</div>
+																				</div>
+																				<div class="list-group-separator"></div>
+																			</div>
+																		</div>
+																		<div class="modal-footer">
+																			<button type="button" class="btn btn-primary" (click)="c('Close click')">Close</button>
+																		</div>
+																	</ng-template>
