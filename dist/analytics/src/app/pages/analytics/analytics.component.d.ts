@@ -1,0 +1,71 @@
+import { OnInit } from "@angular/core";
+import { DataService } from "../../shared/services/data/data.service";
+export declare class AnalyticsComponent implements OnInit {
+    private _data;
+    endDateStr: string;
+    startDateStr: string;
+    errorMsg: boolean;
+    chosenStartDate: Date;
+    chosenEndDate: Date;
+    loading: boolean;
+    data_new: any[];
+    nameData: string[];
+    nodeId: string[];
+    numberOfUsers: number[];
+    numberOfSessions: number[];
+    numberOfClicks: number[];
+    avgTimeSpent: any[];
+    numberOfViews: number[];
+    trimNameUser: string[];
+    trimNameSession: string[];
+    trimNameView: string[];
+    trimNameClick: string[];
+    hideChart: boolean;
+    usersLabel: string;
+    sessionsLabel: string;
+    viewsLabel: string;
+    clicksLabel: string;
+    usersData: ({
+        data: number[];
+        label: string;
+        type: string;
+        fill: boolean;
+        pointRadius: number;
+        pointHoverRadius: number;
+        backgroundColor?: undefined;
+    } | {
+        data: number[];
+        label: string;
+        backgroundColor: string;
+        type?: undefined;
+        fill?: undefined;
+        pointRadius?: undefined;
+        pointHoverRadius?: undefined;
+    })[];
+    usersDataNew: ({
+        data: number[];
+        label: string;
+        type: string;
+        fill: boolean;
+        pointRadius: number;
+        pointHoverRadius: number;
+        backgroundColor?: undefined;
+    } | {
+        data: number[];
+        label: string;
+        backgroundColor: string;
+        type?: undefined;
+        fill?: undefined;
+        pointRadius?: undefined;
+        pointHoverRadius?: undefined;
+    })[];
+    constructor(_data: DataService);
+    getInitialDate(): void;
+    getChosenDate(): void;
+    ngOnInit(): void;
+    refresh(): void;
+    onClick(event: any): void;
+    getData(): void;
+    apiCall(startDateStr: any, endDateStr: any): void;
+    wrapText(str: string): string;
+}

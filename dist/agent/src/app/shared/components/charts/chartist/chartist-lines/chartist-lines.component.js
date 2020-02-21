@@ -1,0 +1,42 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@angular/core");
+const data = require("../demo/data.json");
+let ChartistLinesComponent = class ChartistLinesComponent {
+    constructor() {
+        this.chartTypes = ["Line"];
+        this.type = "Line";
+        this.data = data["Line"];
+        this.options = {
+            low: 0,
+            showArea: false,
+            showPoint: false,
+            fullWidth: true
+        };
+    }
+};
+ChartistLinesComponent = __decorate([
+    core_1.Component({
+        selector: "chartist-lines-chart",
+        styleUrls: ["chartist-lines.component.scss"],
+        template: `
+    <x-chartist
+      [data]="data"
+      [type]="type"
+      [options]="options">
+    </x-chartist>
+  `
+    }),
+    __metadata("design:paramtypes", [])
+], ChartistLinesComponent);
+exports.ChartistLinesComponent = ChartistLinesComponent;
+//# sourceMappingURL=chartist-lines.component.js.map

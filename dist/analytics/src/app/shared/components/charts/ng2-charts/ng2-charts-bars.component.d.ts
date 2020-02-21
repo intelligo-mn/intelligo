@@ -1,0 +1,30 @@
+import { OnInit, OnChanges } from "@angular/core";
+import { OnDestroy } from "@angular/core/src/metadata/lifecycle_hooks";
+export declare class ng2BarChartDemoComponent implements OnInit, OnChanges, OnDestroy {
+    lastDataIndex: number;
+    xlabel: string;
+    ylabel: string;
+    initial: number;
+    changedSecond: boolean;
+    totalPageCount: number;
+    totalCount: number;
+    pageCount: number;
+    changed: boolean;
+    chartData: any[];
+    barChartOptions: any;
+    barChartLabels: string[];
+    chartLabel: string[];
+    barChartType: string;
+    barChartLegend: boolean;
+    barChartData: any[];
+    barChartColors: Array<any>;
+    constructor();
+    ngOnInit(): void;
+    ngOnChanges(): void;
+    ngOnDestroy(): void;
+    dataReturn(lastDataIndex: any): any[];
+    chartClicked(e: any): void;
+    labelReturn(lastLabelIndex: any): any[];
+    incGraph(): void;
+    decGraph(): void;
+}
