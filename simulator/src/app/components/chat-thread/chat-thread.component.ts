@@ -4,28 +4,28 @@ import {
   ElementRef,
   OnInit,
   ViewChild,
-  ViewChildren
-} from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
-import * as hammer from "hammerjs";
-import * as vm from "../../models/ana-chat-vm.models";
-import * as models from "../../models/ana-chat.models";
-import * as config from "../../models/ana-config.models";
-import { APIService } from "../../services/api.service";
-import { ChainDelayService } from "../../services/chain-delay.service";
-import { InfoDialogService } from "../../services/info-dialog.service";
-import { SimulatorService } from "../../services/simulator.service";
+  ViewChildren,
+} from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import * as hammer from 'hammerjs';
+import * as vm from '../../models/ana-chat-vm.models';
+import * as models from '../../models/ana-chat.models';
+import * as config from '../../models/ana-config.models';
+import { APIService } from '../../services/api.service';
+import { ChainDelayService } from '../../services/chain-delay.service';
+import { InfoDialogService } from '../../services/info-dialog.service';
+import { SimulatorService } from '../../services/simulator.service';
 import {
   StompConnectionStatus,
-  StompService
-} from "../../services/stomp.service";
-import { Config, UtilitiesService } from "../../services/utilities.service";
+  StompService,
+} from '../../services/stomp.service';
+import { Config, UtilitiesService } from '../../services/utilities.service';
 
 @Component({
-  selector: "app-chat-thread",
-  templateUrl: "./chat-thread.component.html",
-  styleUrls: ["./chat-thread.component.scss"]
+  selector: 'app-chat-thread',
+  templateUrl: './chat-thread.component.html',
+  styleUrls: ['./chat-thread.component.scss'],
 })
 export class ChatThreadComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
@@ -40,7 +40,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
     private simulator: SimulatorService,
     private sanitizer: DomSanitizer,
     private infoDialog: InfoDialogService,
-    private chainDelayService: ChainDelayService
+    private chainDelayService: ChainDelayService,
   ) {
     this.chatThread = new vm.ChatThreadVM(this.sanitizer);
     this.chatInput = new vm.ChatInputVM(
@@ -49,16 +49,16 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
       this.apiService,
       this.stompService,
       this,
-      this.sanitizer
+      this.sanitizer,
     );
   }
-  @ViewChild("inputContainer", { static: true })
+  @ViewChild('inputContainer', { static: true })
   inputContainerRef: ElementRef;
 
-  @ViewChild("chatThreadView", { static: true })
+  @ViewChild('chatThreadView', { static: true })
   chatThreadView: ElementRef;
 
-  @ViewChildren("carouselContainer")
+  @ViewChildren('carouselContainer')
   carouselContainers: ElementRef[];
 
   chatThread: vm.ChatThreadVM;
@@ -71,16 +71,16 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
   fullScreenVideo: string | SafeUrl;
 
   connectionStatusMessage() {
-    if (!this.stompService) return "";
+    if (!this.stompService) return '';
     switch (this.stompService.connectionStatus) {
       case StompConnectionStatus.Connected:
-        return "Available";
+        return 'Available';
       case StompConnectionStatus.Connecting:
-        return "Trying to connect...";
+        return 'Trying to connect...';
       case StompConnectionStatus.Disconnected:
-        return "Not available";
+        return 'Not available';
       default:
-        return "";
+        return '';
     }
   }
   setMin(min: boolean) {
@@ -94,15 +94,15 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
         .filter(x => x.classList.contains(carId));
       if (carousels) {
         let car = carousels[0];
-        if (direction == "right") {
+        if (direction == 'right') {
           if (car.scrollBy) {
-            car.scrollBy({ behavior: "smooth", left: this.carItemWidth }); //The 'left' value should be the width + margin of a single carousel item set in the CSS
+            car.scrollBy({ behavior: 'smooth', left: this.carItemWidth }); //The 'left' value should be the width + margin of a single carousel item set in the CSS
           } else {
             car.scrollLeft += this.carItemWidth;
           }
-        } else if (direction == "left") {
+        } else if (direction == 'left') {
           if (car.scrollBy) {
-            car.scrollBy({ behavior: "smooth", left: -this.carItemWidth });
+            car.scrollBy({ behavior: 'smooth', left: -this.carItemWidth });
           } else {
             car.scrollLeft -= this.carItemWidth;
           }
@@ -129,7 +129,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
 
   isLastInMessageGroup(msg: vm.ChatMessageVM) {
     let msgsOnly = this.chatThread.messages.filter(
-      x => x.getMessageContentType() != models.MessageContentType.Typing
+      x => x.getMessageContentType() != models.MessageContentType.Typing,
     );
     let index = msgsOnly.indexOf(msg);
     if (index != -1) {
@@ -141,36 +141,36 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
   }
   isLastMessage(msg: vm.ChatMessageVM) {
     let msgsOnly = this.chatThread.messages.filter(
-      x => x.getMessageContentType() != models.MessageContentType.Typing
+      x => x.getMessageContentType() != models.MessageContentType.Typing,
     );
     let index = msgsOnly.indexOf(msg);
     return index == msgsOnly.length - 1;
   }
   handleCarouselClick(
     chatMessage: vm.ChatMessageVM,
-    carOption: models.CarouselOption
+    carOption: models.CarouselOption,
   ) {
     let carMsg = chatMessage.carouselMessageData();
     if (!carMsg.content.input)
       carMsg.content.input = {
-        val: ""
+        val: '',
       };
     if (carOption.type == models.ButtonType.URL) {
       let v = JSON.parse(carOption.value);
       carMsg.content.input.val = v.value;
-      window.open(v.url, "_blank");
+      window.open(v.url, '_blank');
     } else carMsg.content.input.val = carOption.value;
 
     let msg = this.chatThread.addTextReply(
       carOption.title,
-      UtilitiesService.uuidv4()
+      UtilitiesService.uuidv4(),
     );
     this._sendMessageDelegate(
       new models.ANAChatMessage({
         meta: UtilitiesService.getReplyMeta(chatMessage.meta),
-        data: carMsg
+        data: carMsg,
       }),
-      msg
+      msg,
     );
 
     this.chatInput.resetInputs();
@@ -184,7 +184,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
         try {
           x.options.forEach(y => {
             try {
-              let value = "";
+              let value = '';
               if (y.type == models.ButtonType.URL) {
                 let v = JSON.parse(y.value);
                 value = v.value;
@@ -193,9 +193,9 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
               if (value == carMsg.content.input.val)
                 msg = this.chatThread.addTextReply(
                   y.title,
-                  "",
+                  '',
                   chatMessage.meta.timestamp,
-                  true
+                  true,
                 );
             } catch (e) {
               console.log(e);
@@ -239,7 +239,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
     let ele = this.inputContainerRef.nativeElement as HTMLDivElement;
     if (ele) {
       setTimeout(() => {
-        let inputEle = ele.querySelector("#chat-text") as HTMLInputElement;
+        let inputEle = ele.querySelector('#chat-text') as HTMLInputElement;
         if (inputEle) inputEle.focus();
       }, 100);
     }
@@ -268,27 +268,27 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
               case models.MessageType.CAROUSEL:
                 if (direction == vm.Direction.Incoming)
                   this.chatThread.addMessage(
-                    new vm.ChatMessageVM(chatMsg, direction, ""),
-                    true
+                    new vm.ChatMessageVM(chatMsg, direction, ''),
+                    true,
                   );
                 else if (direction == vm.Direction.Outgoing)
                   this.insertThreadMessageForCarouselInput(
-                    new vm.ChatMessageVM(chatMsg, direction, "")
+                    new vm.ChatMessageVM(chatMsg, direction, ''),
                   );
                 break;
               case models.MessageType.SIMPLE:
                 if (direction == vm.Direction.Incoming)
                   //Outgoing messages are never 'SIMPLE',  they are mostly 'INPUT' and rarely 'CAROUSEL'
                   this.chatThread.addMessage(
-                    new vm.ChatMessageVM(chatMsg, direction, ""),
-                    true
+                    new vm.ChatMessageVM(chatMsg, direction, ''),
+                    true,
                   );
                 break;
               case models.MessageType.INPUT:
                 if (direction == vm.Direction.Outgoing) {
                   //Ignore incoming input messages as their outgoing messages will be present (along with user given data).
                   this.chatInput.insertThreadMessageForInput(
-                    new vm.ChatInputItemVM(chatMsg)
+                    new vm.ChatInputItemVM(chatMsg),
                   );
                 }
                 break;
@@ -327,7 +327,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
       },
       err => {
         if (next) next();
-      }
+      },
     );
   }
 
@@ -337,7 +337,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
       this.settings.stompConfig &&
       this.settings.stompConfig.debug
     ) {
-      console.log("Socket Message Received: ");
+      console.log('Socket Message Received: ');
       console.log(message);
     }
 
@@ -355,7 +355,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
       case models.MessageType.CAROUSEL: {
         this.chatThread.setTyping();
         this.chainDelayService.delay(queueLength => {
-          let msg = new vm.ChatMessageVM(message, vm.Direction.Incoming, "");
+          let msg = new vm.ChatMessageVM(message, vm.Direction.Incoming, '');
           this.chatThread.addMessage(msg);
           this.notifyNewMsg();
           if (message.data.type == models.MessageType.CAROUSEL) {
@@ -373,18 +373,18 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
       }
       default:
         console.log(
-          `Unsupported message type: ${models.MessageType[message.data.type]}`
+          `Unsupported message type: ${models.MessageType[message.data.type]}`,
         );
     }
   };
   _sendMessageDelegate: (
     message: models.ANAChatMessage,
-    threadMsgRef: vm.ChatMessageVM
+    threadMsgRef: vm.ChatMessageVM,
   ) => void;
 
   removeConsecutiveErrorsMessage() {
     let oldMsgIdx = this.chatThread.messages.findIndex(
-      x => x.messageAckId == Config.consecutiveErrorsMessageAckId
+      x => x.messageAckId == Config.consecutiveErrorsMessageAckId,
     );
     if (oldMsgIdx != -1) this.chatThread.messages.splice(oldMsgIdx, 1);
   }
@@ -392,17 +392,17 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
   notifyNewMsg() {
     if (
       this.settings.appConfig.msgSounds &&
-      document.visibilityState != "visible" &&
+      document.visibilityState != 'visible' &&
       !this.isMute
     ) {
-      let audio = new Audio("assets/sounds/new-msg.mp3");
+      let audio = new Audio('assets/sounds/new-msg.mp3');
       audio.play();
     }
   }
 
   openWindow(url: string | SafeUrl) {
-    if (typeof url == "string") window.open(url);
-    else if (typeof url == "object") {
+    if (typeof url == 'string') window.open(url);
+    else if (typeof url == 'object') {
       window.open((<any>url).changingThisBreaksApplicationSecurity);
     }
   }
@@ -411,16 +411,16 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
     this.fullScreenImage = url;
 
     let imgContainer = document.querySelector(
-      "div.img-container"
+      'div.img-container',
     ) as HTMLDivElement;
     let image = document.querySelector(
-      "div.img-container>img"
+      'div.img-container>img',
     ) as HTMLImageElement;
 
     if (imgContainer && image) {
-      image.alt = "";
-      image.style.transform = "";
-      imgContainer.style.transform = "";
+      image.alt = '';
+      image.style.transform = '';
+      imgContainer.style.transform = '';
       this.setupImageViewerGestures(imgContainer, image);
     }
   }
@@ -449,7 +449,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
 
   setupImageViewerGestures(
     imgContainer: HTMLDivElement,
-    image: HTMLImageElement
+    image: HTMLImageElement,
   ) {
     this.destroyHammer();
 
@@ -476,12 +476,12 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
     let currentDeltaY = null;
 
     // Prevent long press saving on mobiles.
-    imgContainer.ontouchstart = function (e) {
+    imgContainer.ontouchstart = function(e) {
       e.preventDefault();
     };
 
     // Handles pinch and pan events/transforming at the same time;
-    this.hammerManager.on("pinch pan", function (ev) {
+    this.hammerManager.on('pinch pan', function(ev) {
       let transforms = [];
 
       // Adjusting the current pinch/pan event properties using the previous ones set when they finished touching
@@ -492,10 +492,10 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
       // Concatinating and applying parameters.
       transforms.push(`scale(${currentScale})`);
       transforms.push(`translate(${currentDeltaX}px,${currentDeltaY}px)`);
-      imgContainer.style.transform = transforms.join(" ");
+      imgContainer.style.transform = transforms.join(' ');
     });
 
-    this.hammerManager.on("panend pinchend", function (ev) {
+    this.hammerManager.on('panend pinchend', function(ev) {
       // Saving the final transforms for adjustment next time the user interacts.
       adjustScale = currentScale;
       adjustDeltaX = currentDeltaX;
@@ -506,15 +506,15 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
   getStarted(clearThread: boolean, askConfirmation: boolean) {
     if (askConfirmation) {
       this.infoDialog.confirm(
-        "Start a fresh chat?",
-        "Restarting the chat will clear current chat messages. Are you sure?",
+        'Start a fresh chat?',
+        'Restarting the chat will clear current chat messages. Are you sure?',
         ok => {
           if (ok) {
             this.getStarted(true, false);
           }
         },
-        "Yes",
-        "No"
+        'Yes',
+        'No',
       );
       return;
     }
@@ -529,17 +529,17 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
       meta: {
         sender: {
           id: this.stompService.config.businessId,
-          medium: 3
+          medium: 3,
         },
         recipient: {
           id: this.stompService.config.customerId,
-          medium: 3
+          medium: 3,
         },
         senderType: models.SenderType.USER,
         flowId: this.stompService.config.flowId,
         previousFlowId: this.stompService.config.flowId,
         currentFlowId: this.stompService.config.flowId,
-        timestamp: new Date().getTime()
+        timestamp: new Date().getTime(),
       },
       data: {
         type: 2,
@@ -548,34 +548,34 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
           mandatory: 1,
           options: [
             {
-              title: "Get Started",
-              value: "GetStarted"
-            }
+              title: 'Get Started',
+              value: 'GetStarted',
+            },
           ],
           input: {
-            val: ""
-          }
-        }
+            val: '',
+          },
+        },
       },
       events: [
         {
           type: models.EventType.SET_SESSION_DATA,
-          data: JSON.stringify(UtilitiesService.settings.appConfig.initVerbs)
-        }
-      ]
+          data: JSON.stringify(UtilitiesService.settings.appConfig.initVerbs),
+        },
+      ],
     });
     let msg = new vm.ChatMessageVM(
       firstMsg,
       vm.Direction.Outgoing,
-      UtilitiesService.uuidv4()
+      UtilitiesService.uuidv4(),
     ); //Pseudo, not actually added to thread.
     this._sendMessageDelegate(
       new models.ANAChatMessage({
         meta: UtilitiesService.getReplyMeta(firstMsg.meta),
         data: firstMsg.data,
-        events: firstMsg.events
+        events: firstMsg.events,
       }),
-      msg
+      msg,
     );
   }
 
@@ -595,19 +595,19 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
           let pendingMsgs = this.chatThread.messages.filter(
             x =>
               x.status == vm.MessageStatus.SentTimeout ||
-              (x.status == vm.MessageStatus.SentToServer && x.retrySending)
+              (x.status == vm.MessageStatus.SentToServer && x.retrySending),
           );
           pendingMsgs.forEach(x => x.retrySending());
         }
       };
       this.stompService.handleAck = (
         messageAckId: string,
-        deliveredAck?: boolean
+        deliveredAck?: boolean,
       ) => {
         if (deliveredAck) {
           //For deliveredAck, msgAckId is the msg.meta.id
           let msg = this.chatThread.messages.find(
-            x => x.meta.id == messageAckId
+            x => x.meta.id == messageAckId,
           );
           if (msg) {
             msg.status = vm.MessageStatus.DelieveredToTarget;
@@ -615,7 +615,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
           }
         } else {
           let msg = this.chatThread.messages.find(
-            x => x.messageAckId == messageAckId
+            x => x.messageAckId == messageAckId,
           );
           if (msg) {
             msg.status = vm.MessageStatus.ReceivedAtServer;
@@ -630,7 +630,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
         this.removeConsecutiveErrorsMessage();
         this.chatThread.addTextIncoming(
           Config.consecutiveErrorsMessageText,
-          Config.consecutiveErrorsMessageAckId
+          Config.consecutiveErrorsMessageAckId,
         );
       };
       this.loadHistory(() => {
@@ -638,12 +638,12 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
           if (window.parent && window.parent.postMessage) {
             window.parent.postMessage(
               {
-                type: "LOADED"
+                type: 'LOADED',
               },
-              "*"
+              '*',
             );
           }
-        } catch (e) { }
+        } catch (e) {}
         this.stompService.connect();
       });
     }
