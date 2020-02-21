@@ -26,7 +26,7 @@ export class SimulatorFrameComponent implements OnInit {
     };
     let url = `https://simulator.chatbots.mn/?s=${btoa(JSON.stringify(param))}`;
     if (environment.local)
-      url = `http://localhost:4200/index.html?s=${btoa(JSON.stringify(param))}`;
+      url = `http://localhost:4201/index.html?s=${btoa(JSON.stringify(param))}`;
     this.iframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 

@@ -10,7 +10,7 @@ import { UtilitiesService } from './services/utilities.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   constructor(
@@ -19,7 +19,8 @@ export class AppComponent {
     private stomp: StompService,
     private simulator: SimulatorService,
     private utils: UtilitiesService,
-    private matCSS: MatCSSService) {
+    private matCSS: MatCSSService,
+  ) {
     this.route.queryParams.subscribe(params => {
       if (params['s']) {
         let settings = JSON.parse(atob(params['s'])) as AppSettings;
@@ -34,22 +35,35 @@ export class AppComponent {
     UtilitiesService.settings = settings;
 
     if (settings.brandingConfig) {
-      this.getCustomStyle(settings.brandingConfig.primaryBackgroundColor, settings.brandingConfig.secondaryBackgroundColor, settings.brandingConfig.primaryForegroundColor, settings.brandingConfig.frameContentWidth);
+      this.getCustomStyle(
+        settings.brandingConfig.primaryBackgroundColor,
+        settings.brandingConfig.secondaryBackgroundColor,
+        settings.brandingConfig.primaryForegroundColor,
+        settings.brandingConfig.frameContentWidth,
+      );
     }
     if (settings.thirdPartyConfig && UtilitiesService.googleMapsConfigRef)
-      UtilitiesService.googleMapsConfigRef.apiKey = settings.thirdPartyConfig.googleMapsKey;
+      UtilitiesService.googleMapsConfigRef.apiKey =
+        settings.thirdPartyConfig.googleMapsKey;
     if (settings.appConfig) {
-      this.apiService.fileUploadEndpoint = settings.appConfig.fileUploadEndpoint;
+      this.apiService.fileUploadEndpoint =
+        settings.appConfig.fileUploadEndpoint;
       this.apiService.setAPIEndpoint(settings.appConfig.apiEndpoint);
     }
 
-    if (settings.stompConfig)
-      this.stomp.configure(settings.stompConfig);
+    if (settings.stompConfig) this.stomp.configure(settings.stompConfig);
   }
 
-  getCustomStyle(accent: string = undefined, secondary: string = undefined, accentFG: string = undefined, contentWidth: string = undefined) {
+  getCustomStyle(
+    accent: string = undefined,
+    secondary: string = undefined,
+    accentFG: string = undefined,
+    contentWidth: string = undefined,
+  ) {
     const ANA_CUSTOM_STYLE = 'ana-custom-style';
-    let customStyle = document.getElementById(ANA_CUSTOM_STYLE) as HTMLStyleElement;
+    let customStyle = document.getElementById(
+      ANA_CUSTOM_STYLE,
+    ) as HTMLStyleElement;
     if (!customStyle) {
       customStyle = document.createElement('style');
       customStyle.id = ANA_CUSTOM_STYLE;
@@ -133,7 +147,9 @@ path.send-button{
 }
 
 .ana-actions {
-  margin-right: ${UtilitiesService.settings.appConfig.fullpage ? "-5px" : "15px"};
+  margin-right: ${
+    UtilitiesService.settings.appConfig.fullpage ? '-5px' : '15px'
+  };
 }
 `;
     this.matCSS.loadCustomMatTheme(accent, customStyle, appCSS);
