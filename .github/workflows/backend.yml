@@ -18,7 +18,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - uses: intelligo-systems/intelligo-actions@v1
         with:
-          packages: '["intelligo", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo"]'
+          packages: '["intelligo", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo" , "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo"]'
       - uses: actions/cache@v1
         with:
           path: ~/.npm
