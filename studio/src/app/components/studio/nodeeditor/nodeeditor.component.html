@@ -134,7 +134,7 @@
         </div>
       </div>
     </mat-tab>
-    <mat-tab label="Content" *ngIf="contentTabVisible()" #contentTab>
+    <mat-tab label="{{ 'studio.content'| translate}}" *ngIf="contentTabVisible()" #contentTab>
       <div class="node-section-details tab-content">
         <div class="node-section" *ngFor="let section of chatNode.Sections; let i = index">
           <div [ngSwitch]="MH.editorTypeFromSectionType(section.SectionType)">
@@ -351,12 +351,12 @@
         </section>
       </div>
     </mat-tab>
-    <mat-tab label="Buttons" #buttonsTab>
+    <mat-tab label="{{ 'studio.buttons'| translate}}" #buttonsTab>
       <div class="tab-content">
         <div class="node-buttons" *ngFor="let btn of chatNode.Buttons; let i = index">
           <div class="panel panel-default">
             <div class="panel-heading">
-              Button: {{ MH.chatButtonAlias(btn) }}
+              {{'studio.button' |translate}}: {{ MH.chatButtonAlias(btn) }}
               <div class="pull-right panel-heading-actions">
                 <button mat-icon-button (click)="MH.buttonMoveUp(chatNode, btn)">
                   <mat-icon>arrow_upward</mat-icon>
