@@ -326,16 +326,16 @@
           </div>
         </div>
         <section class="text-center">
-          <img matTooltip="Add a text content" class="section-type-button text"
+          <img matTooltip="{{ 'studio.add-text' | translate }}" class="section-type-button text"
             (click)="MH.addSection(chatNode, SectionType.Text)" />
-          <img matTooltip="Add an image content" class="section-type-button image"
+          <img matTooltip="{{ 'studio.add-image' | translate }}" class="section-type-button image"
             (click)="MH.addSection(chatNode, SectionType.Image)" />
-          <img matTooltip="Add a gif content" class="section-type-button gif"
+          <img matTooltip="{{ 'studio.add-gif' | translate }}" class="section-type-button gif"
             (click)="MH.addSection(chatNode, SectionType.Gif)" />
           <!--<img matTooltip="Add an audio content" class="section-type-button audio" (click)="MH.addSection(chatNode, SectionType.Audio)" />-->
-          <img matTooltip="Add a video content" class="section-type-button video"
+          <img matTooltip="{{ 'studio.add-video' | translate }}" class="section-type-button video"
             (click)="MH.addSection(chatNode, SectionType.Video)" />
-          <img matTooltip="Add a carousel content" class="section-type-button carousel"
+          <img matTooltip="{{ 'studio.add-carousel' | translate }}" class="section-type-button carousel"
             (click)="MH.addSection(chatNode, SectionType.Carousel)" />
           <!--<mat-menu #addSectionMenu="matMenu">
         <button mat-menu-item (click)="MH.addSection(chatNode, SectionType.Text)">Text</button>
@@ -506,7 +506,8 @@
           </div>
         </div>
         <section class="text-center">
-          <button matTooltip="Add Button" type="button" mat-fab (click)="MH.addButton(chatNode)">
+          <button matTooltip="{{ 'studio.add-button' | translate }}" type="button" mat-fab
+            (click)="MH.addButton(chatNode)">
             <mat-icon class="fab-btn-icon">add</mat-icon>
           </button>
         </section>
@@ -519,7 +520,8 @@
     {{ 'studio.done' | translate }}
   </button>
   <span class="spacing"></span>
-  <button type="button" matTooltip="Delete Node" (click)="MH.nodeDelete(chatNode, this)" mat-raised-button>
+  <button type="button" matTooltip="{{ 'studio.delete-node' | translate }}" (click)="MH.nodeDelete(chatNode, this)"
+    mat-raised-button>
     {{ 'studio.delete-node' | translate }}
   </button>
 </mat-dialog-actions>
