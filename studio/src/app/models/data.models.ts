@@ -142,7 +142,7 @@ export interface ChatProject {
 	userId?: string;
 }
 
-export interface RegisterOnAnaCloudDetails {
+export interface RegisterOnIntelligoCloudDetails {
 	business: BusinessAccount;
 	user: UserRegisterModel;
 }

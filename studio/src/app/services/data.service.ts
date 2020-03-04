@@ -13,7 +13,7 @@ import {
   ErrorItem,
   ListContent,
   LoginData,
-  RegisterOnAnaCloudDetails,
+  RegisterOnIntelligoCloudDetails,
   Role,
   User,
   UserRegisterModel,
@@ -175,8 +175,8 @@ export class DataService {
   }
 
   registerOnAnaCloud(
-    request: RegisterOnAnaCloudDetails,
-  ): Observable<APIResponse<RegisterOnAnaCloudDetails>> {
+    request: RegisterOnIntelligoCloudDetails,
+  ): Observable<APIResponse<RegisterOnIntelligoCloudDetails>> {
     let h = this.getHeaders();
     let serverUrl = 'http://gateway.api.dev.ana.chat/';
     if (environment.production) {
