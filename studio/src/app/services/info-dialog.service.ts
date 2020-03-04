@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { Injectable } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {
   InfoDialogComponent,
   InfoDialogOptions,
-  InfoDialogType
-} from "../components/shared/info-dialog/info-dialog.component";
-import { LoadingMaskComponent } from "../components/shared/loading-mask/loading-mask.component";
+  InfoDialogType,
+} from '../components/shared/info-dialog/info-dialog.component';
+import { LoadingMaskComponent } from '../components/shared/loading-mask/loading-mask.component';
 
 @Injectable()
 export class InfoDialogService {
@@ -15,11 +15,11 @@ export class InfoDialogService {
     let data: InfoDialogOptions = {
       dialogType: InfoDialogType.Alert,
       message: message,
-      title: title
+      title: title,
     };
     let d = this.dialog.open(InfoDialogComponent, {
-      width: "auto",
-      data: data
+      width: 'auto',
+      data: data,
     });
     if (callback)
       d.afterClosed().subscribe(x => {
@@ -30,18 +30,18 @@ export class InfoDialogService {
     title: string,
     message: string,
     callback: (result: string) => void,
-    defaultText?: string
+    defaultText?: string,
   ) {
     let data: InfoDialogOptions = {
       dialogType: InfoDialogType.Prompt,
       message: message,
       title: title,
-      defaultInputText: defaultText
+      defaultInputText: defaultText,
     };
 
     let d = this.dialog.open(InfoDialogComponent, {
-      width: "auto",
-      data: data
+      width: 'auto',
+      data: data,
     });
     d.afterClosed().subscribe(x => {
       callback(x as string);
@@ -51,12 +51,12 @@ export class InfoDialogService {
     let data: InfoDialogOptions = {
       dialogType: InfoDialogType.Confirm,
       message: message,
-      title: title
+      title: title,
     };
 
     let d = this.dialog.open(InfoDialogComponent, {
-      width: "auto",
-      data: data
+      width: 'auto',
+      data: data,
     });
     d.afterClosed().subscribe(x => {
       callback(x as boolean);
@@ -67,9 +67,9 @@ export class InfoDialogService {
   showSpinner() {
     this.hideSpinner();
     this.dialogRef = this.dialog.open(LoadingMaskComponent, {
-      width: "auto",
+      width: 'auto',
       disableClose: true,
-      panelClass: "trans-background"
+      panelClass: 'trans-background',
     });
   }
 

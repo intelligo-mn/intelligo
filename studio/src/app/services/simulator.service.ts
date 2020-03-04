@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as jsonpath from 'jsonpath';
 import * as _ from 'underscore';
@@ -7,7 +8,6 @@ import { CarouselButton } from '../models/chatflow.models';
 import * as chatModels from '../models/intelligo-chat.models';
 import { GlobalsService } from '../services/globals.service';
 import { InfoDialogService } from '../services/info-dialog.service';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class SimulatorService {

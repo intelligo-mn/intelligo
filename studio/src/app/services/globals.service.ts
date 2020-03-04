@@ -1,20 +1,20 @@
-import { Injectable } from "@angular/core";
-import { Title } from "@angular/platform-browser";
-import { ObjectID } from "bson";
-import { ChatFlowComponent } from "../components/studio/chatflow/chatflow.component";
-import * as models from "../models/chatflow.models";
-import { CarouselSection, SectionType } from "../models/chatflow.models";
+import { Injectable } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ObjectID } from 'bson';
+import { ChatFlowComponent } from '../components/studio/chatflow/chatflow.component';
+import * as models from '../models/chatflow.models';
+import { CarouselSection, SectionType } from '../models/chatflow.models';
 import {
   AddressInput,
   GeoLoc,
   IntelligoDate,
-  IntelligoTime
-} from "../models/intelligo-chat.models";
+  IntelligoTime,
+} from '../models/intelligo-chat.models';
 
 @Injectable()
 export class GlobalsService {
   constructor(private title: Title) {}
-  appName = "Chatbots.mn";
+  appName = 'Chatbots.mn';
 
   chatFlowComponent: ChatFlowComponent;
   loading: boolean = false;
@@ -25,14 +25,14 @@ export class GlobalsService {
   }
 
   downloadTextAsFile(filename, text) {
-    var element = document.createElement("a");
+    var element = document.createElement('a');
     element.setAttribute(
-      "href",
-      "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+      'href',
+      'data:text/plain;charset=utf-8,' + encodeURIComponent(text),
     );
-    element.setAttribute("download", filename);
+    element.setAttribute('download', filename);
 
-    element.style.display = "none";
+    element.style.display = 'none';
     document.body.appendChild(element);
 
     element.click();
@@ -47,48 +47,48 @@ export class GlobalsService {
         (
           (<any>c) ^
           (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (<any>c / 4)))
-        ).toString(16)
+        ).toString(16),
       );
   }
   getVariableType(x) {
     if (Array.isArray(x)) return VariableType.Array;
-    else if (typeof x == "string") return VariableType.String;
-    else if (x != null && typeof x == "object") return VariableType.Object;
+    else if (typeof x == 'string') return VariableType.String;
+    else if (x != null && typeof x == 'object') return VariableType.Object;
     else return VariableType.Other;
   }
 
-  anaDateDisplay(anaDate: IntelligoDate) {
+  intelligoDateDisplay(anaDate: IntelligoDate) {
     return `${parseInt(anaDate.mday)}-${parseInt(anaDate.month)}-${parseInt(
-      anaDate.year
+      anaDate.year,
     )}`;
   }
 
-  anaTimeDisplay(anaTime: IntelligoTime) {
+  intelligoTimeDisplay(anaTime: IntelligoTime) {
     let hr = parseInt(anaTime.hour);
     let min = parseInt(anaTime.minute);
 
     var hours: any = hr > 12 ? hr - 12 : hr;
-    var am_pm = hr >= 12 ? "PM" : "AM";
-    hours = hours < 10 ? "0" + hours : hours;
-    var minutes = min < 10 ? "0" + min : min;
+    var am_pm = hr >= 12 ? 'PM' : 'AM';
+    hours = hours < 10 ? '0' + hours : hours;
+    var minutes = min < 10 ? '0' + min : min;
 
-    return hours + ":" + minutes + " " + am_pm;
+    return hours + ':' + minutes + ' ' + am_pm;
   }
 
-  anaAddressDisplay(anaAddress: AddressInput) {
+  intelligoAddressDisplay(anaAddress: AddressInput) {
     return [
       anaAddress.line1,
       anaAddress.area,
       anaAddress.city,
       anaAddress.state,
       anaAddress.country,
-      anaAddress.pin
+      anaAddress.pin,
     ]
       .filter(x => x)
-      .join(", ");
+      .join(', ');
   }
 
-  anaLocationDisplay(anaLoc: GeoLoc) {
+  intelligoLocationDisplay(anaLoc: GeoLoc) {
     return `${anaLoc.lat},${anaLoc.lng}`;
   }
 
@@ -123,7 +123,7 @@ export class GlobalsService {
     }
     let targetNode = JSON.parse(JSON.stringify(srcNode)) as models.ChatNode;
     targetNode.Id = new ObjectID().toHexString();
-    targetNode.Name += " Copy";
+    targetNode.Name += ' Copy';
     targetNode.NextNodeId = null;
     if (targetNode.Buttons) {
       targetNode.Buttons.forEach(btn => {
@@ -154,5 +154,5 @@ export enum VariableType {
   Array,
   String,
   Object,
-  Other
+  Other,
 }
