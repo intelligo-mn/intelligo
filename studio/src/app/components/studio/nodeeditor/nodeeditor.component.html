@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>{{ 'studio.edit-chat-node-info' | translate }}</h2>
 <mat-dialog-content>
   <mat-tab-group #tabGroup>
-    <mat-tab label="Node Info" #nodeInfoTab>
+    <mat-tab label="{{ 'studio.node-info' | translate }}" #nodeInfoTab>
       <div class="node-details tab-content">
         <div class="node-basic-info">
           <mat-form-field>
@@ -25,22 +25,22 @@
               {{ 'studio.mark-as-goal-node' | translate}}</mat-checkbox>
           </section>
           <mat-form-field>
-            <input matInput type="text" placeholder="Variable Name" [(ngModel)]="chatNode.VariableName"
-              name="variableName" />
+            <input matInput type="text" placeholder="{{ 'studio.variable-name' | translate }}"
+              [(ngModel)]="chatNode.VariableName" name="variableName" />
           </mat-form-field>
           <mat-form-field>
-            <input matInput type="text" disabled readonly placeholder="Node Id" [(ngModel)]="chatNode.Id"
-              name="nodeId" />
+            <input matInput type="text" disabled readonly placeholder="{{ 'studio.node-id' | translate }}"
+              [(ngModel)]="chatNode.Id" name="nodeId" />
           </mat-form-field>
         </div>
         <div class="node-condition" [hidden]="chatNode.NodeType != 'Condition'">
           <div class="panel panel-default">
-            <div class="panel-heading">Condition Details</div>
+            <div class="panel-heading">{{ 'studio.condition-details' | translate }}</div>
             <div class="panel-body">
               <div>
                 <mat-form-field>
-                  <input matInput type="text" placeholder="Fallback Next Node Id" [(ngModel)]="chatNode.NextNodeId"
-                    name="NextNodeId-Condition" />
+                  <input matInput type="text" placeholder="{{ 'studio.fallback-next-node-id' | translate }}"
+                    [(ngModel)]="chatNode.NextNodeId" name="NextNodeId-Condition" />
                 </mat-form-field>
               </div>
             </div>
@@ -48,24 +48,25 @@
         </div>
         <div class="node-api-details" [hidden]="chatNode.NodeType != 'ApiCall'">
           <div class="panel panel-default">
-            <div class="panel-heading">API Details</div>
+            <div class="panel-heading">{{ 'studio.api-details' | translate }}</div>
             <div class="panel-body">
               <div>
                 <mat-form-field>
-                  <mat-select placeholder="API Method" [(ngModel)]="chatNode.ApiMethod" name="ApiMethod">
+                  <mat-select placeholder="{{ 'studio.api-method' | translate }}" [(ngModel)]="chatNode.ApiMethod"
+                    name="ApiMethod">
                     <mat-option *ngFor="let apiMethod of MH.apiMethods" [value]="apiMethod">
                       {{ apiMethod || "None" }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field>
-                  <input matInput type="url" placeholder="API Url" [(ngModel)]="chatNode.ApiUrl" name="ApiUrl" />
+                  <input matInput type="url" placeholder="{{ 'studio.api-url' | translate }}"
+                    [(ngModel)]="chatNode.ApiUrl" name="ApiUrl" />
                 </mat-form-field>
                 <mat-form-field class="contains-hint">
                   <textarea rows="3" matInput placeholder="Headers" [(ngModel)]="chatNode.Headers"
                     name="Headers"></textarea>
-                  <mat-hint>Enter one header per line. Separate Key and value with a
-                    colon. Eg: Content-Type:text/plain
+                  <mat-hint>{{ 'studio.api-headers-hint' | translate }}
                   </mat-hint>
                 </mat-form-field>
                 <mat-form-field>
@@ -78,14 +79,14 @@
                       'RequiredVariables'
                     )
                   ">
-                  <input matInput type="text" placeholder="Required Variables" [(ngModel)]="chatNode.RequiredVariables"
-                    name="RequiredVariables" />
+                  <input matInput type="text" placeholder="{{ 'studio.required-variables' | translate }}"
+                    [(ngModel)]="chatNode.RequiredVariables" name="RequiredVariables" />
                 </mat-form-field>
                 <mat-form-field [hidden]="
                     !MH.chatNodeApiCallFieldVisible(chatNode, 'RequestBody')
                   ">
-                  <textarea rows="6" matInput placeholder="Request Body" [(ngModel)]="chatNode.RequestBody"
-                    name="RequestBody"></textarea>
+                  <textarea rows="6" matInput placeholder="{{ 'studio.request-body' | translate }}"
+                    [(ngModel)]="chatNode.RequestBody" name="RequestBody"></textarea>
                 </mat-form-field>
               </div>
             </div>
@@ -93,18 +94,19 @@
         </div>
         <div class="node-card-details" [hidden]="chatNode.NodeType != 'Card'">
           <div class="panel panel-default">
-            <div class="panel-heading">Card Details</div>
+            <div class="panel-heading">{{ 'studio.card-details' | translate }}</div>
             <div class="panel-body">
               <mat-form-field>
-                <input matInput type="text" placeholder="Card Header" [(ngModel)]="chatNode.CardHeader"
-                  name="CardHeader" />
+                <input matInput type="text" placeholder="{{ 'studio.card-header' | translate }}"
+                  [(ngModel)]="chatNode.CardHeader" name="CardHeader" />
               </mat-form-field>
               <mat-form-field>
-                <input matInput type="text" placeholder="Card Footer" [(ngModel)]="chatNode.CardFooter"
-                  name="CardFooter" />
+                <input matInput type="text" placeholder="{{ 'studio.card-footer' | translate }}"
+                  [(ngModel)]="chatNode.CardFooter" name="CardFooter" />
               </mat-form-field>
               <mat-form-field>
-                <mat-select placeholder="Card Placement" [(ngModel)]="chatNode.Placement" name="Placement">
+                <mat-select placeholder="{{ 'studio.card-placement' | translate }}" [(ngModel)]="chatNode.Placement"
+                  name="Placement">
                   <mat-option *ngFor="let cardPlacement of MH.cardPlacements" [value]="cardPlacement">
                     {{ cardPlacement || "None" }}
                   </mat-option>
@@ -115,16 +117,16 @@
         </div>
         <div class="node-jumptobot-details" [hidden]="chatNode.NodeType != 'JumpToBot'">
           <div class="panel panel-default">
-            <div class="panel-heading">Jump To Bot Details</div>
+            <div class="panel-heading">{{ 'studio.jump-to-bot-details' | translate }}</div>
             <div class="panel-body">
               <div>
                 <mat-form-field>
-                  <input matInput type="text" placeholder="Target Bot Id" [(ngModel)]="chatNode.TargetBotId"
-                    name="TargetBotId" />
+                  <input matInput type="text" placeholder="{{ 'studio.target-bot-id' | translate }}"
+                    [(ngModel)]="chatNode.TargetBotId" name="TargetBotId" />
                 </mat-form-field>
                 <mat-form-field>
-                  <input matInput type="text" placeholder="Target Node Id" [(ngModel)]="chatNode.TargetNodeId"
-                    name="TargetNodeId" />
+                  <input matInput type="text" placeholder="{{ 'studio.target-node-id' | translate }}"
+                    [(ngModel)]="chatNode.TargetNodeId" name="TargetNodeId" />
                 </mat-form-field>
               </div>
             </div>
@@ -143,8 +145,8 @@
                     <i class="fa fa-file-text-o text-section-icon"></i>
                     &nbsp;
                   </span>
-                  <input [autofocus] matInput type="text" placeholder="Section text" [(ngModel)]="section.Text"
-                    name="sectionText-{{ i }}" />
+                  <input [autofocus] matInput type="text" placeholder="{{ 'studio.section-text' | translate }}"
+                    [(ngModel)]="section.Text" name="sectionText-{{ i }}" />
                   <span matSuffix style="font-size: 24px">
                     <button mat-icon-button (click)="MH.sectionMoveUp(chatNode, section)">
                       <mat-icon>arrow_upward</mat-icon>
@@ -164,7 +166,7 @@
                 <div class="panel-heading">
                   <i [matTooltip]="section.SectionType + ' Section'" class="fa panel-header-icon"
                     [ngClass]="MH.sectionIcon(section)"></i>
-                  Section: {{ MH.sectionAlias(section) }}
+                  {{ 'studio.section' | translate }}: {{ MH.sectionAlias(section) }}
                   <div class="pull-right panel-heading-actions">
                     <button mat-icon-button (click)="MH.sectionMoveUp(chatNode, section)">
                       <mat-icon>arrow_upward</mat-icon>
@@ -179,15 +181,16 @@
                 </div>
                 <div class="panel-body">
                   <mat-form-field>
-                    <input matInput type="text" placeholder="Title" [(ngModel)]="section.Title"
-                      name="sectionTitle-{{ i }}" />
+                    <input matInput type="text" placeholder="{{ 'studio.title' | translate }}"
+                      [(ngModel)]="section.Title" name="sectionTitle-{{ i }}" />
                   </mat-form-field>
                   <mat-form-field>
-                    <input matInput type="url" placeholder="Url" [(ngModel)]="section.Url" name="sectionUrl-{{ i }}" />
+                    <input matInput type="url" placeholder="{{ 'studio.url' | translate }}" [(ngModel)]="section.Url"
+                      name="sectionUrl-{{ i }}" />
                   </mat-form-field>
                   <mat-form-field>
-                    <input matInput type="text" placeholder="Caption" [(ngModel)]="section.Caption"
-                      name="sectionCaption-{{ i }}" />
+                    <input matInput type="text" placeholder="{{ 'studio.caption' | translate }}"
+                      [(ngModel)]="section.Caption" name="sectionCaption-{{ i }}" />
                   </mat-form-field>
                 </div>
               </div>

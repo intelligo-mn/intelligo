@@ -70,6 +70,7 @@
 		"add-video": "Add a video content",
 		"allow-multiple": "Allow Multiple",
 		"api-details": "API Details",
+		"api-method":"API Method",
 		"api-headers": "Headers",
 		"api-headers-hint": "Enter one header per line. Separate Key and value with a colon. Eg: Content-Type:text/plain",
 		"api-url": "API Url",
@@ -77,6 +78,7 @@
 		"card-footer": "Card Footer",
 		"card-header": "Card Header",
 		"card-placement": "Card Placement",
+		"caption": "Тайлбар",
 		"close": "Хаах",
 		"close-description": "Энэхүү төслөөс гарах",
 		"condition-details": "Condition Details",
@@ -87,6 +89,7 @@
 		"edit-chat-node-info": "Чатботын үйлдэлийн мэдээлэл засах",
 		"export": "Export Хийх",
 		"export-description": "Чатботын код татаж авах",
+		"fallback-next-node-id": "Fallback Next Node Id",
 		"fit": "Дэлгэц дүүргэх",
 		"jump-to-bot-details": "Jump To Bot Details",
 		"mark-as-goal-node": "Хамгийн сүүлийн үйлдэл",
@@ -96,6 +99,7 @@
 		"multiple-line-allowed": "Multiple line allowed",
 		"next-node-id": "Fallback Next Node Id",
 		"node-id": "Node Id",
+		"node-info": "Node-ийн мэдээлэл",
 		"node-name": "Үйлдэлийн нэр",
 		"node-type": "Үйлдэлийн төрөл",
 		"open": "Нээх",
@@ -107,11 +111,14 @@
 		"run-chatbot-description": "Симулатор дээр чатботоо ажиллуулах",
 		"save": "Хадгалах",
 		"save-description": "Чатбот хадгалах",
-		"section-text": "Section text",
+		"section": "Section",
+		"section-text": "Section текст",
+		"title": "Гарчиг",
+		"url": "Холбоос",
 		"start-node-not-set": "Start node not set!",
 		"start-node-not-set-message": "Tick 'Mark as start node' for the initial node of your chatbot.",
 		"target-bot-id": "Target Bot Id",
 		"target-node-id": "Target Node Id",
-		"variable-name": "Variable Name"
+		"variable-name": "Хувьсагчийн нэр"
 	}
 }
