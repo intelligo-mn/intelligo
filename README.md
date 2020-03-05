@@ -14,7 +14,7 @@ Conversational AI platform.
 
 ### Tech stack
 
-[<img src=".github/assets/stack.png"/>](https://jisho.dev.mn)
+[<img src="https://github.com/intelligo-systems/jisho.mn/blob/master/.github/assets/stack.png"/>](https://chatbots.mn)
 
 ## Backend API
 
