@@ -2,7 +2,7 @@
   "name": "api.chatbots.mn",
   "private": true,
   "version": "1.0.0",
-  "description": "Chatbots.mn API",
+  "description": "Chatbots.mn Backend API",
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
