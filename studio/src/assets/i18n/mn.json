@@ -61,7 +61,7 @@
 	},
 	"studio": {
 		"add": "Нэмэх",
-		"add-button": "Add Button",
+		"add-button": "Товч нэмэх",
 		"add-carousel": "Add a carousel content",
 		"add-description": "Шинэ үйлдэл нэмэх",
 		"add-gif": "Add an gif content",
@@ -118,7 +118,7 @@
 		"section-text": "Section текст",
 		"title": "Гарчиг",
 		"url": "Холбоос",
-		"start-node-not-set": "Start node not set!",
+		"start-node-not-set": "Хамгийн эхэнд ажиллах үйлдэл зааж өгөөгүй байна!",
 		"start-node-not-set-message": "Tick 'Mark as start node' for the initial node of your chatbot.",
 		"target-bot-id": "Target Bot Id",
 		"target-node-id": "Target Node Id",
