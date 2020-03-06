@@ -51,13 +51,13 @@ jobs:
           packages: '["@devmn/charts", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "@devmn/charts", "@devmn/charts", "intelligo-cli", "@devmn/stepper", "@devmn/stepper", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
-          packages: '["intelligo", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "@devmn/charts", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo"]'
+          packages: '["@devmn/charts", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "@devmn/charts", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
-          packages: '["intelligo", "intelligo-cli", "neuro.js", "intelligo-cli", "@devmn/charts", "@devmn/charts", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo"]'
+          packages: '["@devmn/charts", "intelligo-cli", "neuro.js", "intelligo-cli", "@devmn/charts", "@devmn/charts", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
-          packages: '["intelligo", "intelligo-cli", "neuro.js", "intelligo-cli", "@devmn/charts", "intelligo", "intelligo", "intelligo-cli", "@devmn/charts", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo"]'
+          packages: '["@devmn/charts", "intelligo-cli", "neuro.js", "intelligo-cli", "@devmn/charts", "intelligo", "intelligo", "intelligo-cli", "@devmn/charts", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
           packages: '["@devmn/charts", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "@devmn/charts", "@devmn/charts", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "@devmn/charts", "@devmn/charts", "intelligo"]'
