@@ -36,10 +36,10 @@ jobs:
           packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
-          packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo"]'
+          packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "@devmn/charts", "@devmn/charts", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
-          packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo"]'
+          packages: '["@devmn/charts", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
           packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo"]'
