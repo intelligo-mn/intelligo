@@ -51,13 +51,13 @@ jobs:
           packages: '["@devmn/charts", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
-          packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo"]'
+          packages: '["@devmn/charts", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
-          packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo"]'
+          packages: '["@devmn/charts", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
-          packages: '["intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo"]'
+          packages: '["@devmn/charts", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo", "intelligo-cli", "neuro.js", "uptime.js", "intelligo", "intelligo", "intelligo"]'
       - uses: actions/cache@v1
         with:
           path: ~/.npm
