@@ -1,77 +1,156 @@
 <mat-dialog-content>
-    <div [ngSwitch]="params.Type">
-        <ng-container *ngSwitchCase="ComplexType.Date">
-            <mat-form-field>
-                <input matInput [matDatepicker]="datePicker" placeholder="Choose a date" [(ngModel)]="choosenDate">
-                <mat-datepicker-toggle matSuffix [for]="datePicker" class="ana-color-accent"></mat-datepicker-toggle>
-                <mat-datepicker touchUi="true" #datePicker></mat-datepicker>
-            </mat-form-field>
-        </ng-container>
+  <div [ngSwitch]="params.Type">
+    <ng-container *ngSwitchCase="ComplexType.Date">
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="datePicker"
+          placeholder="Choose a date"
+          [(ngModel)]="choosenDate"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="datePicker"
+          class="ana-color-accent"
+        ></mat-datepicker-toggle>
+        <mat-datepicker touchUi="true" #datePicker></mat-datepicker>
+      </mat-form-field>
+    </ng-container>
 
-        <ng-container *ngSwitchCase="ComplexType.Time">
-            <mat-form-field>
-                <input matInput type="time" placeholder="Choose a time" [(ngModel)]="choosenTime">
-            </mat-form-field>
-        </ng-container>
-        <ng-container *ngSwitchCase="ComplexType.Address">
+    <ng-container *ngSwitchCase="ComplexType.Time">
+      <mat-form-field>
+        <input
+          matInput
+          type="time"
+          placeholder="Choose a time"
+          [(ngModel)]="choosenTime"
+        />
+      </mat-form-field>
+    </ng-container>
+    <ng-container *ngSwitchCase="ComplexType.Address">
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="Street Address"
+          [(ngModel)]="givenAddress.line1"
+          name="addressLine1"
+        />
+      </mat-form-field>
 
-            <mat-form-field>
-                <input matInput type="text" placeholder="Street Address" [(ngModel)]="givenAddress.line1"
-                    name="addressLine1">
-            </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="Area"
+          [(ngModel)]="givenAddress.area"
+          name="addressArea"
+        />
+      </mat-form-field>
 
-            <mat-form-field>
-                <input matInput type="text" placeholder="Area" [(ngModel)]="givenAddress.area" name="addressArea">
-            </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="City"
+          [(ngModel)]="givenAddress.city"
+          name="addressCity"
+        />
+      </mat-form-field>
 
-            <mat-form-field>
-                <input matInput type="text" placeholder="City" [(ngModel)]="givenAddress.city" name="addressCity">
-            </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="State"
+          [(ngModel)]="givenAddress.state"
+          name="addressState"
+        />
+      </mat-form-field>
 
-            <mat-form-field>
-                <input matInput type="text" placeholder="State" [(ngModel)]="givenAddress.state" name="addressState">
-            </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="Country"
+          [(ngModel)]="givenAddress.country"
+          name="addressCountry"
+        />
+      </mat-form-field>
 
-            <mat-form-field>
-                <input matInput type="text" placeholder="Country" [(ngModel)]="givenAddress.country"
-                    name="addressCountry">
-            </mat-form-field>
-
-            <mat-form-field>
-                <input matInput type="text" placeholder="Pin" [(ngModel)]="givenAddress.pin" name="addressPin">
-            </mat-form-field>
-        </ng-container>
-        <ng-container *ngSwitchCase="ComplexType.Location">
-            <agm-map [latitude]="geoLoc.lat" [longitude]="geoLoc.lng">
-                <agm-marker [latitude]="geoLoc.lat" [longitude]="geoLoc.lng" [markerDraggable]="true"
-                    (dragEnd)="mapLocationUpdated($event)"></agm-marker>
-            </agm-map>
-        </ng-container>
-        <ng-container *ngSwitchCase="ComplexType.List">
-            <mat-form-field>
-                <input matInput type="text" placeholder="Search" [(ngModel)]="listItemsSearch" name="listItemsSearch">
-            </mat-form-field>
-            <mat-card *ngIf="searchedListValues().length <= 0">
-                No items to display
-            </mat-card>
-            <mat-list *ngIf="listMultiple">
-                <mat-list-item *ngFor="let listItem of searchedListValues(); let i = index">
-                    <mat-checkbox [(ngModel)]="listItem.isSelected" name="listItemIsSelected-{{i}}" align="start">
-                        {{listItem.text}}</mat-checkbox>
-                </mat-list-item>
-            </mat-list>
-            <mat-list *ngIf="!listMultiple">
-                <mat-radio-group [(ngModel)]="selectedListItem">
-                    <mat-list-item *ngFor="let listItem of searchedListValues(); let i = index">
-                        <mat-radio-button name="listItemIsSelected-{{i}}" [value]="listItem" align="start">
-                            {{listItem.text}}</mat-radio-button>
-                    </mat-list-item>
-                </mat-radio-group>
-            </mat-list>
-        </ng-container>
-    </div>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="Pin"
+          [(ngModel)]="givenAddress.pin"
+          name="addressPin"
+        />
+      </mat-form-field>
+    </ng-container>
+    <ng-container *ngSwitchCase="ComplexType.Location">
+      <agm-map [latitude]="geoLoc.lat" [longitude]="geoLoc.lng">
+        <agm-marker
+          [latitude]="geoLoc.lat"
+          [longitude]="geoLoc.lng"
+          [markerDraggable]="true"
+          (dragEnd)="mapLocationUpdated($event)"
+        ></agm-marker>
+      </agm-map>
+    </ng-container>
+    <ng-container *ngSwitchCase="ComplexType.List">
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="Search"
+          [(ngModel)]="listItemsSearch"
+          name="listItemsSearch"
+        />
+      </mat-form-field>
+      <mat-card *ngIf="searchedListValues().length <= 0">
+        No items to display
+      </mat-card>
+      <mat-list *ngIf="listMultiple">
+        <mat-list-item
+          *ngFor="let listItem of searchedListValues(); let i = index"
+        >
+          <mat-checkbox
+            [(ngModel)]="listItem.isSelected"
+            name="listItemIsSelected-{{ i }}"
+            align="start"
+          >
+            {{ listItem.text }}</mat-checkbox
+          >
+        </mat-list-item>
+      </mat-list>
+      <mat-list *ngIf="!listMultiple">
+        <mat-radio-group [(ngModel)]="selectedListItem">
+          <mat-list-item
+            *ngFor="let listItem of searchedListValues(); let i = index"
+          >
+            <mat-radio-button
+              name="listItemIsSelected-{{ i }}"
+              [value]="listItem"
+              align="start"
+            >
+              {{ listItem.text }}</mat-radio-button
+            >
+          </mat-list-item>
+        </mat-radio-group>
+      </mat-list>
+    </ng-container>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
-    <button mat-raised-button color="primary" [disabled]="!isValid()" mat-button class="complex-input-btn-done"
-        (click)="dialogClose()">Submit</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="!isValid()"
+    mat-button
+    class="complex-input-btn-done"
+    (click)="dialogClose()"
+  >
+    Submit
+  </button>
 </mat-dialog-actions>

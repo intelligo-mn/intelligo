@@ -1,13 +1,30 @@
-<h2 matDialogTitle>{{options.title}}</h2>
+<h2 matDialogTitle>{{ options.title }}</h2>
 <mat-dialog-content>
-    <p>{{options.message}}</p>
-    <mat-form-field [hidden]="options.dialogType!=InfoDialogType.Prompt">
-        <input type="text" name="text" matInput [(ngModel)]="inputText" (keypress)="inputKeypress($event)" />
-    </mat-form-field>
+  <p>{{ options.message }}</p>
+  <mat-form-field [hidden]="options.dialogType != InfoDialogType.Prompt">
+    <input
+      type="text"
+      name="text"
+      matInput
+      [(ngModel)]="inputText"
+      (keypress)="inputKeypress($event)"
+    />
+  </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-raised-button color="primary" (click)="primaryClick()"
-        *ngIf="primaryButtonText">{{primaryButtonText}}</button>
-    <button mat-raised-button [color]="options.dialogType==InfoDialogType.Alert?'primary':''"
-        [matDialogClose]="false">{{secondaryButtonText}}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="primaryClick()"
+    *ngIf="primaryButtonText"
+  >
+    {{ primaryButtonText }}
+  </button>
+  <button
+    mat-raised-button
+    [color]="options.dialogType == InfoDialogType.Alert ? 'primary' : ''"
+    [matDialogClose]="false"
+  >
+    {{ secondaryButtonText }}
+  </button>
 </mat-dialog-actions>
