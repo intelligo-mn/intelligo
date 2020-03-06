@@ -30,7 +30,7 @@ jobs:
           packages: '["@devmn/stepper", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "@devmn/stepper", "@devmn/stepper", "intelligo-cli", "@devmn/stepper", "intelligo", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
-          packages: '["intelligo", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "@devmn/stepper", "intelligo", "intelligo"]'
+          packages: '["@devmn/charts", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "@devmn/stepper", "intelligo", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
           packages: '["intelligo", "intelligo-cli", "neuro.js", "intelligo-cli", "@devmn/stepper", "@devmn/stepper", "@devmn/stepper", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "@devmn/stepper", "intelligo", "intelligo"]'
