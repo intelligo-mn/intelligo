@@ -11,29 +11,28 @@ Conversational AI platform.
 | Chatbots.mn Simulator   | [simulator.chatbots.mn](https://simulator.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/simulator/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=simulator)     |
 | Chatbots.mn Marketplace |             [www.chatbots.mn](https://www.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/marketplace/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=marketplace) |
 
-## Development server
+### Development server
+[<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/angular-logo.png" width="60" height="60" style="background:white;"/>](https://www.creative-tim.com/product/argon-dashboard-pro-angular)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+`ng serve` комманд ажиллуулж dev server ажиллуулна. Вэб хөтөч дээр `http://localhost:4200/` гэсэн холбоос дээр ажиллана. 
 
-## Code scaffolding
+### Build хийх
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+`ng build` гэсэн коммандаар апп build хийнэ. Build хийсэн файл нь `dist/` хавтасанд байрлана. `--prod` flag ашиглан production build хийнэ.
 
-## Build
+### Unit test ажиллуулах
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+`ng test` [Karma](https://karma-runner.github.io).
 
-## Running unit tests
+### End-to-end test хийх
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+`ng e2e` [Protractor](http://www.protractortest.org/).
 
-## Running end-to-end tests
+### Browser Support
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+At present, we officially aim to support the last two versions of the following browsers:
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+<img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/chrome.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/firefox.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/edge.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/safari.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/opera.png" width="64" height="64">
 
 ## License
 
