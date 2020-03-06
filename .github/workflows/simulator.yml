@@ -60,16 +60,16 @@ jobs:
           packages: '["intelligo", "intelligo-cli", "neuro.js", "intelligo-cli", "@devmn/charts", "intelligo", "intelligo", "intelligo-cli", "@devmn/charts", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
-          packages: '["intelligo", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "@devmn/charts", "@devmn/charts", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "@devmn/charts", "@devmn/charts", "intelligo"]'
+          packages: '["@devmn/charts", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "@devmn/charts", "@devmn/charts", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "@devmn/charts", "@devmn/charts", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
-          packages: '["intelligo", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "@devmn/charts", "@devmn/charts", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "@devmn/charts", "@devmn/charts", "intelligo"]'
+          packages: '["@devmn/charts", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "@devmn/charts", "@devmn/charts", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "@devmn/charts", "@devmn/charts", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
-          packages: '["intelligo", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "@devmn/charts", "@devmn/charts", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "@devmn/charts", "@devmn/charts", "intelligo"]'
+          packages: '["@devmn/charts", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "@devmn/charts", "@devmn/charts", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "@devmn/charts", "@devmn/charts", "intelligo"]'
       - uses: intelligo-systems/intelligo-actions@v1
         with:
-          packages: '["intelligo", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "@devmn/charts", "intelligo", "@devmn/charts"]'
+          packages: '["@devmn/charts", "intelligo-cli", "neuro.js", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "intelligo", "intelligo", "intelligo", "intelligo-cli", "@devmn/charts", "intelligo", "@devmn/charts"]'
       - uses: actions/cache@v1
         with:
           path: ~/.npm
