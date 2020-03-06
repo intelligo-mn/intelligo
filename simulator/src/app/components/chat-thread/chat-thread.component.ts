@@ -166,7 +166,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
       UtilitiesService.uuidv4(),
     );
     this._sendMessageDelegate(
-      new models.ANAChatMessage({
+      new models.IntelligoChatMessage({
         meta: UtilitiesService.getReplyMeta(chatMessage.meta),
         data: carMsg,
       }),
@@ -257,7 +257,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
     this.apiService.fetchHistory(oldMsgTimestamp).subscribe(
       resp => {
         try {
-          let chatMsgs = resp.content.map(x => new models.ANAChatMessage(x));
+          let chatMsgs = resp.content.map(x => new models.IntelligoChatMessage(x));
           for (let i = 0; i < chatMsgs.length; i++) {
             let chatMsg = chatMsgs[i];
             let direction =
@@ -378,7 +378,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
     }
   };
   _sendMessageDelegate: (
-    message: models.ANAChatMessage,
+    message: models.IntelligoChatMessage,
     threadMsgRef: vm.ChatMessageVM,
   ) => void;
 
@@ -525,7 +525,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
       this.chatThread.messages = [];
       this.chatInput.resetInputs();
     }
-    let firstMsg = new models.ANAChatMessage({
+    let firstMsg = new models.IntelligoChatMessage({
       meta: {
         sender: {
           id: this.stompService.config.businessId,
@@ -570,7 +570,7 @@ export class ChatThreadComponent implements OnInit, AfterViewInit {
       UtilitiesService.uuidv4(),
     ); //Pseudo, not actually added to thread.
     this._sendMessageDelegate(
-      new models.ANAChatMessage({
+      new models.IntelligoChatMessage({
         meta: UtilitiesService.getReplyMeta(firstMsg.meta),
         data: firstMsg.data,
         events: firstMsg.events,

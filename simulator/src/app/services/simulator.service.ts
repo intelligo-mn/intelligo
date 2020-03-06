@@ -16,7 +16,7 @@ export class SimulatorService {
 			if (msg.type == SimulatorMessageType.AnaChatMessage) {
 				let cfMsg = (msg as AnaChatSimulatorMessage);
 				if (this.handleMessageReceived)
-					this.handleMessageReceived(new models.ANAChatMessage(cfMsg.data));
+					this.handleMessageReceived(new models.IntelligoChatMessage(cfMsg.data));
 			} else if (msg.type == SimulatorMessageType.AnaChatReset) {
 				if (this.handleResetSignal)
 					this.handleResetSignal();
@@ -27,7 +27,7 @@ export class SimulatorService {
 		if (this.debug)
 			console.log(msg);
 	}
-	sendMessage(message: models.ANAChatMessage, threadMsgRef: vm.ChatMessageVM) {
+	sendMessage(message: models.IntelligoChatMessage, threadMsgRef: vm.ChatMessageVM) {
 		window.parent.postMessage({
 			data: message,
 			type: SimulatorMessageType.AnaChatMessage
@@ -35,7 +35,7 @@ export class SimulatorService {
 		if (threadMsgRef)
 			threadMsgRef.status = vm.MessageStatus.ReceivedAtServer;
 	}
-	handleMessageReceived: (message: models.ANAChatMessage) => any;
+	handleMessageReceived: (message: models.IntelligoChatMessage) => any;
 	handleResetSignal: () => void;
 }
 
@@ -48,5 +48,5 @@ export interface SimulatorMessage {
 }
 
 export interface AnaChatSimulatorMessage extends SimulatorMessage {
-	data: models.IANAChatMessage;
+	data: models.IIntelligoChatMessage;
 }

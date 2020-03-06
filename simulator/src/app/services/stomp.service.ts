@@ -4,7 +4,7 @@ import * as SockJS from 'sockjs-client';
 import * as StompJS from 'stompjs';
 
 import { ChatMessageVM, MessageStatus } from '../models/ana-chat-vm.models';
-import { ANAChatMessage, ANAMeta, EventType } from '../models/ana-chat.models';
+import { IntelligoChatMessage, IntelligoMeta, EventType } from '../models/ana-chat.models';
 import { UtilitiesService, Config } from '../services/utilities.service';
 
 @Injectable()
@@ -100,7 +100,7 @@ export class StompService {
 		}, this.stompHeaders);
 		this.stompHeaders['id'] = UtilitiesService.uuidv4();
 		this.client.subscribe('/queue/events/user/' + custId, (message) => {
-			let msg = new ANAChatMessage(JSON.parse(message.body));
+			let msg = new IntelligoChatMessage(JSON.parse(message.body));
 			if (msg.events) {
 				for (var i = 0; i < msg.events.length; i++) {
 					let event = msg.events[i];
@@ -155,7 +155,7 @@ export class StompService {
 
 	private msgsIds: string[] = [];
 	private onMessage = (messageBody: any) => {
-		let anaMsg = new ANAChatMessage(messageBody);
+		let anaMsg = new IntelligoChatMessage(messageBody);
 		if (anaMsg.data && Object.keys(anaMsg.data).length > 0) {
 			this.sendMessageReceivedAck(anaMsg.meta);
 		}
@@ -179,7 +179,7 @@ export class StompService {
 		}
 	}
 
-	sendMessage(message: ANAChatMessage, threadMsgRef: ChatMessageVM) {
+	sendMessage(message: IntelligoChatMessage, threadMsgRef: ChatMessageVM) {
 		let _sendMessage = () => {
 			let msg = message.extract();
 
@@ -197,13 +197,13 @@ export class StompService {
 	}
 
 	typingBusy = false;
-	sendTypingMessage(meta: ANAMeta) {
+	sendTypingMessage(meta: IntelligoMeta) {
 		if (this.typingBusy || !this.client) {
 			return;
 		}
 		this.typingBusy = true;
 		setTimeout(() => this.typingBusy = false, 1000);
-		let msg = new ANAChatMessage({
+		let msg = new IntelligoChatMessage({
 			meta: UtilitiesService.getReplyMeta(meta),
 			events: [{
 				type: EventType.TYPING
@@ -213,8 +213,8 @@ export class StompService {
 		this.client.send(`/app/message`, headers, JSON.stringify(msg.extract()));
 	}
 
-	sendMessageReceivedAck(meta: ANAMeta) {
-		let msg = new ANAChatMessage({
+	sendMessageReceivedAck(meta: IntelligoMeta) {
+		let msg = new IntelligoChatMessage({
 			meta: UtilitiesService.getReplyMeta(meta, false, true),
 			events: [{
 				type: EventType.ACK
@@ -225,7 +225,7 @@ export class StompService {
 	}
 
 	handleConnect: () => void;
-	handleMessageReceived: (message: ANAChatMessage) => any;
+	handleMessageReceived: (message: IntelligoChatMessage) => any;
 	handleAck: (messageAckId: string, delivered?: boolean) => any;
 	handleTyping: () => void;
 	handleConsecutiveErrorsState: () => void;

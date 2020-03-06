@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
   AddressInput,
-  ANADate,
-  ANAMeta,
-  ANATime,
+  IntelligoDate,
+  IntelligoMeta,
+  IntelligoTime,
   GeoLoc,
   MediaType,
   SenderType,
@@ -29,20 +29,20 @@ export class UtilitiesService {
       );
   }
 
-  static anaDateDisplay(anaDate: ANADate) {
+  static anaDateDisplay(anaDate: IntelligoDate) {
     return `${parseInt(anaDate.mday)}-${parseInt(anaDate.month)}-${parseInt(
       anaDate.year,
     )}`;
   }
 
-  static anaDateToDate(anaDate: ANADate) {
+  static anaDateToDate(anaDate: IntelligoDate) {
     return new Date(
       parseInt(anaDate.year),
       parseInt(anaDate.month) - 1,
       parseInt(anaDate.mday),
     );
   }
-  static anaTimeToDate(anaTime: ANATime) {
+  static anaTimeToDate(anaTime: IntelligoTime) {
     let d = new Date();
     d.setHours(
       parseInt(anaTime.hour),
@@ -52,7 +52,7 @@ export class UtilitiesService {
     return d;
   }
 
-  static anaTimeDisplay(anaTime: ANATime) {
+  static anaTimeDisplay(anaTime: IntelligoTime) {
     let hr = parseInt(anaTime.hour);
     let min = parseInt(anaTime.minute);
 
@@ -65,11 +65,11 @@ export class UtilitiesService {
   }
 
   static getReplyMeta(
-    srcMeta: ANAMeta,
+    srcMeta: IntelligoMeta,
     copyId?: boolean,
     copyRespTo?: boolean,
   ) {
-    let replyMeta: ANAMeta = {
+    let replyMeta: IntelligoMeta = {
       id: copyId ? srcMeta.id : this.uuidv4(),
       recipient: srcMeta.sender,
       responseTo: copyRespTo ? srcMeta.responseTo : srcMeta.id,

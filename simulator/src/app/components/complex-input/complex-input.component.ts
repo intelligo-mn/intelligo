@@ -8,12 +8,12 @@ import {
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
-  ANADate,
-  ANATime,
+  IntelligoDate,
+  IntelligoTime,
   AddressInput,
   GeoLoc,
   ListItem,
-  ANADateRange,
+  IntelligoDateRange,
 } from '../../models/ana-chat.models';
 import { UtilitiesService } from '../../services/utilities.service';
 import * as agm from '@agm/core';
@@ -53,7 +53,7 @@ export class ComplexInputComponent implements OnInit, AfterViewInit {
   ComplexType = ComplexType;
 
   choosenTime: string;
-  getChoosenANATime(): ANATime {
+  getChoosenANATime(): IntelligoTime {
     let split = this.choosenTime.split(':');
     return {
       hour: split[0],
@@ -67,7 +67,7 @@ export class ComplexInputComponent implements OnInit, AfterViewInit {
 
   choosenDate: Date;
 
-  getChoosenANADate(): ANADate {
+  getChoosenANADate(): IntelligoDate {
     return {
       mday: this.choosenDate.getDate().toString(),
       month: (this.choosenDate.getMonth() + 1).toString(),
@@ -174,5 +174,5 @@ export interface ComplexInputParams {
   ListValues?: ListItem[];
   ListMultiple?: boolean;
   AddressRequiredFields?: string[];
-  dateRange?: ANADateRange;
+  dateRange?: IntelligoDateRange;
 }

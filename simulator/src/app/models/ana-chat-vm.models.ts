@@ -24,8 +24,8 @@ export enum MessageStatus {
 export class ChatMessageVM {
   direction: Direction;
   time: Date;
-  messageData: models.ANAMessageData;
-  meta: models.ANAMeta;
+  messageData: models.IntelligoMessageData;
+  meta: models.IntelligoMeta;
   messageAckId: string;
   status: MessageStatus;
 
@@ -70,7 +70,7 @@ export class ChatMessageVM {
   }
 
   constructor(
-    chatMessage: models.ANAChatMessage,
+    chatMessage: models.IntelligoChatMessage,
     direction: Direction,
     ackId: string,
     status?: MessageStatus,
@@ -95,7 +95,7 @@ export class ChatThreadVM {
 
   addTextIncoming(text: string, ackId: string) {
     let msg = new ChatMessageVM(
-      new models.ANAChatMessage({
+      new models.IntelligoChatMessage({
         meta: {
           timestamp: new Date().getTime(),
         },
@@ -122,7 +122,7 @@ export class ChatThreadVM {
   ) {
     if (!text) return null;
     let msg = new ChatMessageVM(
-      new models.ANAChatMessage({
+      new models.IntelligoChatMessage({
         meta: {
           timestamp: timestamp || new Date().getTime(),
         },
@@ -144,7 +144,7 @@ export class ChatThreadVM {
     if (this.typingTimerId) clearTimeout(this.typingTimerId);
     this.removeTyping();
     let msg = new ChatMessageVM(
-      new models.ANAChatMessage({
+      new models.IntelligoChatMessage({
         meta: {
           timestamp: new Date().getTime(),
         },
@@ -185,7 +185,7 @@ export class ChatThreadVM {
     insert: boolean = false,
   ) {
     let msg = new ChatMessageVM(
-      new models.ANAChatMessage({
+      new models.IntelligoChatMessage({
         meta: {
           timestamp: timestamp || new Date().getTime(),
         },
@@ -251,14 +251,14 @@ export class ChatThreadVM {
 
 export class ChatInputItemVM {
   content: models.InputContent;
-  data: models.ANAMessageData;
-  meta: models.ANAMeta;
+  data: models.IntelligoMessageData;
+  meta: models.IntelligoMeta;
   disabled: boolean;
   textInputContent() {
     return this.content as models.TextInputContent;
   }
 
-  constructor(message: models.ANAChatMessage) {
+  constructor(message: models.IntelligoChatMessage) {
     this.data = message.data;
     this.content = message.inputData().content;
     if (!this.content.input) this.content.input = {};
@@ -428,8 +428,8 @@ export class ChatInputVM {
     this.chatThread.scrollLastIntoView(300);
   }
 
-  textInputForNonMandatoryCase(srcMeta: models.ANAMeta) {
-    let anaMeta: models.ANAMeta = {
+  textInputForNonMandatoryCase(srcMeta: models.IntelligoMeta) {
+    let anaMeta: models.IntelligoMeta = {
       id: '',
       sender: {
         id: UtilitiesService.settings.stompConfig
@@ -452,7 +452,7 @@ export class ChatInputVM {
       timestamp: srcMeta ? srcMeta.timestamp : new Date().getTime(),
     };
     let input = new ChatInputItemVM(
-      new models.ANAChatMessage({
+      new models.IntelligoChatMessage({
         meta: anaMeta,
         data: {
           type: models.MessageType.INPUT,
@@ -557,7 +557,7 @@ export class ChatInputVM {
           ackId,
         );
         this.chatThreadComponent._sendMessageDelegate(
-          new models.ANAChatMessage({
+          new models.IntelligoChatMessage({
             meta: UtilitiesService.getReplyMeta(inputVM.meta),
             data: { type: inputVM.data.type, content: modifieldInputContent },
           }),
@@ -587,7 +587,7 @@ export class ChatInputVM {
           this.resetInputs();
 
           this.chatThreadComponent._sendMessageDelegate(
-            new models.ANAChatMessage({
+            new models.IntelligoChatMessage({
               meta: UtilitiesService.getReplyMeta(inputVM.meta),
               data: { type: inputVM.data.type, content: modifieldInputContent },
             }),
@@ -704,7 +704,7 @@ export class ChatInputVM {
             .map(x => x.value)
             .join(',');
           this.chatThreadComponent._sendMessageDelegate(
-            new models.ANAChatMessage({
+            new models.IntelligoChatMessage({
               meta: UtilitiesService.getReplyMeta(inputVM.meta),
               data: { type: inputVM.data.type, content: listInputContent },
             }),
@@ -731,7 +731,7 @@ export class ChatInputVM {
           let msg = this.chatThread.addTextReply(displayTime, ackId);
           timeContent.input = { time: userInputTime };
           this.chatThreadComponent._sendMessageDelegate(
-            new models.ANAChatMessage({
+            new models.IntelligoChatMessage({
               meta: UtilitiesService.getReplyMeta(inputVM.meta),
               data: { type: inputVM.data.type, content: timeContent },
             }),
@@ -758,7 +758,7 @@ export class ChatInputVM {
           let msg = this.chatThread.addTextReply(displayDate, ackId);
           dateContent.input = { date: userInputDate };
           this.chatThreadComponent._sendMessageDelegate(
-            new models.ANAChatMessage({
+            new models.IntelligoChatMessage({
               meta: UtilitiesService.getReplyMeta(inputVM.meta),
               data: { type: inputVM.data.type, content: dateContent },
             }),
@@ -776,7 +776,7 @@ export class ChatInputVM {
           ackId,
         );
         this.chatThreadComponent._sendMessageDelegate(
-          new models.ANAChatMessage({
+          new models.IntelligoChatMessage({
             meta: UtilitiesService.getReplyMeta(inputVM.meta),
             data: { type: inputVM.data.type, content: optionInputContent },
           }),
@@ -925,7 +925,7 @@ export class ChatInputVM {
 
   showLocationPickerDialog(
     locInputContent: models.LocationInputContent,
-    inputMeta: models.ANAMeta,
+    inputMeta: models.IntelligoMeta,
     inputMessageType: models.MessageType,
     ackId: string,
     defaultLoc?: models.GeoLoc,
@@ -954,7 +954,7 @@ export class ChatInputVM {
       );
       locInputContent.input = { location: userInputLoc };
       this.chatThreadComponent._sendMessageDelegate(
-        new models.ANAChatMessage({
+        new models.IntelligoChatMessage({
           meta: UtilitiesService.getReplyMeta(inputMeta),
           data: { type: inputMessageType, content: locInputContent },
         }),
@@ -981,7 +981,7 @@ export class ChatInputVM {
 
     this.resetInputs();
     this.chatThreadComponent._sendMessageDelegate(
-      new models.ANAChatMessage({
+      new models.IntelligoChatMessage({
         meta: UtilitiesService.getReplyMeta(inputVM.meta),
         data: { type: inputVM.data.type, content: mediaInputContent },
       }),
