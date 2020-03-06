@@ -38,7 +38,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## License
 
-> Copyright (C) 2019 Intelligo Systems.  
+> Copyright (C) 2019-2020 Intelligo Systems.  
 > Chatbots.mn licensed under the [INTELLIGO](../LICENSE) license.  
 > (See the [LICENSE](./LICENSE) file for the whole license text.)
 
