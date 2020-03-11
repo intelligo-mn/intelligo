@@ -1,0 +1,125 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-chat-node-heading">Create or edit a Chat Node</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           formControlName="name"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_emotion">Emotion</label>
+                    <input type="text" class="form-control" name="emotion" id="field_emotion"
+                           formControlName="emotion"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_chatNodeType">Chat Node Type</label>
+                    <input type="text" class="form-control" name="chatNodeType" id="field_chatNodeType"
+                           formControlName="chatNodeType"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_variableName">Variable Name</label>
+                    <input type="text" class="form-control" name="variableName" id="field_variableName"
+                           formControlName="variableName"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_apiMethod">Api Method</label>
+                    <select class="form-control" name="apiMethod" formControlName="apiMethod" id="field_apiMethod">
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
+                        <option value="DELETE">DELETE</option>
+                        <option value="HEAD">HEAD</option>
+                        <option value="OPTIONS">OPTIONS</option>
+                        <option value="CONNECT">CONNECT</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_apiUrl">Api Url</label>
+                    <input type="text" class="form-control" name="apiUrl" id="field_apiUrl"
+                           formControlName="apiUrl"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_apiResponseDataRoot">Api Response Data Root</label>
+                    <input type="text" class="form-control" name="apiResponseDataRoot" id="field_apiResponseDataRoot"
+                           formControlName="apiResponseDataRoot"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_nextNodeId">Next Node Id</label>
+                    <input type="text" class="form-control" name="nextNodeId" id="field_nextNodeId"
+                           formControlName="nextNodeId"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_requiredVariables">Required Variables</label>
+                    <input type="text" class="form-control" name="requiredVariables" id="field_requiredVariables"
+                           formControlName="requiredVariables"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_groupName">Group Name</label>
+                    <input type="text" class="form-control" name="groupName" id="field_groupName"
+                           formControlName="groupName"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_cardHeader">Card Header</label>
+                    <input type="text" class="form-control" name="cardHeader" id="field_cardHeader"
+                           formControlName="cardHeader"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_cardFooter">Card Footer</label>
+                    <input type="text" class="form-control" name="cardFooter" id="field_cardFooter"
+                           formControlName="cardFooter"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_isStartNode">Is Start Node</label>
+                    <input type="checkbox" class="form-control" name="isStartNode" id="field_isStartNode"
+                           formControlName="isStartNode"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_isGoalNode">Is Goal Node</label>
+                    <input type="checkbox" class="form-control" name="isGoalNode" id="field_isGoalNode"
+                           formControlName="isGoalNode"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_targetBotId">Target Bot Id</label>
+                    <input type="text" class="form-control" name="targetBotId" id="field_targetBotId"
+                           formControlName="targetBotId"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_targetNodeId">Target Node Id</label>
+                    <input type="text" class="form-control" name="targetNodeId" id="field_targetNodeId"
+                           formControlName="targetNodeId"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sections">Sections</label>
+                    <select class="form-control" id="field_sections" name="sections" formControlName="sections">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="sectionOption.id === editForm.get('sections')!.value?.id ? editForm.get('sections')!.value : sectionOption" *ngFor="let sectionOption of sections; trackBy: trackById">{{sectionOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_buttons">Buttons</label>
+                    <select class="form-control" id="field_buttons" name="buttons" formControlName="buttons">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="buttonOption.id === editForm.get('buttons')!.value?.id ? editForm.get('buttons')!.value : buttonOption" *ngFor="let buttonOption of buttons; trackBy: trackById">{{buttonOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

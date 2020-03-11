@@ -1,0 +1,151 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="button">
+            <h2><span>Button</span> {{button.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Button Name</span></dt>
+                <dd>
+                    <span>{{button.buttonName}}</span>
+                </dd>
+                <dt><span>Button Text</span></dt>
+                <dd>
+                    <span>{{button.buttonText}}</span>
+                </dd>
+                <dt><span>Emotion</span></dt>
+                <dd>
+                    <span>{{button.emotion}}</span>
+                </dd>
+                <dt><span>Button Type</span></dt>
+                <dd>
+                    <span>{{button.buttonType}}</span>
+                </dd>
+                <dt><span>Deep Link Url</span></dt>
+                <dd>
+                    <span>{{button.deepLinkUrl}}</span>
+                </dd>
+                <dt><span>Url</span></dt>
+                <dd>
+                    <span>{{button.url}}</span>
+                </dd>
+                <dt><span>Items Source</span></dt>
+                <dd>
+                    <span>{{button.itemsSource}}</span>
+                </dd>
+                <dt><span>Allow Multiple</span></dt>
+                <dd>
+                    <span>{{button.allowMultiple}}</span>
+                </dd>
+                <dt><span>Bounce Timeout</span></dt>
+                <dd>
+                    <span>{{button.bounceTimeout}}</span>
+                </dd>
+                <dt><span>Next Node Id</span></dt>
+                <dd>
+                    <span>{{button.nextNodeId}}</span>
+                </dd>
+                <dt><span>Default Button</span></dt>
+                <dd>
+                    <span>{{button.defaultButton}}</span>
+                </dd>
+                <dt><span>Hidden</span></dt>
+                <dd>
+                    <span>{{button.hidden}}</span>
+                </dd>
+                <dt><span>Variable Value</span></dt>
+                <dd>
+                    <span>{{button.variableValue}}</span>
+                </dd>
+                <dt><span>Prefix Text</span></dt>
+                <dd>
+                    <span>{{button.prefixText}}</span>
+                </dd>
+                <dt><span>Postfix Text</span></dt>
+                <dd>
+                    <span>{{button.postfixText}}</span>
+                </dd>
+                <dt><span>Placeholder Text</span></dt>
+                <dd>
+                    <span>{{button.placeholderText}}</span>
+                </dd>
+                <dt><span>Condition Match Key</span></dt>
+                <dd>
+                    <span>{{button.conditionMatchKey}}</span>
+                </dd>
+                <dt><span>Condition Operator</span></dt>
+                <dd>
+                    <span>{{button.conditionOperator}}</span>
+                </dd>
+                <dt><span>Condition Match Value</span></dt>
+                <dd>
+                    <span>{{button.conditionMatchValue}}</span>
+                </dd>
+                <dt><span>Post To Chat</span></dt>
+                <dd>
+                    <span>{{button.postToChat}}</span>
+                </dd>
+                <dt><span>Does Repeat</span></dt>
+                <dd>
+                    <span>{{button.doesRepeat}}</span>
+                </dd>
+                <dt><span>Repeat On</span></dt>
+                <dd>
+                    <span>{{button.repeatOn}}</span>
+                </dd>
+                <dt><span>Repeat As</span></dt>
+                <dd>
+                    <span>{{button.repeatAs}}</span>
+                </dd>
+                <dt><span>Start Position</span></dt>
+                <dd>
+                    <span>{{button.startPosition}}</span>
+                </dd>
+                <dt><span>Max Repeats</span></dt>
+                <dd>
+                    <span>{{button.maxRepeats}}</span>
+                </dd>
+                <dt><span>Advanced Options</span></dt>
+                <dd>
+                    <span>{{button.advancedOptions}}</span>
+                </dd>
+                <dt><span>Min Length</span></dt>
+                <dd>
+                    <span>{{button.minLength}}</span>
+                </dd>
+                <dt><span>Max Length</span></dt>
+                <dd>
+                    <span>{{button.maxLength}}</span>
+                </dd>
+                <dt><span>Default Text</span></dt>
+                <dd>
+                    <span>{{button.defaultText}}</span>
+                </dd>
+                <dt><span>Is Multi Line</span></dt>
+                <dd>
+                    <span>{{button.isMultiLine}}</span>
+                </dd>
+                <dt><span>Content Id</span></dt>
+                <dd>
+                    <span>{{button.contentId}}</span>
+                </dd>
+                <dt><span>Content Emotion</span></dt>
+                <dd>
+                    <span>{{button.contentEmotion}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/button', button.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+<div>
+    <h2 id="page-heading">
+        <span>Chat Nodes</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-chat-node" [routerLink]="['/chat-node/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create a new Chat Node
+            </span>
+        </button>
+    </h2>
+    <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="chatNodes?.length === 0">
+        <span>No chatNodes found</span>
+    </div>
+    <div class="table-responsive" *ngIf="chatNodes?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr>
+            <th scope="col" ><span>ID</span></th>
+            <th scope="col" ><span>Name</span></th>
+            <th scope="col" ><span>Emotion</span></th>
+            <th scope="col" ><span>Chat Node Type</span></th>
+            <th scope="col" ><span>Variable Name</span></th>
+            <th scope="col" ><span>Api Method</span></th>
+            <th scope="col" ><span>Api Url</span></th>
+            <th scope="col" ><span>Api Response Data Root</span></th>
+            <th scope="col" ><span>Next Node Id</span></th>
+            <th scope="col" ><span>Required Variables</span></th>
+            <th scope="col" ><span>Group Name</span></th>
+            <th scope="col" ><span>Card Header</span></th>
+            <th scope="col" ><span>Card Footer</span></th>
+            <th scope="col" ><span>Is Start Node</span></th>
+            <th scope="col" ><span>Is Goal Node</span></th>
+            <th scope="col" ><span>Target Bot Id</span></th>
+            <th scope="col" ><span>Target Node Id</span></th>
+            <th scope="col" ><span>Sections</span></th>
+            <th scope="col" ><span>Buttons</span></th>
+            <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let chatNode of chatNodes ;trackBy: trackId">
+                <td><a [routerLink]="['/chat-node', chatNode.id, 'view' ]">{{chatNode.id}}</a></td>
+                <td>{{chatNode.name}}</td>
+                <td>{{chatNode.emotion}}</td>
+                <td>{{chatNode.chatNodeType}}</td>
+                <td>{{chatNode.variableName}}</td>
+                <td>{{chatNode.apiMethod}}</td>
+                <td>{{chatNode.apiUrl}}</td>
+                <td>{{chatNode.apiResponseDataRoot}}</td>
+                <td>{{chatNode.nextNodeId}}</td>
+                <td>{{chatNode.requiredVariables}}</td>
+                <td>{{chatNode.groupName}}</td>
+                <td>{{chatNode.cardHeader}}</td>
+                <td>{{chatNode.cardFooter}}</td>
+                <td>{{chatNode.isStartNode}}</td>
+                <td>{{chatNode.isGoalNode}}</td>
+                <td>{{chatNode.targetBotId}}</td>
+                <td>{{chatNode.targetNodeId}}</td>
+                <td>
+                    <div *ngIf="chatNode.sections">
+                        <a [routerLink]="['/section', chatNode.sections?.id, 'view' ]" >{{chatNode.sections?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="chatNode.buttons">
+                        <a [routerLink]="['/button', chatNode.buttons?.id, 'view' ]" >{{chatNode.buttons?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/chat-node', chatNode.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/chat-node', chatNode.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit" (click)="delete(chatNode)"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

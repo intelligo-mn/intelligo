@@ -1,0 +1,99 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="chatNode">
+            <h2><span>Chat Node</span> {{chatNode.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{chatNode.name}}</span>
+                </dd>
+                <dt><span>Emotion</span></dt>
+                <dd>
+                    <span>{{chatNode.emotion}}</span>
+                </dd>
+                <dt><span>Chat Node Type</span></dt>
+                <dd>
+                    <span>{{chatNode.chatNodeType}}</span>
+                </dd>
+                <dt><span>Variable Name</span></dt>
+                <dd>
+                    <span>{{chatNode.variableName}}</span>
+                </dd>
+                <dt><span>Api Method</span></dt>
+                <dd>
+                    <span>{{chatNode.apiMethod}}</span>
+                </dd>
+                <dt><span>Api Url</span></dt>
+                <dd>
+                    <span>{{chatNode.apiUrl}}</span>
+                </dd>
+                <dt><span>Api Response Data Root</span></dt>
+                <dd>
+                    <span>{{chatNode.apiResponseDataRoot}}</span>
+                </dd>
+                <dt><span>Next Node Id</span></dt>
+                <dd>
+                    <span>{{chatNode.nextNodeId}}</span>
+                </dd>
+                <dt><span>Required Variables</span></dt>
+                <dd>
+                    <span>{{chatNode.requiredVariables}}</span>
+                </dd>
+                <dt><span>Group Name</span></dt>
+                <dd>
+                    <span>{{chatNode.groupName}}</span>
+                </dd>
+                <dt><span>Card Header</span></dt>
+                <dd>
+                    <span>{{chatNode.cardHeader}}</span>
+                </dd>
+                <dt><span>Card Footer</span></dt>
+                <dd>
+                    <span>{{chatNode.cardFooter}}</span>
+                </dd>
+                <dt><span>Is Start Node</span></dt>
+                <dd>
+                    <span>{{chatNode.isStartNode}}</span>
+                </dd>
+                <dt><span>Is Goal Node</span></dt>
+                <dd>
+                    <span>{{chatNode.isGoalNode}}</span>
+                </dd>
+                <dt><span>Target Bot Id</span></dt>
+                <dd>
+                    <span>{{chatNode.targetBotId}}</span>
+                </dd>
+                <dt><span>Target Node Id</span></dt>
+                <dd>
+                    <span>{{chatNode.targetNodeId}}</span>
+                </dd>
+                <dt><span>Sections</span></dt>
+                <dd>
+                    <div *ngIf="chatNode.sections">
+                        <a [routerLink]="['/section', chatNode.sections?.id, 'view']">{{chatNode.sections?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Buttons</span></dt>
+                <dd>
+                    <div *ngIf="chatNode.buttons">
+                        <a [routerLink]="['/button', chatNode.buttons?.id, 'view']">{{chatNode.buttons?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/chat-node', chatNode.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

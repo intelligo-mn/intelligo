@@ -1,0 +1,43 @@
+{
+    "name": "ChatFlow",
+    "fields": [
+        {
+            "fieldName": "createdOn",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "updatedOn",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nodeLocations",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "chatNode",
+            "otherEntityRelationshipName": "chatFlow",
+            "relationshipName": "chatNodes",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "chatProject",
+            "otherEntityRelationshipName": "flow",
+            "relationshipName": "chatProject",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20200311154400",
+    "entityTableName": "chat_flow",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

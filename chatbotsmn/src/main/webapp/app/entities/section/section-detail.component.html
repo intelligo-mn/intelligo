@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="section">
+            <h2><span>Section</span> {{section.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Section Type</span></dt>
+                <dd>
+                    <span>{{section.sectionType}}</span>
+                </dd>
+                <dt><span>Delay In Ms</span></dt>
+                <dd>
+                    <span>{{section.delayInMs}}</span>
+                </dd>
+                <dt><span>Hidden</span></dt>
+                <dd>
+                    <span>{{section.hidden}}</span>
+                </dd>
+                <dt><span>Content Id</span></dt>
+                <dd>
+                    <span>{{section.contentId}}</span>
+                </dd>
+                <dt><span>Content Emotion</span></dt>
+                <dd>
+                    <span>{{section.contentEmotion}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/section', section.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-section-heading">Create or edit a Section</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sectionType">Section Type</label>
+                    <input type="text" class="form-control" name="sectionType" id="field_sectionType"
+                           formControlName="sectionType"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_delayInMs">Delay In Ms</label>
+                    <input type="number" class="form-control" name="delayInMs" id="field_delayInMs"
+                           formControlName="delayInMs"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hidden">Hidden</label>
+                    <input type="checkbox" class="form-control" name="hidden" id="field_hidden"
+                           formControlName="hidden"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_contentId">Content Id</label>
+                    <input type="text" class="form-control" name="contentId" id="field_contentId"
+                           formControlName="contentId"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_contentEmotion">Content Emotion</label>
+                    <input type="text" class="form-control" name="contentEmotion" id="field_contentEmotion"
+                           formControlName="contentEmotion"/>
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

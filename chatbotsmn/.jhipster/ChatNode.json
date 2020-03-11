@@ -1,0 +1,96 @@
+{
+    "name": "ChatNode",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "emotion",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "chatNodeType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "variableName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "apiMethod",
+            "fieldType": "APIMethod",
+            "fieldValues": "GET,POST,PUT,DELETE,HEAD,OPTIONS,CONNECT"
+        },
+        {
+            "fieldName": "apiUrl",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "apiResponseDataRoot",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nextNodeId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "requiredVariables",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "groupName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cardHeader",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cardFooter",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "isStartNode",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "isGoalNode",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "targetBotId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "targetNodeId",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "section",
+            "otherEntityRelationshipName": "chatNode",
+            "relationshipName": "sections",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "button",
+            "otherEntityRelationshipName": "chatNode",
+            "relationshipName": "buttons",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200311154500",
+    "entityTableName": "chat_node",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

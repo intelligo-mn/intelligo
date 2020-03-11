@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="chatFlow">
+            <h2><span>Chat Flow</span> {{chatFlow.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Created On</span></dt>
+                <dd>
+                    <span>{{chatFlow.createdOn}}</span>
+                </dd>
+                <dt><span>Updated On</span></dt>
+                <dd>
+                    <span>{{chatFlow.updatedOn}}</span>
+                </dd>
+                <dt><span>Node Locations</span></dt>
+                <dd>
+                    <span>{{chatFlow.nodeLocations}}</span>
+                </dd>
+                <dt><span>Chat Nodes</span></dt>
+                <dd>
+                    <div *ngIf="chatFlow.chatNodes">
+                        <a [routerLink]="['/chat-node', chatFlow.chatNodes?.id, 'view']">{{chatFlow.chatNodes?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/chat-flow', chatFlow.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -19,7 +19,7 @@ entity ChatFlow {
 entity ChatNode {
     name String
     emotion String
-    nodeType String
+    chatNodeType String
     variableName String
     apiMethod APIMethod
     apiUrl String
@@ -88,5 +88,3 @@ relationship ManyToOne {
 relationship OneToOne {
     ChatProject {flow} to ChatFlow {chatProject(id)}
 }
-
-paginate all with infinite-scroll

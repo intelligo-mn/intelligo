@@ -1,0 +1,36 @@
+{
+    "name": "Section",
+    "fields": [
+        {
+            "fieldName": "sectionType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "delayInMs",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "hidden",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "contentId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "contentEmotion",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20200311154600",
+    "entityTableName": "section",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

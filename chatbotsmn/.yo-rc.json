@@ -1,7 +1,7 @@
 {
   "generator-jhipster-nodejs": {
     "jhipsterVersion": "6.6.0",
-    "applicationType": "microservice",
+    "applicationType": "monolith",
     "baseName": "chatbotsmn",
     "packageName": "com.jhipster.node",
     "packageFolder": "com/jhipster/node",
@@ -18,12 +18,17 @@
     "serviceDiscoveryType": false,
     "buildTool": "maven",
     "enableSwaggerCodegen": false,
-    "embeddableLaunchScript": false
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": ""
   },
   "generator-jhipster": {
     "jhipsterVersion": "6.6.0",
-    "creationTimestamp": 1583940953167,
-    "applicationType": "microservice",
+    "creationTimestamp": 1583941318704,
+    "applicationType": "monolith",
     "baseName": "chatbotsmn",
     "testFrameworks": [],
     "jhiPrefix": "jhi",
@@ -42,8 +47,6 @@
         "name": "generator-jhipster-nodejs",
         "version": "1.0.0-beta.3"
       }
-    ],
-    "skipClient": true,
-    "skipUserManagement": true
+    ]
   }
 }
