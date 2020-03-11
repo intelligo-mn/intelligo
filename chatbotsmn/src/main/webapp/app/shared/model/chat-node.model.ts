@@ -1,5 +1,6 @@
 import { ISection } from 'app/shared/model/section.model';
 import { IButton } from 'app/shared/model/button.model';
+import { IChatFlow } from 'app/shared/model/chat-flow.model';
 import { APIMethod } from 'app/shared/model/enumerations/api-method.model';
 
 export interface IChatNode {
@@ -20,8 +21,9 @@ export interface IChatNode {
   isGoalNode?: boolean;
   targetBotId?: string;
   targetNodeId?: string;
-  sections?: ISection;
-  buttons?: IButton;
+  sections?: ISection[];
+  buttons?: IButton[];
+  chatFlow?: IChatFlow;
 }
 
 export class ChatNode implements IChatNode {
@@ -43,8 +45,9 @@ export class ChatNode implements IChatNode {
     public isGoalNode?: boolean,
     public targetBotId?: string,
     public targetNodeId?: string,
-    public sections?: ISection,
-    public buttons?: IButton
+    public sections?: ISection[],
+    public buttons?: IButton[],
+    public chatFlow?: IChatFlow
   ) {
     this.isStartNode = this.isStartNode || false;
     this.isGoalNode = this.isGoalNode || false;

@@ -25,6 +25,12 @@
                 <dd>
                     <span>{{section.contentEmotion}}</span>
                 </dd>
+                <dt><span>Chat Node</span></dt>
+                <dd>
+                    <div *ngIf="section.chatNode">
+                        <a [routerLink]="['/chat-node', section.chatNode?.id, 'view']">{{section.chatNode?.id}}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

@@ -24,6 +24,7 @@
             <th scope="col" ><span>Hidden</span></th>
             <th scope="col" ><span>Content Id</span></th>
             <th scope="col" ><span>Content Emotion</span></th>
+            <th scope="col" ><span>Chat Node</span></th>
             <th scope="col"></th>
             </tr>
             </thead>
@@ -35,6 +36,11 @@
                 <td>{{section.hidden}}</td>
                 <td>{{section.contentId}}</td>
                 <td>{{section.contentEmotion}}</td>
+                <td>
+                    <div *ngIf="section.chatNode">
+                        <a [routerLink]="['/chat-node', section.chatNode?.id, 'view' ]" >{{section.chatNode?.id}}</a>
+                    </div>
+                </td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"

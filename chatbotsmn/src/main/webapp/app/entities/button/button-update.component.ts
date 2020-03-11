@@ -4,9 +4,12 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { IButton, Button } from 'app/shared/model/button.model';
 import { ButtonService } from './button.service';
+import { IChatNode } from 'app/shared/model/chat-node.model';
+import { ChatNodeService } from 'app/entities/chat-node/chat-node.service';
 
 @Component({
   selector: 'jhi-button-update',
@@ -14,6 +17,8 @@ import { ButtonService } from './button.service';
 })
 export class ButtonUpdateComponent implements OnInit {
   isSaving = false;
+
+  chatnodes: IChatNode[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -48,14 +53,29 @@ export class ButtonUpdateComponent implements OnInit {
     defaultText: [],
     isMultiLine: [],
     contentId: [],
-    contentEmotion: []
+    contentEmotion: [],
+    chatNode: []
   });
 
-  constructor(protected buttonService: ButtonService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected buttonService: ButtonService,
+    protected chatNodeService: ChatNodeService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ button }) => {
       this.updateForm(button);
+
+      this.chatNodeService
+        .query()
+        .pipe(
+          map((res: HttpResponse<IChatNode[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: IChatNode[]) => (this.chatnodes = resBody));
     });
   }
 
@@ -93,7 +113,8 @@ export class ButtonUpdateComponent implements OnInit {
       defaultText: button.defaultText,
       isMultiLine: button.isMultiLine,
       contentId: button.contentId,
-      contentEmotion: button.contentEmotion
+      contentEmotion: button.contentEmotion,
+      chatNode: button.chatNode
     });
   }
 
@@ -146,7 +167,8 @@ export class ButtonUpdateComponent implements OnInit {
       defaultText: this.editForm.get(['defaultText'])!.value,
       isMultiLine: this.editForm.get(['isMultiLine'])!.value,
       contentId: this.editForm.get(['contentId'])!.value,
-      contentEmotion: this.editForm.get(['contentEmotion'])!.value
+      contentEmotion: this.editForm.get(['contentEmotion'])!.value,
+      chatNode: this.editForm.get(['chatNode'])!.value
     };
   }
 
@@ -164,5 +186,9 @@ export class ButtonUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackById(index: number, item: IChatNode): any {
+    return item.id;
   }
 }

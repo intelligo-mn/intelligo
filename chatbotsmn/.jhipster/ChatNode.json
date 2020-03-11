@@ -69,17 +69,22 @@
     ],
     "relationships": [
         {
-            "relationshipType": "many-to-one",
+            "relationshipType": "one-to-many",
             "otherEntityName": "section",
             "otherEntityRelationshipName": "chatNode",
-            "relationshipName": "sections",
-            "otherEntityField": "id"
+            "relationshipName": "sections"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "button",
+            "otherEntityRelationshipName": "chatNode",
+            "relationshipName": "buttons"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "button",
-            "otherEntityRelationshipName": "chatNode",
-            "relationshipName": "buttons",
+            "otherEntityName": "chatFlow",
+            "otherEntityRelationshipName": "chatNodes",
+            "relationshipName": "chatFlow",
             "otherEntityField": "id"
         }
     ],

@@ -170,6 +170,13 @@
                            formControlName="contentEmotion"/>
                 </div>
 
+                <div class="form-group">
+                    <label class="form-control-label" for="field_chatNode">Chat Node</label>
+                    <select class="form-control" id="field_chatNode" name="chatNode" formControlName="chatNode">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="chatNodeOption.id === editForm.get('chatNode')!.value?.id ? editForm.get('chatNode')!.value : chatNodeOption" *ngFor="let chatNodeOption of chatnodes; trackBy: trackById">{{chatNodeOption.id}}</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

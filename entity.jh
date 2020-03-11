@@ -79,7 +79,7 @@ entity Button {
   contentEmotion String
 }
 
-relationship ManyToOne {
+relationship OneToMany {
 	ChatFlow {chatNodes} to ChatNode
     ChatNode {sections} to Section
     ChatNode {buttons} to Button

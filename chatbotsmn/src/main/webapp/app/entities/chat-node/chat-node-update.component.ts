@@ -8,12 +8,8 @@ import { map } from 'rxjs/operators';
 
 import { IChatNode, ChatNode } from 'app/shared/model/chat-node.model';
 import { ChatNodeService } from './chat-node.service';
-import { ISection } from 'app/shared/model/section.model';
-import { SectionService } from 'app/entities/section/section.service';
-import { IButton } from 'app/shared/model/button.model';
-import { ButtonService } from 'app/entities/button/button.service';
-
-type SelectableEntity = ISection | IButton;
+import { IChatFlow } from 'app/shared/model/chat-flow.model';
+import { ChatFlowService } from 'app/entities/chat-flow/chat-flow.service';
 
 @Component({
   selector: 'jhi-chat-node-update',
@@ -22,9 +18,7 @@ type SelectableEntity = ISection | IButton;
 export class ChatNodeUpdateComponent implements OnInit {
   isSaving = false;
 
-  sections: ISection[] = [];
-
-  buttons: IButton[] = [];
+  chatflows: IChatFlow[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -44,14 +38,12 @@ export class ChatNodeUpdateComponent implements OnInit {
     isGoalNode: [],
     targetBotId: [],
     targetNodeId: [],
-    sections: [],
-    buttons: []
+    chatFlow: []
   });
 
   constructor(
     protected chatNodeService: ChatNodeService,
-    protected sectionService: SectionService,
-    protected buttonService: ButtonService,
+    protected chatFlowService: ChatFlowService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -60,23 +52,14 @@ export class ChatNodeUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ chatNode }) => {
       this.updateForm(chatNode);
 
-      this.sectionService
+      this.chatFlowService
         .query()
         .pipe(
-          map((res: HttpResponse<ISection[]>) => {
+          map((res: HttpResponse<IChatFlow[]>) => {
             return res.body ? res.body : [];
           })
         )
-        .subscribe((resBody: ISection[]) => (this.sections = resBody));
-
-      this.buttonService
-        .query()
-        .pipe(
-          map((res: HttpResponse<IButton[]>) => {
-            return res.body ? res.body : [];
-          })
-        )
-        .subscribe((resBody: IButton[]) => (this.buttons = resBody));
+        .subscribe((resBody: IChatFlow[]) => (this.chatflows = resBody));
     });
   }
 
@@ -99,8 +82,7 @@ export class ChatNodeUpdateComponent implements OnInit {
       isGoalNode: chatNode.isGoalNode,
       targetBotId: chatNode.targetBotId,
       targetNodeId: chatNode.targetNodeId,
-      sections: chatNode.sections,
-      buttons: chatNode.buttons
+      chatFlow: chatNode.chatFlow
     });
   }
 
@@ -138,8 +120,7 @@ export class ChatNodeUpdateComponent implements OnInit {
       isGoalNode: this.editForm.get(['isGoalNode'])!.value,
       targetBotId: this.editForm.get(['targetBotId'])!.value,
       targetNodeId: this.editForm.get(['targetNodeId'])!.value,
-      sections: this.editForm.get(['sections'])!.value,
-      buttons: this.editForm.get(['buttons'])!.value
+      chatFlow: this.editForm.get(['chatFlow'])!.value
     };
   }
 
@@ -159,7 +140,7 @@ export class ChatNodeUpdateComponent implements OnInit {
     this.isSaving = false;
   }
 
-  trackById(index: number, item: SelectableEntity): any {
+  trackById(index: number, item: IChatFlow): any {
     return item.id;
   }
 }

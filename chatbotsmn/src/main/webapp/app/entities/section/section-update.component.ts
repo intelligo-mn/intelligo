@@ -4,9 +4,12 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { ISection, Section } from 'app/shared/model/section.model';
 import { SectionService } from './section.service';
+import { IChatNode } from 'app/shared/model/chat-node.model';
+import { ChatNodeService } from 'app/entities/chat-node/chat-node.service';
 
 @Component({
   selector: 'jhi-section-update',
@@ -15,20 +18,37 @@ import { SectionService } from './section.service';
 export class SectionUpdateComponent implements OnInit {
   isSaving = false;
 
+  chatnodes: IChatNode[] = [];
+
   editForm = this.fb.group({
     id: [],
     sectionType: [],
     delayInMs: [],
     hidden: [],
     contentId: [],
-    contentEmotion: []
+    contentEmotion: [],
+    chatNode: []
   });
 
-  constructor(protected sectionService: SectionService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected sectionService: SectionService,
+    protected chatNodeService: ChatNodeService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ section }) => {
       this.updateForm(section);
+
+      this.chatNodeService
+        .query()
+        .pipe(
+          map((res: HttpResponse<IChatNode[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: IChatNode[]) => (this.chatnodes = resBody));
     });
   }
 
@@ -39,7 +59,8 @@ export class SectionUpdateComponent implements OnInit {
       delayInMs: section.delayInMs,
       hidden: section.hidden,
       contentId: section.contentId,
-      contentEmotion: section.contentEmotion
+      contentEmotion: section.contentEmotion,
+      chatNode: section.chatNode
     });
   }
 
@@ -65,7 +86,8 @@ export class SectionUpdateComponent implements OnInit {
       delayInMs: this.editForm.get(['delayInMs'])!.value,
       hidden: this.editForm.get(['hidden'])!.value,
       contentId: this.editForm.get(['contentId'])!.value,
-      contentEmotion: this.editForm.get(['contentEmotion'])!.value
+      contentEmotion: this.editForm.get(['contentEmotion'])!.value,
+      chatNode: this.editForm.get(['chatNode'])!.value
     };
   }
 
@@ -83,5 +105,9 @@ export class SectionUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackById(index: number, item: IChatNode): any {
+    return item.id;
   }
 }

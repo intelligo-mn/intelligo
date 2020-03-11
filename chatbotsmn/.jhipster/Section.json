@@ -22,7 +22,15 @@
             "fieldType": "String"
         }
     ],
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "chatNode",
+            "otherEntityRelationshipName": "sections",
+            "relationshipName": "chatNode",
+            "otherEntityField": "id"
+        }
+    ],
     "changelogDate": "20200311154600",
     "entityTableName": "section",
     "dto": "no",

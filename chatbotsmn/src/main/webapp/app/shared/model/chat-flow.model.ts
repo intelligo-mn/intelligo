@@ -6,7 +6,7 @@ export interface IChatFlow {
   createdOn?: string;
   updatedOn?: string;
   nodeLocations?: string;
-  chatNodes?: IChatNode;
+  chatNodes?: IChatNode[];
   chatProject?: IChatProject;
 }
 
@@ -16,7 +16,7 @@ export class ChatFlow implements IChatFlow {
     public createdOn?: string,
     public updatedOn?: string,
     public nodeLocations?: string,
-    public chatNodes?: IChatNode,
+    public chatNodes?: IChatNode[],
     public chatProject?: IChatProject
   ) {}
 }

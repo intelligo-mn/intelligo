@@ -69,16 +69,10 @@
                 <dd>
                     <span>{{chatNode.targetNodeId}}</span>
                 </dd>
-                <dt><span>Sections</span></dt>
+                <dt><span>Chat Flow</span></dt>
                 <dd>
-                    <div *ngIf="chatNode.sections">
-                        <a [routerLink]="['/section', chatNode.sections?.id, 'view']">{{chatNode.sections?.id}}</a>
-                    </div>
-                </dd>
-                <dt><span>Buttons</span></dt>
-                <dd>
-                    <div *ngIf="chatNode.buttons">
-                        <a [routerLink]="['/button', chatNode.buttons?.id, 'view']">{{chatNode.buttons?.id}}</a>
+                    <div *ngIf="chatNode.chatFlow">
+                        <a [routerLink]="['/chat-flow', chatNode.chatFlow?.id, 'view']">{{chatNode.chatFlow?.id}}</a>
                     </div>
                 </dd>
             </dl>

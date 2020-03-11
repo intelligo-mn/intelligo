@@ -22,7 +22,6 @@
             <th scope="col" ><span>Created On</span></th>
             <th scope="col" ><span>Updated On</span></th>
             <th scope="col" ><span>Node Locations</span></th>
-            <th scope="col" ><span>Chat Nodes</span></th>
             <th scope="col"></th>
             </tr>
             </thead>
@@ -32,11 +31,6 @@
                 <td>{{chatFlow.createdOn}}</td>
                 <td>{{chatFlow.updatedOn}}</td>
                 <td>{{chatFlow.nodeLocations}}</td>
-                <td>
-                    <div *ngIf="chatFlow.chatNodes">
-                        <a [routerLink]="['/chat-node', chatFlow.chatNodes?.id, 'view' ]" >{{chatFlow.chatNodes?.id}}</a>
-                    </div>
-                </td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"

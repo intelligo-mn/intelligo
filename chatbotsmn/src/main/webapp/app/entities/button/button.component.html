@@ -51,6 +51,7 @@
             <th scope="col" ><span>Is Multi Line</span></th>
             <th scope="col" ><span>Content Id</span></th>
             <th scope="col" ><span>Content Emotion</span></th>
+            <th scope="col" ><span>Chat Node</span></th>
             <th scope="col"></th>
             </tr>
             </thead>
@@ -89,6 +90,11 @@
                 <td>{{button.isMultiLine}}</td>
                 <td>{{button.contentId}}</td>
                 <td>{{button.contentEmotion}}</td>
+                <td>
+                    <div *ngIf="button.chatNode">
+                        <a [routerLink]="['/chat-node', button.chatNode?.id, 'view' ]" >{{button.chatNode?.id}}</a>
+                    </div>
+                </td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"

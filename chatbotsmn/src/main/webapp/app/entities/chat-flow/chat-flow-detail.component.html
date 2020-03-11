@@ -17,12 +17,6 @@
                 <dd>
                     <span>{{chatFlow.nodeLocations}}</span>
                 </dd>
-                <dt><span>Chat Nodes</span></dt>
-                <dd>
-                    <div *ngIf="chatFlow.chatNodes">
-                        <a [routerLink]="['/chat-node', chatFlow.chatNodes?.id, 'view']">{{chatFlow.chatNodes?.id}}</a>
-                    </div>
-                </dd>
             </dl>
 
             <button type="submit"

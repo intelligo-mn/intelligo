@@ -25,13 +25,6 @@
                            formControlName="nodeLocations"/>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_chatNodes">Chat Nodes</label>
-                    <select class="form-control" id="field_chatNodes" name="chatNodes" formControlName="chatNodes">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="chatNodeOption.id === editForm.get('chatNodes')!.value?.id ? editForm.get('chatNodes')!.value : chatNodeOption" *ngFor="let chatNodeOption of chatnodes; trackBy: trackById">{{chatNodeOption.id}}</option>
-                    </select>
-                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

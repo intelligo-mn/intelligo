@@ -130,7 +130,15 @@
             "fieldType": "String"
         }
     ],
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "chatNode",
+            "otherEntityRelationshipName": "buttons",
+            "relationshipName": "chatNode",
+            "otherEntityField": "id"
+        }
+    ],
     "changelogDate": "20200311154700",
     "entityTableName": "button",
     "dto": "no",

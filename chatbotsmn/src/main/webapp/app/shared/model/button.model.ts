@@ -1,3 +1,5 @@
+import { IChatNode } from 'app/shared/model/chat-node.model';
+
 export interface IButton {
   id?: number;
   buttonName?: string;
@@ -32,6 +34,7 @@ export interface IButton {
   isMultiLine?: boolean;
   contentId?: string;
   contentEmotion?: string;
+  chatNode?: IChatNode;
 }
 
 export class Button implements IButton {
@@ -68,7 +71,8 @@ export class Button implements IButton {
     public defaultText?: string,
     public isMultiLine?: boolean,
     public contentId?: string,
-    public contentEmotion?: string
+    public contentEmotion?: string,
+    public chatNode?: IChatNode
   ) {
     this.allowMultiple = this.allowMultiple || false;
     this.defaultButton = this.defaultButton || false;

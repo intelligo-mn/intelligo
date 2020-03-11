@@ -4,12 +4,9 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { IChatFlow, ChatFlow } from 'app/shared/model/chat-flow.model';
 import { ChatFlowService } from './chat-flow.service';
-import { IChatNode } from 'app/shared/model/chat-node.model';
-import { ChatNodeService } from 'app/entities/chat-node/chat-node.service';
 
 @Component({
   selector: 'jhi-chat-flow-update',
@@ -18,35 +15,18 @@ import { ChatNodeService } from 'app/entities/chat-node/chat-node.service';
 export class ChatFlowUpdateComponent implements OnInit {
   isSaving = false;
 
-  chatnodes: IChatNode[] = [];
-
   editForm = this.fb.group({
     id: [],
     createdOn: [],
     updatedOn: [],
-    nodeLocations: [],
-    chatNodes: []
+    nodeLocations: []
   });
 
-  constructor(
-    protected chatFlowService: ChatFlowService,
-    protected chatNodeService: ChatNodeService,
-    protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
-  ) {}
+  constructor(protected chatFlowService: ChatFlowService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ chatFlow }) => {
       this.updateForm(chatFlow);
-
-      this.chatNodeService
-        .query()
-        .pipe(
-          map((res: HttpResponse<IChatNode[]>) => {
-            return res.body ? res.body : [];
-          })
-        )
-        .subscribe((resBody: IChatNode[]) => (this.chatnodes = resBody));
     });
   }
 
@@ -55,8 +35,7 @@ export class ChatFlowUpdateComponent implements OnInit {
       id: chatFlow.id,
       createdOn: chatFlow.createdOn,
       updatedOn: chatFlow.updatedOn,
-      nodeLocations: chatFlow.nodeLocations,
-      chatNodes: chatFlow.chatNodes
+      nodeLocations: chatFlow.nodeLocations
     });
   }
 
@@ -80,8 +59,7 @@ export class ChatFlowUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       createdOn: this.editForm.get(['createdOn'])!.value,
       updatedOn: this.editForm.get(['updatedOn'])!.value,
-      nodeLocations: this.editForm.get(['nodeLocations'])!.value,
-      chatNodes: this.editForm.get(['chatNodes'])!.value
+      nodeLocations: this.editForm.get(['nodeLocations'])!.value
     };
   }
 
@@ -99,9 +77,5 @@ export class ChatFlowUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
-  }
-
-  trackById(index: number, item: IChatNode): any {
-    return item.id;
   }
 }

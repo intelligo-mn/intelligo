@@ -16,11 +16,10 @@
     ],
     "relationships": [
         {
-            "relationshipType": "many-to-one",
+            "relationshipType": "one-to-many",
             "otherEntityName": "chatNode",
             "otherEntityRelationshipName": "chatFlow",
-            "relationshipName": "chatNodes",
-            "otherEntityField": "id"
+            "relationshipName": "chatNodes"
         },
         {
             "relationshipType": "one-to-one",

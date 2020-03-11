@@ -35,8 +35,7 @@
             <th scope="col" ><span>Is Goal Node</span></th>
             <th scope="col" ><span>Target Bot Id</span></th>
             <th scope="col" ><span>Target Node Id</span></th>
-            <th scope="col" ><span>Sections</span></th>
-            <th scope="col" ><span>Buttons</span></th>
+            <th scope="col" ><span>Chat Flow</span></th>
             <th scope="col"></th>
             </tr>
             </thead>
@@ -60,13 +59,8 @@
                 <td>{{chatNode.targetBotId}}</td>
                 <td>{{chatNode.targetNodeId}}</td>
                 <td>
-                    <div *ngIf="chatNode.sections">
-                        <a [routerLink]="['/section', chatNode.sections?.id, 'view' ]" >{{chatNode.sections?.id}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="chatNode.buttons">
-                        <a [routerLink]="['/button', chatNode.buttons?.id, 'view' ]" >{{chatNode.buttons?.id}}</a>
+                    <div *ngIf="chatNode.chatFlow">
+                        <a [routerLink]="['/chat-flow', chatNode.chatFlow?.id, 'view' ]" >{{chatNode.chatFlow?.id}}</a>
                     </div>
                 </td>
                 <td class="text-right">

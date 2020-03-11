@@ -98,17 +98,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_sections">Sections</label>
-                    <select class="form-control" id="field_sections" name="sections" formControlName="sections">
+                    <label class="form-control-label" for="field_chatFlow">Chat Flow</label>
+                    <select class="form-control" id="field_chatFlow" name="chatFlow" formControlName="chatFlow">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="sectionOption.id === editForm.get('sections')!.value?.id ? editForm.get('sections')!.value : sectionOption" *ngFor="let sectionOption of sections; trackBy: trackById">{{sectionOption.id}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_buttons">Buttons</label>
-                    <select class="form-control" id="field_buttons" name="buttons" formControlName="buttons">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="buttonOption.id === editForm.get('buttons')!.value?.id ? editForm.get('buttons')!.value : buttonOption" *ngFor="let buttonOption of buttons; trackBy: trackById">{{buttonOption.id}}</option>
+                        <option [ngValue]="chatFlowOption.id === editForm.get('chatFlow')!.value?.id ? editForm.get('chatFlow')!.value : chatFlowOption" *ngFor="let chatFlowOption of chatflows; trackBy: trackById">{{chatFlowOption.id}}</option>
                     </select>
                 </div>
             </div>

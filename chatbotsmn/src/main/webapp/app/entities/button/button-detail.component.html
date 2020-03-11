@@ -133,6 +133,12 @@
                 <dd>
                     <span>{{button.contentEmotion}}</span>
                 </dd>
+                <dt><span>Chat Node</span></dt>
+                <dd>
+                    <div *ngIf="button.chatNode">
+                        <a [routerLink]="['/chat-node', button.chatNode?.id, 'view']">{{button.chatNode?.id}}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"
