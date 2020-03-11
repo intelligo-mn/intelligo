@@ -1,0 +1,22 @@
+{
+  "name": "chatbotsmn",
+  "version": "0.0.0",
+  "description": "Description for chatbotsmn",
+  "private": true,
+  "license": "UNLICENSED",
+  "cacheDirectories": [
+    "node_modules"
+  ],
+  "scripts": {
+    "build:app": "cd server && npm run build",
+    "lint:fix": "echo \"INFO: no client found\"",
+    "start:app": "cd server && npm run start",
+    "test": "echo \"INFO: no client test found\""
+  },
+  "devDependencies": {
+    "generator-jhipster": "6.6.0"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  }
+}
