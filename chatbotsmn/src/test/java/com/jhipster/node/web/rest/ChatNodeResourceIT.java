@@ -229,6 +229,24 @@ public class ChatNodeResourceIT {
 
     @Test
     @Transactional
+    public void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = chatNodeRepository.findAll().size();
+        // set the field null
+        chatNode.setName(null);
+
+        // Create the ChatNode, which fails.
+
+        restChatNodeMockMvc.perform(post("/api/chat-nodes")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(chatNode)))
+            .andExpect(status().isBadRequest());
+
+        List<ChatNode> chatNodeList = chatNodeRepository.findAll();
+        assertThat(chatNodeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllChatNodes() throws Exception {
         // Initialize the database
         chatNodeRepository.saveAndFlush(chatNode);

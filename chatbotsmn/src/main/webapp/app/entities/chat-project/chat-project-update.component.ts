@@ -22,9 +22,9 @@ export class ChatProjectUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    name: [],
+    name: [null, [Validators.required]],
     status: [],
-    userId: [],
+    userId: [null, [Validators.required]],
     flow: []
   });
 

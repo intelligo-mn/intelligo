@@ -139,7 +139,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20200311154700",
+    "changelogDate": "20200311163321",
     "entityTableName": "button",
     "dto": "no",
     "pagination": "no",

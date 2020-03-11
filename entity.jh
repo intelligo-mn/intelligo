@@ -4,10 +4,10 @@ enum APIMethod {
 }
 
 entity ChatProject {
-    id String
-	name String
+    id String required
+	name String required
 	status String
-	userId String
+	userId String required
 }
 
 entity ChatFlow {
@@ -17,7 +17,7 @@ entity ChatFlow {
 }
 
 entity ChatNode {
-    name String
+    name String required
     emotion String
     chatNodeType String
     variableName String

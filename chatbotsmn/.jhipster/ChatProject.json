@@ -3,7 +3,10 @@
     "fields": [
         {
             "fieldName": "name",
-            "fieldType": "String"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
             "fieldName": "status",
@@ -11,7 +14,10 @@
         },
         {
             "fieldName": "userId",
-            "fieldType": "String"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "relationships": [
@@ -24,7 +30,7 @@
             "ownerSide": true
         }
     ],
-    "changelogDate": "20200311154300",
+    "changelogDate": "20200311163317",
     "entityTableName": "chat_project",
     "dto": "no",
     "pagination": "no",
