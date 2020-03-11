@@ -100,7 +100,7 @@ export class LandingComponent implements OnInit {
           projectId: _id,
           _id: _id,
         };
-        defaultFlow.nodeLocations[firstNode.Id] = { X: 500, Y: 500 };
+        defaultFlow.nodeLocations[firstNode.id] = { X: 500, Y: 500 };
         this.settings.saveChatProject(name, defaultFlow, false, () => {
           this.openChatBotProject(name);
         });
