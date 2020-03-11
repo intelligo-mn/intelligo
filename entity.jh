@@ -1,0 +1,92 @@
+
+enum APIMethod {
+    GET, POST, PUT, DELETE, HEAD, OPTIONS, CONNECT
+}
+
+entity ChatProject {
+    id String
+	name String
+	status String
+	userId String
+}
+
+entity ChatFlow {
+    createdOn String
+    updatedOn String
+    nodeLocations String
+}
+
+entity ChatNode {
+    name String
+    emotion String
+    nodeType String
+    variableName String
+    apiMethod APIMethod
+    apiUrl String
+    apiResponseDataRoot String
+    nextNodeId String
+    requiredVariables String
+    groupName String
+    cardHeader String
+    cardFooter String
+    isStartNode Boolean
+    isGoalNode Boolean
+    targetBotId String
+    targetNodeId String
+}
+
+
+entity Section {
+  sectionType String
+  delayInMs Integer
+  hidden Boolean
+  contentId String
+  contentEmotion String
+}
+
+entity Button {
+  buttonName String
+  buttonText String
+  emotion Integer
+  buttonType String
+  deepLinkUrl String
+  url String
+  itemsSource String
+  allowMultiple Boolean
+  bounceTimeout Integer
+  nextNodeId String
+  defaultButton Boolean
+  hidden Boolean
+  variableValue String
+  prefixText String
+  postfixText String
+  placeholderText String
+  conditionMatchKey String
+  conditionOperator String
+  conditionMatchValue String
+  postToChat Boolean
+  doesRepeat Boolean
+  repeatOn String
+  repeatAs String
+  startPosition Integer
+  maxRepeats Integer
+  advancedOptions Boolean
+  minLength Integer
+  maxLength Integer
+  defaultText String
+  isMultiLine Boolean
+  contentId String
+  contentEmotion String
+}
+
+relationship ManyToOne {
+	ChatFlow {chatNodes} to ChatNode
+    ChatNode {sections} to Section
+    ChatNode {buttons} to Button
+}
+
+relationship OneToOne {
+    ChatProject {flow} to ChatFlow {chatProject(id)}
+}
+
+paginate all with infinite-scroll
