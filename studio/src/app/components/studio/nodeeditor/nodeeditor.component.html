@@ -380,7 +380,7 @@
 
               <mat-form-field>
                 <input matInput [autofocus] type="text" [placeholder]="
-                    ['ApiCall', 'Condition'].indexOf(chatNode.NodeType) == -1
+                    ['ApiCall', 'Condition'].indexOf(chatNode.nodeType) == -1
                       ? 'Text on button'
                       : 'Button Name'
                   " [(ngModel)]="btn.buttonName" name="btnName-{{ i }}" />
