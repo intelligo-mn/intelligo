@@ -73,7 +73,7 @@
             fill="url(#NodeFG)" class="node-section-title noselect" x="0" y="0" [attr.width]="chatNodeVM.width() - 30"
             [attr.height]="chatNodeVM.height()" height="0" width="0" (dblclick)="openEditor(chatNodeVM)"
             (click)="chatNodeVM.nodeClick()">
-            <xhtml:div xmlns="http://www.w3.org/1999/xhtml" [attr.node-id]="chatNodeVM.chatNode.Id">
+            <xhtml:div xmlns="http://www.w3.org/1999/xhtml" [attr.node-id]="chatNodeVM.chatNode.id">
               <xhtml:div onmousedown="return false;//to avoid text selection, creates issue with node drag"
                 class="noselect chatnode" [class.selected]="chatNodeVM.isSelected"
                 [class.click-connect]="chatNodeVM.clickConnectionActive()">
@@ -85,7 +85,7 @@
                 <xhtml:div class="chatnode-body">
                   <xhtml:div class="chatnode-sections">
                     <xhtml:table>
-                      <xhtml:tr *ngFor="let section of chatNodeVM.chatNode.Sections"
+                      <xhtml:tr *ngFor="let section of chatNodeVM.chatNode.sections"
                         [attr.title]="MH.sectionAlias(section)">
                         <xhtml:td valign="middle" class="section-icon">
                           <xhtml:i class="fa fa-file-text-o"></xhtml:i>
@@ -99,9 +99,9 @@
                     </xhtml:table>
                   </xhtml:div>
                   <xhtml:div class="chatnode-buttons">
-                    <xhtml:table [attr.node-id]="chatNodeVM.chatNode.Id">
+                    <xhtml:table [attr.node-id]="chatNodeVM.chatNode.id">
                       <xhtml:tr>
-                        <xhtml:td *ngFor="let chatButton of chatNodeVM.chatNode.Buttons" valign="middle">
+                        <xhtml:td *ngFor="let chatButton of chatNodeVM.chatNode.buttons" valign="middle">
                           <xhtml:div [attr.title]="MH.chatButtonAlias(chatButton)">
                             <xhtml:i class="fa fa-link"></xhtml:i>
                             <br />

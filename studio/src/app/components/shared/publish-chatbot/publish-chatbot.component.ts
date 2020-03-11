@@ -124,7 +124,7 @@ export class PublishChatbotComponent implements OnInit {
 			if (ok) {
 				this.infoDialog.showSpinner();
 				this.selectedProject.source = this.pack;
-				this.selectedProject.flow = this.globals.normalizeChatNodes(this.pack.ChatNodes);
+				this.selectedProject.flow = this.globals.normalizeChatNodes(this.pack.chatNodes);
 				this.dataService.saveChatProject(this.selectedProject).subscribe(x => {
 					this.infoDialog.hideSpinner();
 					if (x.success) {

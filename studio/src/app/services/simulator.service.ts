@@ -120,7 +120,7 @@ export class SimulatorService {
               let clickedBtn = this.getNodeButtonByType(
                 models.ButtonType.GetLocation,
               );
-              if (clickedBtn) nextNodeId = clickedBtn.NextNodeId;
+              if (clickedBtn) nextNodeId = clickedBtn.nextNodeId;
             }
             break;
           case chatModels.InputType.DATE: //Click, Complex
@@ -130,7 +130,7 @@ export class SimulatorService {
               let clickedBtn = this.getNodeButtonByType(
                 models.ButtonType.GetDate,
               );
-              if (clickedBtn) nextNodeId = clickedBtn.NextNodeId;
+              if (clickedBtn) nextNodeId = clickedBtn.nextNodeId;
             }
             break;
           case chatModels.InputType.TIME: //Click, Complex
@@ -140,7 +140,7 @@ export class SimulatorService {
               let clickedBtn = this.getNodeButtonByType(
                 models.ButtonType.GetTime,
               );
-              if (clickedBtn) nextNodeId = clickedBtn.NextNodeId;
+              if (clickedBtn) nextNodeId = clickedBtn.nextNodeId;
             }
             break;
           case chatModels.InputType.ADDRESS: //Click, Complex
@@ -150,7 +150,7 @@ export class SimulatorService {
               let clickedBtn = this.getNodeButtonByType(
                 models.ButtonType.GetAddress,
               );
-              if (clickedBtn) nextNodeId = clickedBtn.NextNodeId;
+              if (clickedBtn) nextNodeId = clickedBtn.nextNodeId;
             }
             break;
           case chatModels.InputType.MEDIA: //Click, Non Complex
@@ -178,7 +178,7 @@ export class SimulatorService {
                     break;
                 }
                 let clickedBtn = this.getNodeButtonByType(cfmType);
-                if (clickedBtn) nextNodeId = clickedBtn.NextNodeId;
+                if (clickedBtn) nextNodeId = clickedBtn.nextNodeId;
               }
             }
             break;
@@ -187,14 +187,14 @@ export class SimulatorService {
               let ip = ipMsgContent.input as chatModels.TextInput; //Option also has input.val
               if (ip.val == 'GET_STARTED') {
                 let firstNode = _.first(
-                  this.chatFlow.filter(x => x.IsStartNode),
+                  this.chatFlow.filter(x => x.isStartNode),
                 );
-                nextNodeId = firstNode ? firstNode.Id : this.chatFlow[0].Id;
+                nextNodeId = firstNode ? firstNode.id : this.chatFlow[0].id;
               } else {
                 let clickedBtn = this.getNodeButtonById(ip.val);
                 if (clickedBtn) {
-                  nextNodeId = clickedBtn.NextNodeId;
-                  userData = clickedBtn.VariableValue;
+                  nextNodeId = clickedBtn.nextNodeId;
+                  userData = clickedBtn.variableValue;
                 }
               }
             }
@@ -211,7 +211,7 @@ export class SimulatorService {
               let clickedBtn = this.getNodeButtonByType(
                 models.ButtonType.GetItemFromSource,
               );
-              if (clickedBtn) nextNodeId = clickedBtn.NextNodeId;
+              if (clickedBtn) nextNodeId = clickedBtn.nextNodeId;
             }
             break;
           case chatModels.InputType.PHONE:
@@ -221,7 +221,7 @@ export class SimulatorService {
               let clickedBtn = this.getNodeButtonByType(
                 models.ButtonType.GetPhoneNumber,
               );
-              if (clickedBtn) nextNodeId = clickedBtn.NextNodeId;
+              if (clickedBtn) nextNodeId = clickedBtn.nextNodeId;
             }
             break;
           case chatModels.InputType.EMAIL:
@@ -231,7 +231,7 @@ export class SimulatorService {
               let clickedBtn = this.getNodeButtonByType(
                 models.ButtonType.GetEmail,
               );
-              if (clickedBtn) nextNodeId = clickedBtn.NextNodeId;
+              if (clickedBtn) nextNodeId = clickedBtn.nextNodeId;
             }
             break;
           case chatModels.InputType.NUMERIC:
@@ -241,7 +241,7 @@ export class SimulatorService {
               let clickedBtn = this.getNodeButtonByType(
                 models.ButtonType.GetNumber,
               );
-              if (clickedBtn) nextNodeId = clickedBtn.NextNodeId;
+              if (clickedBtn) nextNodeId = clickedBtn.nextNodeId;
             }
             break;
           case chatModels.InputType.TEXT:
@@ -251,7 +251,7 @@ export class SimulatorService {
               let clickedBtn = this.getNodeButtonByType(
                 models.ButtonType.GetText,
               );
-              if (clickedBtn) nextNodeId = clickedBtn.NextNodeId;
+              if (clickedBtn) nextNodeId = clickedBtn.nextNodeId;
             }
             break;
           default:
@@ -291,32 +291,32 @@ export class SimulatorService {
 
   private getNodeById(Id: string) {
     if (Id) {
-      let foundNodes = this.chatFlow.filter(n => n.Id == Id);
+      let foundNodes = this.chatFlow.filter(n => n.id == Id);
       if (foundNodes && foundNodes.length > 0) return foundNodes[0];
     }
     return null;
   }
 
   private getNodeButtonById(buttonId: string) {
-    let btn = this.state.currentNode.Buttons.filter(x => x._id == buttonId);
+    let btn = this.state.currentNode.buttons.filter(x => x._id == buttonId);
     return btn && btn.length > 0 ? btn[0] : null;
   }
 
   private getNodeButtonByType(type: models.ButtonType) {
-    let btn = this.state.currentNode.Buttons.filter(x => x.ButtonType == type);
+    let btn = this.state.currentNode.buttons.filter(x => x.buttonType == type);
     let firstTry = btn && btn.length > 0 ? btn[0] : null;
     if (firstTry) return firstTry;
 
     if (type == models.ButtonType.GetText) {
       let found = _.first(
-        _.filter(this.state.currentNode.Buttons, x =>
+        _.filter(this.state.currentNode.buttons, x =>
           _.contains(
             [
               models.ButtonType.GetPhoneNumber,
               models.ButtonType.GetEmail,
               models.ButtonType.GetNumber,
             ],
-            x.ButtonType,
+            x.buttonType,
           ),
         ),
       );
@@ -327,7 +327,7 @@ export class SimulatorService {
 
   private getCarouselButtonById(carItemBtnId: string) {
     let carSection = this.state.currentSection as models.CarouselSection;
-    if (carSection && carSection.SectionType == models.SectionType.Carousel) {
+    if (carSection && carSection.sectionType == models.SectionType.Carousel) {
       let selectedCarBtn: CarouselButton = null;
       for (var i = 0; i < carSection.Items.length; i++) {
         let carItem = carSection.Items[i];
@@ -348,8 +348,8 @@ export class SimulatorService {
   }
 
   private saveVariable(value: string) {
-    if (value && this.state.currentNode && this.state.currentNode.VariableName)
-      this.state.variables[this.state.currentNode.VariableName] = value;
+    if (value && this.state.currentNode && this.state.currentNode.variableName)
+      this.state.variables[this.state.currentNode.variableName] = value;
   }
 
   private logDebug(msg: any) {
@@ -415,15 +415,15 @@ export class SimulatorService {
   private processNode(chatNode: models.ChatNode, section?: models.Section) {
     chatNode = this.processVerbsForChatNode(chatNode);
     this.state.currentNode = chatNode;
-    this.state.currentSection = section || _.first(chatNode.Sections);
+    this.state.currentSection = section || _.first(chatNode.sections);
 
-    switch (chatNode.NodeType) {
+    switch (chatNode.nodeType) {
       case models.NodeType.ApiCall:
         {
           let apiHeaders = new HttpHeaders();
 
-          if (chatNode.Headers) {
-            let splits = chatNode.Headers.split(/\n|,/);
+          if (chatNode.headers) {
+            let splits = chatNode.headers.split(/\n|,/);
             for (var si = 0; si < splits.length; si++) {
               try {
                 let split = splits[si];
@@ -440,28 +440,28 @@ export class SimulatorService {
           }
 
           let reqBody: string = null;
-          if (chatNode.RequestBody)
-            reqBody = this.processVerbs(chatNode.RequestBody);
+          if (chatNode.requestBody)
+            reqBody = this.processVerbs(chatNode.requestBody);
 
           let reqParams = new HttpParams();
-          if (chatNode.RequiredVariables) {
-            for (var i = 0; i < chatNode.RequiredVariables.length; i++) {
+          if (chatNode.requiredVariables) {
+            for (var i = 0; i < chatNode.requiredVariables.length; i++) {
               if (
-                chatNode.RequiredVariables[i] &&
+                chatNode.requiredVariables[i] &&
                 Object.keys(this.state.variables).indexOf(
-                  chatNode.RequiredVariables[i],
+                  chatNode.requiredVariables[i],
                 ) != -1
               )
                 reqParams.append(
-                  chatNode.RequiredVariables[i],
-                  this.state.variables[chatNode.RequiredVariables[i]],
+                  chatNode.requiredVariables[i],
+                  this.state.variables[chatNode.requiredVariables[i]],
                 );
             }
           }
 
-          let nextNodeId = chatNode.NextNodeId;
+          let nextNodeId = chatNode.nextNodeId;
           this.http
-            .request(models.APIMethod[chatNode.ApiMethod], chatNode.ApiUrl, {
+            .request(models.APIMethod[chatNode.apiMethod], chatNode.apiUrl, {
               headers: apiHeaders,
               body: reqBody,
               params: reqParams,
@@ -496,24 +496,24 @@ export class SimulatorService {
       case models.NodeType.Combination:
       default:
         {
-          if (chatNode.Sections && chatNode.Sections.length > 0) {
+          if (chatNode.sections && chatNode.sections.length > 0) {
             let msg = this.convertSection(this.state.currentSection);
             this.prepareReplyAndSend(msg);
-            let sectionIndex = chatNode.Sections.findIndex(
+            let sectionIndex = chatNode.sections.findIndex(
               x => x._id == this.state.currentSection._id,
             );
             let remainingSections =
-              chatNode.Sections.length - (sectionIndex + 1);
+              chatNode.sections.length - (sectionIndex + 1);
             if (remainingSections > 0) {
-              this.processNode(chatNode, chatNode.Sections[sectionIndex + 1]);
+              this.processNode(chatNode, chatNode.sections[sectionIndex + 1]);
               return;
             }
           }
 
           if (
             this.state.currentNode &&
-            this.state.currentNode.Buttons &&
-            this.state.currentNode.Buttons.length > 0
+            this.state.currentNode.buttons &&
+            this.state.currentNode.buttons.length > 0
           ) {
             this.convertButtons(this.state.currentNode, inputMsgToSend => {
               this.prepareReplyAndSend(inputMsgToSend);
@@ -556,7 +556,7 @@ export class SimulatorService {
       content: anaMessageContent,
       type: chatModels.MessageType.SIMPLE,
     };
-    switch (section.SectionType) {
+    switch (section.sectionType) {
       case models.SectionType.Image:
         anaMessageContent.media = {
           type: chatModels.MediaType.IMAGE,
@@ -637,7 +637,7 @@ export class SimulatorService {
     chatNode: models.ChatNode,
     callback: (resp: chatModels.IntelligoMessageData) => void,
   ): void {
-    let clickInputs = _.filter(chatNode.Buttons, x =>
+    let clickInputs = _.filter(chatNode.buttons, x =>
       _.contains(
         [
           models.ButtonType.DeepLink,
@@ -656,11 +656,11 @@ export class SimulatorService {
           models.ButtonType.ShowConfirmation,
           models.ButtonType.NextNode,
         ],
-        x.ButtonType,
+        x.buttonType,
       ),
     );
 
-    let textInputs = _.filter(chatNode.Buttons, x =>
+    let textInputs = _.filter(chatNode.buttons, x =>
       _.contains(
         [
           models.ButtonType.GetText,
@@ -668,7 +668,7 @@ export class SimulatorService {
           models.ButtonType.GetPhoneNumber,
           models.ButtonType.GetNumber,
         ],
-        x.ButtonType,
+        x.buttonType,
       ),
     );
 
@@ -686,7 +686,7 @@ export class SimulatorService {
         _.filter(clickInputs, x =>
           _.contains(
             [models.ButtonType.NextNode, models.ButtonType.OpenUrl],
-            x.ButtonType,
+            x.buttonType,
           ),
         ).length > 0
       ) {
@@ -699,17 +699,17 @@ export class SimulatorService {
             _.filter(clickInputs, x =>
               _.contains(
                 [models.ButtonType.NextNode, models.ButtonType.OpenUrl],
-                x.ButtonType,
+                x.buttonType,
               ),
             ),
             y => {
               return {
-                title: y.ButtonName || y.ButtonText,
+                title: y.buttonName || y.buttonText,
                 value:
-                  y.ButtonType == models.ButtonType.OpenUrl
-                    ? JSON.stringify({ url: y.Url, value: y._id })
+                  y.buttonType == models.ButtonType.OpenUrl
+                    ? JSON.stringify({ url: y.url, value: y._id })
                     : y._id,
-                type: this.convertButtonType(y.ButtonType),
+                type: this.convertButtonType(y.buttonType),
               };
             },
           ),
@@ -721,7 +721,7 @@ export class SimulatorService {
       }
 
       let inputButton = _.first(clickInputs);
-      switch (inputButton.ButtonType) {
+      switch (inputButton.buttonType) {
         case models.ButtonType.GetDate:
           return callback({
             content: <chatModels.DateInputContent>{
@@ -782,14 +782,14 @@ export class SimulatorService {
             type: chatModels.MessageType.INPUT,
           });
         case models.ButtonType.GetItemFromSource: {
-          if (inputButton.ItemsSource) {
+          if (inputButton.itemsSource) {
             let msg: chatModels.ListInputContent = {
               inputType: chatModels.InputType.LIST,
-              multiple: inputButton.AllowMultiple,
+              multiple: inputButton.allowMultiple,
               mandatory: mandatory,
               values: [],
             };
-            let itemSrc = inputButton.ItemsSource.split(',').map(x => {
+            let itemSrc = inputButton.itemsSource.split(',').map(x => {
               let y = x.trim().split(':');
               return { K: y[0], V: y[1] };
             });
@@ -804,8 +804,8 @@ export class SimulatorService {
               type: chatModels.MessageType.INPUT,
             });
           }
-          if (inputButton.Url) {
-            this.http.get(inputButton.Url).subscribe((x: any) => {
+          if (inputButton.url) {
+            this.http.get(inputButton.url).subscribe((x: any) => {
               let items = x.json() as {
                 [key: string]: string;
               };
@@ -813,7 +813,7 @@ export class SimulatorService {
 
               let msg: chatModels.ListInputContent = {
                 inputType: chatModels.InputType.LIST,
-                multiple: inputButton.AllowMultiple,
+                multiple: inputButton.allowMultiple,
                 mandatory: mandatory,
                 values: itemKeys.map(key => {
                   return {
@@ -856,14 +856,14 @@ export class SimulatorService {
     if (textInputs && textInputs.length > 0) {
       let textInput = textInputs[0];
       let inputMsg: chatModels.TextInputContent = {
-        inputType: this.convertButtonTypeToInputType(textInput.ButtonType),
+        inputType: this.convertButtonTypeToInputType(textInput.buttonType),
         mandatory: mandatory,
         textInputAttr: {
-          defaultText: textInput.DefaultText,
-          maxLength: textInput.MaxLength,
-          minLength: textInput.MinLength,
-          multiLine: textInput.IsMultiLine ? 1 : 0,
-          placeHolder: textInput.PlaceholderText,
+          defaultText: textInput.defaultText,
+          maxLength: textInput.maxLength,
+          minLength: textInput.minLength,
+          multiLine: textInput.isMultiLine ? 1 : 0,
+          placeHolder: textInput.placeholderText,
         },
       };
       return callback({
@@ -916,15 +916,15 @@ export class SimulatorService {
   private processConditionNode(chatNode: models.ChatNode) {
     let done = false;
     try {
-      if (chatNode.Buttons) {
-        for (var btnIdx = 0; btnIdx < chatNode.Buttons.length; btnIdx++) {
-          let btn = chatNode.Buttons[btnIdx];
-          let rootToken = btn.ConditionMatchKey.split(/\.|\[/)[0];
+      if (chatNode.buttons) {
+        for (var btnIdx = 0; btnIdx < chatNode.buttons.length; btnIdx++) {
+          let btn = chatNode.buttons[btnIdx];
+          let rootToken = btn.conditionMatchKey.split(/\.|\[/)[0];
           let wrappedResp = {};
           wrappedResp[rootToken] = JSON.parse(this.state.variables[rootToken]);
           let deepValue: any = jsonpath.query(
             wrappedResp,
-            btn.ConditionMatchKey,
+            btn.conditionMatchKey,
           );
           if (
             deepValue &&
@@ -936,38 +936,38 @@ export class SimulatorService {
           if (
             this.match(
               deepValue,
-              btn.ConditionOperator,
-              btn.ConditionMatchValue,
+              btn.conditionOperator,
+              btn.conditionMatchValue,
             )
           ) {
-            this.saveVariable(btn.VariableValue);
-            this.gotoNextNode(btn.NextNodeId);
+            this.saveVariable(btn.variableValue);
+            this.gotoNextNode(btn.nextNodeId);
             done = true;
             break;
           }
         }
       }
     } catch (e) {
-      if (chatNode.Buttons) {
-        for (var btnIdx = 0; btnIdx < chatNode.Buttons.length; btnIdx++) {
-          let btn = chatNode.Buttons[btnIdx];
-          let leftOperand = this.state.variables[btn.ConditionMatchKey];
+      if (chatNode.buttons) {
+        for (var btnIdx = 0; btnIdx < chatNode.buttons.length; btnIdx++) {
+          let btn = chatNode.buttons[btnIdx];
+          let leftOperand = this.state.variables[btn.conditionMatchKey];
           if (
             this.match(
               leftOperand,
-              btn.ConditionOperator,
-              btn.ConditionMatchValue,
+              btn.conditionOperator,
+              btn.conditionMatchValue,
             )
           ) {
-            this.saveVariable(btn.VariableValue);
-            this.gotoNextNode(btn.NextNodeId);
+            this.saveVariable(btn.variableValue);
+            this.gotoNextNode(btn.nextNodeId);
             done = true;
             break;
           }
         }
       }
     }
-    if (!done) this.gotoNextNode(chatNode.NextNodeId); //Fallback node id
+    if (!done) this.gotoNextNode(chatNode.nextNodeId); //Fallback node id
   }
 
   private match(left: any, op: models.ConditionOperator, right: any) {

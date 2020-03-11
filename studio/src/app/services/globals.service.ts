@@ -112,7 +112,7 @@ export class GlobalsService {
 
   normalizeChatNodes(chatNodes: models.ChatNode[]) {
     chatNodes.forEach(x => {
-      x.IsStartNode = x.IsStartNode ? true : false; //This field should exist even if it's false
+      x.isStartNode = x.isStartNode ? true : false; //This field should exist even if it's false
     });
     return chatNodes;
   }
@@ -122,19 +122,19 @@ export class GlobalsService {
       return false;
     }
     let targetNode = JSON.parse(JSON.stringify(srcNode)) as models.ChatNode;
-    targetNode.Id = new ObjectID().toHexString();
-    targetNode.Name += ' Copy';
-    targetNode.NextNodeId = null;
-    if (targetNode.Buttons) {
-      targetNode.Buttons.forEach(btn => {
+    targetNode.id = new ObjectID().toHexString();
+    targetNode.name += ' Copy';
+    targetNode.nextNodeId = null;
+    if (targetNode.buttons) {
+      targetNode.buttons.forEach(btn => {
         btn._id = new ObjectID().toHexString();
-        btn.NextNodeId = null;
+        btn.nextNodeId = null;
       });
     }
-    if (targetNode.Sections) {
-      targetNode.Sections.forEach(section => {
+    if (targetNode.sections) {
+      targetNode.sections.forEach(section => {
         section._id = new ObjectID().toHexString();
-        if (section.SectionType == SectionType.Carousel) {
+        if (section.sectionType == SectionType.Carousel) {
           let car = section as CarouselSection;
           car.Items.forEach(carItem => {
             carItem._id = new ObjectID().toHexString();

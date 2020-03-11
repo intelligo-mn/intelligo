@@ -20,7 +20,7 @@ export class ChatFlowService {
     proj: ChatBotProject,
     pack: models.ChatFlowPack,
   ) {
-    let chatNodes = this.normalizeChatNodes(pack.ChatNodes);
+    let chatNodes = this.normalizeChatNodes(pack.chatNodes);
 
     return this.http.post(
       this.normalizeBaseUrl(conn.ServerUrl) + this.publishChatBotAPI,
@@ -43,7 +43,7 @@ export class ChatFlowService {
 
   normalizeChatNodes(chatNodes: models.ChatNode[]) {
     chatNodes.forEach(x => {
-      x.IsStartNode = x.IsStartNode ? true : false; //This field should exist even if it's false
+      x.isStartNode = x.isStartNode ? true : false; //This field should exist even if it's false
     });
     return chatNodes;
   }

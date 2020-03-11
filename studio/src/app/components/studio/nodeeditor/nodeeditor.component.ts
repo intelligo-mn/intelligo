@@ -76,14 +76,14 @@ export class NodeEditorComponent implements OnInit, OnDestroy {
     if (
       this.chatNode &&
       this.contentTabVisible() &&
-      this.chatNode.Sections.length > 0
+      this.chatNode.sections.length > 0
     ) {
       this.tabGroup.selectedIndex = this.contentTabIndex;
     }
   }
 
   contentTabVisible() {
-    return ["Card", "Combination"].indexOf(this.chatNode.NodeType) != -1;
+    return ["Card", "Combination"].indexOf(this.chatNode.nodeType) != -1;
   }
 
   addNewSectionText() {

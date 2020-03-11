@@ -84,23 +84,23 @@ export class LandingComponent implements OnInit {
         if (!name) return;
 
         let firstNode = {
-          Name: 'New Node',
-          Id: new ObjectID().toHexString(),
-          Buttons: [],
-          Sections: [],
-          NodeType: models.NodeType.Combination,
-          TimeoutInMs: 0,
+          name: 'New Node',
+          id: new ObjectID().toHexString(),
+          buttons: [],
+          sections: [],
+          nodeType: models.NodeType.Combination,
+          timeoutInMs: 0,
         };
         let _id = new ObjectID().toHexString();
         let defaultFlow: models.ChatFlowPack = {
-          ChatNodes: [firstNode],
-          CreatedOn: new Date(),
-          UpdatedOn: new Date(),
-          NodeLocations: {},
-          ProjectId: _id,
+          chatNodes: [firstNode],
+          createdOn: new Date(),
+          updatedOn: new Date(),
+          nodeLocations: {},
+          projectId: _id,
           _id: _id,
         };
-        defaultFlow.NodeLocations[firstNode.Id] = { X: 500, Y: 500 };
+        defaultFlow.nodeLocations[firstNode.Id] = { X: 500, Y: 500 };
         this.settings.saveChatProject(name, defaultFlow, false, () => {
           this.openChatBotProject(name);
         });

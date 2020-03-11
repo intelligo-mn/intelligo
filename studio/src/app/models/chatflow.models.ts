@@ -1,56 +1,56 @@
-import { ObjectID } from "bson";
+import { ObjectID } from 'bson';
 import {
   ChatFlowComponent,
-  ChatNodeVM
-} from "../components/studio/chatflow/chatflow.component";
-import { NodeEditorComponent } from "../components/studio/nodeeditor/nodeeditor.component";
-import { GlobalsService } from "../services/globals.service";
-import { InfoDialogService } from "../services/info-dialog.service";
-import { MatButton } from "@angular/material/button";
-import * as _ from "underscore";
+  ChatNodeVM,
+} from '../components/studio/chatflow/chatflow.component';
+import { NodeEditorComponent } from '../components/studio/nodeeditor/nodeeditor.component';
+import { GlobalsService } from '../services/globals.service';
+import { InfoDialogService } from '../services/info-dialog.service';
+import { MatButton } from '@angular/material/button';
+import * as _ from 'underscore';
 //Enum Start
 export enum SectionType {
-  Image = "Image",
-  Text = "Text",
-  Graph = "Graph",
-  Gif = "Gif",
-  Audio = "Audio",
-  Video = "Video",
-  Link = "Link",
-  EmbeddedHtml = "EmbeddedHtml",
-  Carousel = "Carousel",
-  PrintOTP = "PrintOTP"
+  Image = 'Image',
+  Text = 'Text',
+  Graph = 'Graph',
+  Gif = 'Gif',
+  Audio = 'Audio',
+  Video = 'Video',
+  Link = 'Link',
+  EmbeddedHtml = 'EmbeddedHtml',
+  Carousel = 'Carousel',
+  PrintOTP = 'PrintOTP',
 }
 
 export enum CarouselButtonType {
-  NextNode = "NextNode",
-  DeepLink = "DeepLink",
-  OpenUrl = "OpenUrl"
+  NextNode = 'NextNode',
+  DeepLink = 'DeepLink',
+  OpenUrl = 'OpenUrl',
 }
 
 export enum NodeType {
-  ApiCall = "ApiCall",
-  Combination = "Combination",
-  Card = "Card",
-  JumpToBot = "JumpToBot",
-  Condition = "Condition",
-  HandoffToAgent = "HandoffToAgent"
+  ApiCall = 'ApiCall',
+  Combination = 'Combination',
+  Card = 'Card',
+  JumpToBot = 'JumpToBot',
+  Condition = 'Condition',
+  HandoffToAgent = 'HandoffToAgent',
 }
 
 export enum APIMethod {
-  GET = "GET",
-  POST = "POST",
-  PUT = "PUT",
-  DELETE = "DELETE",
-  HEAD = "HEAD",
-  OPTIONS = "OPTIONS",
-  CONNECT = "CONNECT"
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+  HEAD = 'HEAD',
+  OPTIONS = 'OPTIONS',
+  CONNECT = 'CONNECT',
 }
 
 export enum CardPlacement {
-  Incoming = "Incoming",
-  Outgoing = "Outgoing",
-  Center = "Center"
+  Incoming = 'Incoming',
+  Outgoing = 'Outgoing',
+  Center = 'Center',
 }
 //Enums End
 
@@ -67,12 +67,11 @@ export interface BaseIdEntity {
 export interface BaseEntity extends BaseIdEntity {}
 
 export interface Section extends BaseEntity {
-  SectionType: SectionType;
-  DelayInMs?: number;
-  Hidden?: boolean;
-
-  ContentId?: string;
-  ContentEmotion?: string;
+  sectionType: SectionType;
+  delayInMs?: number;
+  hidden?: boolean;
+  contentId?: string;
+  contentEmotion?: string;
 }
 
 export interface RepeatableBaseEntity extends BaseEntity {
@@ -125,110 +124,107 @@ export interface CarouselSection extends TitleCaptionSection {
 }
 // Sections - End
 export enum ConditionOperator {
-  EqualTo = "EqualTo",
-  NotEqualTo = "NotEqualTo",
-  GreaterThan = "GreaterThan",
-  LessThan = "LessThan",
-  GreaterThanOrEqualTo = "GreaterThanOrEqualTo",
-  LessThanOrEqualTo = "LessThanOrEqualTo",
-  Mod = "Mod",
-  In = "In",
-  NotIn = "NotIn",
-  StartsWith = "StartsWith",
-  EndsWith = "EndsWith",
-  Contains = "Contains",
-  Between = "Between",
-  IsNull = "IsNull"
+  EqualTo = 'EqualTo',
+  NotEqualTo = 'NotEqualTo',
+  GreaterThan = 'GreaterThan',
+  LessThan = 'LessThan',
+  GreaterThanOrEqualTo = 'GreaterThanOrEqualTo',
+  LessThanOrEqualTo = 'LessThanOrEqualTo',
+  Mod = 'Mod',
+  In = 'In',
+  NotIn = 'NotIn',
+  StartsWith = 'StartsWith',
+  EndsWith = 'EndsWith',
+  Contains = 'Contains',
+  Between = 'Between',
+  IsNull = 'IsNull',
 }
 
 export enum ButtonType {
-  OpenUrl = "OpenUrl",
-  GetText = "GetText",
-  GetNumber = "GetNumber",
-  GetAddress = "GetAddress",
-  GetEmail = "GetEmail",
-  GetPhoneNumber = "GetPhoneNumber",
-  GetItemFromSource = "GetItemFromSource",
-  GetImage = "GetImage",
-  GetAudio = "GetAudio",
-  GetVideo = "GetVideo",
-  NextNode = "NextNode",
-  DeepLink = "DeepLink",
-  GetAgent = "GetAgent",
-  GetFile = "GetFile",
-  ShowConfirmation = "ShowConfirmation",
-  FetchChatFlow = "FetchChatFlow",
+  OpenUrl = 'OpenUrl',
+  GetText = 'GetText',
+  GetNumber = 'GetNumber',
+  GetAddress = 'GetAddress',
+  GetEmail = 'GetEmail',
+  GetPhoneNumber = 'GetPhoneNumber',
+  GetItemFromSource = 'GetItemFromSource',
+  GetImage = 'GetImage',
+  GetAudio = 'GetAudio',
+  GetVideo = 'GetVideo',
+  NextNode = 'NextNode',
+  DeepLink = 'DeepLink',
+  GetAgent = 'GetAgent',
+  GetFile = 'GetFile',
+  ShowConfirmation = 'ShowConfirmation',
+  FetchChatFlow = 'FetchChatFlow',
   /// Format: yyyy-MM-dd
-  GetDate = "GetDate",
+  GetDate = 'GetDate',
   /// Format: HH:mm:ss
-  GetTime = "GetTime",
+  GetTime = 'GetTime',
   /// Format: yyyy-MM-ddTHH:mm:ss
-  GetDateTime = "GetDateTime",
+  GetDateTime = 'GetDateTime',
   /// Format: [Latitude],[Longitude]
-  GetLocation = "GetLocation"
+  GetLocation = 'GetLocation',
 }
 
 export interface Button extends BaseIdEntity {
-  ButtonName: string;
-  ButtonText?: string;
-  Emotion?: number;
-  ButtonType: ButtonType;
-  DeepLinkUrl?: string;
-  Url?: string;
-  ItemsSource?: string;
-  AllowMultiple?: boolean;
-
-  BounceTimeout?: number;
-  NextNodeId?: string;
-  DefaultButton?: boolean;
-  Hidden?: boolean;
-  VariableValue?: string;
-  PrefixText?: string;
-  PostfixText?: string;
-  PlaceholderText?: string;
-  ConditionMatchKey?: string;
-  ConditionOperator?: ConditionOperator;
-  ConditionMatchValue?: string;
-  PostToChat?: boolean;
-  DoesRepeat?: boolean;
-  RepeatOn?: string;
-  RepeatAs?: string;
-  StartPosition?: number;
-  MaxRepeats?: number;
-  AdvancedOptions?: boolean;
-  MinLength?: number;
-  MaxLength?: number;
-  DefaultText?: string;
-  IsMultiLine?: boolean;
-
-  ContentId?: string;
-  ContentEmotion?: string;
+  buttonName: string;
+  buttonText?: string;
+  emotion?: number;
+  buttonType: ButtonType;
+  deepLinkUrl?: string;
+  url?: string;
+  itemsSource?: string;
+  allowMultiple?: boolean;
+  bounceTimeout?: number;
+  nextNodeId?: string;
+  defaultButton?: boolean;
+  hidden?: boolean;
+  variableValue?: string;
+  prefixText?: string;
+  postfixText?: string;
+  placeholderText?: string;
+  conditionMatchKey?: string;
+  conditionOperator?: ConditionOperator;
+  conditionMatchValue?: string;
+  postToChat?: boolean;
+  doesRepeat?: boolean;
+  repeatOn?: string;
+  repeatAs?: string;
+  startPosition?: number;
+  maxRepeats?: number;
+  advancedOptions?: boolean;
+  minLength?: number;
+  maxLength?: number;
+  defaultText?: string;
+  isMultiLine?: boolean;
+  contentId?: string;
+  contentEmotion?: string;
 }
 
 export interface ChatNode {
-  Name: string;
-  Id: string;
-  Emotion?: string;
-  NodeType: NodeType;
-  Sections: Section[];
-  Buttons: Button[];
-  VariableName?: string;
-  ApiMethod?: APIMethod;
-  ApiUrl?: string;
-  ApiResponseDataRoot?: string;
-  NextNodeId?: string;
-  RequiredVariables?: string[];
-  GroupName?: string;
-  CardHeader?: string;
-  CardFooter?: string;
-  Placement?: CardPlacement;
-  IsStartNode?: boolean;
-  IsGoalNode?: boolean;
-  TargetBotId?: string;
-  TargetNodeId?: string;
-
-  RequestBody?: string;
-  Headers?: string;
+  name: string;
+  id: string;
+  emotion?: string;
+  nodeType: NodeType;
+  sections: Section[];
+  buttons: Button[];
+  variableName?: string;
+  apiMethod?: APIMethod;
+  apiUrl?: string;
+  apiResponseDataRoot?: string;
+  nextNodeId?: string;
+  requiredVariables?: string[];
+  groupName?: string;
+  cardHeader?: string;
+  cardFooter?: string;
+  placement?: CardPlacement;
+  isStartNode?: boolean;
+  isGoalNode?: boolean;
+  targetBotId?: string;
+  targetNodeId?: string;
+  requestBody?: string;
+  headers?: string;
 }
 
 export interface ChatContent {
@@ -248,11 +244,11 @@ export interface ChatContent {
 
 //WebNodeLocations: NodeLocations;
 export interface ChatFlowPack {
-  ProjectId: string;
-  ChatNodes: ChatNode[];
-  NodeLocations?: NodeLocations;
-  CreatedOn: Date;
-  UpdatedOn: Date;
+  projectId: string;
+  chatNodes: ChatNode[];
+  nodeLocations?: NodeLocations;
+  createdOn: Date;
+  updatedOn: Date;
   _id: string;
 }
 
@@ -266,15 +262,15 @@ export interface LayoutPoint {
 }
 
 export enum EditorType {
-  Text = "Text",
-  TitleCaptionUrl = "TitleCaptionUrl",
-  Carousel = "Carousel"
+  Text = 'Text',
+  TitleCaptionUrl = 'TitleCaptionUrl',
+  Carousel = 'Carousel',
 }
 
 export class ModelHelpers {
   constructor(
     public globalsService: GlobalsService,
-    public infoDialog: InfoDialogService
+    public infoDialog: InfoDialogService,
   ) {}
 
   CarouselButtonType = CarouselButtonType;
@@ -282,7 +278,7 @@ export class ModelHelpers {
   carouselButtonTypes: CarouselButtonType[] = [
     CarouselButtonType.NextNode,
     CarouselButtonType.OpenUrl,
-    CarouselButtonType.DeepLink
+    CarouselButtonType.DeepLink,
   ];
 
   nodeTypes: NodeType[] = [
@@ -291,7 +287,7 @@ export class ModelHelpers {
     //NodeType.Card,
     NodeType.Condition,
     NodeType.HandoffToAgent,
-    NodeType.JumpToBot
+    NodeType.JumpToBot,
   ];
   apiMethods: APIMethod[] = [
     APIMethod.GET,
@@ -300,12 +296,12 @@ export class ModelHelpers {
     APIMethod.HEAD,
     APIMethod.OPTIONS,
     APIMethod.DELETE,
-    APIMethod.CONNECT
+    APIMethod.CONNECT,
   ];
   cardPlacements: CardPlacement[] = [
     CardPlacement.Center,
     CardPlacement.Incoming,
-    CardPlacement.Outgoing
+    CardPlacement.Outgoing,
   ];
   buttonTypes: ButtonType[] = [
     ButtonType.DeepLink,
@@ -326,7 +322,7 @@ export class ModelHelpers {
     ButtonType.GetVideo,
     ButtonType.GetFile,
     ButtonType.NextNode,
-    ButtonType.OpenUrl
+    ButtonType.OpenUrl,
     //ButtonType.ShowConfirmation
   ];
   conditionOperators: ConditionOperator[] = [
@@ -343,13 +339,13 @@ export class ModelHelpers {
     ConditionOperator.EndsWith,
     ConditionOperator.Contains,
     ConditionOperator.Between,
-    ConditionOperator.IsNull
+    ConditionOperator.IsNull,
   ];
   sectionAlias(section: Section) {
-    switch (section.SectionType) {
+    switch (section.sectionType) {
       case SectionType.Text: {
         let ts = section as TextSection;
-        return ts.Text || ts.SectionType;
+        return ts.Text || ts.sectionType;
       }
       case SectionType.Image:
       case SectionType.Audio:
@@ -359,19 +355,19 @@ export class ModelHelpers {
       case SectionType.Graph:
       case SectionType.Carousel: {
         let tcs = section as TitleCaptionSection;
-        return tcs.Title || tcs.Caption || tcs.SectionType;
+        return tcs.Title || tcs.Caption || tcs.sectionType;
       }
       default:
-        return section.SectionType;
+        return section.sectionType;
     }
   }
 
   chatNodeAlias(chatNode: ChatNode) {
-    return chatNode.Name || chatNode.NodeType;
+    return chatNode.name || chatNode.nodeType;
   }
 
   chatButtonAlias(btn: Button) {
-    return btn.ButtonName || btn.ButtonText || btn.ButtonType;
+    return btn.buttonName || btn.buttonText || btn.buttonType;
   }
 
   editorTypeFromSectionType(secType: SectionType): EditorType {
@@ -395,39 +391,39 @@ export class ModelHelpers {
     const HIDDEN = true;
 
     if (
-      ["ConditionMatchKey", "ConditionOperator", "ConditionMatchValue"].indexOf(
-        fieldName
+      ['ConditionMatchKey', 'ConditionOperator', 'ConditionMatchValue'].indexOf(
+        fieldName,
       ) != -1
     )
       return [NodeType.ApiCall, NodeType.Condition].indexOf(
-        chatNode.NodeType
+        chatNode.nodeType,
       ) != -1
         ? !HIDDEN
         : HIDDEN;
 
-    if (fieldName == "ButtonType" || fieldName == "ButtonText")
+    if (fieldName == 'ButtonType' || fieldName == 'ButtonText')
       return [NodeType.ApiCall, NodeType.Condition].indexOf(
-        chatNode.NodeType
+        chatNode.nodeType,
       ) != -1
         ? HIDDEN
         : !HIDDEN;
 
     //Following fields must only be visible for 'GetText' Buttons
     if (
-      ["MinLength", "MaxLength", "IsMultiLine", "DefaultText"].indexOf(
-        fieldName
+      ['MinLength', 'MaxLength', 'IsMultiLine', 'DefaultText'].indexOf(
+        fieldName,
       ) != -1
     )
-      return btn.ButtonType == ButtonType.GetText ? false : true;
+      return btn.buttonType == ButtonType.GetText ? false : true;
 
     //Following fields must only be visible for 'GetItemFromSource ' Buttons
-    if (["AllowMultiple", "ItemsSource"].indexOf(fieldName) != -1)
-      return btn.ButtonType == ButtonType.GetItemFromSource ? !HIDDEN : HIDDEN;
+    if (['AllowMultiple', 'ItemsSource'].indexOf(fieldName) != -1)
+      return btn.buttonType == ButtonType.GetItemFromSource ? !HIDDEN : HIDDEN;
 
     var hidden = false;
-    switch (btn.ButtonType) {
+    switch (btn.buttonType) {
       case ButtonType.OpenUrl:
-        hidden = !(["Url"].indexOf(fieldName) != -1); //Show only Url field
+        hidden = !(['Url'].indexOf(fieldName) != -1); //Show only Url field
         break;
       case ButtonType.GetText:
       case ButtonType.GetNumber:
@@ -437,12 +433,12 @@ export class ModelHelpers {
         //if the passed button property is present in the list, that field should not be visible. here placeholder text should not be visible if button type is input(Get[X]) type
         hidden =
           [
-            "NextNodeId",
-            "DeepLinkUrl",
-            "Url",
-            "ConditionMatchKey",
-            "ConditionOperator",
-            "ConditionMatchValue"
+            'NextNodeId',
+            'DeepLinkUrl',
+            'Url',
+            'ConditionMatchKey',
+            'ConditionOperator',
+            'ConditionMatchValue',
           ].indexOf(fieldName) != -1;
         break;
       case ButtonType.GetTime:
@@ -451,15 +447,15 @@ export class ModelHelpers {
       case ButtonType.GetLocation:
         hidden =
           [
-            "NextNodeId",
-            "DeepLinkUrl",
-            "Url",
-            "ConditionMatchKey",
-            "ConditionOperator",
-            "ConditionMatchValue",
-            "PostfixText",
-            "PrefixText",
-            "PlaceholderText"
+            'NextNodeId',
+            'DeepLinkUrl',
+            'Url',
+            'ConditionMatchKey',
+            'ConditionOperator',
+            'ConditionMatchValue',
+            'PostfixText',
+            'PrefixText',
+            'PlaceholderText',
           ].indexOf(fieldName) != -1;
         break;
       case ButtonType.GetImage:
@@ -469,50 +465,50 @@ export class ModelHelpers {
         //if the passed button property is present in the list, that field should not be visible. here placeholder text should not be visible if button type is input(Get[X]) type
         hidden =
           [
-            "NextNodeId",
-            "DeepLinkUrl",
-            "PlaceholderText",
-            "Url",
-            "PostfixText",
-            "PrefixText",
-            "ConditionMatchKey",
-            "ConditionOperator",
-            "ConditionMatchValue"
+            'NextNodeId',
+            'DeepLinkUrl',
+            'PlaceholderText',
+            'Url',
+            'PostfixText',
+            'PrefixText',
+            'ConditionMatchKey',
+            'ConditionOperator',
+            'ConditionMatchValue',
           ].indexOf(fieldName) != -1;
         break;
       case ButtonType.GetItemFromSource:
         hidden =
           [
-            "NextNodeId",
-            "DeepLinkUrl",
-            "ConditionMatchKey",
-            "ConditionOperator",
-            "ConditionMatchValue",
-            "PlaceholderText"
+            'NextNodeId',
+            'DeepLinkUrl',
+            'ConditionMatchKey',
+            'ConditionOperator',
+            'ConditionMatchValue',
+            'PlaceholderText',
           ].indexOf(fieldName) != -1;
         break;
       case ButtonType.NextNode:
         hidden =
           [
-            "NextNodeId",
-            "PostfixText",
-            "PrefixText",
-            "DeepLinkUrl",
-            "Url",
-            "PlaceholderText"
+            'NextNodeId',
+            'PostfixText',
+            'PrefixText',
+            'DeepLinkUrl',
+            'Url',
+            'PlaceholderText',
           ].indexOf(fieldName) != -1;
         break;
       case ButtonType.DeepLink:
         hidden =
           [
-            "NextNodeId",
-            "Url",
-            "PostfixText",
-            "PrefixText",
-            "PlaceholderText",
-            "ConditionMatchKey",
-            "ConditionOperator",
-            "ConditionMatchValue"
+            'NextNodeId',
+            'Url',
+            'PostfixText',
+            'PrefixText',
+            'PlaceholderText',
+            'ConditionMatchKey',
+            'ConditionOperator',
+            'ConditionMatchValue',
           ].indexOf(fieldName) != -1;
         break;
       case ButtonType.GetAgent:
@@ -524,13 +520,13 @@ export class ModelHelpers {
       case ButtonType.FetchChatFlow:
         hidden =
           [
-            "DeepLinkUrl",
-            "PlaceholderText",
-            "PostfixText",
-            "PrefixText",
-            "ConditionMatchKey",
-            "ConditionOperator",
-            "ConditionMatchValue"
+            'DeepLinkUrl',
+            'PlaceholderText',
+            'PostfixText',
+            'PrefixText',
+            'ConditionMatchKey',
+            'ConditionOperator',
+            'ConditionMatchValue',
           ].indexOf(fieldName) != -1;
         break;
       default:
@@ -539,57 +535,57 @@ export class ModelHelpers {
     return hidden;
   }
   chatNodeApiCallFieldVisible(chatNode: ChatNode, fieldName: string) {
-    switch (chatNode.ApiMethod) {
+    switch (chatNode.apiMethod) {
       case APIMethod.POST:
       case APIMethod.PUT: {
-        if (fieldName == "RequestBody") return true;
-        if (fieldName == "RequiredVariables") return false;
+        if (fieldName == 'RequestBody') return true;
+        if (fieldName == 'RequiredVariables') return false;
       }
       default: {
-        if (fieldName == "RequestBody") return false;
-        if (fieldName == "RequiredVariables") return true;
+        if (fieldName == 'RequestBody') return false;
+        if (fieldName == 'RequiredVariables') return true;
       }
     }
     return true;
   }
   sectionIcon(section: Section) {
-    switch (section.SectionType) {
+    switch (section.sectionType) {
       case SectionType.Image:
-        return "fa-picture-o";
+        return 'fa-picture-o';
       default:
-        return "fa-file-o";
+        return 'fa-file-o';
     }
   }
 
   addSection(chatNode: ChatNode, sectionType: SectionType) {
-    if (chatNode.NodeType == NodeType.Card) {
-      if (chatNode.Sections && chatNode.Sections.length >= 1) {
+    if (chatNode.nodeType == NodeType.Card) {
+      if (chatNode.sections && chatNode.sections.length >= 1) {
         this.infoDialog.alert(
-          "Not allowed",
-          "In a Card Node, only one content item can be added."
+          'Not allowed',
+          'In a Card Node, only one content item can be added.',
         );
         return;
       }
       if ([SectionType.Text, SectionType.Image].indexOf(sectionType) == -1) {
         this.infoDialog.alert(
-          "Not allowed",
-          "In a Card Node, only Text and Image content types can be added."
+          'Not allowed',
+          'In a Card Node, only Text and Image content types can be added.',
         );
         return;
       }
     }
     switch (sectionType) {
       case SectionType.Carousel:
-        chatNode.Sections.push(<CarouselSection>{
-          SectionType: sectionType,
+        chatNode.sections.push(<CarouselSection>{
+          sectionType: sectionType,
           _id: new ObjectID().toHexString(),
-          Items: []
+          Items: [],
         });
         break;
       default:
-        chatNode.Sections.push({
-          SectionType: sectionType,
-          _id: new ObjectID().toHexString()
+        chatNode.sections.push({
+          sectionType: sectionType,
+          _id: new ObjectID().toHexString(),
         });
         break;
     }
@@ -597,70 +593,70 @@ export class ModelHelpers {
   }
 
   sectionMoveUp(chatNode: ChatNode, section: Section) {
-    var current = chatNode.Sections.indexOf(section);
-    if (current != -1) this.arrayMove(chatNode.Sections, current, current - 1);
+    var current = chatNode.sections.indexOf(section);
+    if (current != -1) this.arrayMove(chatNode.sections, current, current - 1);
   }
   sectionMoveDown(chatNode: ChatNode, section: Section) {
-    var current = chatNode.Sections.indexOf(section);
-    if (current != -1) this.arrayMove(chatNode.Sections, current, current + 1);
+    var current = chatNode.sections.indexOf(section);
+    if (current != -1) this.arrayMove(chatNode.sections, current, current + 1);
   }
   sectionDelete(chatNode: ChatNode, section: Section) {
-    var current = chatNode.Sections.indexOf(section);
+    var current = chatNode.sections.indexOf(section);
     if (current != -1) {
       this.infoDialog.confirm(
-        "Sure?",
+        'Sure?',
         `Delete section '${this.sectionAlias(section)}'`,
         ok => {
           if (ok) {
-            chatNode.Sections.splice(current, 1);
+            chatNode.sections.splice(current, 1);
             this.globalsService.chatFlowComponent.chatFlowNetwork.updateChatNodeConnections();
             this.globalsService.chatFlowComponent.updateLayout();
           }
-        }
+        },
       );
     }
   }
   addButton(chatNode: ChatNode) {
-    if (chatNode.NodeType == NodeType.Card) {
-      if (chatNode.Buttons && chatNode.Buttons.length >= 2) {
+    if (chatNode.nodeType == NodeType.Card) {
+      if (chatNode.buttons && chatNode.buttons.length >= 2) {
         this.infoDialog.alert(
-          "No allowed",
-          "Card node cannot have more than two buttons"
+          'No allowed',
+          'Card node cannot have more than two buttons',
         );
         return;
       }
     }
-    chatNode.Buttons.push({
+    chatNode.buttons.push({
       _id: new ObjectID().toHexString(),
-      ButtonName: "New Button",
-      ButtonType: ButtonType.NextNode
+      buttonName: 'New Button',
+      buttonType: ButtonType.NextNode,
     });
 
     this.globalsService.chatFlowComponent.updateLayout();
   }
 
   buttonMoveUp(chatNode: ChatNode, btn: Button) {
-    var current = chatNode.Buttons.indexOf(btn);
-    if (current != -1) this.arrayMove(chatNode.Buttons, current, current - 1);
+    var current = chatNode.buttons.indexOf(btn);
+    if (current != -1) this.arrayMove(chatNode.buttons, current, current - 1);
   }
   buttonMoveDown(chatNode: ChatNode, btn: Button) {
-    var current = chatNode.Buttons.indexOf(btn);
-    if (current != -1) this.arrayMove(chatNode.Buttons, current, current + 1);
+    var current = chatNode.buttons.indexOf(btn);
+    if (current != -1) this.arrayMove(chatNode.buttons, current, current + 1);
   }
   buttonDelete(chatNode: ChatNode, btn: Button) {
-    var current = chatNode.Buttons.indexOf(btn);
+    var current = chatNode.buttons.indexOf(btn);
     if (current != -1) {
       this.infoDialog.confirm(
-        "Sure?",
+        'Sure?',
         `Delete button '${this.chatButtonAlias(btn)}'?`,
         ok => {
           if (ok) {
-            chatNode.Buttons.splice(current, 1);
+            chatNode.buttons.splice(current, 1);
 
             this.globalsService.chatFlowComponent.chatFlowNetwork.updateChatNodeConnections();
             this.globalsService.chatFlowComponent.updateLayout();
           }
-        }
+        },
       );
     }
   }
@@ -668,7 +664,7 @@ export class ModelHelpers {
   nodeDeleteDirect(chatNode: ChatNode) {
     let network = this.globalsService.chatFlowComponent.chatFlowNetwork;
     var elementIdxToDel = network.chatNodeVMs.findIndex(
-      x => x.chatNode.Id == chatNode.Id
+      x => x.chatNode.id == chatNode.id,
     );
     network.chatNodeVMs.splice(elementIdxToDel, 1);
 
@@ -678,22 +674,22 @@ export class ModelHelpers {
 
   nodeDelete(chatNode: ChatNode, nodeEditor?: NodeEditorComponent) {
     this.infoDialog.confirm(
-      "Sure?",
-      `Are you sure you want to delete '${chatNode.Name ||
-        chatNode.NodeType}' chat node?`,
+      'Sure?',
+      `Are you sure you want to delete '${chatNode.name ||
+        chatNode.nodeType}' chat node?`,
       ok => {
         if (ok) {
           this.nodeDeleteDirect(chatNode);
           if (nodeEditor) nodeEditor.dialogRef.close();
         }
-      }
+      },
     );
   }
 
   nodeContentMenu(
     chatNodeVM: ChatNodeVM,
     event: MouseEvent,
-    options: MatButton
+    options: MatButton,
   ) {
     event.preventDefault();
 
@@ -704,15 +700,15 @@ export class ModelHelpers {
   resetOtherStartNodes(chatNode: ChatNode) {
     this.globalsService.chatFlowComponent.chatFlowNetwork.chatNodeVMs.forEach(
       vm => {
-        if (vm.chatNode != chatNode) vm.chatNode.IsStartNode = false;
-      }
+        if (vm.chatNode != chatNode) vm.chatNode.isStartNode = false;
+      },
     );
   }
 
   test(chatNode: ChatNode) {
     this.infoDialog.alert(
-      "Alert",
-      JSON.stringify(chatNode.Sections[chatNode.Sections.length - 1], null, 4)
+      'Alert',
+      JSON.stringify(chatNode.sections[chatNode.sections.length - 1], null, 4),
     );
   }
 
@@ -729,7 +725,7 @@ export class ModelHelpers {
 
   arrayMove(array: any[], old_index, new_index) {
     if (new_index >= array.length || new_index < 0)
-      throw "new index cannot be greater than or equal to array length or less than zero";
+      throw 'new index cannot be greater than or equal to array length or less than zero';
 
     array.splice(new_index, 0, array.splice(old_index, 1)[0]);
   }
@@ -737,8 +733,8 @@ export class ModelHelpers {
   carouselItemAdd(carSection: CarouselSection) {
     carSection.Items.push({
       Buttons: [],
-      Title: "New Carousel Item",
-      _id: new ObjectID().toHexString()
+      Title: 'New Carousel Item',
+      _id: new ObjectID().toHexString(),
     });
   }
   carouselItemMoveUp(carSection: CarouselSection, carItem: CarouselItem) {
@@ -751,20 +747,20 @@ export class ModelHelpers {
   }
   carouselItemDelete(carSection: CarouselSection, carItem: CarouselItem) {
     this.infoDialog.confirm(
-      "Sure?",
+      'Sure?',
       `Delete carousel item ${carItem.Title}?`,
       ok => {
         var current = carSection.Items.indexOf(carItem);
         if (current != -1) carSection.Items.splice(current, 1);
-      }
+      },
     );
   }
 
   carouselButtonAdd(carItem: CarouselItem) {
     carItem.Buttons.push({
-      Text: "New Button",
+      Text: 'New Button',
       Type: CarouselButtonType.NextNode,
-      _id: new ObjectID().toHexString()
+      _id: new ObjectID().toHexString(),
     });
   }
 
@@ -778,12 +774,12 @@ export class ModelHelpers {
   }
   carouselButtonDelete(carItem: CarouselItem, carButton: CarouselButton) {
     this.infoDialog.confirm(
-      "Sure?",
+      'Sure?',
       `Delete carousel button ${carButton.Text}?`,
       ok => {
         var current = carItem.Buttons.indexOf(carButton);
         if (current != -1) carItem.Buttons.splice(current, 1);
-      }
+      },
     );
   }
 }

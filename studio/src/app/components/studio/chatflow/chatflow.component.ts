@@ -250,7 +250,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
     for (let i = 0; i < nodesVMs.length; i++) {
       let nodeVM = nodesVMs[i];
       var elementIdxToDel = this.chatFlowNetwork.chatNodeVMs.findIndex(
-        x => x.chatNode.Id == nodeVM.chatNode.Id,
+        x => x.chatNode.id == nodeVM.chatNode.id,
       );
       this.chatFlowNetwork.chatNodeVMs.splice(elementIdxToDel, 1);
     }
@@ -284,7 +284,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 
   updateNodeLayout(chatNodeVM: ChatNodeVM): boolean {
     let btnsTable = this.chatFlowRootSVG().querySelector(
-      `table[node-id='${chatNodeVM.chatNode.Id}']`,
+      `table[node-id='${chatNodeVM.chatNode.id}']`,
     ) as HTMLTableElement;
     if (btnsTable) {
       if (!chatNodeVM._layoutUpdated)
@@ -299,7 +299,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 
       window.requestAnimationFrame(() => {
         let nodeRoot = this.chatFlowRootSVG().querySelector(
-          `div[node-id='${chatNodeVM.chatNode.Id}']`,
+          `div[node-id='${chatNodeVM.chatNode.id}']`,
         ) as HTMLDivElement;
         chatNodeVM._height = nodeRoot.clientHeight;
         chatNodeVM._layoutUpdated = true;
@@ -337,7 +337,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
           for (var i = 0; i < selectedNodes.length; i++) {
             let thisNode = selectedNodes[i];
             let thisOffset = this.chatFlowNetwork.selectedNodeOffsets[
-              thisNode.chatNode.Id
+              thisNode.chatNode.id
             ];
             if (thisOffset) {
               thisNode._x = targetXY.x - thisOffset.x;
@@ -535,11 +535,11 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
     var newNodeVM = new ChatNodeVM(
       this.chatFlowNetwork,
       {
-        Name: 'New Node',
-        Id: new ObjectID().toHexString(),
-        Buttons: [],
-        Sections: [],
-        NodeType: models.NodeType.Combination,
+        name: 'New Node',
+        id: new ObjectID().toHexString(),
+        buttons: [],
+        sections: [],
+        nodeType: models.NodeType.Combination,
       },
       this.snakbar,
     );
@@ -561,28 +561,28 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
     this._isMouseDown = false;
   }
   private loadChatFlowPack(pack: models.ChatFlowPack) {
-    if (pack.ChatNodes) {
+    if (pack.chatNodes) {
       this.chatFlowNetwork.chatFlowPack = pack;
       this.chatFlowNetwork.chatNodeVMs = [];
 
-      pack.ChatNodes.forEach(cn => {
+      pack.chatNodes.forEach(cn => {
         new ChatNodeVM(this.chatFlowNetwork, cn, this.snakbar);
 
-        cn.Buttons.forEach(btn => {
-          btn.AdvancedOptions =
-            btn.VariableValue ||
-            btn.ConditionMatchKey ||
-            btn.ConditionMatchValue ||
-            btn.ConditionOperator
+        cn.buttons.forEach(btn => {
+          btn.advancedOptions =
+            btn.variableValue ||
+            btn.conditionMatchKey ||
+            btn.conditionMatchValue ||
+            btn.conditionOperator
               ? true
               : false;
         });
       });
 
       this.chatFlowNetwork.chatNodeVMs.forEach(vm => {
-        var locs = pack.NodeLocations;
+        var locs = pack.nodeLocations;
         if (locs) {
-          var loc = locs[vm.chatNode.Id];
+          var loc = locs[vm.chatNode.id];
           vm._x = loc.X;
           vm._y = loc.Y;
         }
@@ -615,19 +615,19 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.chatFlowNetwork.chatNodeVMs.length; i++) {
       let item = this.chatFlowNetwork.chatNodeVMs[i];
 
-      nodeLocs[item.chatNode.Id] = {
+      nodeLocs[item.chatNode.id] = {
         X: item._x,
         Y: item._y,
       };
     }
 
     let pack: models.ChatFlowPack = {
-      ProjectId: this.chatFlowNetwork.chatFlowPack.ProjectId,
-      ChatNodes: this.chatFlowNetwork.chatNodeVMs.map(x => x.chatNode),
-      NodeLocations: nodeLocs,
+      projectId: this.chatFlowNetwork.chatFlowPack.projectId,
+      chatNodes: this.chatFlowNetwork.chatNodeVMs.map(x => x.chatNode),
+      nodeLocations: nodeLocs,
       _id: this.chatFlowNetwork.chatFlowPack._id,
-      CreatedOn: this.chatFlowNetwork.chatFlowPack.CreatedOn,
-      UpdatedOn: this.chatFlowNetwork.chatFlowPack.UpdatedOn,
+      createdOn: this.chatFlowNetwork.chatFlowPack.createdOn,
+      updatedOn: this.chatFlowNetwork.chatFlowPack.updatedOn,
     };
     this.settings.saveChatProject(this.projName, pack, true);
     this.snakbar.open(`Chatbot project '${this.projName}' saved`, 'Dismiss', {
@@ -647,14 +647,14 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
   playChatFlow() {
     //this.infoDialog.alert('Alert', 'Coming soon');
     let pack = this.saveChatFlow();
-    if (pack.ChatNodes.filter(x => x.IsStartNode).length <= 0) {
+    if (pack.chatNodes.filter(x => x.isStartNode).length <= 0) {
       this.infoDialog.alert(
         'Start node not set!',
         `Tick 'Mark as start node' for the initial node of your chatbot.`,
       );
       return;
     }
-    let chatNodes = this.chatFlowService.normalizeChatNodes(pack.ChatNodes);
+    let chatNodes = this.chatFlowService.normalizeChatNodes(pack.chatNodes);
     this.simulatorService.init(chatNodes, this.simulator);
     this.simulator.isOpen = true;
   }
@@ -720,10 +720,10 @@ class ChatFlowNetwork {
     this.chatNodeConnections = [];
 
     this.chatNodeVMs.forEach(chatNodeVM => {
-      chatNodeVM.chatNode.Buttons.forEach(srcBtn => {
-        if (srcBtn.NextNodeId != null || srcBtn.NextNodeId != '') {
+      chatNodeVM.chatNode.buttons.forEach(srcBtn => {
+        if (srcBtn.nextNodeId != null || srcBtn.nextNodeId != '') {
           let destNode = this.chatNodeVMs.filter(
-            x => x.chatNode.Id == srcBtn.NextNodeId,
+            x => x.chatNode.id == srcBtn.nextNodeId,
           );
           if (destNode && destNode.length > 0)
             this.chatNodeConnections.push(
@@ -836,8 +836,8 @@ class ChatNodeConnection {
     this.infoDialog.confirm(
       'Delete connection?',
       `This will delete the connection between the button '${this
-        .srcButtonConnector.button.ButtonName ||
-        'Unnamed Button'}' and node '${this.destChatNodeVM.chatNode.Name ||
+        .srcButtonConnector.button.buttonName ||
+        'Unnamed Button'}' and node '${this.destChatNodeVM.chatNode.name ||
         'Unnamed Node'}'. Are you sure?`,
       ok => {
         if (ok) {
@@ -908,7 +908,7 @@ class ChatButtonConnector {
   ) {}
 
   x() {
-    let btns = this.chatNodeVM.chatNode.Buttons;
+    let btns = this.chatNodeVM.chatNode.buttons;
     let btnsCount = btns.length;
     let eachPart = this.chatNodeVM.width() / btnsCount;
     let _x =
@@ -937,12 +937,12 @@ class ChatButtonConnector {
   }
 
   btnIndex() {
-    let btns = this.chatNodeVM.chatNode.Buttons;
+    let btns = this.chatNodeVM.chatNode.buttons;
     return btns.indexOf(this.button);
   }
 
   setButtonNextNodeId(nextNodeId: string) {
-    this.button.NextNodeId = nextNodeId;
+    this.button.nextNodeId = nextNodeId;
     this.chatNodeVM.network.updateChatNodeConnections();
   }
 
@@ -955,7 +955,7 @@ class ChatButtonConnector {
     }
 
     this.chatNodeVM.network.clickConnectionStartSnackbar = this.snackbar.open(
-      `Connection started at button '${this.button.ButtonName}' of node '${this.chatNodeVM.chatNode.Name}'. Click on the target node to connect.`,
+      `Connection started at button '${this.button.buttonName}' of node '${this.chatNodeVM.chatNode.name}'. Click on the target node to connect.`,
       'Abort',
     );
     this.chatNodeVM.network.clickConnectionStartSnackbar
@@ -967,9 +967,9 @@ class ChatButtonConnector {
 
   isConnected() {
     return (
-      this.button.NextNodeId &&
+      this.button.nextNodeId &&
       this.chatNodeVM.network.chatNodeVMs.filter(
-        x => x.chatNode.Id == this.button.NextNodeId,
+        x => x.chatNode.id == this.button.nextNodeId,
       ).length > 0
     );
   }
@@ -1040,7 +1040,7 @@ export class ChatNodeVM {
           y: targetXY.y - n._y,
         };
 
-        this.network.selectedNodeOffsets[n.chatNode.Id] = new Point(
+        this.network.selectedNodeOffsets[n.chatNode.id] = new Point(
           mouseOffset.x,
           mouseOffset.y,
         );
@@ -1052,7 +1052,7 @@ export class ChatNodeVM {
     let nw = this.network;
     if (!nw.newChatNodeConnection.isHidden) {
       nw.newChatNodeConnection.srcButtonConnector.setButtonNextNodeId(
-        this.chatNode.Id,
+        this.chatNode.id,
       );
     }
   }
@@ -1072,7 +1072,7 @@ export class ChatNodeVM {
   }
 
   chatButtonConnectors() {
-    return this.chatNode.Buttons.map(
+    return this.chatNode.buttons.map(
       btn => new ChatButtonConnector(this, btn, this.snackbar),
     );
   }
@@ -1092,7 +1092,7 @@ export class ChatNodeVM {
   nodeClick() {
     if (this.clickConnectionActive()) {
       this.network.clickConnectionStartButton.setButtonNextNodeId(
-        this.chatNode.Id,
+        this.chatNode.id,
       );
       this.network.clickConnectionStartButton = null;
       this.network.clickConnectionStartSnackbar.dismiss();
@@ -1114,8 +1114,8 @@ export class ChatNodeVM {
   }
   isNodeEmpty() {
     if (
-      (!this.chatNode.Sections || this.chatNode.Sections.length <= 0) &&
-      (!this.chatNode.Buttons || this.chatNode.Buttons.length <= 0)
+      (!this.chatNode.sections || this.chatNode.sections.length <= 0) &&
+      (!this.chatNode.buttons || this.chatNode.buttons.length <= 0)
     ) {
       return true;
     } else {
