@@ -1,19 +1,19 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 
 const commonConf = {
   SYNCRONIZE: false,
-  ENTITIES: [__dirname + '/domain/*.entity{.ts,.js}'],
-  MIGRATIONS: [__dirname + '/migrations/**/*{.ts,.js}'],
+  ENTITIES: [__dirname + "/domain/*.entity{.ts,.js}"],
+  MIGRATIONS: [__dirname + "/migrations/**/*{.ts,.js}"],
   CLI: {
-    migrationsDir: 'src/migrations'
+    migrationsDir: "src/migrations"
   },
   MIGRATIONS_RUN: true
 };
 
 let ormconfig: TypeOrmModuleOptions = {
-  name: 'default',
-  type: 'sqlite',
-  database: '../target/sqlite-dev-db.sql',
+  name: "default",
+  type: "sqlite",
+  database: "../target/sqlite-dev-db.sql",
   logging: true,
   synchronize: true,
   entities: commonConf.ENTITIES,
@@ -22,12 +22,12 @@ let ormconfig: TypeOrmModuleOptions = {
   migrationsRun: commonConf.MIGRATIONS_RUN
 };
 
-if (process.env.NODE_ENV === 'prod') {
+if (process.env.NODE_ENV === "prod") {
   ormconfig = {
-    name: 'default',
-    type: 'mysql',
-    database: 'chatbotsmn',
-    url: 'mysql://YOUR_USER:YOUR_PWD@localhost:27017/chatbotsmn',
+    name: "default",
+    type: "mongodb",
+    database: "chatbotsmn",
+    url: "mongodb://turtuvshin:turtuvshin1@ds211648.mlab.com:11648/chatbotsmn",
     logging: false,
     synchronize: commonConf.SYNCRONIZE,
     entities: commonConf.ENTITIES,
@@ -37,13 +37,14 @@ if (process.env.NODE_ENV === 'prod') {
   };
 }
 
-if (process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV === "dev") {
   ormconfig = {
-    name: 'default',
-    type: 'sqlite',
-    database: ':memory:',
-    logging: true,
-    synchronize: true,
+    name: "default",
+    type: "mongodb",
+    database: "chatbotsmn",
+    url: "mongodb://turtuvshin:turtuvshin1@ds211648.mlab.com:11648/chatbotsmn",
+    logging: false,
+    synchronize: commonConf.SYNCRONIZE,
     entities: commonConf.ENTITIES,
     migrations: commonConf.MIGRATIONS,
     cli: commonConf.CLI,

@@ -62,7 +62,7 @@ export class SeedUsersRoles1570200490072 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const conn = queryRunner.connection;
     await conn
-      .createQueryBuilder()
+      .getMongoRepository()
       .insert()
       .into(Authority)
       .values([this.role1, this.role2])
