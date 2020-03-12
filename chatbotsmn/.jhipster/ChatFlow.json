@@ -29,7 +29,7 @@
             "ownerSide": false
         }
     ],
-    "changelogDate": "20200311163318",
+    "changelogDate": "20200312010900",
     "entityTableName": "chat_flow",
     "dto": "no",
     "pagination": "no",
@@ -37,6 +37,7 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "readOnly": false,
+    "embedded": false,
     "clientRootFolder": "",
     "applications": "*"
 }

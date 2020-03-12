@@ -139,7 +139,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20200311163321",
+    "changelogDate": "20200312011200",
     "entityTableName": "button",
     "dto": "no",
     "pagination": "no",
@@ -147,6 +147,7 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "readOnly": false,
+    "embedded": false,
     "clientRootFolder": "",
     "applications": "*"
 }

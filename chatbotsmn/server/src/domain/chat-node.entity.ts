@@ -2,9 +2,11 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, ManyToOne, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 import { BaseEntity } from './base/base.entity';
 import { ApiModelProperty } from '@nestjs/swagger';
+import { validate, Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max } from 'class-validator';
 
 import Section from './section.entity';
 import Button from './button.entity';
+import ChatFlow from './chat-flow.entity';
 import { APIMethod } from './enumeration/api-method';
 
 /**
@@ -12,7 +14,7 @@ import { APIMethod } from './enumeration/api-method';
  */
 @Entity('chat_node')
 export default class ChatNode extends BaseEntity {
-  @Column({ name: 'name' })
+  @Column({ name: 'name', nullable: false })
   name: string;
 
   @Column({ name: 'emotion' })
@@ -24,8 +26,8 @@ export default class ChatNode extends BaseEntity {
   @Column({ name: 'variable_name' })
   variableName: string;
 
-  @Column({ name: 'api_method'})
-  apiMethod: string;
+  @Column({ type: 'enum', name: 'api_method', enum: APIMethod })
+  apiMethod: APIMethod;
 
   @Column({ name: 'api_url' })
   apiUrl: string;
@@ -60,15 +62,23 @@ export default class ChatNode extends BaseEntity {
   @Column({ name: 'target_node_id' })
   targetNodeId: string;
 
-  @ManyToOne(
-    type => Section
+  @OneToMany(
+    type => Section,
+    other => other.chatNode
   )
-  sections: Section;
+  sections: Section[];
+
+  @OneToMany(
+    type => Button,
+    other => other.chatNode
+  )
+  buttons: Button[];
 
   @ManyToOne(
-    type => Button
+    type => ChatFlow,
+    other => other.chatNodes
   )
-  buttons: Button;
+  chatFlow: ChatFlow;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 }

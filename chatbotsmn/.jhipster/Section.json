@@ -31,7 +31,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20200311163320",
+    "changelogDate": "20200312011100",
     "entityTableName": "section",
     "dto": "no",
     "pagination": "no",
@@ -39,6 +39,7 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "readOnly": false,
+    "embedded": false,
     "clientRootFolder": "",
     "applications": "*"
 }

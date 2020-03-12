@@ -3,6 +3,8 @@ import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, ManyToOne
 import { BaseEntity } from './base/base.entity';
 import { ApiModelProperty } from '@nestjs/swagger';
 
+import ChatNode from './chat-node.entity';
+
 /**
  * A Button.
  */
@@ -103,6 +105,12 @@ export default class Button extends BaseEntity {
 
   @Column({ name: 'content_emotion' })
   contentEmotion: string;
+
+  @ManyToOne(
+    type => ChatNode,
+    other => other.buttons
+  )
+  chatNode: ChatNode;
 
   // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 }

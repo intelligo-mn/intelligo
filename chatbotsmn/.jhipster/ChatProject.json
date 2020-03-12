@@ -30,7 +30,7 @@
             "ownerSide": true
         }
     ],
-    "changelogDate": "20200311163317",
+    "changelogDate": "20200312010800",
     "entityTableName": "chat_project",
     "dto": "no",
     "pagination": "no",
@@ -38,6 +38,7 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "readOnly": false,
+    "embedded": false,
     "clientRootFolder": "",
     "applications": "*"
 }

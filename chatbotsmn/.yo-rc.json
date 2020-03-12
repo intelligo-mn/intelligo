@@ -27,7 +27,7 @@
   },
   "generator-jhipster": {
     "jhipsterVersion": "6.6.0",
-    "creationTimestamp": 1583941318704,
+    "creationTimestamp": 1583975251016,
     "applicationType": "monolith",
     "baseName": "chatbotsmn",
     "testFrameworks": [],

@@ -91,7 +91,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20200311163319",
+    "changelogDate": "20200312011000",
     "entityTableName": "chat_node",
     "dto": "no",
     "pagination": "no",
@@ -99,6 +99,7 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "readOnly": false,
+    "embedded": false,
     "clientRootFolder": "",
     "applications": "*"
 }

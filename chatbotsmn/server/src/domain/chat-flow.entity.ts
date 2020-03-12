@@ -20,10 +20,11 @@ export default class ChatFlow extends BaseEntity {
   @Column({ name: 'node_locations' })
   nodeLocations: string;
 
-  @ManyToOne(
-    type => ChatNode
+  @OneToMany(
+    type => ChatNode,
+    other => other.chatFlow
   )
-  chatNodes: ChatNode;
+  chatNodes: ChatNode[];
 
   @OneToOne(
     type => ChatProject,
