@@ -3,10 +3,10 @@
     #matSelect
     [formControl]="select"
     disableOptionCentering
-    panelClass="ac-dropdown"
+    panelClass="dev-dropdown"
     (selectionChange)="selectionChange.emit($event.value)"
   >
-    <ng-content select="ac-dropdown-static-options"></ng-content>
+    <ng-content select="dev-dropdown-static-options"></ng-content>
     <mat-option *ngFor="let item of items" [value]="item[bindValue]"> {{ item[bindLabel] }} </mat-option>
   </mat-select>
 </mat-form-field>
