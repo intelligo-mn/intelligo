@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  align-items: center;
+  font-size: inherit;
+  line-height: 3em;
+  height: 3em;
+  padding: 0 16px;
+  cursor: pointer;
+  outline: none;
+  min-width: 150px;
+
+  ::ng-deep mat-icon {
+    margin-right: 10px;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+}

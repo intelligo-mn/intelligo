@@ -1,0 +1,12 @@
+<mat-form-field *ngIf="items">
+  <mat-select
+    #matSelect
+    [formControl]="select"
+    disableOptionCentering
+    panelClass="ac-dropdown"
+    (selectionChange)="selectionChange.emit($event.value)"
+  >
+    <ng-content select="ac-dropdown-static-options"></ng-content>
+    <mat-option *ngFor="let item of items" [value]="item[bindValue]"> {{ item[bindLabel] }} </mat-option>
+  </mat-select>
+</mat-form-field>
