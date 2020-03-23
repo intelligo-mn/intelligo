@@ -31,6 +31,8 @@ import {
 import { PublishChatbotComponent } from '../../shared/publish-chatbot/publish-chatbot.component';
 import { NodeEditorComponent } from '../nodeeditor/nodeeditor.component';
 import { SimulatorFrameComponent } from '../simulator-frame/simulator-frame.component';
+import { Observable } from 'rxjs';
+import { ChatBotProject } from 'src/app/models/app.models';
 
 @Component({
   selector: 'app-chatflow',
@@ -38,6 +40,23 @@ import { SimulatorFrameComponent } from '../simulator-frame/simulator-frame.comp
   styleUrls: ['./chatflow.component.scss'],
 })
 export class ChatFlowComponent implements OnInit, OnDestroy {
+
+  small$: Observable<boolean>;
+  mediumUp$: Observable<boolean>;
+  desktop$: Observable<boolean>;
+
+  categories$: Observable<Array<any>>;
+  projects$: Observable<Array<ChatBotProject>>;
+  selectedProjectId$: Observable<string>;
+  favoritesCount$: Observable<number>;
+  favoritesScore$: Observable<number>;
+  overallScore$: Observable<number>;
+
+  editMode = false;
+
+  sideNavMode = 'side';
+
+  
   constructor(
     private chatFlowService: ChatFlowService,
     public dialog: MatDialog,
@@ -92,6 +111,15 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.unbindDesignerShortcuts();
+  }
+
+
+  navigateToProject(project: string) {
+    this.router.navigate([`/${project}`]);
+  }
+
+  private setSidenavMode(mode: 'side' | 'over') {
+    this.sideNavMode = mode;
   }
 
   chatFlowRootSVG() {
