@@ -31,8 +31,11 @@ import {
 import { PublishChatbotComponent } from '../../shared/publish-chatbot/publish-chatbot.component';
 import { NodeEditorComponent } from '../nodeeditor/nodeeditor.component';
 import { SimulatorFrameComponent } from '../simulator-frame/simulator-frame.component';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { ChatBotProject } from 'src/app/models/app.models';
+import { BreakpointService } from 'src/app/services/breakpoint.service';
+import { map } from 'rxjs/operators';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-chatflow',
@@ -46,7 +49,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
   desktop$: Observable<boolean>;
 
   categories$: Observable<Array<any>>;
-  projects$: Observable<Array<ChatBotProject>>;
+  projects$: Array<any>;
   selectedProjectId$: Observable<string>;
   favoritesCount$: Observable<number>;
   favoritesScore$: Observable<number>;
@@ -56,7 +59,9 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
 
   sideNavMode = 'side';
 
-  
+  @ViewChild(MatSidenav)
+  sideNav: MatSidenav;
+
   constructor(
     private chatFlowService: ChatFlowService,
     public dialog: MatDialog,
@@ -70,6 +75,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
     public globalsService: GlobalsService,
     public simulatorService: SimulatorService,
     public settings: SettingsService,
+    private breakpointService: BreakpointService
   ) {
     this.chatFlowNetwork = new ChatFlowNetwork(
       this,
@@ -96,6 +102,7 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
   simulator: SimulatorFrameComponent;
 
   projName: string = '';
+
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(x => {
       this.projName = x.get('proj');
@@ -107,6 +114,22 @@ export class ChatFlowComponent implements OnInit, OnDestroy {
       }
     });
     this.bindDesignerShortcuts();
+    this.projects$ = this.settings.listSavedChatProjectNames();
+    const { small$, medium$, desktop$ } = this.breakpointService.getAllBreakpoints();
+
+    this.small$ = small$;
+    this.desktop$ = desktop$;
+    this.mediumUp$ = combineLatest(medium$, desktop$).pipe(map(([medium, desktop]) => medium || desktop));
+
+    desktop$.subscribe(matches => {
+      if (!matches) {
+        this.sideNav.close();
+        this.setSidenavMode('over');
+      } else {
+        this.sideNav.open();
+        this.setSidenavMode('side');
+      }
+    });
   }
 
   ngOnDestroy(): void {

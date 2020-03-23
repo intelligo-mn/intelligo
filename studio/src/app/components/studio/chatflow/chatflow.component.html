@@ -5,10 +5,9 @@
   <dev-toolbar-logo [showText]="desktop$ | async"></dev-toolbar-logo>
   <dev-dropdown
     (selectionChange)="navigateToProject($event)"
-    [items]="projects$ | async"
-    [selected]="selectedProjectId$ | async"
-    bindLabel="name"
-    bindValue="id"
+    [items]="projects$"
+    [bindLabel]=""
+    [selected]="selectedProjectId$"
   >
     <dev-dropdown-static-options>
       <dev-dropdown-static-option routerLink="/">
@@ -16,10 +15,12 @@
       </dev-dropdown-static-option>
     </dev-dropdown-static-options>
   </dev-dropdown>
-  <dev-checklist-search *ngIf="mediumUp$ | async"></dev-checklist-search>
 </dev-toolbar>
+<div [hidden]="layoutReady()">
+  <app-loading-indicator></app-loading-indicator>
+</div>
 <mat-sidenav-container>
-  <mat-sidenav [mode]="sideNavMode" [autoFocus]="false" #sideNav>
+  <mat-sidenav [mode]="sideNavMode" [autoFocus]="true" #sideNav>
     <div class="section-container">
       <section class="category-list-wrapper">
         <div class="category-list">
@@ -313,7 +314,8 @@
     </svg>
   </mat-sidenav-content>
 </mat-sidenav-container>
-<dev-footer></dev-footer>
+<app-simulator-frame #simulator> </app-simulator-frame>
+<hotkeys-cheatsheet title="Keyboard Shortcuts:"></hotkeys-cheatsheet>
 
 <!-- <div>
   <div [hidden]="layoutReady()">
@@ -481,5 +483,3 @@
     </div>
   </div>
 </div> -->
-<app-simulator-frame #simulator> </app-simulator-frame>
-<hotkeys-cheatsheet title="Keyboard Shortcuts:"></hotkeys-cheatsheet>

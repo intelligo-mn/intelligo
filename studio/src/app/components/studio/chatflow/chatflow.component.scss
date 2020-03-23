@@ -43,7 +43,9 @@
 
 .chatflow-root-svg {
   overflow: hidden;
-  width: calc(99vw - 88px);
+  // width: calc(99vw - 88px);
+  // height: 99vh;
+  width: 100vw;
   height: 99vh;
 }
 
