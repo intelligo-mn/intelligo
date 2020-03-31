@@ -4,13 +4,12 @@ Conversational AI platform.
 
 ### Platform Apps
 
-| Apps                    |                                                    Web |  Github Actions                                                                                                                                                              |
-| ----------------------- | -----------------------------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| **Chatbots.mn Backend API** |            **[api.chatbots.mn](https://api.chatbots.mn)** | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/backend/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=backend)         |
-| Chatbots.mn Studio      |             [app.chatbots.mn](https://app.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/studio/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=studio)           |
-| Chatbots.mn Simulator   | [simulator.chatbots.mn](https://simulator.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/simulator/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=simulator)     |
-| Chatbots.mn Marketplace |             [www.chatbots.mn](https://www.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/marketplace/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=marketplace) |
-
+| Apps             |                                                    Web |                                                                                                                                                                     Github Actions | Status |
+| ---------------- | -----------------------------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | -----: |
+| ![][api-chatbot] |         **[api.chatbots.mn](https://api.chatbots.mn)** |         [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/backend/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=backend) | ![][heroku]       |
+| ![][stu-chatbot] |             [app.chatbots.mn](https://app.chatbots.mn) |           [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/studio/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=studio) | ![][heroku]       |
+| ![][sim-chatbot] | [simulator.chatbots.mn](https://simulator.chatbots.mn) |     [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/simulator/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=simulator) | ![][heroku]       |
+| ![][www-chatbot] |             [www.chatbots.mn](https://www.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/marketplace/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=marketplace) | ![][heroku]      |
 
 ### Tech stack
 
@@ -144,3 +143,9 @@ At present, we officially aim to support the last two versions of the following 
 > Chatbots.mn licensed under the [INTELLIGO](./LICENSE) license.  
 > (See the [LICENSE](./LICENSE) file for the whole license text.)
 
+[api-chatbot]: https://img.shields.io/badge/backend-chatbots.mn-007acc?style=flat-square&logo=node.js&logoWidth=18
+[stu-chatbot]: https://img.shields.io/badge/studio-chatbots.mn-007acc?style=flat-square&logo=angular&logoWidth=32
+[sim-chatbot]: https://img.shields.io/badge/simulator-chatbots.mn-007acc?style=flat-square&logo=angular
+[www-chatbot]: https://img.shields.io/badge/www-chatbots.mn-007acc?style=flat-square&logo=angular&logoWidth=37
+
+[heroku]: https://img.shields.io/badge/heroku-DEPLOYED-40a6bc?style=flat&logo=heroku&labelColor=0d1d25
