@@ -3,6 +3,7 @@ name: Core
 about: Suggest an idea for this project
 title: ''
 labels: ''
+projects: 5
 assignees: tortuvshin
 
 ---
