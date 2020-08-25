@@ -47,7 +47,7 @@
     "eventemitter3": "4.0.0",
     "express": "4.17.1",
     "extend": "3.0.2",
-    "lodash": "4.17.15",
+    "lodash": "4.17.19",
     "opencollective": "1.0.3",
     "opencollective-postinstall": "2.0.2",
     "request": "2.88.0",
