@@ -19,6 +19,14 @@ Conversational AI platform.
 
 [NestJS Framework](https://github.com/nestjs/nest) backend project.
 
+[https://www.intelligo.cc](https://www.intelligo.cc)
+
+[https://www.intelligo.mn](https://www.intelligo.mn)
+
+[https://intelligo.cc](https://www.intelligo.cc)
+
+[https://intelligo.mn](https://www.intelligo.mn)
+
 ### Installation
 
 ```bash
