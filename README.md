@@ -19,14 +19,6 @@ Conversational AI platform.
 
 [NestJS Framework](https://github.com/nestjs/nest) backend project.
 
-[https://www.intelligo.cc](https://www.intelligo.cc)
-
-[https://www.intelligo.mn](https://www.intelligo.mn)
-
-[https://intelligo.cc](https://www.intelligo.cc)
-
-[https://intelligo.mn](https://www.intelligo.mn)
-
 ### Installation
 
 ```bash
@@ -144,6 +136,10 @@ $ npm run test:e2e
 At present, we officially aim to support the last two versions of the following browsers:
 
 <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/chrome.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/firefox.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/edge.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/safari.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/opera.png" width="64" height="64">
+
+### Development time 
+
+Development time from 2020-11-15 [![time tracker](https://wakatime.com/badge/github/intelligo-io/chatbots.mn.svg)](https://wakatime.com/badge/github/intelligo-io/chatbots.mn)
 
 ## License
 
