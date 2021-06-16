@@ -37,7 +37,7 @@
     "ngx-clipboard": "^12.3.0",
     "rxjs": "^6.5.4",
     "ts-md5": "^1.2.7",
-    "underscore": "^1.9.2",
+    "underscore": "^1.12.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
