@@ -1,4 +1,4 @@
-# Chatbots.mn
+# chatbot.sh
 
 Conversational AI platform.
 
