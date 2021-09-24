@@ -143,8 +143,8 @@ Development time from 2020-11-15 [![time tracker](https://wakatime.com/badge/git
 
 ## License
 
-> Copyright (C) 2019-2020 Intelligo Systems.  
-> Chatbots.mn licensed under the [INTELLIGO](./LICENSE) license.  
+> Copyright (C) 2019-2020 Intelligo LLC.  
+> Chatbot.sh licensed under the [INTELLIGO](./LICENSE) license.  
 > (See the [LICENSE](./LICENSE) file for the whole license text.)
 
 [api-chatbot]: https://img.shields.io/badge/backend-chatbots.mn-007acc?style=flat-square&logo=node.js&logoWidth=18
