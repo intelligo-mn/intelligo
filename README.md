@@ -1,6 +1,6 @@
 # chatbot.sh
 
-Conversational AI platform.
+Conversational AI platform powering virtual assistants and smart bots across mobile apps, web and messaging platforms. https://www.chatbot.sh
 
 ### Platform Apps
 
