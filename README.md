@@ -6,14 +6,14 @@ Conversational AI platform powering virtual assistants and smart bots across mob
 
 | Apps             |                                                    Web |                                                                                                                                                                     Github Actions | Status |
 | ---------------- | -----------------------------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | -----: |
-| ![][api-chatbot] |         **[api.chatbots.mn](https://api.chatbots.mn)** |         [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/backend/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=backend) | ![][heroku]       |
-| ![][stu-chatbot] |             [app.chatbots.mn](https://app.chatbots.mn) |           [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/studio/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=studio) | ![][heroku]       |
-| ![][sim-chatbot] | [simulator.chatbots.mn](https://simulator.chatbots.mn) |     [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/simulator/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=simulator) | ![][heroku]       |
-| ![][www-chatbot] |             [www.chatbots.mn](https://www.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/marketplace/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=marketplace) | ![][heroku]      |
+| ![][api-chatbot] |         **[api.chatbot.sh](https://api.chatbot.sh)** |         [![Build Status](https://github.com/intelligo-mn/chatbot.sh/workflows/backend/badge.svg)](https://github.com/intelligo-mn/chatbot.sh/actions?workflow=backend) | ![][heroku]       |
+| ![][stu-chatbot] |             [app.chatbot.mn](https://app.chatbot.sh) |           [![Build Status](https://github.com/intelligo-mn/chatbot.sh/workflows/studio/badge.svg)](https://github.com/intelligo-mn/chatbot.sh/actions?workflow=studio) | ![][heroku]       |
+| ![][sim-chatbot] | [simulator.chatbot.sh](https://simulator.chatbot.sh) |     [![Build Status](https://github.com/intelligo-mn/chatbot.sh/workflows/simulator/badge.svg)](https://github.com/intelligo-mn/chatbot.sh/actions?workflow=simulator) | ![][heroku]       |
+| ![][www-chatbot] |             [www.chatbot.sh](https://www.chatbot.sh) | [![Build Status](https://github.com/intelligo-mn/chatbot.sh/workflows/marketplace/badge.svg)](https://github.com/intelligo-mn/chatbot.sh/actions?workflow=marketplace) | ![][heroku]      |
 
 ### Tech stack
 
-[<img src="https://github.com/intelligo-systems/jisho.mn/blob/master/.github/assets/stack.png"/>](https://chatbots.mn)
+[<img src="https://github.com/intelligo-mn/jisho.mn/blob/master/.github/assets/stack.png"/>](https://chatbot.sh)
 
 ## Backend API
 
@@ -139,7 +139,7 @@ At present, we officially aim to support the last two versions of the following 
 
 ### Development time 
 
-Development time from 2020-11-15 [![time tracker](https://wakatime.com/badge/github/intelligo-io/chatbots.mn.svg)](https://wakatime.com/badge/github/intelligo-io/chatbots.mn)
+Development time from 2020-11-15 [![time tracker](https://wakatime.com/badge/github/intelligo-io/chatbot.sh.svg)](https://wakatime.com/badge/github/intelligo-io/chatbot.sh)
 
 ## License
 
@@ -147,9 +147,9 @@ Development time from 2020-11-15 [![time tracker](https://wakatime.com/badge/git
 > Chatbot.sh licensed under the [INTELLIGO](./LICENSE) license.  
 > (See the [LICENSE](./LICENSE) file for the whole license text.)
 
-[api-chatbot]: https://img.shields.io/badge/backend-chatbots.mn-007acc?style=flat-square&logo=node.js&logoWidth=18
-[stu-chatbot]: https://img.shields.io/badge/studio-chatbots.mn-007acc?style=flat-square&logo=angular&logoWidth=32
-[sim-chatbot]: https://img.shields.io/badge/simulator-chatbots.mn-007acc?style=flat-square&logo=angular
-[www-chatbot]: https://img.shields.io/badge/www-chatbots.mn-007acc?style=flat-square&logo=angular&logoWidth=37
+[api-chatbot]: https://img.shields.io/badge/backend-chatbot.sh-007acc?style=flat-square&logo=node.js&logoWidth=18
+[stu-chatbot]: https://img.shields.io/badge/studio-chatbot.sh-007acc?style=flat-square&logo=angular&logoWidth=32
+[sim-chatbot]: https://img.shields.io/badge/simulator-chatbot.sh-007acc?style=flat-square&logo=angular
+[www-chatbot]: https://img.shields.io/badge/www-chatbot.sh-007acc?style=flat-square&logo=angular&logoWidth=37
 
 [heroku]: https://img.shields.io/badge/heroku-DEPLOYED-40a6bc?style=flat&logo=heroku&labelColor=0d1d25
