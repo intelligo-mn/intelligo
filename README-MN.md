@@ -1,5 +1,5 @@
 
-# Chatbots.mn
+# chatbot.sh
 
 Хиймэл оюунтай чатбот хөгжүүлэх платформ.
 
@@ -32,7 +32,7 @@
 
 ## Зохиогчийн эрх
 
-> Copyright (C) 2019 Intelligo Systems.  
-> Chatbots.mn licensed under the [INTELLIGO](./LICENSE) license.  
+> Copyright (C) 2019 Intelligo LLC.  
+> chatbot.sh licensed under the [INTELLIGO](./LICENSE) license.  
 > (See the [LICENSE](./LICENSE) file for the whole license text.)
 
