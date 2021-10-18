@@ -59,7 +59,7 @@
   "devDependencies": {
     "@types/express": "4.17.12",
     "@types/extend": "3.0.1",
-    "@types/lodash": "4.14.170",
+    "@types/lodash": "4.14.175",
     "@types/node": "10.17.14",
     "@types/request": "2.48.4",
     "@types/ws": "7.4.5",
