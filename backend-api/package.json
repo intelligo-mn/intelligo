@@ -43,7 +43,7 @@
     "@typescript-eslint/eslint-plugin-tslint": "2.11.0",
     "@typescript-eslint/parser": "2.11.0",
     "angular2-template-loader": "0.6.2",
-    "autoprefixer": "9.7.3",
+    "autoprefixer": "10.3.7",
     "base-href-webpack-plugin": "2.0.0",
     "browser-sync": "2.27.5",
     "browser-sync-webpack-plugin": "2.2.2",
