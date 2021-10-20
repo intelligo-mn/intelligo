@@ -12,7 +12,7 @@ updates:
     open-pull-requests-limit: 40
     labels:
     - "dependencies"
-    - "marketplace"
+    - "app:market"
     allow:
     # Allow both direct and indirect updates for all packages
     - dependency-type: "all"
@@ -29,7 +29,7 @@ updates:
     open-pull-requests-limit: 40
     labels:
     - "dependencies"
-    - "studio"
+    - "app:studio"
     allow:
     # Allow both direct and indirect updates for all packages
     - dependency-type: "all"
@@ -46,12 +46,12 @@ updates:
     open-pull-requests-limit: 40
     labels:
     - "dependencies"
-    - "simulator"
+    - "app:simulator"
     allow:
     # Allow both direct and indirect updates for all packages
     - dependency-type: "all"
-  - package-ecosystem: "maven"
-    directory: "/api-gateway"
+  - package-ecosystem: "npm"
+    directory: "/backend-api"
     schedule:
       interval: "daily"
       time: "21:23"
