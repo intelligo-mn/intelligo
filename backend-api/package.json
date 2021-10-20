@@ -9,7 +9,7 @@
   ],
   "dependencies": {
     "@angular/common": "8.2.14",
-    "@angular/compiler": "8.2.14",
+    "@angular/compiler": "12.2.10",
     "@angular/core": "8.2.14",
     "@angular/forms": "8.2.14",
     "@angular/platform-browser": "8.2.14",
