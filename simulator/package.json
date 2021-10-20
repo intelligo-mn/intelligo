@@ -55,7 +55,7 @@
     "protractor": "~5.4.3",
     "ts-node": "~8.6.2",
     "tslint": "~6.0.0",
-    "typescript": "~3.7.5",
+    "typescript": "~3.7.7",
     "@angular-devkit/core": "9.0.3",
     "@types/jsonpath": "^0.2.0",
     "@types/sockjs-client": "^1.1.1",
