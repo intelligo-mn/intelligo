@@ -1,12 +1,8 @@
 name: auto-merge-pr
 on:
-  pull_request:
-    types:
-      - security
-  check_suite:
-    types:
-      - completed
-  status: {}
+  schedule:
+  - cron:  "0 9 * * 1"
+  workflow_dispatch:
 jobs:
   automerge:
     runs-on: ubuntu-latest
