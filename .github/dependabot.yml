@@ -1,12 +1,72 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-
 version: 2
 updates:
-  - package-ecosystem: "" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "npm"
+    directory: "/marketplace"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 30
+      timezone: "Asia/Ulaanbaatar"
+    allow:
+      - dependency-type: "all"
+    commit-message:
+        prefix: "build: (market)"
+    open-pull-requests-limit: 40
+    labels:
+    - "dependencies"
+    - "marketplace"
+    allow:
+    # Allow both direct and indirect updates for all packages
+    - dependency-type: "all"
+  - package-ecosystem: "npm"
+    directory: "/studio"
+    schedule:
+      interval: "daily"
+      timezone: "Asia/Ulaanbaatar"
+    commit-message:
+        prefix: "build: (studio)"
+    allow:
+      # Allow both direct and indirect updates for all packages
+      - dependency-type: "all"
+    open-pull-requests-limit: 40
+    labels:
+    - "dependencies"
+    - "studio"
+    allow:
+    # Allow both direct and indirect updates for all packages
+    - dependency-type: "all"
+  - package-ecosystem: "npm"
+    directory: "/simulator"
+    schedule:
+      interval: "daily"
+      timezone: "Asia/Ulaanbaatar"
+    commit-message:
+        prefix: "build: (sim)"
+    allow:
+      # Allow both direct and indirect updates for all packages
+      - dependency-type: "all"
+    open-pull-requests-limit: 40
+    labels:
+    - "dependencies"
+    - "simulator"
+    allow:
+    # Allow both direct and indirect updates for all packages
+    - dependency-type: "all"
+  - package-ecosystem: "maven"
+    directory: "/api-gateway"
+    schedule:
+      interval: "daily"
+      time: "21:23"
+      timezone: "Asia/Ulaanbaatar"
+    commit-message:
+        prefix: "build: (sub)"
+    allow:
+      # Allow both direct and indirect updates for all packages
+      - dependency-type: "all"
+    open-pull-requests-limit: 40
+    labels:
+    - "dependencies"
+    - "security"
+    allow:
+    # Allow both direct and indirect updates for all packages
+    - dependency-type: "all"
+      
+
