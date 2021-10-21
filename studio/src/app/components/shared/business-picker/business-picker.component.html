@@ -1,24 +1,67 @@
 <h2 matDialogTitle>{{ title }}</h2>
 <mat-dialog-content>
-    <mat-form-field class="full-width" tabindex="-1">
-        <input tabindex="-1" type="text" placeholder="Choose an account" aria-label="Business Account" matInput [(ngModel)]="bizFilter" [matAutocomplete]="bizAuto" name="bizAccount" [disabled]="param.businessId">
-        <mat-autocomplete tabindex="-1" #bizAuto="matAutocomplete" (optionSelected)="bizOptionSelected($event)" [displayWith]="bizDisplayWith">
-            <mat-option *ngFor="let option of bizFilteredOptions()" [value]="option">
-                {{ option.name }} <span class="desc">Id: {{ option.id }}</span>
-            </mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
-    <mat-form-field class="full-width" tabindex="-1" *ngIf="param.askFlowId && chatProjects && chatProjects.length > 0">
-        <input tabindex="-1" type="text" placeholder="Choose a chat project" aria-label="Chat project" matInput [(ngModel)]="projFilter" [matAutocomplete]="projAuto" name="projAccount" [disabled]="param.businessId && param.flowId">
-        <mat-autocomplete tabindex="-1" #projAuto="matAutocomplete" (optionSelected)="projOptionSelected($event)" [displayWith]="projDisplayWith">
-            <mat-option *ngFor="let option of projFilteredOptions()" [value]="option">
-                {{ option.name }} <span class="desc">Id: {{ option.id }}</span>
-            </mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
-    <label class="desc">You are logged into '{{chatConnName}}' Chatbot.sh chat server</label>
+  <mat-form-field class="full-width" tabindex="-1">
+    <input
+      tabindex="-1"
+      type="text"
+      placeholder="Choose an account"
+      aria-label="Business Account"
+      matInput
+      [(ngModel)]="bizFilter"
+      [matAutocomplete]="bizAuto"
+      name="bizAccount"
+      [disabled]="param.businessId"
+    />
+    <mat-autocomplete
+      tabindex="-1"
+      #bizAuto="matAutocomplete"
+      (optionSelected)="bizOptionSelected($event)"
+      [displayWith]="bizDisplayWith"
+    >
+      <mat-option *ngFor="let option of bizFilteredOptions()" [value]="option">
+        {{ option.name }} <span class="desc">Id: {{ option.id }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field
+    class="full-width"
+    tabindex="-1"
+    *ngIf="param.askFlowId && chatProjects && chatProjects.length > 0"
+  >
+    <input
+      tabindex="-1"
+      type="text"
+      placeholder="Choose a chat project"
+      aria-label="Chat project"
+      matInput
+      [(ngModel)]="projFilter"
+      [matAutocomplete]="projAuto"
+      name="projAccount"
+      [disabled]="param.businessId && param.flowId"
+    />
+    <mat-autocomplete
+      tabindex="-1"
+      #projAuto="matAutocomplete"
+      (optionSelected)="projOptionSelected($event)"
+      [displayWith]="projDisplayWith"
+    >
+      <mat-option *ngFor="let option of projFilteredOptions()" [value]="option">
+        {{ option.name }} <span class="desc">Id: {{ option.id }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <label class="desc"
+    >You are logged into '{{ chatConnName }}' Chatbot.sh chat server</label
+  >
 </mat-dialog-content>
 <mat-dialog-actions class="actions">
-    <button mat-raised-button (click)="submit()" color="primary" [disabled]="!valid()">Submit</button>
-    <button mat-raised-button matDialogClose>Dismiss</button>
+  <button
+    mat-raised-button
+    (click)="submit()"
+    color="primary"
+    [disabled]="!valid()"
+  >
+    Submit
+  </button>
+  <button mat-raised-button matDialogClose>Dismiss</button>
 </mat-dialog-actions>
