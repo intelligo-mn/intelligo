@@ -24,7 +24,7 @@
         }, {
             "SectionType": "Text",
             "_id": "5db96fedd03f5e725c51375c",
-            "Text": "Chatbots.mn чатботтой холбогдлоо"
+            "Text": "Chatbot.sh чатботтой холбогдлоо"
         }, {
             "SectionType": "Text",
             "_id": "5db9700fd03f5e725c51375d",
@@ -76,7 +76,7 @@
         "Sections": [{
             "SectionType": "Text",
             "_id": "5d7c3cab14297a25ecc1e953",
-            "Text": "Бид chatbots.mn platform болон Intelligo Framework ашиглан messenger bot хөгжүүлдэг"
+            "Text": "Бид chatbot.sh platform болон Intelligo Framework ашиглан messenger bot хөгжүүлдэг"
         }],
         "NodeType": "Combination",
         "IsStartNode": false
@@ -93,7 +93,7 @@
         "Sections": [{
             "SectionType": "Text",
             "_id": "5db9713ad03f5e725c513761",
-            "Text": "Бид chatbots.mn platform болон Intelligo Framework ашиглан messenger bot хөгжүүлдэг"
+            "Text": "Бид chatbot.sh platform болон Intelligo Framework ашиглан messenger bot хөгжүүлдэг"
         }],
         "NodeType": "Combination",
         "IsStartNode": false
@@ -110,7 +110,7 @@
         "Sections": [{
             "SectionType": "Text",
             "_id": "5db9716ed03f5e725c513763",
-            "Text": "Бид chatbots.mn platform болон Intelligo Framework ашиглан messenger bot хөгжүүлдэг"
+            "Text": "Бид chatbot.sh platform болон Intelligo Framework ашиглан messenger bot хөгжүүлдэг"
         }],
         "NodeType": "Combination",
         "IsStartNode": false

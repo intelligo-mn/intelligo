@@ -12,7 +12,7 @@ export class GetChatServerComponent implements OnInit {
   ngOnInit() {}
 
   selfHost() {
-    window.location.href = 'https://www.chatbots.mn/self-hosting';
+    window.location.href = 'https://www.chatbot.sh/self-hosting';
   }
 
   anaCloud() {

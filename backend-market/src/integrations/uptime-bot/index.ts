@@ -13,15 +13,15 @@ export const uptimeBot = (req: Request, res: Response, next: NextFunction) => {
       timeout: 200, // threshold in milliseconds above which is considered degraded performance
     },
     {
-      url: 'https://www.chatbots.mn', // URL of service we'll be pining
+      url: 'https://www.chatbot.sh', // URL of service we'll be pining
       timeout: 200, // threshold in milliseconds above which is considered degraded performance
     },
     {
-      url: 'https://app.chatbots.mn', // URL of service we'll be pining
+      url: 'https://app.chatbot.sh', // URL of service we'll be pining
       timeout: 200, // threshold in milliseconds above which is considered degraded performance
     },
     {
-      url: 'https://app.chatbots.mn', // URL of service we'll be pining
+      url: 'https://app.chatbot.sh', // URL of service we'll be pining
       timeout: 200, // threshold in milliseconds above which is considered degraded performance
     },
     {

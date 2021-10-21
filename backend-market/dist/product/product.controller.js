@@ -105,7 +105,7 @@ __decorate([
 ], ProductController.prototype, "delete", null);
 ProductController = __decorate([
     common_1.Controller('product'),
-    swagger_1.ApiTags('Chatbots.mn Marketplace'),
+    swagger_1.ApiTags('Chatbot.sh Marketplace'),
     __metadata("design:paramtypes", [product_service_1.ProductService])
 ], ProductController);
 exports.ProductController = ProductController;

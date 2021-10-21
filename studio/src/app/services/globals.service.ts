@@ -14,7 +14,7 @@ import {
 @Injectable()
 export class GlobalsService {
   constructor(private title: Title) {}
-  appName = 'Chatbots.mn';
+  appName = 'Chatbot.sh';
 
   chatFlowComponent: ChatFlowComponent;
   loading: boolean = false;

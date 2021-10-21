@@ -28,7 +28,7 @@ __decorate([
 ], AppController.prototype, "getHello", null);
 AppController = __decorate([
     common_1.Controller(),
-    swagger_1.ApiTags('Chatbots.mn'),
+    swagger_1.ApiTags('Chatbot.sh'),
     __metadata("design:paramtypes", [app_service_1.AppService])
 ], AppController);
 exports.AppController = AppController;

@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivate {
     if(environment.local){
       return true;
     }
-    window.location.href = 'https://chatbots.mn';
+    window.location.href = 'https://chatbot.sh';
     return false;
   }
 }

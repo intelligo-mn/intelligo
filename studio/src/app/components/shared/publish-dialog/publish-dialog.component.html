@@ -2,10 +2,10 @@
 <mat-dialog-content>
     <mat-card *ngIf="!savedConns || savedConns.length <= 0" class="text-center">
         <h4>
-            Looks like you don't have any saved Chatbots.mn chat server connections.
+            Looks like you don't have any saved Chatbot.sh chat server connections.
             <br />
             <br />
-            <button mat-raised-button color="primary" (click)="managePublishServers()">Add Chatbots.mn chat server connection</button>
+            <button mat-raised-button color="primary" (click)="managePublishServers()">Add Chatbot.sh chat server connection</button>
         </h4>
     </mat-card>
 
@@ -27,7 +27,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <div class="left" *ngIf="savedConns && savedConns.length>0">
-        <button mat-raised-button (click)="managePublishServers()">Add/edit Chatbots.mn chat servers</button>
+        <button mat-raised-button (click)="managePublishServers()">Add/edit Chatbot.sh chat servers</button>
     </div>
     <div class="spacing"></div>
     <div class="right">

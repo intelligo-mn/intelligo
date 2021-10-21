@@ -19,7 +19,7 @@ import { ProductService } from './product.service';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('product')
-@ApiTags('Chatbots.mn Marketplace')
+@ApiTags('Chatbot.sh Marketplace')
 export class ProductController {
   constructor(private productService: ProductService) {}
 

@@ -33,7 +33,7 @@ export class HomeComponent {
       if (!done) {
         this.infoDialog.alert(
           'Login Required',
-          'You must be logged in to your Chatbots.mn chat server to manage users',
+          'You must be logged in to your Chatbot.sh chat server to manage users',
         );
         return;
       }
@@ -63,7 +63,7 @@ export class HomeComponent {
       if (!done) {
         this.infoDialog.alert(
           'Login Required',
-          'You must be logged in to your Chatbots.mn chat server to view analytics',
+          'You must be logged in to your Chatbot.sh chat server to view analytics',
         );
         return;
       }
@@ -93,7 +93,7 @@ export class HomeComponent {
       if (!done) {
         this.infoDialog.alert(
           'Login Required',
-          'You must be logged in to your Chatbots.mn chat server to deploy your chatbot',
+          'You must be logged in to your Chatbot.sh chat server to deploy your chatbot',
         );
         return;
       }

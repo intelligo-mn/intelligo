@@ -46,7 +46,7 @@ __decorate([
 ], OrderController.prototype, "createOrder", null);
 OrderController = __decorate([
     common_1.Controller('order'),
-    swagger_1.ApiTags('Chatbots.mn Marketplace'),
+    swagger_1.ApiTags('Chatbot.sh Marketplace'),
     __metadata("design:paramtypes", [order_service_1.OrderService])
 ], OrderController);
 exports.OrderController = OrderController;

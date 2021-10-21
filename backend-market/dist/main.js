@@ -19,15 +19,15 @@ const simulator = Express();
 simulator.use(serveStatic('simulator/dist'));
 studio.use(serveStatic('studio/dist'));
 server.use(cors());
-server.use(vhost('app.chatbots.mn', studio));
-server.use(vhost('simulator.chatbots.mn', simulator));
-server.use(vhost('cdn.chatbots.mn', serveStatic('cdn')));
+server.use(vhost('app.chatbot.sh', studio));
+server.use(vhost('simulator.chatbot.sh', simulator));
+server.use(vhost('cdn.chatbot.sh', serveStatic('cdn')));
 server.use(serveStatic('marketplace/dist'));
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, new platform_express_1.ExpressAdapter(server));
     const options = new swagger_1.DocumentBuilder()
-        .setTitle('API for Chatbots.mn')
-        .setDescription('API for Chatbots.mn')
+        .setTitle('API for Chatbot.sh')
+        .setDescription('API for Chatbot.sh')
         .setVersion('1.0')
         .addBearerAuth()
         .build();

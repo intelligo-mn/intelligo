@@ -1,4 +1,4 @@
-# Contributing to Chatbots.mn Platform
+# Contributing to Chatbot.sh Platform
 
 We would love for you to contribute to Intelligo and help make it even better than it is today! As a contributor, here are the guidelines we would like you to follow:
 
@@ -201,5 +201,5 @@ reference GitHub issues that this commit **Closes**.
 
 **Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
 
-[github]: https://github.com/intelligo-systems/chatbots.mn
+[github]: https://github.com/intelligo-systems/chatbot.sh
 [js-style-guide]: https://google.github.io/styleguide/jsguide.html

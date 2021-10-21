@@ -46,9 +46,9 @@ export class DeployLandingComponent implements OnInit {
     height: '70%',
     width: '360px',
     isFullPage: false,
-    logoUrl: 'https://www.chatbots.mn/favicon.ico',
+    logoUrl: 'https://www.chatbot.sh/favicon.ico',
     showPoweredByAna: false,
-    title: 'Chatbots.mn chatbot',
+    title: 'Chatbot.sh chatbot',
     websdkUrl: '',
     webSocketsUrl: '',
   };
@@ -110,7 +110,7 @@ export class DeployLandingComponent implements OnInit {
     let src = `<!DOCTYPE html>
 <html>
 <head>
-	<title>Chatbots.mn web chat preview</title>
+	<title>Chatbot.sh web chat preview</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>

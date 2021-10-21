@@ -1,4 +1,4 @@
-# Chatbots.mn Simulator
+# Chatbot.sh Simulator
 
 Conversational AI platform.
 
@@ -6,10 +6,10 @@ Conversational AI platform.
 
 | Apps                    |                                                    Web |  Github Actions                                                                                                                                                              |
 | ----------------------- | -----------------------------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| Chatbots.mn Backend API |             [api.chatbots.mn](https://api.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/backend/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=backend)         |
-| Chatbots.mn Studio      |             [app.chatbots.mn](https://app.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/studio/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=studio)           |
-| **Chatbots.mn Simulator**   | **[simulator.chatbots.mn](https://simulator.chatbots.mn)** | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/simulator/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=simulator)     |
-| Chatbots.mn Marketplace |             [www.chatbots.mn](https://www.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/marketplace/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=marketplace) |
+| Chatbot.sh Backend API |             [api.chatbot.sh](https://api.chatbot.sh) | [![Build Status](https://github.com/intelligo-systems/chatbot.sh/workflows/backend/badge.svg)](https://github.com/intelligo-systems/chatbot.sh/actions?workflow=backend)         |
+| Chatbot.sh Studio      |             [app.chatbot.sh](https://app.chatbot.sh) | [![Build Status](https://github.com/intelligo-systems/chatbot.sh/workflows/studio/badge.svg)](https://github.com/intelligo-systems/chatbot.sh/actions?workflow=studio)           |
+| **Chatbot.sh Simulator**   | **[simulator.chatbot.sh](https://simulator.chatbot.sh)** | [![Build Status](https://github.com/intelligo-systems/chatbot.sh/workflows/simulator/badge.svg)](https://github.com/intelligo-systems/chatbot.sh/actions?workflow=simulator)     |
+| Chatbot.sh Marketplace |             [www.chatbot.sh](https://www.chatbot.sh) | [![Build Status](https://github.com/intelligo-systems/chatbot.sh/workflows/marketplace/badge.svg)](https://github.com/intelligo-systems/chatbot.sh/actions?workflow=marketplace) |
 
 ## Development server
 
@@ -39,6 +39,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## License
 
 > Copyright (C) 2019-2020 Intelligo Systems.  
-> Chatbots.mn licensed under the [INTELLIGO](../LICENSE) license.  
+> Chatbot.sh licensed under the [INTELLIGO](../LICENSE) license.  
 > (See the [LICENSE](./LICENSE) file for the whole license text.)
 

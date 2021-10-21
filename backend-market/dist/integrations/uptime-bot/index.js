@@ -11,15 +11,15 @@ exports.uptimeBot = (req, res, next) => {
             timeout: 200,
         },
         {
-            url: 'https://www.chatbots.mn',
+            url: 'https://www.chatbot.sh',
             timeout: 200,
         },
         {
-            url: 'https://app.chatbots.mn',
+            url: 'https://app.chatbot.sh',
             timeout: 200,
         },
         {
-            url: 'https://app.chatbots.mn',
+            url: 'https://app.chatbot.sh',
             timeout: 200,
         },
         {

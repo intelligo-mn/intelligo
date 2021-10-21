@@ -25,7 +25,7 @@
 		"password-min-message": "Minimum length of the password is 6 characters.",
 		"phone": "Phone number",
 		"please-fill": "Please fill all the mandatory fields.",
-		"title": "Create your Chatbots.mn Cloud account",
+		"title": "Create your Chatbot.sh Cloud account",
 		"unable-register": "Unable to register",
 		"unable-register-message": "Something went wrong while trying to register. Please try again."
 	},
@@ -44,7 +44,7 @@
 		"enter-new-name": "Enter a new name: ",
 		"import": "Import",
 		"import-description": "Import chatbot project from file",
-		"invalid-project-file": "Invalid file. Please select a valid Chatbots.mn project file",
+		"invalid-project-file": "Invalid file. Please select a valid Chatbot.sh project file",
 		"language": "Language",
 		"login": "Login",
 		"logout": "Logout",
@@ -56,7 +56,7 @@
 		"projects": "Recent chatbot projects",
 		"rename": "Rename",
 		"search": "Search",
-		"title": "Chatbots.mn platform - Studio",
+		"title": "Chatbot.sh platform - Studio",
 		"unable-load": "Unable to load file."
 	},
 	"studio": {

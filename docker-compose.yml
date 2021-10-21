@@ -28,7 +28,7 @@ services:
         image: projectana/service-registry
         restart: always
         ports:
-            - "80:8761"
+            - "9001:8761"
         depends_on:
             db:
                 condition: service_healthy

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://chatbots.mn'
+  apiUrl: 'https://chatbot.sh'
 };
 
 /*

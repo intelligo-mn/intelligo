@@ -1,8 +1,8 @@
-# Chatbots.mn Embed Plugin
+# Chatbot.sh Embed Plugin
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
-Use Chatbots.mn Embed Plugin to deploy your intelligo chat bot onto your website. 
+Use Chatbot.sh Embed Plugin to deploy your intelligo chat bot onto your website. 
 
   - Brand it as your website.
   - Mobile friendly out of the box. 
@@ -12,18 +12,18 @@ Use Chatbots.mn Embed Plugin to deploy your intelligo chat bot onto your website
 
 **Step 1:**
 
-Setup [intelligo Conversation Studio and intelligo Chat Server](https://github.com/intelligo-systems/chatbots.mn) to design and publish an intelligo chat bot.
+Setup [intelligo Conversation Studio and intelligo Chat Server](https://github.com/intelligo-systems/chatbot.sh) to design and publish an intelligo chat bot.
   - Assuming you have done that have an intelligo Chat Server URL, let's call it `intelligo-chat-server.com`
 
 **Step 2:**
 
-Download `intelligo-web-chat-plugin.zip` from [releases](https://github.com/intelligo-systems/chatbots.mn/releases), extract and host it on any normal http server. Note the server URL. Let's call it `web-plugin.intelligo-chat-server.com`
+Download `intelligo-web-chat-plugin.zip` from [releases](https://github.com/intelligo-systems/chatbot.sh/releases), extract and host it on any normal http server. Note the server URL. Let's call it `web-plugin.intelligo-chat-server.com`
    - If you want to host this at a path like `/web-plugin/` instead of the root of your server, you will also need to update `<base href="/">` inside `head` of `index.html` to `<base href="/web-plugin/">`. If you do it, intelligo web chat plug-in server URL will now be `intelligo-chat-server.com/web-plugin/`
 
 **Step 3:**
 
 Using intelligo Conversation Studio, design a chat bot, publish it and note down the chat project id. Let's call it `chat-bot-1` 
-  - Click [here](https://github.com/intelligo-systems/chatbots.mn) if you have not setup intelligo Conversation Studio and created your chat bot yet! 
+  - Click [here](https://github.com/intelligo-systems/chatbot.sh) if you have not setup intelligo Conversation Studio and created your chat bot yet! 
 
 **Step 4:**
 
@@ -78,7 +78,7 @@ intelligo-html-messages="true" or "false"
 Load only current chat session in history:
 intelligo-current-session-only="false" or "true"
 
-Show or hide 'Powered by Chatbots.mn':
+Show or hide 'Powered by Chatbot.sh':
 intelligo-show-branding="true" or "false"
 
 Enable chat message sounds:
@@ -99,4 +99,4 @@ intelligo(<user-id>, {
 
 ## License
 
-Chatbots.mn Embed Plugin is available under the [GNU GPLv3 license](https://www.gnu.org/licenses/gpl-3.0.en.html).
+Chatbot.sh Embed Plugin is available under the [GNU GPLv3 license](https://www.gnu.org/licenses/gpl-3.0.en.html).

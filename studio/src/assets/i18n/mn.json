@@ -25,7 +25,7 @@
 		"password-min-message": "Minimum length of the password is 6 characters.",
 		"phone": "Утасны дугаар",
 		"please-fill": "Please fill all the mandatory fields.",
-		"title": "Create your Chatbots.mn Cloud account",
+		"title": "Create your Chatbot.sh Cloud account",
 		"unable-register": "Unable to register",
 		"unable-register-message": "Something went wrong while trying to register. Please try again."
 	},
@@ -56,7 +56,7 @@
 		"projects": "Чатботууд",
 		"rename": "Нэр солих",
 		"search": "Хайх",
-		"title": "Chatbots.mn платформ - Studio",
+		"title": "Chatbot.sh платформ - Studio",
 		"unable-load": "Файл уншихад алдаа гарлаа."
 	},
 	"studio": {

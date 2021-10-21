@@ -6,7 +6,7 @@ import { LoginDTO, RegisterDTO } from './auth.dto';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
-@ApiTags('Chatbots.mn Auth')
+@ApiTags('Chatbot.sh Auth')
 export class AuthController {
   constructor(
     private userService: UserService,

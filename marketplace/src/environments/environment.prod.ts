@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://chatbots.mn'
+  apiUrl: 'https://chatbot.sh'
 };

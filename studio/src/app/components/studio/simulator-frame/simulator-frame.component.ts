@@ -15,7 +15,7 @@ export class SimulatorFrameComponent implements OnInit {
         primaryForegroundColor: 'white',
         secondaryBackgroundColor: '#3c3c3c',
         logoUrl: `favicon.ico`,
-        agentName: 'Chatbots.mn',
+        agentName: 'Chatbot.sh',
         frameHeight: '100%',
         frameWidth: '360px',
       },
@@ -24,7 +24,7 @@ export class SimulatorFrameComponent implements OnInit {
         htmlMessages: true,
       },
     };
-    let url = `https://simulator.chatbots.mn/?s=${btoa(JSON.stringify(param))}`;
+    let url = `https://simulator.chatbot.sh/?s=${btoa(JSON.stringify(param))}`;
     if (environment.local)
       url = `http://localhost:4201/index.html?s=${btoa(JSON.stringify(param))}`;
     this.iframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);

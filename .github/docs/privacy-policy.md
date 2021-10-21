@@ -4,7 +4,7 @@
 
 ## Introduction
 
-Chatbots.mn (“Chatbots.mn”) respects your right to privacy and takes your privacy seriously. We are committed to protecting and securing any personal information you give us. This Privacy Policy explains who we are; how we collect, use and share personal information about you; how you can manage the information you give us and exercise your privacy rights; and how we protect your information. This Privacy Policy relates to our use of any personal information we collect from you via our online services including our Website and App or give us in any other way (together, the “Services“).
+Chatbot.sh (“Chatbot.sh”) respects your right to privacy and takes your privacy seriously. We are committed to protecting and securing any personal information you give us. This Privacy Policy explains who we are; how we collect, use and share personal information about you; how you can manage the information you give us and exercise your privacy rights; and how we protect your information. This Privacy Policy relates to our use of any personal information we collect from you via our online services including our Website and App or give us in any other way (together, the “Services“).
 
 The Services are currently under intense development and different aspects of the Services will be deployed over the coming months. Some parts of this Privacy Policy refer to functions of the Services that have not yet been implemented or deployed. Once such functions are available for use, by accessing and continuing to use the Services thereafter, you agree that those parts of the Privacy Policy shall go into effect.
 
@@ -21,7 +21,7 @@ If any part of this website links you to other websites, those websites do not o
 
 ## Your Data Protection Rights And Choices
 
-If you wish to access your personal information that Chatbots.mn collects, you can do so at any time by contacting us using the contact details provided under “How to Contact Us” heading below.
+If you wish to access your personal information that Chatbot.sh collects, you can do so at any time by contacting us using the contact details provided under “How to Contact Us” heading below.
 
 If you are a resident of the European Economic Area, you additionally have the following data protection rights:
 
@@ -34,9 +34,9 @@ If you are a resident of the European Economic Area, you additionally have the f
 
 ## How We Collect Your Personal Information
 
-What we collect depends largely on the interaction that takes place between you and Chatbots.mn, most of which can be categorized under the following:
+What we collect depends largely on the interaction that takes place between you and Chatbot.sh, most of which can be categorized under the following:
 
-Using Chatbots.mn Software as a Service. When you use any Chatbots.mn Software as a Service, we store all the content you provide, including but not limited to accounts created for team members, files, pictures, project information, and any other information that you provide to the services you use. For any Chatbots.mn Software as a Service, we also collect data about usage of the software. This may include, but is not limited to, numbers of users, flows, broadcasts etc.
+Using Chatbot.sh Software as a Service. When you use any Chatbot.sh Software as a Service, we store all the content you provide, including but not limited to accounts created for team members, files, pictures, project information, and any other information that you provide to the services you use. For any Chatbot.sh Software as a Service, we also collect data about usage of the software. This may include, but is not limited to, numbers of users, flows, broadcasts etc.
 
 ## Types of Personal Information:
 
@@ -44,7 +44,7 @@ Using Chatbots.mn Software as a Service. When you use any Chatbots.mn Software a
 
 (ii) Subscribers (users of users or also known as audience or subscriber): identification and publicly available social media profile information (name, date of birth, gender, geographic location), chat history, navigational data (including chatbot usage information), application integration data, and other electronic data submitted, stored, sent, or received by end users and other personal information, the extent of which is determined and controlled by the Customer in its sole discretion.
 
-Purchasing Chatbots.mn PRO subscription. When you sign up for Chatbots.mn Software as a Service PRO Subscription, we collect information to process your payment and create your customer account. This information includes name, email address, physical address, telephone number, and company name where applicable. We retain the last four digits of your credit card to allow you to identify the card used for future purchases. We use a third-party service provider to process your credit card transactions. These third parties are governed by their own agreements.
+Purchasing Chatbot.sh PRO subscription. When you sign up for Chatbot.sh Software as a Service PRO Subscription, we collect information to process your payment and create your customer account. This information includes name, email address, physical address, telephone number, and company name where applicable. We retain the last four digits of your credit card to allow you to identify the card used for future purchases. We use a third-party service provider to process your credit card transactions. These third parties are governed by their own agreements.
 
 User generated content. Our products and services often give you the option to provide feedback, such as suggestions, compliments or problems encountered. We invite you to provide such feedback as well as to participate with comments on our blog and community page. If you choose to post a comment, your user name, city, and any other information that you choose to post will be visible to the public. We are not responsible for the privacy of any information that you choose to post to our website, including in our blogs, or for the accuracy of any information contained in those postings. Any information that you disclose becomes public information. We cannot prevent such information from being used in a manner that may violate this Privacy Policy, the law or your personal privacy.
 
@@ -60,7 +60,7 @@ Sensitive personal information. Subject to the following paragraph, we ask that 
 
 For service operations (i) to operate, maintain, administer and improve the Service; (ii) to manage and communicate with you regarding your Service account, if you have one, including by sending you Service announcements, technical notices, updates, security alerts, and support and administrative messages; (iii) to process payments you make through the Service; (iv) to better understand your needs and interests, and personalize your experience with the Service; (v) o send you information about product by email (vi) to respond to your Service-related requests, questions and feedback.
 
-To communicate with you. If you request information from us, register for the Service or participate in our surveys, promotions or events, we may send you Chatbots.mn-related marketing communications if permitted by law but will provide you with the ability to opt out.
+To communicate with you. If you request information from us, register for the Service or participate in our surveys, promotions or events, we may send you Chatbot.sh-related marketing communications if permitted by law but will provide you with the ability to opt out.
 
 To comply with law.We use your personal information as we believe necessary or appropriate to comply with applicable laws, lawful requests and legal process, such as to respond to subpoenas or requests from government authorities.
 
@@ -83,7 +83,7 @@ In connection with a corporate transaction, such as a divestiture, merger, conso
 Any other person with your consent to the disclosure.
 We are not able to list every specific recipient in this Privacy Policy due to the volume of recipients and frequency of changes to this information.  The categories of recipients are explained in more detail in the sub paragraphs of this section above, for example, travel suppliers such as hotels, airlines, car rental companies and activity providers, who enable us to fulfil your booking.  If you have any questions about third-party data sharing, please contact us at the information provided at the bottom of this Privacy Policy.
 We also may share aggregate or anonymous information with third parties, including advertisers and investors. This information does not contain any personal information and is used to develop content and services we hope you will find of interest;
-Business Transfers – As we develop our business, we might sell or buy businesses or assets. In the event of a corporate sale, merger, reorganization, dissolution or similar event, personal information may be part of the transferred assets. You acknowledge and agree that any successor to or acquirer of Chatbots.mn (or its assets) will continue to have the right to use your personal information and other information in accordance with the terms of this Privacy Policy. Further, Chatbots.mn may also disclose aggregated personal information in order to describe our Services to prospective acquirers or business partners.
+Business Transfers – As we develop our business, we might sell or buy businesses or assets. In the event of a corporate sale, merger, reorganization, dissolution or similar event, personal information may be part of the transferred assets. You acknowledge and agree that any successor to or acquirer of Chatbot.sh (or its assets) will continue to have the right to use your personal information and other information in accordance with the terms of this Privacy Policy. Further, Chatbot.sh may also disclose aggregated personal information in order to describe our Services to prospective acquirers or business partners.
 Data Retention
 We retain the personal information we collect from you where we have an ongoing legitimate business need to do so (for example, to provide you with a service you have requested or to comply with applicable legal, tax or accounting requirements). When we have no ongoing legitimate business need to process your personal information, we will either delete or anonymize the data or, if this is not possible (for example, because your personal information has been stored in backup archives), then we will securely store your personal information and isolate it from any further processing until deletion is possible.We will anonymize or aggregate your data if we intend to use it for analytical purposes or trend analysis over longer periods.
 
@@ -93,7 +93,7 @@ Your personal information may be stored and processed in any country where we ha
 
 ## Cookies And Beacons
 
-A cookie is a string of information that a website stores on a visitor’s computer, and that the visitor’s browser provides to the website each time the visitor returns. Chatbots.mn uses cookies to help Chatbots.mn identify and track visitors, their usage of Chatbots.mn website, and their website access preferences. Chatbots.mn visitors who do not wish to have cookies placed on their computers should set their browsers to refuse cookies before using Chatbots.mn’s websites, with the drawback that certain features of Chatbots.mn’s websites may not function properly without the aid of cookies.
+A cookie is a string of information that a website stores on a visitor’s computer, and that the visitor’s browser provides to the website each time the visitor returns. Chatbot.sh uses cookies to help Chatbot.sh identify and track visitors, their usage of Chatbot.sh website, and their website access preferences. Chatbot.sh visitors who do not wish to have cookies placed on their computers should set their browsers to refuse cookies before using Chatbot.sh’s websites, with the drawback that certain features of Chatbot.sh’s websites may not function properly without the aid of cookies.
 
 ## Children Information
 
@@ -107,4 +107,4 @@ If you have any questions about changes to this Privacy Policy, please contact u
 
 ## Contact Us
 
-If you require any more information or have any questions about our privacy policy, please feel free to contact us by email at info@chatbots.mn with the subject line “Privacy Policy Inquiry”.
+If you require any more information or have any questions about our privacy policy, please feel free to contact us by email at info@chatbot.sh with the subject line “Privacy Policy Inquiry”.

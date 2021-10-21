@@ -7,10 +7,10 @@
 
 | Apps                    |                                                    Web |  Github Actions                                                                                                                                                              |
 | ----------------------- | -----------------------------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| **Chatbots.mn Backend API** |            **[api.chatbots.mn](https://api.chatbots.mn)** | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/backend/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=backend)         |
-| Chatbots.mn Studio      |             [app.chatbots.mn](https://app.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/studio/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=studio)           |
-| Chatbots.mn Simulator   | [simulator.chatbots.mn](https://simulator.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/simulator/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=simulator)     |
-| Chatbots.mn Marketplace |             [www.chatbots.mn](https://www.chatbots.mn) | [![Build Status](https://github.com/intelligo-systems/chatbots.mn/workflows/marketplace/badge.svg)](https://github.com/intelligo-systems/chatbots.mn/actions?workflow=marketplace) |
+| **Chatbot.sh Backend API** |            **[api.chatbot.sh](https://api.chatbot.sh)** | [![Build Status](https://github.com/intelligo-systems/chatbot.sh/workflows/backend/badge.svg)](https://github.com/intelligo-systems/chatbot.sh/actions?workflow=backend)         |
+| Chatbot.sh Studio      |             [app.chatbot.sh](https://app.chatbot.sh) | [![Build Status](https://github.com/intelligo-systems/chatbot.sh/workflows/studio/badge.svg)](https://github.com/intelligo-systems/chatbot.sh/actions?workflow=studio)           |
+| Chatbot.sh Simulator   | [simulator.chatbot.sh](https://simulator.chatbot.sh) | [![Build Status](https://github.com/intelligo-systems/chatbot.sh/workflows/simulator/badge.svg)](https://github.com/intelligo-systems/chatbot.sh/actions?workflow=simulator)     |
+| Chatbot.sh Marketplace |             [www.chatbot.sh](https://www.chatbot.sh) | [![Build Status](https://github.com/intelligo-systems/chatbot.sh/workflows/marketplace/badge.svg)](https://github.com/intelligo-systems/chatbot.sh/actions?workflow=marketplace) |
 
 ### Холбоотой системүүд
 

@@ -1,8 +1,8 @@
 {
-  "name": "api.chatbots.mn",
+  "name": "api.chatbot.sh",
   "private": true,
   "version": "1.0.0",
-  "description": "Chatbots.mn Backend API",
+  "description": "Chatbot.sh Backend API",
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",

@@ -8,7 +8,7 @@ import { CreateOrderDTO } from './order.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('order')
-@ApiTags('Chatbots.mn Marketplace')
+@ApiTags('Chatbot.sh Marketplace')
 export class OrderController {
   constructor(private orderService: OrderService) {}
 

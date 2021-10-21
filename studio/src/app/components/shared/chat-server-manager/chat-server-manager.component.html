@@ -1,8 +1,8 @@
-<h2 matDialogTitle>Chatbots.mn chat server connections</h2>
+<h2 matDialogTitle>Chatbot.sh chat server connections</h2>
 <mat-dialog-content>
     <div class="center-block center-content">
         <mat-card [hidden]="savedConnections.length!=0" class="text-center">
-            <h4>Looks like you don't have any saved Chatbots.mn chat server connections. <br /> Start by adding one.
+            <h4>Looks like you don't have any saved Chatbot.sh chat server connections. <br /> Start by adding one.
             </h4>
         </mat-card>
 
@@ -66,7 +66,7 @@
         (click)="saveConnections(true)">Save changes</button>
     <button matTooltip="Add new connection" [color]="savedConnections.length==0?'primary':''" mat-raised-button
         (click)="addConnection()">Add new server connection</button>
-    <button matTooltip="Get an Chatbots.mn chat server" mat-raised-button (click)="getAnaChatServer()">Get an
-        Chatbots.mn chat server</button>
+    <button matTooltip="Get an Chatbot.sh chat server" mat-raised-button (click)="getAnaChatServer()">Get an
+        Chatbot.sh chat server</button>
     <button mat-raised-button matDialogClose>Dismiss</button>
 </mat-dialog-actions>
