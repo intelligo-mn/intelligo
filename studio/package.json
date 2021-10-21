@@ -39,7 +39,7 @@
     "ts-md5": "^1.2.7",
     "underscore": "^1.12.1",
     "tslib": "^1.10.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.3"
   },
   "devDependencies": {
     "@angular-devkit/core": "^9.0.1",
