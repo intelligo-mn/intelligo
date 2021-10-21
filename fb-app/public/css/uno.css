@@ -1,0 +1,64 @@
+body {
+
+}
+
+.header-div {
+    height: 50px;
+}
+
+.logo-sm {
+    width: 100px;
+    margin-left: 16px;
+    margin-top: 8px;
+}
+
+.logo-text {
+    color: #0D47A1;
+    font-weight: 500;
+    font-size: 32px;
+}
+.left-pane {
+    height: 100vh;
+}
+
+.quarter-width {
+    width: 25%;
+}
+.half-width {
+    width: 50%;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.full-height {
+    height: 80vh;
+}
+
+.links-list li:hover {
+    cursor: pointer !important;
+    background: #f5f5f5 !important;
+}
+
+.no-border {
+    border: none !important;
+}
+
+.collection .collection-item.avatar .square {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    overflow: hidden;
+    left: 15px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.collection .collection-item:last-child {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.pages-ul {
+    width: 480px;
+}
