@@ -81,7 +81,7 @@
     "style-loader": "1.0.1",
     "terser-webpack-plugin": "5.2.4",
     "thread-loader": "3.0.4",
-    "to-string-loader": "1.1.6",
+    "to-string-loader": "1.2.0",
     "ts-loader": "6.2.1",
     "tslint": "5.20.1",
     "typescript": "3.4.5",
