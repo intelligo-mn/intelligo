@@ -12,7 +12,7 @@
     "@angular/compiler": "12.2.10",
     "@angular/core": "8.2.14",
     "@angular/forms": "12.2.11",
-    "@angular/platform-browser": "8.2.14",
+    "@angular/platform-browser": "12.2.11",
     "@angular/platform-browser-dynamic": "8.2.14",
     "@angular/router": "8.2.14",
     "@fortawesome/angular-fontawesome": "0.5.0",
