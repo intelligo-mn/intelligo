@@ -42,7 +42,7 @@
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
-    "@angular-devkit/core": "^9.0.1",
+    "@angular-devkit/core": "^12.2.11",
     "@angular/language-service": "~12.2.10",
     "@types/bson": "^4.0.1",
     "@types/jasmine": "~3.5.3",
