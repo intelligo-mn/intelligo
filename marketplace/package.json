@@ -35,7 +35,7 @@
     "rxjs": "6.5.4",
     "rxjs-compat": "6.5.4",
     "tslib": "^1.11.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.3"
   },
   "devDependencies": {
     "@angular/language-service": "~12.2.10",
