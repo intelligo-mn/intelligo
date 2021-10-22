@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@angular/cli": "12.2.10",
-    "@angular/compiler-cli": "8.2.14",
+    "@angular/compiler-cli": "12.2.11",
     "@ngtools/webpack": "8.3.20",
     "@types/jest": "24.0.23",
     "@types/node": "16.11.1",
