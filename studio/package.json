@@ -32,7 +32,7 @@
     "bson": "^4.0.3",
     "core-js": "^3.18.3",
     "font-awesome": "^4.7.0",
-    "jsonpath": "^1.0.2",
+    "jsonpath": "^1.1.1",
     "mousetrap": "^1.6.5",
     "ngx-clipboard": "^13.0.1",
     "rxjs": "^6.5.4",
