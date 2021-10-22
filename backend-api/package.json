@@ -61,7 +61,7 @@
     "generator-jhipster": "7.3.1",
     "html-loader": "0.5.5",
     "html-webpack-plugin": "5.4.0",
-    "husky": "3.1.0",
+    "husky": "7.0.4",
     "jest": "24.9.0",
     "jest-date-mock": "1.0.7",
     "jest-junit": "10.0.0",
