@@ -62,7 +62,7 @@
     "karma-jasmine": "~4.0.1",
     "karma-jasmine-html-reporter": "^1.5.4",
     "protractor": "~5.4.3",
-    "shelljs": "^0.8.3",
+    "shelljs": "^0.8.5",
     "ts-node": "~10.3.1",
     "tslint": "~6.0.0",
     "typescript": "4.4.4"
