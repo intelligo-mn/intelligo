@@ -1,7 +1,7 @@
 Flask==1.0
 python-dotenv==0.6.5
 redis==2.10.6
-requests==2.18.4
+requests==2.20.0
 thrift==0.10.0
 furl==1.0.1
 pymongo[srv]==3.7.0
