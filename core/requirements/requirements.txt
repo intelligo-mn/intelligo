@@ -1,4 +1,4 @@
-Flask==0.12
+Flask==1.0
 python-dotenv==0.6.5
 redis==2.10.6
 requests==2.18.4
