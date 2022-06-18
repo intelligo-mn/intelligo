@@ -41,7 +41,7 @@
     "/src"
   ],
   "dependencies": {
-    "async": "3.2.0",
+    "async": "3.2.4",
     "body-parser": "1.19.0",
     "config": "3.2.5",
     "eventemitter3": "4.0.7",
