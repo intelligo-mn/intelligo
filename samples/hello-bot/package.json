@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "config": "3.2.5",
-    "express": "4.17.1",
+    "express": "4.18.2",
     "intelligo": "1.3.0"
   }
 }
