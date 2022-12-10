@@ -45,7 +45,7 @@
     "body-parser": "1.19.0",
     "config": "3.2.5",
     "eventemitter3": "4.0.7",
-    "express": "4.17.1",
+    "express": "4.17.3",
     "extend": "3.0.2",
     "lodash": "4.17.21",
     "opencollective": "1.0.3",
