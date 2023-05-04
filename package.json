@@ -60,7 +60,7 @@
     "@types/express": "4.17.12",
     "@types/extend": "3.0.1",
     "@types/lodash": "4.14.170",
-    "@types/node": "10.17.14",
+    "@types/node": "18.16.3",
     "@types/request": "2.48.4",
     "@types/ws": "7.4.5",
     "chai": "4.2.0",
