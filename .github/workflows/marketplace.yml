@@ -28,15 +28,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: intelligo-systems/intelligo-actions@v1
-        with:
-          packages: '["intelligo", "intelligo",  "intelligo", "intelligo", "intelligo"]'
       - uses: actions/cache@v1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-  
+            ${{ runner.os }}-node-
       - name: Install dependencies
         run: npm install
         working-directory: ./marketplace

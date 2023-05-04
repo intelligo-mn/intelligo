@@ -1,1 +1,0 @@
-{"version":3,"file":"authority.entity.js","sourceRoot":"","sources":["../../src/domain/authority.entity.ts"],"names":[],"mappings":";;;;;;;;;;;AAAA,qCAAgD;AAChD,6CAAmD;AAGnD,IAAa,SAAS,GAAtB,MAAa,SAAS;CAIrB,CAAA;AADC;IAFC,0BAAgB,CAAC,EAAE,OAAO,EAAE,WAAW,EAAE,WAAW,EAAE,WAAW,EAAE,CAAC;IACpE,uBAAa,EAAE;;uCACH;AAHF,SAAS;IADrB,gBAAM,CAAC,eAAe,CAAC;GACX,SAAS,CAIrB;AAJY,8BAAS"}
