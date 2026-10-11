@@ -1,0 +1,33 @@
+---
+/**
+ * Loads gtag.js after the page, on the production host only. A bundled
+ * script, not an inline one: the content security policy allows Google's
+ * tag and collection hosts (src/lib/headers.mjs) and nothing inline it
+ * did not hash.
+ */
+---
+<script>
+  import { ANALYTICS } from "@/lib/analytics";
+
+  declare global {
+    interface Window {
+      dataLayer: unknown[];
+      gtag: (...args: unknown[]) => void;
+    }
+  }
+
+  if (location.hostname === ANALYTICS.host) {
+    window.dataLayer = window.dataLayer || [];
+    // gtag.js reads each queued call as an `arguments` object, not an array.
+    window.gtag = function gtag() {
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer.push(arguments);
+    };
+    window.gtag("js", new Date());
+    window.gtag("config", ANALYTICS.measurementId);
+    const tag = document.createElement("script");
+    tag.async = true;
+    tag.src = `https://www.googletagmanager.com/gtag/js?id=${ANALYTICS.measurementId}`;
+    document.head.append(tag);
+  }
+</script>
