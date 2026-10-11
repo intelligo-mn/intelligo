@@ -465,10 +465,59 @@ jobs:
           if [ "$DIST_TAG" != "latest" ]; then prerelease="--prerelease"; fi
           gh release create "v$VERSION" --repo "$GITHUB_REPOSITORY" --verify-tag --title "v$VERSION" --notes-file "$RUNNER_TEMP/release/notes.md" $prerelease
 
-      # The site's /r and version follow what npm serves, read by `pnpm
-      # sync`; main's protection keeps this run from committing it.
-      - name: The site still describes the previous release
-        if: needs.publish.result == 'success'
-        env:
-          VERSION: ${{ needs.verify.outputs.version }}
-        run: echo "::notice title=Sync intelligo.dev::/r and the site's version follow npm once synced. Commit pnpm sync on main to serve $VERSION; CI's site check fails until then."
+  # intelligo.dev reads the release npm serves at build time
+  # (apps/website/scripts/serve-release.mjs), and the build Cloudflare ran
+  # for the release commit ran before the publish. This one runs after it,
+  # from main as Cloudflare would build it, so the site and /r serve the
+  # new release without waiting for the next push.
+  deploy-site:
+    name: Deploy intelligo.dev
+    needs: [verify, publish]
+    if: needs.publish.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      VERSION: ${{ needs.verify.outputs.version }}
+
+    steps:
+      - name: Cloudflare credentials
+        id: credentials
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::notice title=Deploy intelligo.dev::No CLOUDFLARE_API_TOKEN/CLOUDFLARE_ACCOUNT_ID secret: the site serves $VERSION from its next build."
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.credentials.outputs.present == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+
+      - if: steps.credentials.outputs.present == 'true'
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0 — pnpm version from packageManager
+
+      - if: steps.credentials.outputs.present == 'true'
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+
+      - if: steps.credentials.outputs.present == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - if: steps.credentials.outputs.present == 'true'
+        name: Build and deploy
+        run: |
+          set -euo pipefail
+          pnpm turbo build --filter=website
+          grep -q "\"published\": \"$VERSION\"" apps/website/src/data/proof.json || {
+            echo "::error::The build did not pick up $VERSION from npm."
+            exit 1
+          }
+          pnpm --filter website exec wrangler deploy

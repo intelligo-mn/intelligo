@@ -160,19 +160,21 @@ jobs:
       # renders the items' real components, all as committed copies made
       # by `sync`; so are its data files, generated docs, llms.txt and the
       # chrome's Intelligo components. Every one of them is compared here.
-      # proof.json is compared on the version it describes and the one npm
-      # serves, and not on its counts and sampled date: after a release
-      # this step fails until the site is synced to it.
+      # proof.json is compared on the version it describes, and not on its
+      # counts and sampled date. The release npm serves (proof.json's
+      # `published` and public/r/*.json) is not compared: every build of the
+      # site reads it from npm (scripts/serve-release.mjs), so a release
+      # needs no commit for the site to follow it.
       - name: Site sync output is committed
         run: |
           set -euo pipefail
           pnpm sync
-          described() { node -p "const p = JSON.parse(require('fs').readFileSync(0, 'utf8')); p.version + ' ' + p.published"; }
+          described() { node -p "JSON.parse(require('fs').readFileSync(0, 'utf8')).version"; }
           committed=$(git show HEAD:apps/website/src/data/proof.json | described)
           synced=$(described < apps/website/src/data/proof.json)
-          git checkout -- apps/website/src/data/proof.json
+          git checkout -- apps/website/src/data/proof.json ':(glob)apps/website/public/r/*.json'
           if [ "$committed" != "$synced" ]; then
-            echo "proof.json describes $committed; the tree and npm say $synced. Run pnpm sync and commit."
+            echo "proof.json describes $committed; the tree says $synced. Run pnpm sync and commit."
             exit 1
           fi
           git status --porcelain -- apps/website

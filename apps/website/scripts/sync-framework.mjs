@@ -3,7 +3,9 @@
  * Pull everything the site shows about the framework from the framework
  * itself, so the site can never claim a page or a number that doesn't
  * exist — and commit the result, so a deploy needs nothing but this
- * directory (Cloudflare builds from apps/website and never runs this).
+ * directory (Cloudflare builds from apps/website and never runs this;
+ * its build runs scripts/serve-release.mjs, which moves `published` and
+ * public/r/*.json to the release npm serves).
  *
  *   pnpm sync        # repository root: builds the registry first (turbo)
  *
@@ -53,11 +55,8 @@ import {
   generateLlmsTxt,
   isGenerated,
 } from "./docs.mjs";
-import {
-  compareVersions,
-  fromRelease,
-  toRelease,
-} from "./registry-release.mjs";
+import { compareVersions, toRelease } from "./registry-release.mjs";
+import { publishedVersion, serveRelease } from "./serve-release.mjs";
 
 const SITE = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 // apps/website lives inside the framework repository: two directories up.
@@ -160,35 +159,7 @@ const version = JSON.parse(
   readFileSync(join(FRAMEWORK, "packages/core/package.json"), "utf8")
 ).version;
 
-/**
- * What npm serves under the dist-tag this version releases to — the one
- * version the site may call "on npm". The tree runs ahead of npm between
- * a version bump and its release, and stays ahead if the release fails.
- * Without the network the last answer stands: sync works offline.
- */
-async function publishedVersion() {
-  const proofPath = join(SITE, "src/data/proof.json");
-  const last = existsSync(proofPath)
-    ? JSON.parse(readFileSync(proofPath, "utf8")).published
-    : undefined;
-  const tag = /-([a-z]+)/.exec(version)?.[1] ?? "latest";
-  try {
-    const response = await fetch(
-      "https://registry.npmjs.org/-/package/@intelligo-dev%2fcore/dist-tags",
-      { signal: AbortSignal.timeout(10_000) }
-    );
-    if (!response.ok) throw new Error(`npm answered ${response.status}`);
-    const published = (await response.json())[tag];
-    if (!published) throw new Error(`npm has no "${tag}" dist-tag`);
-    return published;
-  } catch (error) {
-    console.warn(
-      `proof: could not read npm (${error.message}); keeping published = ${last ?? "unknown"}`
-    );
-    return last;
-  }
-}
-const published = await publishedVersion();
+const published = await publishedVersion(version);
 
 function writeRelease(release, sourceDir) {
   rmSync(releaseDir(release), { recursive: true, force: true });
@@ -262,15 +233,7 @@ for (const v of new Set([version, published].filter(Boolean))) {
 // What the namespace serves: the release npm has, or this tree's version
 // while npm has none.
 const current = published ?? version;
-for (const f of readdirSync(registryRoot)) {
-  if (f.endsWith(".json")) rmSync(join(registryRoot, f));
-}
-for (const f of readdirSync(releaseDir(current))) {
-  writeFileSync(
-    join(registryRoot, f),
-    fromRelease(readFileSync(join(releaseDir(current), f), "utf8"), current)
-  );
-}
+serveRelease(current);
 const releases = readdirSync(registryRoot)
   .filter((f) => statSync(join(registryRoot, f)).isDirectory())
   .sort(compareVersions);
