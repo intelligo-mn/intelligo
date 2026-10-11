@@ -3,10 +3,12 @@
  * groups, the framework package ids `pnpm add` lists, and the version
  * that types into the terminal. Source of truth if this ever needs a
  * refresh: packages/registry/registry.json (item names/groups, via
- * apps/website/src/lib/registry-items.ts's GROUPS map) and
- * packages/core/package.json's version. Not auto-synced — a rendered
- * video is a snapshot, not a live page.
+ * apps/website/src/lib/registry-items.ts's GROUPS map). The version is
+ * read when the film renders, from the site's proof.json — a rendered
+ * video keeps the version it was rendered at.
  */
+
+import proof from "../../../apps/website/src/data/proof.json";
 
 export type RegistryGroup = "Auth" | "Shell" | "Settings" | "Commerce" | "AI";
 
@@ -64,5 +66,5 @@ export const PACKAGES = [
   "admin",
 ];
 
-/** The published version, from packages/core/package.json. */
-export const PACKAGE_VERSION = "1.0.0-beta.8";
+/** The version npm serves when the film is rendered, as the site states it. */
+export const PACKAGE_VERSION: string = proof.published;
