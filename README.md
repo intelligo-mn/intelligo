@@ -8,7 +8,7 @@ You build the agent, with the AI framework you already use.<br/>
 Intelligo is everything around it — and it is tested, typed, and yours.
 
 <a href="https://github.com/intelligo-dev/intelligo/actions/workflows/ci.yml"><img src="https://github.com/intelligo-dev/intelligo/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI" /></a>
-<a href="https://www.npmjs.com/package/@intelligo-dev/core"><img src="https://img.shields.io/npm/v/@intelligo-dev/core/beta?label=npm%40beta" alt="npm beta" /></a>
+<a href="https://www.npmjs.com/package/@intelligo-dev/core"><img src="https://img.shields.io/npm/v/@intelligo-dev/core?label=npm" alt="npm" /></a>
 <img src="https://img.shields.io/badge/licence-Apache--2.0-blue" alt="Apache-2.0" />
 <img src="https://img.shields.io/badge/TypeScript-strict-blue" alt="TypeScript" />
 <img src="https://img.shields.io/badge/Next.js-16-black" alt="Next.js 16" />
