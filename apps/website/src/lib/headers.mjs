@@ -35,17 +35,24 @@ export function inlineScriptHashes(html) {
   return hashes;
 }
 
+/** The hosts Google documents for a GA4 tag under a content security policy. */
+const GOOGLE_TAG = "https://*.googletagmanager.com";
+const GOOGLE_COLLECT =
+  "https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com";
+
 export function contentSecurityPolicy(hashes) {
   return [
     "default-src 'self'",
-    // WebAssembly compiles the code highlighter's regular-expression engine.
-    `script-src 'self' 'wasm-unsafe-eval' ${[...hashes].sort().join(" ")}`,
+    // WebAssembly compiles the code highlighter's regular-expression engine;
+    // Google's tag host serves gtag.js (src/components/analytics.astro).
+    `script-src 'self' 'wasm-unsafe-eval' ${GOOGLE_TAG} ${[...hashes].sort().join(" ")}`,
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https:",
     "font-src 'self' data:",
     "media-src 'self' blob:",
-    // The star count in the nav; the demos read files the reader attached.
-    "connect-src 'self' blob: data: https://api.github.com",
+    // The star count in the nav; analytics collection; the demos read
+    // files the reader attached.
+    `connect-src 'self' blob: data: https://api.github.com ${GOOGLE_COLLECT}`,
     "worker-src 'self' blob:",
     "frame-src 'self' blob: data:",
     "object-src 'none'",

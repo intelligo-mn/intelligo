@@ -3,6 +3,7 @@ import { Font } from "astro:assets";
 import "../styles/global.css";
 import { SITE } from "@/lib/site";
 import { ogImagePath } from "@/lib/og-path.mjs";
+import Analytics from "@/components/analytics.astro";
 
 interface Props {
   title?: string;
@@ -117,6 +118,7 @@ const jsonLd = JSON.stringify(
         }
       })();
     </script>
+    <Analytics />
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>

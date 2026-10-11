@@ -145,9 +145,25 @@ describe("_headers", () => {
   it("refuses framing and runs no script it did not hash", () => {
     const csp = headers.contentSecurityPolicy(new Set(["'sha256-x'"]));
     expect(csp).toContain("frame-ancestors 'none'");
-    expect(csp).toMatch(/script-src 'self' 'wasm-unsafe-eval' 'sha256-x'(;|$)/);
+    expect(csp).toMatch(
+      /script-src 'self' 'wasm-unsafe-eval' https:\/\/\*\.googletagmanager\.com 'sha256-x'(;|$)/
+    );
     expect(csp).not.toContain("'unsafe-inline' 'sha256");
     expect(csp).not.toMatch(/script-src[^;]*'unsafe-(inline|eval)'/);
+  });
+
+  it("lets the analytics tag load and send, and nothing else off-site", () => {
+    const csp = headers.contentSecurityPolicy(new Set());
+    const connect = /connect-src ([^;]*)/.exec(csp)![1]!.split(" ");
+    expect(connect).toEqual([
+      "'self'",
+      "blob:",
+      "data:",
+      "https://api.github.com",
+      "https://*.google-analytics.com",
+      "https://*.analytics.google.com",
+      "https://*.googletagmanager.com",
+    ]);
   });
 
   it("serves the registry as JSON to any origin", () => {
