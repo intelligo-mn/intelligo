@@ -9,11 +9,11 @@
   },
   "scripts": {
     "dev": "astro dev --port 4003",
-    "build": "astro build",
+    "build": "node scripts/serve-release.mjs && astro build",
     "preview": "astro preview --port 4003",
     "type-check": "astro check",
     "sync": "node scripts/sync-framework.mjs",
-    "deploy": "astro build && wrangler deploy"
+    "deploy": "pnpm build && wrangler deploy"
   },
   "dependencies": {
     "@ai-sdk/react": "^4.0.130",
