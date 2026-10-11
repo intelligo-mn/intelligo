@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import Base from "@/layouts/Base.astro";
 import Footer from "@/components/footer.astro";
 import { Nav } from "@/components/nav";
+import { getGitHubStars } from "@/lib/github-stars";
 import { SITE } from "@/lib/site";
 
 interface Props {
@@ -32,6 +33,7 @@ interface Props {
   structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 const { path, tag, title, lede, description, noindex, compact, gallery, seoTitle, structuredData } = Astro.props;
+const stars = await getGitHubStars();
 const GALLERIES = [
   { id: "pages", href: "/blocks", label: "Pages" },
   { id: "components", href: "/components", label: "Components" },
@@ -47,7 +49,7 @@ const pageData = structuredData ?? {
 };
 ---
 <Base title={pageTitle} description={pageDescription} noindex={noindex} structuredData={pageData}>
-  <Nav client:load current={path} />
+  <Nav client:load current={path} stars={stars} />
   <main id="main" class="page-body rails-full">
     <header class="xline">
       {compact ? (

@@ -8,17 +8,20 @@ import { buttonVariants } from "@/components/ui/button";
  * A link to the repository that also says how many stars it has.
  *
  * A link, not a button that opens a window: it can be middle-clicked,
- * copied and read as what it is. The count comes from GitHub's public
- * API, which allows an address sixty calls an hour — so one answer is
- * kept for an hour — "no answer" included, so a repository that is not
- * public yet is asked about once, not on every page. With no answer the
- * count is simply not shown; the link never depends on it.
+ * copied and read as what it is. `initialCount` is the number read at
+ * build time, so the HTML carries it from the first paint. The client
+ * then asks GitHub's public API, which allows an address sixty calls an
+ * hour — so one answer is kept for an hour — "no answer" included, so a
+ * repository that is not public yet is asked about once, not on every
+ * page. The count sits in a slot of fixed width that is there before
+ * any number is: a count arriving or changing never moves the nav.
  */
 
 interface GitHubStarButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   owner: string;
   repo: string;
   staticCount?: number;
+  initialCount?: number;
   showCount?: boolean;
 }
 
@@ -73,18 +76,21 @@ export function GitHubStarButton({
   owner,
   repo,
   staticCount,
+  initialCount,
   showCount = true,
   className,
   ...props
 }: GitHubStarButtonProps) {
-  const [count, setCount] = useState<number | null>(staticCount ?? null);
+  const [count, setCount] = useState<number | null>(
+    staticCount ?? initialCount ?? null
+  );
 
   useEffect(() => {
     if (staticCount !== undefined || !showCount) return;
     const key = `stars:${owner}/${repo}`;
     const cached = readCached(key);
     if (cached !== undefined) {
-      setCount(cached);
+      if (cached !== null) setCount(cached);
       return;
     }
     let live = true;
@@ -96,7 +102,7 @@ export function GitHubStarButton({
             ? data.stargazers_count
             : null;
         writeCached(key, n);
-        if (live) setCount(n);
+        if (live && n !== null) setCount(n);
       })
       .catch(() => writeCached(key, null));
     return () => {
@@ -122,10 +128,15 @@ export function GitHubStarButton({
     >
       <StarIcon className="size-4 transition-transform duration-normal ease-standard group-hover/star:scale-110" />
       <span>Star</span>
-      {showCount && count !== null && (
+      {showCount && (
         <>
           <span className="h-4 w-px bg-current opacity-20" aria-hidden="true" />
-          <span className="tabular-nums">{formatNumber(count)}</span>
+          <span
+            className="min-w-[4ch] text-center tabular-nums"
+            aria-hidden={count === null ? true : undefined}
+          >
+            {count !== null ? formatNumber(count) : "\u00a0"}
+          </span>
         </>
       )}
     </a>

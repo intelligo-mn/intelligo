@@ -14,6 +14,7 @@
 import Base from "@/layouts/Base.astro";
 import Footer from "@/components/footer.astro";
 import { Nav } from "@/components/nav";
+import { getGitHubStars } from "@/lib/github-stars";
 import { SITE } from "@/lib/site";
 import { docsSidebar } from "@/lib/docs-nav";
 import type { MarkdownHeading } from "astro";
@@ -30,6 +31,7 @@ interface Props {
   source?: string;
 }
 const { path, section, title, description, headings = [], prev, next, source } = Astro.props;
+const stars = await getGitHubStars();
 const sidebar = await docsSidebar();
 const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 const current = sidebar.flatMap((s) => s.items).find((i) => i.href === path);
@@ -55,7 +57,7 @@ const structuredData = [
 const pageTitle = title.includes(SITE.brand) ? title : `${title} — ${SITE.brand} docs`;
 ---
 <Base title={pageTitle} description={description} structuredData={structuredData}>
-  <Nav client:load current={path} />
+  <Nav client:load current={path} stars={stars} />
   <main id="main" class="rails-full">
     <div class="mx-auto grid max-w-7xl grid-cols-1 border-t border-border lg:grid-cols-[248px_minmax(0,1fr)] xl:grid-cols-[248px_minmax(0,1fr)_216px] xl:border-x">
       <aside class="hidden border-r border-border lg:block">
