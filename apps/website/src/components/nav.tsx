@@ -36,7 +36,14 @@ function useReadingProgress() {
   return bar;
 }
 
-export function Nav({ current }: { current?: string }) {
+export function Nav({
+  current,
+  stars,
+}: {
+  current?: string;
+  /** The star count read at build time, so the first paint carries it. */
+  stars?: number;
+}) {
   const [open, setOpen] = useState(false);
   const bar = useReadingProgress();
   const root = useRef<HTMLElement>(null);
@@ -117,7 +124,11 @@ export function Nav({ current }: { current?: string }) {
           </div>
           <DocsSearch />
           {SITE.githubPublic ? (
-            <GitHubStarButton owner={SITE.githubOwner} repo={SITE.githubRepo} />
+            <GitHubStarButton
+              owner={SITE.githubOwner}
+              repo={SITE.githubRepo}
+              initialCount={stars}
+            />
           ) : (
             <a
               href={SITE.github}

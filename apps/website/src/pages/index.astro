@@ -17,9 +17,12 @@ import WhatYouGet from "@/sections/what-you-get.astro";
 import Code from "@/sections/code.astro";
 import Quickstart from "@/sections/quickstart.astro";
 import Faq from "@/sections/faq.astro";
+import { getGitHubStars } from "@/lib/github-stars";
+
+const stars = await getGitHubStars();
 ---
 <Base>
-  <Nav client:load current="/" />
+  <Nav client:load current="/" stars={stars} />
   <main id="main" class="rails">
     <Hero />
     <SeeIt />
