@@ -14,6 +14,75 @@ untagged milestones that followed. None of them were released to npm —
 happened alongside the framework is out of scope and noted only where
 it explains a framework decision.
 
+## [1.2.1] — 2026-10-18
+
+### Added
+
+- `setConversationSharing("public" | "workspace" | "off")` in
+  `@intelligo-dev/core` chooses who a share link opens for. `public`
+  (the default) is unchanged; `workspace` opens a link only for members
+  of the conversation's workspace; `off` hides the share dialog and
+  refuses to share (`sharing_off`). The public read honours it on the
+  server.
+- Invitations carry a product's own fields: `inviteMember` takes
+  `productFields`, accepting the invitation copies them to the new
+  membership, and `memberProductFields` reads them back.
+- `isImpersonating(session)` in `@intelligo-dev/auth`.
+- The chat config takes `linkHosts`, and `Markdown` takes
+  `linkPrefixes`: a product that names them links only to those hosts,
+  and other links show as text. `MarkdownLink` is the confirming link a
+  `components.a` override falls back to.
+- `DOCUMENT_LIMITS` bounds a saved document's id, title, content and
+  kept versions.
+
+### Changed
+
+- Production refuses to start without an email provider: set
+  `RESEND_API_KEY` or `LOOPS_API_KEY`, or choose `EMAIL_PROVIDER=console`
+  explicitly.
+- A chat opened with `?query=` puts the text in the composer instead of
+  sending it. A same-origin handoff still sends.
+- For a persisted conversation, the model reads the stored transcript:
+  an earlier message the client sends is replaced by the stored message
+  with the same id and role. `persist: false`, or a product's own
+  `persist`, keeps the old path.
+- `hasFeature` answers `false` with `degraded: true` while the feature
+  flags cannot be read, instead of falling back to the plan matrix.
+- Platform admins list users, read a user, list a user's sessions and
+  start or stop impersonating only through the admin console's server
+  calls, not the raw auth endpoints.
+- Checkout, local payment and credit purchases refuse while an admin is
+  acting as the user (`errors.impersonating`).
+- Reply links open only http(s), `mailto:` and `tel:` addresses.
+- An HTML document preview runs under a content security policy that
+  reaches no server, and only `code` documents are previewed as HTML.
+
+### Fixed
+
+- Tokens `prepareMessages` spent are charged when admission then
+  refuses the turn.
+- A saved document links only the actor's own conversations, and old
+  versions beyond the limit are pruned. Too long or foreign input shows
+  `actions.invalidArtifact`.
+- The prompt sanitizer strips role prefixes, chat-template tokens,
+  `[INST]` and prompt tags in any language.
+- Links next to citations still confirm before opening.
+
+### Upgrading
+
+Run `intelligo migrate` before deploying:
+`0009_invitation_product_fields` adds a nullable `product_fields` jsonb
+column to `invitation` and `member`. Nothing is rewritten.
+
+Set `RESEND_API_KEY`, `LOOPS_API_KEY` or `EMAIL_PROVIDER=console` in
+production, or the app does not start.
+
+Run `intelligo sync` for every item (`chat`, `chat-share`, `dashboard`,
+`pricing`, `payment-poll`, `ai-markdown`, `document-viewer` and
+`artifacts` changed). Add the chat keys `actions.invalidArtifact`,
+`actions.sharingOff` and `share.descriptionWorkspace`, and the pricing
+and payment-poll key `errors.impersonating`, to any locale you own.
+
 ## [1.2.0] — 2026-10-08
 
 ### Added
