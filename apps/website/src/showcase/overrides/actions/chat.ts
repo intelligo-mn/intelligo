@@ -89,11 +89,18 @@ export async function voteMessage(
   await wait();
   return { success: true, data: undefined };
 }
-export async function getShareState(
-  ..._args: unknown[]
-): Promise<ChatActionResult<{ shared: boolean; ref: string | null }>> {
+export async function getShareState(..._args: unknown[]): Promise<
+  ChatActionResult<{
+    shared: boolean;
+    ref: string | null;
+    sharing: "public" | "workspace" | "off";
+  }>
+> {
   await wait();
-  return { success: true, data: { shared: false, ref: null } };
+  return {
+    success: true,
+    data: { shared: false, ref: null, sharing: "public" },
+  };
 }
 export async function setConversationShared(
   ..._args: unknown[]
