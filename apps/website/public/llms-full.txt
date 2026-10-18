@@ -2205,7 +2205,11 @@ export const chatServerConfig: ChatServerConfig = {
 That is a working chat. Every turn goes through auth, the plan's rate limit,
 the feature gate, conversation persistence (`@intelligo-dev/core/conversations`)
 and the execution boundary (`executions.begin()` decides entitlement against
-the model that is about to run, and settles exactly once).
+the model that is about to run, and settles exactly once). The model reads
+the conversation as it was stored: each message before the one being sent
+is read back by id, and one the conversation does not hold is left out, so
+a client cannot put words or tool results in the transcript it never had. A
+deployment with its own `persist` reads its own store in `prepareMessages`.
 
 ## The seams
 

@@ -502,6 +502,32 @@ export function createChatHandler(config: ChatServerConfig): ChatHandler {
     }
   }
 
+  /**
+   * The client's transcript with every message before the last replaced
+   * by the stored message of the same id and role, in the client's
+   * order; one the conversation does not hold is dropped. The last
+   * message (the new user message, or a continuation already rebuilt
+   * from the stored one) stays as it is.
+   */
+  async function asStoredHistory(
+    actor: ChatActor,
+    body: { id: string; messages: UIMessage[] }
+  ): Promise<UIMessage[]> {
+    const earlier = body.messages.slice(0, -1);
+    const last = body.messages[body.messages.length - 1]!;
+    const rows = await getMessagesByIds(
+      actor,
+      body.id,
+      earlier.map((m) => m.id)
+    );
+    const stored = new Map(toUIMessages(rows).map((m) => [m.id, m]));
+    const kept = earlier.flatMap((m) => {
+      const held = stored.get(m.id);
+      return held && held.role === m.role ? [held] : [];
+    });
+    return [...kept, last];
+  }
+
   // POST: stream a reply.
 
   async function POST(request: Request): Promise<Response> {
@@ -734,6 +760,29 @@ export function createChatHandler(config: ChatServerConfig): ChatHandler {
         return refusal("BAD_REQUEST", t("invalidBody"), where, {}, cors);
       }
       body.messages = [...body.messages.slice(0, -1), resumed];
+    }
+
+    // What came before the turn's own message is what the conversation
+    // holds, not what the client says it holds: a client could otherwise
+    // put words, tool results or files in the model's mouth that it never
+    // produced. With the transport's own persistence each earlier message
+    // is read back by id; one the conversation does not hold under the
+    // same role is left out. A deployment that persists elsewhere
+    // (`persist`) reads its own store in `prepareMessages`.
+    if (
+      config.persist === undefined &&
+      loaded.row &&
+      body.messages.length > 1
+    ) {
+      try {
+        body.messages = await asStoredHistory(actor, body);
+      } catch (error) {
+        log.error("Failed to read the stored history", {
+          conversationId: body.id,
+          error: errorMessage(error),
+        });
+        return refusal("INTERNAL", t("internalError"), where, {}, cors);
+      }
     }
 
     const answers = approvalAnswers(body.messages);
