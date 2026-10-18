@@ -132,6 +132,9 @@ jobs:
       # reads a widened column through Drizzle's integer mapper, which
       # parses the string a bigint arrives as. Widening a column
       # rewrites its table under a lock, so run it in a quiet window.
+      # 0009 adds one nullable column to invitation and member
+      # (product_fields, jsonb): nothing renamed or removed, and no table
+      # rewritten.
       #
       # Raising it again: confirm `intelligo migrate --check` reports
       # zero pending, then raise FROZEN_AT in the same commit as the
@@ -139,7 +142,7 @@ jobs:
       - name: The migration chain is frozen
         run: |
           set -euo pipefail
-          FROZEN_AT=9
+          FROZEN_AT=10
           entries=$(node -p "require('./packages/core/src/db/migrations/meta/_journal.json').entries.length")
           echo "journal has $entries entries, frozen at $FROZEN_AT"
           if [ "$entries" -gt "$FROZEN_AT" ]; then
