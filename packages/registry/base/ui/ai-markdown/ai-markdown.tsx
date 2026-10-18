@@ -18,7 +18,7 @@
  */
 
 import * as React from "react";
-import { defaultRehypePlugins, Streamdown } from "streamdown";
+import { defaultComponents, defaultRehypePlugins, Streamdown } from "streamdown";
 import { cjk } from "@streamdown/cjk";
 import { code } from "@streamdown/code";
 import "katex/dist/katex.min.css";
@@ -123,6 +123,13 @@ function rehypePluginsFor(
   }
   return plugins;
 }
+
+/**
+ * Markdown's own link: it confirms before opening another site. A
+ * `components.a` override that wraps some links (citations, say) renders
+ * the rest with this, so they keep that confirmation.
+ */
+export const MarkdownLink = defaultComponents.a;
 
 const NO_IMAGE_HOSTS: readonly string[] = [];
 const ANY_LINK_HOST: readonly string[] = ["*"];

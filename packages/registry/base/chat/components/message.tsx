@@ -41,7 +41,7 @@ import {
 } from "@/components/ui/ai-branch";
 import { CitationPill, type CitationItem } from "@/components/ui/ai-citations";
 import { ImageGeneration } from "@/components/ui/ai-image-generation";
-import { Markdown } from "@/components/ui/ai-markdown";
+import { Markdown, MarkdownLink } from "@/components/ui/ai-markdown";
 import { chatConfig } from "@/lib/chat-config";
 
 import { ReasoningText } from "@/components/ui/ai-reasoning-text";
@@ -510,10 +510,12 @@ function CitationAnchor({
       );
     }
   }
+  // Any other link keeps Markdown's own rendering, which confirms before
+  // opening another site: overriding `a` for citations must not drop it.
   return (
-    <a href={href} target="_blank" rel="noreferrer" {...props}>
+    <MarkdownLink href={href} {...props}>
       {children}
-    </a>
+    </MarkdownLink>
   );
 }
 

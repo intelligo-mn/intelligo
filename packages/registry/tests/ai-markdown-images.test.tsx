@@ -35,6 +35,20 @@ describe("Markdown links", () => {
     expect(custom).not.toContain(LINKED);
   });
 
+  it("keeps the confirming link for a component override that falls back to MarkdownLink", async () => {
+    const { MarkdownLink } = await import("../base/ui/ai-markdown/ai-markdown");
+    const html = renderToStaticMarkup(
+      <Markdown
+        components={{
+          a: (props: React.ComponentProps<"a">) => <MarkdownLink {...props} />,
+        }}
+      >
+        {"[docs](https://docs.example.com/a)"}
+      </Markdown>
+    );
+    expect(html).toContain(LINKED);
+  });
+
   it("links only to the hosts a product names, when it names them", () => {
     const allowed = ["https://docs.example.com/"];
     expect(render("[ok](https://docs.example.com/a)", [], allowed)).toContain(
