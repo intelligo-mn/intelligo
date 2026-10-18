@@ -169,15 +169,15 @@ describe("hasFeature in-process cache", () => {
     expect(await hasFeature("ws-1", "detailed_assessment")).toBe(true);
   });
 
-  it("does not cache the matrix's answer when the kill-switch read failed", async () => {
+  it("refuses a feature while the kill-switch read fails, and does not cache that", async () => {
     mocks.getWorkspaceSubscription.mockResolvedValue(onPlan("pro"));
+    // The plan grants it, but the flag that could switch it off cannot be read.
     mocks.selectLimit.mockRejectedValueOnce(new Error("reset"));
-    expect(await hasFeature("ws-1", "web_search")).toBe(true);
-
-    mocks.selectLimit.mockResolvedValue([
-      { name: "web_search", isActive: false, enabledPlans: '["pro"]' },
-    ]);
     expect(await hasFeature("ws-1", "web_search")).toBe(false);
+
+    // Once the database answers, the flag decides again.
+    mocks.selectLimit.mockResolvedValue([]);
+    expect(await hasFeature("ws-1", "web_search")).toBe(true);
   });
 
   it("drops expired answers instead of keeping every key it ever saw", async () => {

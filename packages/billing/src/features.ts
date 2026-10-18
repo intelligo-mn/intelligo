@@ -2,7 +2,9 @@
  * Feature checking: resolves a workspace's plan from its subscription
  * (or active trial) and checks the `feature_flags` table for runtime
  * overrides before falling back to the registered feature matrix.
- * Every DB read degrades gracefully to the registered defaults.
+ * A failed read of the plan degrades to the registered defaults; a
+ * failed read of the flags refuses the feature, since it may be the
+ * read that would have seen a kill switch.
  */
 
 import { db } from "@intelligo-dev/core/db";
@@ -138,10 +140,10 @@ export function invalidateFeatureCache(workspaceId?: string): void {
  *
  * A `feature_flags` row overrides the registered matrix: `isActive=false`
  * blocks the feature globally (kill switch), otherwise its
- * `enabledPlans` JSON array decides. With no row, or on a DB error, the
- * registered matrix decides. Results are cached in-process for 60
- * seconds (see invalidateFeatureCache); one decided after a failed read
- * is not.
+ * `enabledPlans` JSON array decides. With no row the registered matrix
+ * decides; when the flags cannot be read, the feature is refused.
+ * Results are cached in-process for 60 seconds (see
+ * invalidateFeatureCache); one decided after a failed read is not.
  */
 export async function hasFeature(
   workspaceId: string,
@@ -199,17 +201,14 @@ async function computeHasFeature(
     return answer(allowed ? allowed.includes(plan) : false);
   } catch (error) {
     console.error(
-      `[hasFeature] DB query failed for feature "${feature}", falling back to the registered matrix:`,
+      `[hasFeature] DB query failed for feature "${feature}"; refusing it until the flags can be read:`,
       error
     );
-    // Graceful degradation: use the registered matrix on DB error, and
-    // do not cache it — a kill switch the read missed must apply as
-    // soon as the database answers again.
-    const allowed = featureMatrix()[feature];
-    return {
-      value: allowed ? allowed.includes(plan) : false,
-      degraded: true,
-    };
+    // Closed, not open: the read that failed is the one that would have
+    // seen a kill switch, so the registered matrix cannot stand in for
+    // it. Not cached, so the feature returns as soon as the database
+    // answers again.
+    return { value: false, degraded: true };
   }
 }
 
