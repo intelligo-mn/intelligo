@@ -35,6 +35,7 @@
     "noBillingAccount": "No billing account found. Subscribe to a plan or purchase credits first.",
     "providerError": "Something went wrong. Please try again.",
     "invalidInput": "Invalid input",
-    "genericFailure": "Something went wrong."
+    "genericFailure": "Something went wrong.",
+    "impersonating": "Billing can't be changed while you are signed in as this user."
   }
 }

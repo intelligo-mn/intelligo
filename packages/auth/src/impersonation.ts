@@ -24,6 +24,17 @@ export type ImpersonatedSession = {
   expiresAt: Date;
 };
 
+/**
+ * Whether `session` is a platform admin acting as its user (Better-Auth's
+ * admin plugin marks it with `impersonatedBy`). Support may look and
+ * act, but paying, subscribing or managing billing in a user's name is
+ * theirs alone: the money transports refuse while this is true.
+ */
+export function isImpersonating(session: object): boolean {
+  const by = (session as { impersonatedBy?: unknown }).impersonatedBy;
+  return typeof by === "string" && by !== "";
+}
+
 /** Default matching `impersonationSessionDuration` in server.ts. */
 const FALLBACK_DURATION_MS = 30 * 60_000;
 

@@ -47,7 +47,11 @@ vi.mock("./server", () => ({
 }));
 
 import { AuthGuardError } from "./guard-error";
-import { impersonateUser, stopImpersonating } from "./impersonation";
+import {
+  impersonateUser,
+  isImpersonating,
+  stopImpersonating,
+} from "./impersonation";
 
 const expiresAt = new Date("2026-08-26T04:30:00.000Z");
 
@@ -130,6 +134,15 @@ describe("impersonateUser", () => {
     expect(result.expiresAt.getTime()).toBeGreaterThanOrEqual(
       before + 30 * 60_000
     );
+  });
+});
+
+describe("isImpersonating", () => {
+  it("is true only for a session an admin opened as its user", () => {
+    expect(isImpersonating({ id: "s", impersonatedBy: "u-admin" })).toBe(true);
+    expect(isImpersonating({ id: "s", impersonatedBy: null })).toBe(false);
+    expect(isImpersonating({ id: "s", impersonatedBy: "" })).toBe(false);
+    expect(isImpersonating({ id: "s" })).toBe(false);
   });
 });
 

@@ -30,6 +30,7 @@ export type { WorkspaceRole } from "./helpers";
 export { PLATFORM_ADMIN_ROLE } from "./roles";
 export {
   impersonateUser,
+  isImpersonating,
   stopImpersonating,
   type ImpersonatedSession,
 } from "./impersonation";

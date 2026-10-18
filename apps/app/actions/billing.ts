@@ -10,7 +10,7 @@ import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { z } from "zod";
 
-import { requireRole } from "@intelligo-dev/auth";
+import { isImpersonating, requireRole } from "@intelligo-dev/auth";
 import {
   createBillingPortal,
   createCreditCheckout,
@@ -85,7 +85,9 @@ export async function createCheckoutSession(
   }
 
   try {
-    const { workspace, user } = await requireRole(["owner"]);
+    const { workspace, user, session } = await requireRole(["owner"]);
+    if (isImpersonating(session))
+      return { success: false, error: t("errors.impersonating") };
     const base = await origin();
 
     const { url } = await createSubscriptionCheckout({
@@ -129,7 +131,9 @@ export async function createCreditPurchaseSession(
   }
 
   try {
-    const { workspace, user } = await requireRole(["owner"]);
+    const { workspace, user, session } = await requireRole(["owner"]);
+    if (isImpersonating(session))
+      return { success: false, error: t("errors.impersonating") };
     const base = await origin();
 
     const { url } = await createCreditCheckout({
@@ -150,7 +154,9 @@ export async function createPortalSession(): Promise<BillingActionResult> {
   const t = await getTranslations("pricing");
 
   try {
-    const { workspace } = await requireRole(["owner"]);
+    const { workspace, session } = await requireRole(["owner"]);
+    if (isImpersonating(session))
+      return { success: false, error: t("errors.impersonating") };
     const base = await origin();
 
     const { url } = await createBillingPortal({

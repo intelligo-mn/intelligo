@@ -14,7 +14,11 @@
 import { revalidatePath } from "next/cache";
 import { getTranslations } from "next-intl/server";
 
-import { requireRole, requireWorkspace } from "@intelligo-dev/auth";
+import {
+  isImpersonating,
+  requireRole,
+  requireWorkspace,
+} from "@intelligo-dev/auth";
 import type { ActionResult } from "@intelligo-dev/next";
 import {
   isBillingServiceError,
@@ -62,6 +66,9 @@ export async function startLocalPayment(
     await requireRole([...PAYER_ROLES]);
   } catch {
     return { success: false, error: t("errors.forbidden") };
+  }
+  if (isImpersonating(context.session)) {
+    return { success: false, error: t("errors.impersonating") };
   }
 
   try {

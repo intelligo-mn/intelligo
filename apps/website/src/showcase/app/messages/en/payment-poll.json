@@ -25,6 +25,7 @@
     "createFailed": "We couldn't start the payment. Try again in a moment.",
     "statusFailed": "We couldn't check the payment status.",
     "declined": "The payment was declined.",
-    "forbidden": "Only a workspace owner can pay for this."
+    "forbidden": "Only a workspace owner can pay for this.",
+    "impersonating": "Payments can't be made while you are signed in as this user."
   }
 }
