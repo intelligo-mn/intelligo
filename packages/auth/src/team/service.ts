@@ -18,7 +18,12 @@ import { createLogger } from "@intelligo-dev/core/logger";
 import { auth } from "../server";
 import { requireAuth, requireRole, requireWorkspace } from "../helpers";
 import { orgApi, type OrgInvitation, type OrgMember } from "../org-api";
-import { inviteMemberSchema, updateRoleSchema } from "./schemas";
+import * as fields from "./product-fields";
+import {
+  inviteMemberSchema,
+  updateRoleSchema,
+  type InviteMemberInput,
+} from "./schemas";
 import { TeamServiceError, isTeamServiceError } from "./errors";
 import type { TeamServicePorts } from "./ports";
 
@@ -153,10 +158,11 @@ export function createTeamService(ports: TeamServicePorts = {}) {
    * invitations as seats: otherwise a workspace one seat short of its
    * limit could send any number of invitations and have them all accepted.
    */
-  async function inviteMember(input: {
-    email: string;
-    role: "admin" | "member";
-  }): Promise<OrgInvitation | null> {
+  // `productFields`: the product's own fields for this member, copied onto
+  // the membership on acceptance and read back with `memberProductFields`.
+  async function inviteMember(
+    input: InviteMemberInput
+  ): Promise<OrgInvitation | null> {
     const { workspace, user } = await callRequireRole(["owner", "admin"]);
     const validated = parseInput(inviteMemberSchema, input);
     const hdrs = await getRequestHeaders();
@@ -226,6 +232,8 @@ export function createTeamService(ports: TeamServicePorts = {}) {
           })
         );
     }
+
+    await fields.keep(result?.id, workspace.id, validated.productFields);
 
     return result;
   }
@@ -305,6 +313,10 @@ export function createTeamService(ports: TeamServicePorts = {}) {
         "Failed to accept invitation"
       );
     }
+
+    // The inviter's product fields become the membership's, so what the
+    // inviter said this member is outlives the invitation.
+    await fields.copy(invitationId, matched.organizationId, user.id);
 
     // Notify the owner, fire-and-forget: acceptance has already succeeded.
     // Uses `targetOrg`, the organization just joined, rather than resolving
@@ -548,3 +560,5 @@ export function createTeamService(ports: TeamServicePorts = {}) {
 }
 
 export type TeamService = ReturnType<typeof createTeamService>;
+
+export { memberProductFields } from "./product-fields";

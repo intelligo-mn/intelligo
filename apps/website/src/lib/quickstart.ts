@@ -36,7 +36,7 @@ export const QUICKSTART = [
     cmd: "pnpm db:migrate",
     note: "After DATABASE_URL and BETTER_AUTH_SECRET are in .env.local. The framework's schema, applied in one transaction — then drizzle-kit for the tables you add.",
     out: [
-      "✓ Applied 9 migration(s):",
+      "✓ Applied 10 migration(s):",
       "    0000_baseline",
       "    0001_reconcile_chain_built_databases",
       "    0002_webhook_claim_lease",
@@ -46,6 +46,7 @@ export const QUICKSTART = [
       "    0006_local_invoice_grant",
       "    0007_schema_hardening",
       "    0008_wide_counters_kept_ledgers",
+      "    0009_invitation_product_fields",
     ],
   },
   {

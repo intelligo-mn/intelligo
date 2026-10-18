@@ -60,7 +60,11 @@ writes the column directly, and `intelligo admin revoke <email>` takes it away.
 Workspaces and memberships change through the team and workspace services,
 which apply the plan's limits and the deletion hook around Better-Auth's
 organization plugin; the plugin's own mutating endpoints answer 404 over HTTP
-(`SERVICE_ONLY_ORGANIZATION_PATHS`). Behind proxies, `AUTH_IP_HEADERS`
+(`SERVICE_ONLY_ORGANIZATION_PATHS`). An invitation can carry a product's
+own fields (`inviteMember({ email, role, productFields })`, a few short
+strings — what the member is to the workspace, say); they are copied onto
+the membership when it is accepted and read back with
+`memberProductFields({ workspaceId, userId })`. Behind proxies, `AUTH_IP_HEADERS`
 (headers to read the client address from, in order) and
 `AUTH_TRUSTED_PROXIES` (CIDRs) let the auth rate limiter tell clients apart.
 

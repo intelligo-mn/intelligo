@@ -42,6 +42,7 @@ d("team service — real DB integration", () => {
   let users: typeof import("@intelligo-dev/core/db/schema").users;
   let auth: typeof import("../server").auth;
   let createTeamService: typeof import("./service").createTeamService;
+  let memberProductFields: typeof import("./service").memberProductFields;
   let isTeamServiceError: typeof import("./errors").isTeamServiceError;
 
   type Fixture = { cookie: string; userId: string; email: string };
@@ -91,7 +92,7 @@ d("team service — real DB integration", () => {
     ({ db } = await import("@intelligo-dev/core/db"));
     ({ users } = await import("@intelligo-dev/core/db/schema"));
     ({ auth } = await import("../server"));
-    ({ createTeamService } = await import("./service"));
+    ({ createTeamService, memberProductFields } = await import("./service"));
     ({ isTeamServiceError } = await import("./errors"));
   });
 
@@ -126,6 +127,8 @@ d("team service — real DB integration", () => {
       const invitation = await service().inviteMember({
         email: `it-member-${suffix}@example.test`,
         role: "member",
+        // What the inviter says this member is, for the product to read later.
+        productFields: { relation: "parent" },
       });
 
       expect(invitation).toBeTruthy();
@@ -177,6 +180,14 @@ d("team service — real DB integration", () => {
       expect(memberRow).toBeTruthy();
       expect(memberRow!.role).toBe("member");
       memberRecordId = memberRow!.id!;
+
+      // The inviter's product fields are now the membership's.
+      expect(
+        await memberProductFields({ workspaceId: orgId, userId: member.userId })
+      ).toEqual({ relation: "parent" });
+      expect(
+        await memberProductFields({ workspaceId: orgId, userId: owner.userId })
+      ).toBeNull();
     });
 
     it("accepting the same invitation again is idempotent — rejected, not a duplicate membership", async () => {

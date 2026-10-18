@@ -64,6 +64,13 @@
       "when": 1791387534871,
       "tag": "0008_wide_counters_kept_ledgers",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1792330718281,
+      "tag": "0009_invitation_product_fields",
+      "breakpoints": true
     }
   ]
 }

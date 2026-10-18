@@ -49,13 +49,23 @@ vi.mock("@intelligo-dev/core/db", () => ({
   db: {
     select: () => ({
       from: () => ({
-        where: async () => [{ n: mocks.memberCount() }],
+        // Awaited: the member count. `.limit()`: an accepted invitation's
+        // product fields, of which these tests carry none.
+        where: () =>
+          Object.assign(Promise.resolve([{ n: mocks.memberCount() }]), {
+            limit: async () => [],
+          }),
       }),
     }),
   },
 }));
 vi.mock("@intelligo-dev/core/db/schema", () => ({
-  member: { organizationId: "organization_id" },
+  member: { organizationId: "organization_id", userId: "user_id" },
+  invitation: {
+    id: "id",
+    organizationId: "organization_id",
+    productFields: "product_fields",
+  },
 }));
 
 vi.mock("@intelligo-dev/core/request-context", () => ({

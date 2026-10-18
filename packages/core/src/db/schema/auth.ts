@@ -12,6 +12,7 @@ import {
   integer,
   bigint,
   index,
+  jsonb,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 
@@ -151,6 +152,8 @@ export const member = pgTable(
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
     role: text("role").notNull(),
+    /** The product's fields from the invitation this member accepted. */
+    productFields: jsonb("product_fields").$type<Record<string, string>>(),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
@@ -178,6 +181,12 @@ export const invitation = pgTable(
     inviterId: text("inviter_id").references(() => users.id, {
       onDelete: "set null",
     }),
+    /**
+     * A product's own fields for the member this invites, set by the
+     * inviter (e.g. what they are to the workspace) and copied onto the
+     * membership when it is accepted. The framework reads none of it.
+     */
+    productFields: jsonb("product_fields").$type<Record<string, string>>(),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },

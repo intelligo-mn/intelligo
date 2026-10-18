@@ -49,6 +49,7 @@ export {
 
 export {
   createTeamService,
+  memberProductFields,
   type TeamService,
   type TeamServicePorts,
 } from "./team/service";
