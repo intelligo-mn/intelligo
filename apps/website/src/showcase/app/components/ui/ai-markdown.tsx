@@ -95,8 +95,11 @@ const [harden] = defaultRehypePlugins.harden as unknown as [
 
 const rehypeFor = new Map<string, NonNullable<StreamdownProps["rehypePlugins"]>>();
 
-function rehypePluginsFor(imagePrefixes: readonly string[]) {
-  const key = imagePrefixes.join(" ");
+function rehypePluginsFor(
+  imagePrefixes: readonly string[],
+  linkPrefixes: readonly string[]
+) {
+  const key = `${imagePrefixes.join(" ")}\u0000${linkPrefixes.join(" ")}`;
   let plugins = rehypeFor.get(key);
   if (!plugins) {
     plugins = [
@@ -109,8 +112,10 @@ function rehypePluginsFor(imagePrefixes: readonly string[]) {
           defaultOrigin: "https://relative.invalid",
           allowedImagePrefixes: [...imagePrefixes],
           allowDataImages: true,
-          allowedLinkPrefixes: ["*"],
-          allowedProtocols: ["*"],
+          allowedLinkPrefixes: [...linkPrefixes],
+          // http, https and mailto are always allowed; beyond them only
+          // tel:, so a link cannot open another app's custom scheme.
+          allowedProtocols: ["tel:"],
         },
       ],
     ] as NonNullable<StreamdownProps["rehypePlugins"]>;
@@ -120,15 +125,23 @@ function rehypePluginsFor(imagePrefixes: readonly string[]) {
 }
 
 const NO_IMAGE_HOSTS: readonly string[] = [];
+const ANY_LINK_HOST: readonly string[] = ["*"];
 
 export type MarkdownProps = Omit<StreamdownProps, "plugins"> & {
   /** URL prefixes images may load from, e.g. `https://cdn.example.com/`. */
   imagePrefixes?: readonly string[];
+  /**
+   * URL prefixes links may point at; any http(s) address by default. A
+   * product that only wants its own and its sources' pages linked names
+   * them; a link elsewhere then shows as text.
+   */
+  linkPrefixes?: readonly string[];
 };
 
 export function Markdown({
   children,
   imagePrefixes = NO_IMAGE_HOSTS,
+  linkPrefixes = ANY_LINK_HOST,
   ...props
 }: MarkdownProps) {
   const text = typeof children === "string" ? children : "";
@@ -148,7 +161,7 @@ export function Markdown({
         needsMath && "math" in loaded,
         needsMermaid && "mermaid" in loaded
       )}
-      rehypePlugins={rehypePluginsFor(imagePrefixes)}
+      rehypePlugins={rehypePluginsFor(imagePrefixes, linkPrefixes)}
       {...props}
     >
       {children}

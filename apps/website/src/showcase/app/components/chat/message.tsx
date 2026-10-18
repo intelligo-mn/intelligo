@@ -94,6 +94,10 @@ const IMAGE_HOSTS =
   "imageHosts" in chatConfig
     ? (chatConfig.imageHosts as string[] | undefined)
     : undefined;
+const LINK_HOSTS =
+  "linkHosts" in chatConfig
+    ? (chatConfig.linkHosts as string[] | undefined)
+    : undefined;
 
 export type MessageVersion = {
   index: number;
@@ -314,6 +318,7 @@ export function Message({
               isAnimating={streamingText}
               components={markdownComponents}
               imagePrefixes={IMAGE_HOSTS}
+              linkPrefixes={LINK_HOSTS}
             >
               {linkCitations(part.text, new Set(citations.keys()))}
             </Markdown>

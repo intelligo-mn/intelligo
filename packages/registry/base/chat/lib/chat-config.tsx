@@ -135,6 +135,13 @@ export interface ChatConfig {
    */
   imageHosts?: string[];
   /**
+   * URL prefixes links in a reply may point at, e.g.
+   * `https://docs.example.com/`. Unset: any http(s) address. A product
+   * whose model reads pages it does not control can name the hosts it
+   * trusts, so a link a page planted shows as text.
+   */
+  linkHosts?: string[];
+  /**
    * Auto-continuation predicate, passed straight to `useChat`'s
    * `sendAutomaticallyWhen`. Default: continue when the reader answered
    * an approval, or when a card supplied a client-side tool's result.
