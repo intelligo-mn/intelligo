@@ -114,8 +114,11 @@ to `turn.addUsage(usage, { model })`. Tokens on the turn's own model (or
 with no `model`) settle with the turn's; tokens on another registered model
 are summed per model and recorded as that model's own execution
 (`capability` `"chat.embedding"` for an embedding model, `parentExecutionId`
-in its metadata) when the turn settles. An unregistered `model` throws
-`UnknownModelError` at the call rather than bill at another model's price.
+in its metadata) when the turn settles. Tokens `prepareMessages` reports
+before a turn that admission then refuses are recorded the same way, as
+already spent, so a refused turn still pays for its summary. An
+unregistered `model` throws `UnknownModelError` at the call rather than
+bill at another model's price.
 
 `turn.state` is a `Map` that lives for one request and is shared by every
 seam that receives the turn — `resolveAgent`, `prepareMessages`, tools,

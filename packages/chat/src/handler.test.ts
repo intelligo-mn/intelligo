@@ -449,6 +449,50 @@ describe("POST refusals", () => {
     );
   });
 
+  it("charges what prepareMessages spent when admission then refuses the turn", async () => {
+    registerModels(DEFAULT_MODELS);
+    const childComplete = vi.fn().mockResolvedValue(undefined);
+    const begin = vi.fn(async (params: { alreadySpent?: boolean }) =>
+      params.alreadySpent
+        ? {
+            id: "e-2",
+            requestId: "req-2",
+            allowed: true,
+            complete: childComplete,
+            fail: vi.fn(),
+          }
+        : { allowed: false, code: "insufficient_credits" }
+    );
+    const { POST } = createChatHandler(
+      baseConfig({ begin } as unknown as Executions, {
+        prepareMessages: async (t, messages) => {
+          // A summary on a cheaper model, and tokens with no model named.
+          t.addUsage(
+            { inputTokens: 100, outputTokens: 20 },
+            { model: MODEL_ID }
+          );
+          t.addUsage({ inputTokens: 5, outputTokens: 1 });
+          return { messages };
+        },
+      })
+    );
+    const response = await POST(turn());
+    expect(response.status).toBe(402);
+    const spent = begin.mock.calls.filter(([p]) => p.alreadySpent);
+    expect(spent).toHaveLength(2);
+    expect(childComplete).toHaveBeenCalledWith(
+      expect.objectContaining({
+        model: MODEL_ID,
+        usage: expect.objectContaining({ inputTokens: 100, outputTokens: 20 }),
+      })
+    );
+    expect(childComplete).toHaveBeenCalledWith(
+      expect.objectContaining({
+        usage: expect.objectContaining({ inputTokens: 5 }),
+      })
+    );
+  });
+
   it("answers 503 when the deployment has no billing configured", async () => {
     const refused = fakeExecutions({
       allowed: false,

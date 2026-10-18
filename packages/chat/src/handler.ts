@@ -821,6 +821,58 @@ export function createChatHandler(config: ChatServerConfig): ChatHandler {
       ...(config.metadata ? config.metadata(turn) : {}),
     };
 
+    /**
+     * What was spent before admission (`turn.addUsage` in
+     * `prepareMessages`), recorded as executions of their own when the
+     * turn is refused: the tokens are already used, so each is begun as
+     * spent and charged, as a nested model's are at settlement. Usage
+     * without a named model is the turn's model's.
+     */
+    const settleSpentBeforeAdmission = async () => {
+      const spent = [...namedUsage.values()].map((entry) => ({
+        model: entry.model,
+        capability:
+          entry.capability ??
+          (getModelPricing(entry.model)?.kind === "embedding"
+            ? EMBEDDING_CAPABILITY
+            : capability),
+        usage: entry.usage,
+      }));
+      if (nestedUsage)
+        spent.push({ model: modelId, capability, usage: nestedUsage });
+      namedUsage.clear();
+      nestedUsage = null;
+      for (const entry of spent) {
+        try {
+          const child = await config.executions.begin({
+            workspaceId: actor.workspaceId,
+            userId: actor.userId,
+            capability: entry.capability,
+            model: entry.model,
+            alreadySpent: true,
+            metadata: { ...metadata, refusedTurn: true },
+          });
+          if (!child.allowed) {
+            throw new Error(
+              `Usage on ${entry.model} was refused: ${child.reason ?? child.code ?? "refused"}`
+            );
+          }
+          await child.complete({
+            usage: entry.usage,
+            model: entry.model,
+            metadata: { ...metadata, aborted: false, refusedTurn: true },
+          });
+        } catch (error) {
+          log.error("Usage spent before a refused turn was not settled", {
+            conversationId: body.id,
+            modelId: entry.model,
+            error: errorMessage(error),
+          });
+          await emit(() => events.fail?.({ turn, error, phase: "settlement" }));
+        }
+      }
+    };
+
     // Entitlement, decided against the model that is about to run, held
     // for this prompt and, with tools, every step the loop may take.
     const run = await config.executions.begin({
@@ -839,6 +891,10 @@ export function createChatHandler(config: ChatServerConfig): ChatHandler {
     });
 
     if (!run.allowed) {
+      // Tokens `prepareMessages` already spent (a summary, a retrieval)
+      // are charged even though the turn does not run: otherwise a
+      // workspace with no credit could keep a model working for free.
+      await settleSpentBeforeAdmission();
       // 402 for anything the workspace can fix by paying; 503 for what
       // only the deployment can fix — no billing configured, or a model
       // id with no registered price.
