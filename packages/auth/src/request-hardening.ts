@@ -28,11 +28,20 @@ export const SERVICE_ONLY_ORGANIZATION_PATHS = [
 ] as const;
 
 /**
- * Admin endpoints the framework wraps: impersonation goes through
- * `impersonateUser` (the allowlist check) and `@intelligo-dev/admin`'s
- * `startImpersonation` (the reason and the audit event).
+ * Admin endpoints the framework wraps or does not offer: impersonation
+ * goes through `impersonateUser` (the allowlist check) and
+ * `@intelligo-dev/admin`'s `startImpersonation` / `stopImpersonation`
+ * (the reason and the audit events); the console reads users from its
+ * own audited queries. Called over HTTP these would list every user and
+ * their sessions, or end an impersonation, with no audit row.
  */
-export const SERVICE_ONLY_ADMIN_PATHS = ["/admin/impersonate-user"] as const;
+export const SERVICE_ONLY_ADMIN_PATHS = [
+  "/admin/impersonate-user",
+  "/admin/stop-impersonating",
+  "/admin/list-users",
+  "/admin/get-user",
+  "/admin/list-user-sessions",
+] as const;
 
 const list = (value: string | undefined) =>
   (value ?? "")

@@ -32,6 +32,16 @@ describe("SERVICE_ONLY_ORGANIZATION_PATHS", () => {
 describe("SERVICE_ONLY_ADMIN_PATHS", () => {
   it("closes raw impersonation, which skips the reason and the audit event", () => {
     expect(SERVICE_ONLY_ADMIN_PATHS).toContain("/admin/impersonate-user");
+    expect(SERVICE_ONLY_ADMIN_PATHS).toContain("/admin/stop-impersonating");
+  });
+
+  it("closes the raw user and session listings, which leave no audit row", () => {
+    for (const path of [
+      "/admin/list-users",
+      "/admin/get-user",
+      "/admin/list-user-sessions",
+    ])
+      expect(SERVICE_ONLY_ADMIN_PATHS).toContain(path);
   });
 });
 

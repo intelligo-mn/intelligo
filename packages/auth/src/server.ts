@@ -31,7 +31,6 @@ import { APIError } from "better-auth/api";
 const accessControl = createAccessControl(defaultStatements);
 const platformAdminRole = accessControl.newRole({
   user: ["impersonate", "list", "get"],
-  session: ["list"],
 });
 const userRole = accessControl.newRole(userAc.statements);
 import { db } from "@intelligo-dev/core/db";
