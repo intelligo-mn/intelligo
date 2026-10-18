@@ -177,9 +177,12 @@ export function DocumentList({ documents }: DocumentListProps) {
     filters.find((filter) => filter.type === activeFilter)?.label ??
     activeFilter;
 
-  // An HTML page or an SVG has a rendered form worth offering; anything
-  // else is only ever its source.
-  const canPreview = selected ? isPreviewableTitle(selected.title) : false;
+  // A code document that is an HTML page or an SVG has a rendered form
+  // worth offering, as in the chat's canvas; anything else, whatever its
+  // title says, is only ever its source.
+  const canPreview = selected
+    ? selected.kind === "code" && isPreviewableTitle(selected.title)
+    : false;
 
   return (
     <>

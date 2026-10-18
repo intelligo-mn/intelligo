@@ -3,8 +3,8 @@
   "version": "1.2.0",
   "published": "1.2.0",
   "packages": 11,
-  "testFiles": 156,
-  "testCases": 1626,
+  "testFiles": 157,
+  "testCases": 1629,
   "architectureTests": 18,
   "registryItems": 28
 }

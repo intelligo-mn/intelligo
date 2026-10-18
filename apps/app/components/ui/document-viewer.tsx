@@ -145,17 +145,28 @@ export function ImageView({ content, title }: DocumentViewProps) {
 }
 
 /**
+ * What a preview may load: nothing from the network. The page is
+ * written by a model that may have been steered by what it read, and
+ * an image, a stylesheet or a fetch to any server would carry whatever
+ * the page puts in its URL there. Inline scripts, styles and data/blob
+ * images still work, so a self-contained page or SVG renders.
+ */
+export const PREVIEW_CSP =
+  "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; font-src data:; media-src data: blob:; form-action 'none'; base-uri 'none'";
+
+/**
  * An HTML page or an SVG, rendered in a sandbox: scripts run, but in an
- * opaque origin with no access to the app, its cookies or its storage.
- * The document asks for a light canvas, so a page written without a
- * background reads as it would on its own.
+ * opaque origin with no access to the app, its cookies or its storage,
+ * and under `PREVIEW_CSP`, with no reach to the network. The document
+ * asks for a light canvas, so a page written without a background reads
+ * as it would on its own.
  */
 export function HtmlPreview({ content, title }: DocumentViewProps) {
   return (
     <iframe
       title={title}
       sandbox="allow-scripts"
-      srcDoc={`<meta name="color-scheme" content="light">${content}`}
+      srcDoc={`<meta http-equiv="Content-Security-Policy" content="${PREVIEW_CSP}"><meta name="color-scheme" content="light">${content}`}
       className="size-full min-h-96 rounded-lg border"
     />
   );
