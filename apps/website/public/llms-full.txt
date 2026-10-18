@@ -1601,6 +1601,12 @@ formatMoney(fromMajor(12.5, "USD"), "en-US"); // "$12.50", held as 12_500_000 mi
 const system = `${basePrompt}\n\nAbout the user: ${sanitizeForSystemPrompt(profile)}`;
 ```
 
+`sanitizeForSystemPrompt` is one layer, not a guarantee. It strips role
+markers, chat-template tokens and prompt tags in any language, but its
+override phrases are English: a product adds its own language's to
+`INJECTION_PATTERNS`, and keeps user text out of the system prompt where it
+can.
+
 ## Exports
 
 | Subpath            | What                                                                                   |

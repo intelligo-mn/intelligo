@@ -9,6 +9,12 @@
  * Returns an empty string when more than half of the original was
  * injection patterns: feeding the remaining fragments to the model is
  * worse than dropping them.
+ *
+ * One layer, not a guarantee: the phrases are English, and a model can
+ * be steered in any language or wording. The structural patterns (role
+ * markers, chat-template tokens, prompt tags) hold in every language; a
+ * product adds its own language's phrases to `INJECTION_PATTERNS`, and
+ * keeps user text out of the system prompt where it can.
  */
 
 const ZERO_WIDTH_CHARS =
@@ -34,6 +40,17 @@ export const INJECTION_PATTERNS: readonly InjectionPattern[] = [
   { name: "<|im_start|>", pattern: /<\|im_start\|>/gi },
   { name: "<|im_end|>", pattern: /<\|im_end\|>/gi },
   { name: "system: prefix", pattern: /^(SYSTEM|System|system)\s*:\s*/gm },
+  {
+    name: "role prefix",
+    pattern: /^\s*(?:human|assistant|user|developer)\s*:\s*/gim,
+  },
+  { name: "chat-template token", pattern: /<\|[a-z_]{1,32}\|>/gi },
+  { name: "[INST]", pattern: /\[\/?INST\]/gi },
+  {
+    name: "prompt tag",
+    pattern:
+      /<\s*\/?\s*(?:system|instructions?|summary|context|prompt|assistant|user|developer)\b[^>]{0,64}>/gi,
+  },
   {
     name: "ignore previous instructions",
     pattern: /ignore\s+(?:all\s+)?previous\s+instructions?/gi,
