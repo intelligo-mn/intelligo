@@ -4,6 +4,7 @@ export {
   getDocumentVersions,
   saveDocument,
   deleteDocumentVersions,
+  DOCUMENT_LIMITS,
 } from "./service";
 
 export {

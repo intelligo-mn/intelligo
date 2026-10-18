@@ -66,6 +66,11 @@ function friendlyMessageKey(code: string): string | undefined {
 function friendlyError(t: Translator, error: unknown): string {
   // Unknown errors deliberately map to the generic key — a raw
   // `Error#message` can carry internals (SQL, hostnames) to the UI.
+  // A document refused for its input (too long, an unknown kind, a
+  // conversation not the reader's) is not a conversation's bad title.
+  if (isDocumentServiceError(error) && error.code === "invalid_input") {
+    return t("actions.invalidArtifact");
+  }
   if (isConversationServiceError(error) || isDocumentServiceError(error)) {
     const key = friendlyMessageKey(error.code);
     return key ? t(key) : t("actions.genericError");

@@ -6,9 +6,9 @@
  * never trusted to have done it. Failures throw `DocumentServiceError`.
  */
 
-import { and, desc, eq, gt } from "drizzle-orm";
+import { and, desc, eq, gt, lt } from "drizzle-orm";
 import { db } from "../db";
-import { documents } from "../db/schema";
+import { conversations, documents } from "../db/schema";
 import { classifyDocumentTitle, isProductDocument } from "./classifier";
 import { DocumentServiceError } from "./errors";
 import type { DocumentActor, DocumentFilter, DocumentListItem } from "./types";
@@ -137,6 +137,49 @@ const SAVE_ATTEMPTS = 10;
  * Throws DocumentServiceError("forbidden") if a document with this id
  * already exists in the workspace under a different user.
  */
+/**
+ * What one document may hold. A save past these is refused
+ * (`invalid_input`), never cut short; past `versions`, the oldest
+ * versions go as new ones are written.
+ */
+export const DOCUMENT_LIMITS = {
+  idChars: 128,
+  titleChars: 200,
+  contentChars: 2_000_000,
+  versions: 100,
+} as const;
+
+/** A kind as the canvas and the artifacts page name one: `text`, `code`, a product's `report`. */
+const KIND = /^[a-z][a-z0-9_-]{0,31}$/;
+
+function checkDocumentInput(params: {
+  id: string;
+  title: string;
+  content: string;
+  kind: string;
+}): void {
+  const problem =
+    typeof params.id !== "string" ||
+    params.id.length === 0 ||
+    params.id.length > DOCUMENT_LIMITS.idChars
+      ? "id"
+      : typeof params.title !== "string" ||
+          params.title.length > DOCUMENT_LIMITS.titleChars
+        ? "title"
+        : typeof params.content !== "string" ||
+            params.content.length > DOCUMENT_LIMITS.contentChars
+          ? "content"
+          : typeof params.kind !== "string" || !KIND.test(params.kind)
+            ? "kind"
+            : null;
+  if (problem) {
+    throw new DocumentServiceError(
+      "invalid_input",
+      `The document's ${problem} is missing, malformed or too long`
+    );
+  }
+}
+
 export async function saveDocument(
   actor: DocumentActor,
   params: {
@@ -147,11 +190,33 @@ export async function saveDocument(
     /**
      * The conversation this was written in, stored on `metadata` so
      * the artifacts page can link back to it. Optional: a document
-     * saved by a job or an import belongs to no conversation.
+     * saved by a job or an import belongs to no conversation. Must be
+     * one of the actor's own conversations.
      */
     conversationId?: string;
   }
 ): Promise<DocumentListItem> {
+  checkDocumentInput(params);
+  if (params.conversationId !== undefined) {
+    const [owned] = await db
+      .select({ id: conversations.id })
+      .from(conversations)
+      .where(
+        and(
+          eq(conversations.id, params.conversationId),
+          eq(conversations.workspaceId, actor.workspaceId),
+          eq(conversations.userId, actor.userId)
+        )
+      )
+      .limit(1);
+    if (!owned) {
+      throw new DocumentServiceError(
+        "invalid_input",
+        "The document's conversation is not the actor's"
+      );
+    }
+  }
+
   const existingDocs = await db
     .select()
     .from(documents)
@@ -205,6 +270,36 @@ export async function saveDocument(
 
   if (!newDocument) {
     throw new DocumentServiceError("database_error", "Failed to save document");
+  }
+
+  // Past the newest `versions`, the oldest go: an editor saving on every
+  // change must not grow one document without end.
+  if (existingDocs.length + 1 > DOCUMENT_LIMITS.versions) {
+    const kept = await db
+      .select({ createdAt: documents.createdAt })
+      .from(documents)
+      .where(
+        and(
+          eq(documents.id, params.id),
+          eq(documents.workspaceId, actor.workspaceId),
+          eq(documents.userId, actor.userId)
+        )
+      )
+      .orderBy(desc(documents.createdAt))
+      .limit(DOCUMENT_LIMITS.versions);
+    const oldestKept = kept[kept.length - 1]?.createdAt;
+    if (oldestKept) {
+      await db
+        .delete(documents)
+        .where(
+          and(
+            eq(documents.id, params.id),
+            eq(documents.workspaceId, actor.workspaceId),
+            eq(documents.userId, actor.userId),
+            lt(documents.createdAt, oldestKept)
+          )
+        );
+    }
   }
 
   return toListItem(newDocument);

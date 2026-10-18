@@ -131,6 +131,7 @@
     "conversationNotFound": "That conversation no longer exists.",
     "conversationForbidden": "You don't have permission to view this conversation.",
     "invalidTitle": "That title isn't valid.",
+    "invalidArtifact": "This can't be saved as an artifact: it is too long or not one of yours.",
     "databaseError": "Something went wrong. Please try again.",
     "genericError": "Something went wrong.",
     "copy": "Copy",

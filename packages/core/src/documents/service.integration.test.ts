@@ -29,6 +29,8 @@ d("documents service — real DB integration", () => {
 
   const actor = { workspaceId, userId };
   const otherActor = { workspaceId, userId: otherUserId };
+  const conversationId = `docs-it-conv-${suffix}`;
+  const othersConversationId = `docs-it-conv-other-${suffix}`;
 
   beforeAll(async () => {
     process.env.DATABASE_URL = DATABASE_URL;
@@ -50,6 +52,16 @@ d("documents service — real DB integration", () => {
         `INSERT INTO users (id, name, email, email_verified, created_at, updated_at)
          VALUES ($1, 'Docs IT', $2, true, now(), now())`,
         [id, email]
+      );
+    }
+    for (const [id, owner] of [
+      [conversationId, userId],
+      [othersConversationId, otherUserId],
+    ]) {
+      await client.query(
+        `INSERT INTO conversations (id, workspace_id, user_id, agent_id)
+         VALUES ($1, $2, $3, 'assistant')`,
+        [id, workspaceId, owner]
       );
     }
   });
@@ -87,9 +99,9 @@ d("documents service — real DB integration", () => {
       title: "Written in a chat",
       content: "v1",
       kind: "text",
-      conversationId: "conv-abc",
+      conversationId,
     });
-    expect(saved.conversationId).toBe("conv-abc");
+    expect(saved.conversationId).toBe(conversationId);
 
     // The canvas resends title, kind and content on an edit — never the
     // conversation. Since every save writes a new version row, the link
@@ -102,8 +114,47 @@ d("documents service — real DB integration", () => {
       content: "v2",
       kind: "text",
     });
-    expect(edited.conversationId).toBe("conv-abc");
-    expect((await getDocument(actor, id)).conversationId).toBe("conv-abc");
+    expect(edited.conversationId).toBe(conversationId);
+    expect((await getDocument(actor, id)).conversationId).toBe(conversationId);
+  });
+
+  it("links a document only to one of the actor's own conversations", async () => {
+    for (const linked of [othersConversationId, `docs-it-missing-${suffix}`]) {
+      await expect(
+        saveDocument(actor, {
+          id: `doc-${suffix}-foreign`,
+          title: "Linked elsewhere",
+          content: "x",
+          kind: "text",
+          conversationId: linked,
+        })
+      ).rejects.toSatisfy(
+        (err: unknown) =>
+          isDocumentServiceError(err) && err.code === "invalid_input"
+      );
+    }
+  });
+
+  it("keeps the newest versions only, past the limit", async () => {
+    const { DOCUMENT_LIMITS } = await import("./service");
+    const id = `doc-${suffix}-many`;
+    for (let i = 0; i < DOCUMENT_LIMITS.versions + 2; i++) {
+      await saveDocument(actor, {
+        id,
+        title: "Draft",
+        content: `v${i}`,
+        kind: "text",
+      });
+    }
+    const { rows } = await client.query<{ content: string }>(
+      `SELECT content FROM documents WHERE id = $1 ORDER BY created_at`,
+      [id]
+    );
+    expect(rows).toHaveLength(DOCUMENT_LIMITS.versions);
+    expect(rows[0]!.content).toBe("v2");
+    expect(rows[rows.length - 1]!.content).toBe(
+      `v${DOCUMENT_LIMITS.versions + 1}`
+    );
   });
 
   it("keeps every save of one document made in the same millisecond", async () => {
