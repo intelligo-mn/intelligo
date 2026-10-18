@@ -34,6 +34,9 @@ export BETTER_AUTH_SECRET=consumer_smoke_secret_000000000000000000000000
 export CRON_SECRET=consumer_smoke_secret_000000000000000000000000
 export NEXT_PUBLIC_APP_URL=http://localhost:$APP_PORT
 export NEXT_TELEMETRY_DISABLED=1
+# The smoke app runs in production mode with no email key: say so, as a
+# deployment without email must.
+export EMAIL_PROVIDER=console
 
 servers=()
 cleanup() {

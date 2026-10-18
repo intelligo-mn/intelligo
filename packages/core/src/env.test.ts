@@ -161,6 +161,24 @@ describe("validateEnv", () => {
     expect(flagged()).toBe(false);
   });
 
+  it("refuses production without an email provider unless console is chosen on purpose", () => {
+    const refused = () =>
+      validateEnv().errors.some((e) => e.includes("No email provider"));
+    vi.stubEnv("RESEND_API_KEY", "");
+    vi.stubEnv("LOOPS_API_KEY", "");
+    vi.stubEnv("EMAIL_PROVIDER", "");
+
+    expect(refused()).toBe(false);
+    vi.stubEnv("NODE_ENV", "production");
+    expect(refused()).toBe(true);
+    expect(validateEnv().valid).toBe(false);
+    vi.stubEnv("EMAIL_PROVIDER", "console");
+    expect(refused()).toBe(false);
+    vi.stubEnv("EMAIL_PROVIDER", "");
+    vi.stubEnv("RESEND_API_KEY", "re_123");
+    expect(refused()).toBe(false);
+  });
+
   it("warns about test Stripe key in production", () => {
     vi.stubEnv("NODE_ENV", "production");
     vi.stubEnv("STRIPE_SECRET_KEY", "sk_test_abc123");

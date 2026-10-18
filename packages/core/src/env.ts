@@ -157,9 +157,16 @@ export function validateEnv(options: { extra?: readonly EnvVar[] } = {}): {
         `NEXT_PUBLIC_APP_URL is ${appUrl}, not an https URL — auth callbacks, email links and secure cookies are built from it`
       );
     }
-    if (!process.env.RESEND_API_KEY && !process.env.LOOPS_API_KEY) {
-      warnings.push(
-        "No email provider (RESEND_API_KEY or LOOPS_API_KEY) — sign-ups are not email-verified and emails only reach the server console"
+    // Without a provider, sign-up skips email verification and an
+    // invitation reaches whoever registers the address, so production
+    // refuses to start unless the deployment says it means it.
+    if (
+      !process.env.RESEND_API_KEY?.trim() &&
+      !process.env.LOOPS_API_KEY?.trim() &&
+      emailProvider !== "console"
+    ) {
+      errors.push(
+        "No email provider (RESEND_API_KEY or LOOPS_API_KEY) — sign-ups would not be email-verified. Set one, or EMAIL_PROVIDER=console to run without email on purpose"
       );
     }
     if (process.env.STRIPE_SECRET_KEY?.startsWith("sk_test_")) {
