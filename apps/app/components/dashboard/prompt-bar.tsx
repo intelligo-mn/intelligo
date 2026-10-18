@@ -10,7 +10,8 @@
  * `chat:handoff:<id>` and navigate to `${chatBasePath}/${id}`; the chat
  * thread sends it as the first turn. The prompt stays out of the URL,
  * the history and the server's logs; only where storage is unavailable
- * does it travel as `?query=`. Nothing is written to the server here,
+ * does it travel as `?query=`, which the chat puts in its composer for
+ * the reader to send. Nothing is written to the server here,
  * so an abandoned prompt leaves no empty conversation behind.
  *
  * No attachments: the handoff carries text only, so a file picked here

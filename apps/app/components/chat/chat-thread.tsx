@@ -19,10 +19,11 @@
  * Another surface can mint a conversation id and open it already
  * started: the dashboard's prompt bar leaves the first turn in
  * `sessionStorage` under `chat:handoff:<id>`, so the prompt never
- * reaches a URL; a link from outside the app (a marketing CTA) passes
- * `?query=`, which is dropped from the address once read. Either is
- * sent once, only into an empty conversation, so a refresh doesn't
- * replay it.
+ * reaches a URL, and is sent as the first turn; a link from outside the
+ * app (a marketing CTA) passes `?query=`, which is dropped from the
+ * address once read and fills the composer for the reader to send.
+ * Either applies once, only to an empty conversation, so a refresh
+ * doesn't replay it.
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -474,7 +475,10 @@ export function ChatThread({
       url.searchParams.delete("query");
       window.history.replaceState(window.history.state, "", url);
     }
-    if (blocked) {
+    // A link can come from anywhere, so `?query=` only fills the composer:
+    // the reader sends it, and a page elsewhere cannot speak for them or
+    // spend their credit. Only this app's handoff starts the turn itself.
+    if (blocked || handoff === null) {
       draft.setValue(query);
       return;
     }
