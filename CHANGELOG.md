@@ -14,7 +14,10 @@ untagged milestones that followed. None of them were released to npm —
 happened alongside the framework is out of scope and noted only where
 it explains a framework decision.
 
-## [1.2.1] — 2026-10-18
+## [1.2.2] — 2026-10-18
+
+1.2.1 was set on main but never published: its release commit failed CI
+on formatting. 1.2.2 is that release.
 
 ### Added
 
