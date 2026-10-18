@@ -29,6 +29,8 @@ import {
   saveDocument,
 } from "@intelligo-dev/core/documents";
 import {
+  conversationSharing,
+  type ConversationSharing,
   deleteConversation as deleteConversationRow,
   getConversation,
   getRecentMessages,
@@ -56,6 +58,8 @@ function friendlyMessageKey(code: string): string | undefined {
       return "actions.conversationForbidden";
     case "invalid_input":
       return "actions.invalidTitle";
+    case "sharing_off":
+      return "actions.sharingOff";
     case "database_error":
       return "actions.databaseError";
     default:
@@ -288,18 +292,25 @@ export async function voteMessage(
 }
 
 /**
- * Whether the conversation is published, and the path segment of its
- * public link: `/share/<ref>`.
+ * Whether the conversation is published, the path segment of its
+ * public link (`/share/<ref>`), and who such a link opens for
+ * (`conversationSharing()`, bound from the composition root): `off`
+ * means the dialog offers nothing.
  */
-export async function getShareState(
-  id: string
-): Promise<ChatActionResult<{ shared: boolean; ref: string | null }>> {
+export async function getShareState(id: string): Promise<
+  ChatActionResult<{
+    shared: boolean;
+    ref: string | null;
+    sharing: ConversationSharing;
+  }>
+> {
   try {
     const row = await getConversation(await actor(), id);
-    const shared = row.visibility === "public";
+    const sharing = conversationSharing();
+    const shared = row.visibility === "public" && sharing !== "off";
     return {
       success: true,
-      data: { shared, ref: shared ? shareRef(row) : null },
+      data: { shared, ref: shared ? shareRef(row) : null, sharing },
     };
   } catch (error) {
     return {

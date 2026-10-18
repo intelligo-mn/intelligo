@@ -1,13 +1,18 @@
 "use server";
 
 /**
- * The public read of a shared conversation. No actor: the reader is
- * anyone with the link. What they get is decided by `sanitizeForShare`
- * (`@intelligo-dev/chat`) — the transcript minus reasoning, tool
- * details, provider metadata, transient parts and file URLs. A product
- * that wants a named tool's output on the page passes a policy here.
+ * The read of a shared conversation by its link. With `public` sharing
+ * the reader is anyone holding it; with `workspace` sharing the reader
+ * must be signed in as a member of the conversation's workspace; with
+ * sharing off no link opens (`setConversationSharing`, bound from the
+ * composition root, decides in `getPublicConversation`). What they get
+ * is decided by `sanitizeForShare` (`@intelligo-dev/chat`) — the
+ * transcript minus reasoning, tool details, provider metadata,
+ * transient parts and file URLs. A product that wants a named tool's
+ * output on the page passes a policy here.
  */
 
+import { getAuthSession } from "@intelligo-dev/auth";
 import { sanitizeForShare, toUIMessages } from "@intelligo-dev/chat";
 import type { UIMessage } from "ai";
 import {
@@ -28,8 +33,10 @@ export async function loadSharedConversation(
   id: string
 ): Promise<SharedConversation | null> {
   try {
-    const conversation = await getPublicConversation(id);
-    const rows = await getPublicMessages(id);
+    // Who is reading, when anyone is signed in: what `workspace` sharing checks.
+    const reader = { readerUserId: (await getAuthSession())?.user.id ?? null };
+    const conversation = await getPublicConversation(id, reader);
+    const rows = await getPublicMessages(id, reader);
     return {
       id,
       title: conversation.title,

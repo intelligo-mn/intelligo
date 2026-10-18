@@ -124,7 +124,12 @@ seam that receives the turn — `resolveAgent`, `prepareMessages`, tools,
 (a profile, a retrieval result) the next can use without a second query.
 
 `sanitizeForShare` strips a transcript
-for a public page; `recordChatFeedback` records a vote and tells the hook.
+for a public page; who a share link opens for is
+`setConversationSharing` from `@intelligo-dev/core/conversations`, bound in
+the composition root: `"public"` (anyone with the link, the default),
+`"workspace"` (signed-in members of the conversation's workspace) or `"off"`
+(no link opens, publishing is refused and the share button is not shown).
+`recordChatFeedback` records a vote and tells the hook.
 Stored attachments mount two more handlers, `createChatUploadHandler` and
 `createChatAttachmentHandler`.
 

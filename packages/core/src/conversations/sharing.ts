@@ -13,8 +13,31 @@ import type { Conversation, ConversationActor, Message } from "./types";
 export type ConversationVisibility = "private" | "public";
 
 /**
- * Publish or unpublish a conversation. Public means readable by anyone
- * holding its share link (`shareRef`).
+ * Who a share link opens for: anyone holding it (`public`, the default),
+ * only signed-in members of the conversation's workspace (`workspace`),
+ * or nobody, with sharing turned off (`off`). A product whose
+ * conversations must not leave its tenants binds it once from the
+ * composition root.
+ */
+export type ConversationSharing = "public" | "workspace" | "off";
+
+let sharing: ConversationSharing = "public";
+
+/** Sets who share links open for; bound once from the composition root. */
+export function setConversationSharing(mode: ConversationSharing): void {
+  sharing = mode;
+}
+
+/** Who share links open for (`setConversationSharing`). */
+export function conversationSharing(): ConversationSharing {
+  return sharing;
+}
+
+/**
+ * Publish or unpublish a conversation. Public means readable by whoever
+ * `conversationSharing()` lets hold its share link (`shareRef`). With
+ * sharing off, publishing is refused (`sharing_off`); unpublishing
+ * always works.
  */
 export async function setConversationVisibility(
   actor: ConversationActor,
@@ -22,6 +45,12 @@ export async function setConversationVisibility(
   visibility: ConversationVisibility
 ): Promise<Conversation> {
   await getConversation(actor, id);
+  if (visibility === "public" && sharing === "off") {
+    throw new ConversationServiceError(
+      "sharing_off",
+      "Conversation sharing is turned off"
+    );
+  }
 
   // Sharing an already public conversation keeps its link; sharing it
   // again after unsharing issues a new one, and unsharing forgets it.
@@ -76,17 +105,28 @@ export function shareRef(row: {
  * conversation's workspace and their account is not deleted: once they
  * leave, are removed, or delete their account, nobody is left who could
  * unshare it, so it stops being public by itself.
+ *
+ * With sharing off no link answers; with `workspace` sharing only a
+ * `readerUserId` that is a member of the conversation's workspace gets
+ * it. Anything else is `not_found`, as a link that names nothing.
  */
-export async function getPublicConversation(ref: string): Promise<{
+export async function getPublicConversation(
+  ref: string,
+  options: { readerUserId?: string | null } = {}
+): Promise<{
   id: string;
   title: string | null;
   agentId: string;
   createdAt: Date;
   updatedAt: Date;
 }> {
+  if (sharing === "off") {
+    throw new ConversationServiceError("not_found", "Conversation not found");
+  }
   const [row] = await db
     .select({
       id: conversations.id,
+      workspaceId: conversations.workspaceId,
       title: conversations.title,
       agentId: conversations.agentId,
       createdAt: conversations.createdAt,
@@ -118,15 +158,38 @@ export async function getPublicConversation(ref: string): Promise<{
   if (!row) {
     throw new ConversationServiceError("not_found", "Conversation not found");
   }
-  return row;
+  if (sharing === "workspace") {
+    const reader = options.readerUserId;
+    const [isMember] = reader
+      ? await db
+          .select({ id: member.id })
+          .from(member)
+          .where(
+            and(
+              eq(member.userId, reader),
+              eq(member.organizationId, row.workspaceId)
+            )
+          )
+          .limit(1)
+      : [];
+    if (!isMember) {
+      throw new ConversationServiceError("not_found", "Conversation not found");
+    }
+  }
+  const { workspaceId: _workspaceId, ...shown } = row;
+  return shown;
 }
 
 /**
  * The messages of a published conversation, by its share link, oldest
- * first. Throws `not_found` when the link names nothing public.
+ * first. Throws `not_found` when the link names nothing the reader may
+ * open (`getPublicConversation`).
  */
-export async function getPublicMessages(ref: string): Promise<Message[]> {
-  const { id } = await getPublicConversation(ref);
+export async function getPublicMessages(
+  ref: string,
+  options: { readerUserId?: string | null } = {}
+): Promise<Message[]> {
+  const { id } = await getPublicConversation(ref, options);
   return db
     .select()
     .from(messages)

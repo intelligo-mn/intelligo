@@ -167,6 +167,60 @@ d("conversations service — real DB integration", () => {
     );
   });
 
+  it("follows the deployment's sharing mode: off refuses and hides, workspace opens to members only", async () => {
+    const conv = await service.createConversation(actor, {
+      agentId: "assistant",
+      modelId: "google/gemini-2.5-flash",
+    });
+    const notFound = (err: unknown) =>
+      isConversationServiceError(err) && err.code === "not_found";
+    const shared = await service.setConversationVisibility(
+      actor,
+      conv.id,
+      "public"
+    );
+    const ref = service.shareRef(shared);
+    try {
+      service.setConversationSharing("workspace");
+      // A member of the workspace opens it; nobody signed in, or a stranger, does not.
+      expect(
+        (
+          await service.getPublicConversation(ref, {
+            readerUserId: otherUserId,
+          })
+        ).id
+      ).toBe(conv.id);
+      await expect(service.getPublicConversation(ref)).rejects.toSatisfy(
+        notFound
+      );
+      await expect(
+        service.getPublicMessages(ref, { readerUserId: "nobody" })
+      ).rejects.toSatisfy(notFound);
+
+      service.setConversationSharing("off");
+      await expect(
+        service.getPublicConversation(ref, { readerUserId: userId })
+      ).rejects.toSatisfy(notFound);
+      const other = await service.createConversation(actor, {
+        agentId: "assistant",
+        modelId: "google/gemini-2.5-flash",
+      });
+      await expect(
+        service.setConversationVisibility(actor, other.id, "public")
+      ).rejects.toSatisfy(
+        (err: unknown) =>
+          isConversationServiceError(err) && err.code === "sharing_off"
+      );
+      // Unsharing still works, so a deployment can turn sharing off and clean up.
+      expect(
+        (await service.setConversationVisibility(actor, conv.id, "private"))
+          .visibility
+      ).toBe("private");
+    } finally {
+      service.setConversationSharing("public");
+    }
+  });
+
   it("a share link stops answering once its author leaves the workspace or deletes their account", async () => {
     const notFound = (err: unknown) =>
       isConversationServiceError(err) && err.code === "not_found";

@@ -11,11 +11,17 @@
  * - `invalid_input` — a caller-supplied argument failed a basic
  *   invariant (e.g. an empty title, or a batch of messages that
  *   reference a conversation the actor does not own).
+ * - `sharing_off` — publishing a conversation while the deployment has
+ *   sharing turned off (`setConversationSharing("off")`).
  * - `database_error` — the underlying insert/update did not return the
  *   row it was expected to.
  */
 export type ConversationServiceErrorCode =
-  "not_found" | "forbidden" | "invalid_input" | "database_error";
+  | "not_found"
+  | "forbidden"
+  | "invalid_input"
+  | "sharing_off"
+  | "database_error";
 
 export class ConversationServiceError extends Error {
   readonly code: ConversationServiceErrorCode;

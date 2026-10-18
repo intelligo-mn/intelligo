@@ -132,6 +132,7 @@
     "conversationForbidden": "You don't have permission to view this conversation.",
     "invalidTitle": "That title isn't valid.",
     "invalidArtifact": "This can't be saved as an artifact: it is too long or not one of yours.",
+    "sharingOff": "Sharing conversations is turned off here.",
     "databaseError": "Something went wrong. Please try again.",
     "genericError": "Something went wrong.",
     "copy": "Copy",
@@ -252,6 +253,7 @@
   "share": {
     "title": "Share this conversation",
     "description": "Anyone with the link can read it. Reasoning, tool details and attachments stay private.",
+    "descriptionWorkspace": "Members of this workspace with the link can read it. Reasoning, tool details and attachments stay private.",
     "loading": "Loading the share link…",
     "enable": "Create link",
     "disable": "Stop sharing",

@@ -1,8 +1,10 @@
 "use client";
 
 /**
- * Publish a conversation as a read-only page anyone with the link can
- * open, and stop sharing it again. What the page shows is decided
+ * Publish a conversation as a read-only page whoever holds the link can
+ * open — anyone, or only the workspace's members, as the deployment
+ * binds `setConversationSharing` — and stop sharing it again. With
+ * sharing off the button is not shown. What the page shows is decided
  * server-side (`sanitizeForShare` in `@intelligo-dev/chat`): the
  * reader's reasoning, tool details and attachments never leave.
  */
@@ -36,15 +38,22 @@ export function ShareDialog({ conversationId }: ShareDialogProps) {
   const [open, setOpen] = useState(false);
   const [shared, setShared] = useState<boolean | null>(null);
   const [shareRef, setShareRef] = useState<string | null>(null);
+  // Who a link opens for, as the server's composition root binds it;
+  // with sharing off there is no button at all.
+  const [sharing, setSharing] = useState<"public" | "workspace" | "off" | null>(
+    null
+  );
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    if (!open) return;
     void getShareState(conversationId).then((result) => {
       setShared(result.success ? result.data.shared : false);
       setShareRef(result.success ? result.data.ref : null);
+      setSharing(result.success ? result.data.sharing : null);
     });
   }, [open, conversationId]);
+
+  if (sharing === "off") return null;
 
   const url =
     typeof window === "undefined" || !shareRef
@@ -80,7 +89,13 @@ export function ShareDialog({ conversationId }: ShareDialogProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("share.title")}</DialogTitle>
-          <DialogDescription>{t("share.description")}</DialogDescription>
+          <DialogDescription>
+            {t(
+              sharing === "workspace"
+                ? "share.descriptionWorkspace"
+                : "share.description"
+            )}
+          </DialogDescription>
         </DialogHeader>
         {shared === null ? (
           <Spinner label={t("share.loading")} />

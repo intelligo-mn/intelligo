@@ -18,11 +18,13 @@ export {
 } from "./service";
 export {
   setConversationVisibility,
+  setConversationSharing,
+  conversationSharing,
   getPublicConversation,
   getPublicMessages,
   shareRef,
 } from "./sharing";
-export type { ConversationVisibility } from "./sharing";
+export type { ConversationSharing, ConversationVisibility } from "./sharing";
 export { getMessage, getMessagesByIds, getRecentMessages } from "./history";
 
 export {
