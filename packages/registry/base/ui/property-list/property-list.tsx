@@ -44,7 +44,19 @@ function isBlank(value: unknown): boolean {
   );
 }
 
-const ISO_DATE = /^\d{4}-\d{2}-\d{2}(?:[T ][\d:.]+(?:Z|[+-]\d{2}:?\d{2})?)?$/;
+/**
+ * Whether a value is something React renders itself: an element, or the
+ * lazy reference an element a server component rendered arrives as on the
+ * client. Either is passed through, never taken apart as a record.
+ */
+function isReactNode(value: unknown): value is React.ReactNode {
+  return (
+    React.isValidElement(value) ||
+    (typeof value === "object" && value !== null && "$$typeof" in value)
+  );
+}
+
+const ISO_DATE =/^\d{4}-\d{2}-\d{2}(?:[T ][\d:.]+(?:Z|[+-]\d{2}:?\d{2})?)?$/;
 
 export interface PropertyValueProps {
   value: unknown;
@@ -56,11 +68,12 @@ export interface PropertyValueProps {
 /**
  * A plain value as a person reads it: a date as a date, a number with its
  * separators, a list as chips, a record as a nested list — never as JSON.
- * A React element passes through unchanged.
+ * A React element passes through unchanged, including one a server
+ * component rendered.
  */
 function PropertyValue({ value, locale, labels }: PropertyValueProps) {
   const l = { ...propertyListLabels, ...labels };
-  if (React.isValidElement(value)) return value;
+  if (isReactNode(value)) return <>{value}</>;
   if (isBlank(value))
     return <span className="text-muted-foreground">{l.empty}</span>;
   if (typeof value === "boolean") return <>{value ? l.yes : l.no}</>;
