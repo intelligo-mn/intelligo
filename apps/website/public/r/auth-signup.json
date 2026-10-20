@@ -5,10 +5,10 @@
   "description": "Email/password and OAuth account creation. Requires the auth-login item (provides the shared AuthCard shell, SocialLoginButtons, and lib/auth-validation.ts schemas); install it first. Redirects to auth-email-verification's /verify-email route when the server requires email verification.",
   "dependencies": [
     "@intelligo-dev/auth",
-    "react-hook-form@^7.88.0",
+    "react-hook-form@^7.89.0",
     "@hookform/resolvers@^5.9.1",
-    "lucide-react@^1.46.0",
-    "next-intl@^4.14.5"
+    "lucide-react@^1.52.0",
+    "next-intl@^4.14.9"
   ],
   "registryDependencies": [
     "alert",

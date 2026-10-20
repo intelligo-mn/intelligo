@@ -8,7 +8,7 @@
     "@intelligo-dev/core",
     "@intelligo-dev/next",
     "sonner@^2.0.8",
-    "next-intl@^4.14.5"
+    "next-intl@^4.14.9"
   ],
   "registryDependencies": [
     "alert",

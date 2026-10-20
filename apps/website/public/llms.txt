@@ -117,6 +117,9 @@ The design system and AI components, installable in any shadcn project the same 
 - [Page Header](https://intelligo.dev/components/page-header): The one page title every Intelligo page renders: heading, description and actions.
 - [Stat Card](https://intelligo.dev/components/stat-card): A metric on a card — label, value, an action such as a status badge, and a footer.
 - [Status Badge](https://intelligo.dev/components/status-badge): A status shown in a status token — neutral, info, success, warning or destructive — never a palette colour.
+- [Data Table](https://intelligo.dev/components/data-table): A list the server pages, sorts and filters — rows with a pinned header and keyboard steps, a toolbar with search, facets and column menu, filter chips and pagination.
+- [Record Panel](https://intelligo.dev/components/record-panel): One record of a list opened beside it in a sheet — title, previous and next with the arrow keys or J and K, a link to its full page, actions and a pinned footer.
+- [Property List](https://intelligo.dev/components/property-list): A record's fields as label and value — dates, numbers, lists and nested records formatted for a reader, never shown as JSON, with empty fields folded away.
 - [Copy Button](https://intelligo.dev/components/copy-button): Copy to the clipboard with confirmation and a live announcement; labels are passed in, so it carries no copy of its own.
 - [AI Code Block](https://intelligo.dev/components/ai-code-block): Highlighted code that streams without layout shift: header with filename, language, status and copy action, line numbers, focused lines, light and dark.
 - [AI Markdown](https://intelligo.dev/components/ai-markdown): Markdown as a model writes it — GFM, highlighted code, CJK emphasis — with maths and diagrams fetched only when the text contains them.

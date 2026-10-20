@@ -6,11 +6,11 @@
   "dependencies": [
     "@intelligo-dev/auth",
     "@intelligo-dev/next",
-    "react-hook-form@^7.88.0",
+    "react-hook-form@^7.89.0",
     "@hookform/resolvers@^5.9.1",
     "zod@^4.6.5",
-    "lucide-react@^1.46.0",
-    "next-intl@^4.14.5"
+    "lucide-react@^1.52.0",
+    "next-intl@^4.14.9"
   ],
   "registryDependencies": [
     "alert",

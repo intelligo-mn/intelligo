@@ -14,6 +14,27 @@ untagged milestones that followed. None of them were released to npm —
 happened alongside the framework is out of scope and noted only where
 it explains a framework decision.
 
+## [1.2.3] — 2026-10-20
+
+### Added
+
+- Three registry primitives for a product's console, installed with
+  `shadcn add @intelligo/<name>`:
+  - `data-table`: a list the server pages, sorts and filters — rows with
+    a pinned header and keyboard steps (↑ ↓, Enter, Space), a toolbar
+    with search, facet filters and a column and density menu, removable
+    filter chips and pagination. It is controlled: every change is a
+    callback, so the product decides how list state reaches the server
+    (usually the URL).
+  - `record-panel`: one record opened in a sheet beside its list, with
+    previous and next (the arrow keys, or J and K), a link to its full
+    page, actions and a pinned footer.
+  - `property-list`: a record's fields as label and value. Dates,
+    numbers, lists and nested records are formatted for a reader rather
+    than shown as JSON, and empty fields fold behind a toggle.
+- Their copy comes in through a `labels` prop with English defaults, as
+  the other primitives take theirs.
+
 ## [1.2.2] — 2026-10-18
 
 1.2.1 was set on main but never published: its release commit failed CI

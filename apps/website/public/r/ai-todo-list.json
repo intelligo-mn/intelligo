@@ -5,7 +5,7 @@
   "description": "The agent's to-do list: a collapsible plan whose status marks morph between pending, in progress, completed and cancelled, with a rolling completion count.",
   "dependencies": [
     "motion@^13.4.0",
-    "lucide-react@^1.46.0"
+    "lucide-react@^1.52.0"
   ],
   "registryDependencies": [
     "@intelligo/ai-motion"
