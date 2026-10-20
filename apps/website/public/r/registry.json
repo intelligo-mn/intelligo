@@ -556,6 +556,59 @@
       ]
     },
     {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "A list the server pages, sorts and filters — rows with a pinned header and keyboard steps, a toolbar with search, facets and column menu, filter chips and pagination. Controlled: every change is a callback the caller turns into a request.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "badge",
+        "table",
+        "@intelligo/button",
+        "@intelligo/checkbox",
+        "@intelligo/dropdown-menu",
+        "@intelligo/input",
+        "@intelligo/popover",
+        "@intelligo/select"
+      ],
+      "files": [
+        {
+          "path": "base/ui/data-table/data-table.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/data-table.tsx"
+        }
+      ]
+    },
+    {
+      "name": "record-panel",
+      "type": "registry:ui",
+      "title": "Record Panel",
+      "description": "One record of a list opened beside it in a sheet — title, previous and next with the arrow keys or J and K, a link to its full page, actions and a pinned footer.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["@intelligo/button", "@intelligo/sheet"],
+      "files": [
+        {
+          "path": "base/ui/record-panel/record-panel.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/record-panel.tsx"
+        }
+      ]
+    },
+    {
+      "name": "property-list",
+      "type": "registry:ui",
+      "title": "Property List",
+      "description": "A record's fields as label and value — dates, numbers, lists and nested records formatted for a reader, never shown as JSON, with empty fields folded away.",
+      "registryDependencies": ["@intelligo/button"],
+      "files": [
+        {
+          "path": "base/ui/property-list/property-list.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/property-list.tsx"
+        }
+      ]
+    },
+    {
       "name": "copy-button",
       "type": "registry:ui",
       "title": "Copy Button",

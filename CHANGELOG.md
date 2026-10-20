@@ -14,6 +14,15 @@ untagged milestones that followed. None of them were released to npm —
 happened alongside the framework is out of scope and noted only where
 it explains a framework decision.
 
+## [1.2.4] — 2026-10-21
+
+### Fixed
+
+- `property-list` rendered an element that a server component passed as
+  a value — a link, a badge — as React's internal fields laid out like a
+  record. Such an element reaches the client as a lazy reference, and
+  `PropertyValue` now renders it as itself.
+
 ## [1.2.3] — 2026-10-20
 
 ### Added
