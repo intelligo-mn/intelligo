@@ -486,8 +486,10 @@ function environmentPage(root) {
     if (!existsSync(src)) continue;
     for (const file of walkFiles(src)) {
       if (!/\.tsx?$/.test(file) || /\.test\.tsx?$/.test(file)) continue;
+      // `env.X` matches `process.env.X` and a read from an injected `env`
+      // object, which functions that take the environment as a parameter use.
       for (const m of readFileSync(file, "utf8").matchAll(
-        /process\.env\.([A-Z][A-Z0-9_]*)/g
+        /\benv\.([A-Z][A-Z0-9_]*)/g
       )) {
         if (!documented.has(m[1]) && !ENV_NOT_DOCUMENTED.has(m[1]))
           undocumented.add(m[1]);

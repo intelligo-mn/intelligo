@@ -3,7 +3,7 @@
   "frameworkVersion": "1.2.4",
   "features": {
     "app-scaffold": {
-      "templateVersion": "1.22.0",
+      "templateVersion": "1.23.0",
       "files": [
         {
           "path": "package.json",
@@ -19,7 +19,7 @@
         },
         {
           "path": ".env.example",
-          "hash": "ba725bc008a28e8a3c537cf0d16fcd3932c9a77ee04ce80e40e87b71a4e2f3c4"
+          "hash": "7debe7d6be9226a8d2618552029c1e3ca9de7216c343c1cc90340e2058726f5b"
         },
         {
           "path": "lib/intelligo.ts",
