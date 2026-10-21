@@ -33,6 +33,7 @@ import {
   type ConversationSharing,
   deleteConversation as deleteConversationRow,
   getConversation,
+  getMessage,
   getRecentMessages,
   getVotes,
   isConversationServiceError,
@@ -251,6 +252,13 @@ export async function setConversationPinned(
   id: string,
   pinned: boolean
 ): Promise<ChatActionResult<undefined>> {
+  // The value is stored in the conversation's metadata as sent.
+  if (typeof pinned !== "boolean") {
+    return {
+      success: false,
+      error: (await getTranslations("chat"))("actions.genericError"),
+    };
+  }
   try {
     await updateConversationMetadata(await actor(), id, { pinned });
     return { success: true, data: undefined };
@@ -269,6 +277,9 @@ export async function voteMessage(
   vote: "up" | "down" | null
 ): Promise<ChatActionResult<undefined>> {
   const t = await getTranslations("chat");
+  if (vote !== "up" && vote !== "down" && vote !== null) {
+    return { success: false, error: t("actions.feedbackFailed") };
+  }
   try {
     const result = await recordChatFeedback(chatServerConfig, await actor(), {
       conversationId,
@@ -324,6 +335,12 @@ export async function setConversationShared(
   id: string,
   shared: boolean
 ): Promise<ChatActionResult<{ shared: boolean; ref: string | null }>> {
+  if (typeof shared !== "boolean") {
+    return {
+      success: false,
+      error: (await getTranslations("chat"))("actions.genericError"),
+    };
+  }
   try {
     const owner = await actor();
     const before = await getConversation(owner, id);
@@ -355,41 +372,86 @@ export async function setConversationShared(
  *
  * The message id becomes the document id, which makes saving the same
  * reply twice a new *version* of one artifact rather than a duplicate.
+ *
+ * The content is the stored reply's text, read from the reader's own
+ * conversation: the page names the message, it does not supply what the
+ * message said.
  */
 export async function saveMessageAsArtifact(params: {
+  conversationId: string;
   messageId: string;
-  content: string;
   title?: string;
-  /** Lets the artifacts page link back to where this came from. */
-  conversationId?: string;
 }): Promise<ChatActionResult<{ id: string; title: string }>> {
   const t = await getTranslations("chat");
-
-  const content = params.content.trim();
-  if (!content) {
-    return { success: false, error: t("actions.emptyArtifact") };
-  }
-
-  const title =
-    params.title?.trim() ||
-    deriveArtifactTitle(content) ||
-    t("artifactCard.untitled");
+  const input = parseArtifactInput(params);
+  if (!input) return { success: false, error: t("actions.invalidArtifact") };
 
   try {
-    const saved = await saveDocument(await actor(), {
-      id: params.messageId,
+    const scoped = await actor();
+    const stored = await getMessage(
+      scoped,
+      input.conversationId,
+      input.messageId
+    );
+    // Absent while the reply is still streaming, and always when the
+    // deployment stores transcripts itself (`persist`) or not at all.
+    if (!stored) {
+      return { success: false, error: t("actions.unstoredArtifact") };
+    }
+    if (stored.role !== "assistant") {
+      return { success: false, error: t("actions.invalidArtifact") };
+    }
+
+    const [message] = toUIMessages([stored]);
+    const content = message ? messageText(message.parts) : "";
+    if (!content) {
+      return { success: false, error: t("actions.emptyArtifact") };
+    }
+
+    const title =
+      input.title?.trim() ||
+      deriveArtifactTitle(content) ||
+      t("artifactCard.untitled");
+
+    const saved = await saveDocument(scoped, {
+      id: input.messageId,
       title,
       content,
       kind: "text",
-      ...(params.conversationId
-        ? { conversationId: params.conversationId }
-        : {}),
+      conversationId: input.conversationId,
     });
     revalidatePath("/artifacts");
     return { success: true, data: { id: saved.id, title: saved.title } };
   } catch (error) {
     return { success: false, error: friendlyError(t, error) };
   }
+}
+
+type ArtifactInput = {
+  conversationId: string;
+  messageId: string;
+  title?: string;
+};
+
+/** The ids and optional title `saveMessageAsArtifact` reads, or null. */
+function parseArtifactInput(value: unknown): ArtifactInput | null {
+  if (typeof value !== "object" || value === null) return null;
+  const { conversationId, messageId, title } = value as Record<string, unknown>;
+  if (typeof conversationId !== "string" || !conversationId) return null;
+  if (typeof messageId !== "string" || !messageId) return null;
+  if (title !== undefined && typeof title !== "string") return null;
+  return { conversationId, messageId, ...(title ? { title } : {}) };
+}
+
+/** A message's text parts, joined the way the thread shows them. */
+function messageText(parts: ReadonlyArray<unknown>): string {
+  return parts
+    .flatMap((part) => {
+      const { type, text } = part as { type?: unknown; text?: unknown };
+      return type === "text" && typeof text === "string" ? [text] : [];
+    })
+    .join("\n\n")
+    .trim();
 }
 
 /** Every version of a document the canvas shows, newest first. */
@@ -421,18 +483,37 @@ export async function saveArtifactVersion(params: {
   content: string;
 }): Promise<ChatActionResult<{ id: string }>> {
   const t = await getTranslations("chat");
+  const version = parseArtifactVersion(params);
+  if (!version) return { success: false, error: t("actions.invalidArtifact") };
   try {
     const saved = await saveDocument(await actor(), {
-      id: params.documentId,
-      title: params.title,
-      content: params.content,
-      kind: params.kind,
+      id: version.documentId,
+      title: version.title,
+      content: version.content,
+      kind: version.kind,
     });
     revalidatePath("/artifacts");
     return { success: true, data: { id: saved.id } };
   } catch (error) {
     return { success: false, error: friendlyError(t, error) };
   }
+}
+
+type ArtifactVersion = {
+  documentId: string;
+  title: string;
+  kind: string;
+  content: string;
+};
+
+/** The four strings a new document version is made of, or null. */
+function parseArtifactVersion(value: unknown): ArtifactVersion | null {
+  if (typeof value !== "object" || value === null) return null;
+  const { documentId, title, kind, content } = value as Record<string, unknown>;
+  if (typeof documentId !== "string" || !documentId) return null;
+  if (typeof title !== "string" || typeof kind !== "string") return null;
+  if (typeof content !== "string") return null;
+  return { documentId, title, kind, content };
 }
 
 const MAX_ARTIFACT_TITLE = 60;
