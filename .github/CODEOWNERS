@@ -1,22 +1,75 @@
 # Code ownership, in the sense the framework's boundary rules mean it: which
 # boundary a path belongs to, so a change that crosses one is visible
 # in review rather than only in CI.
+#
+# The "High risk" section lists source whose every changed line a person
+# reads. scripts/review-policy.mjs parses it, and
+# tests/architecture/review-policy.test.ts fails on a pattern there that
+# matches no tracked file. Package READMEs and manifests are left out on
+# purpose: a release bumps every manifest. Later lines win, so the
+# section stays last.
 
 # Everything defaults to the maintainer.
-*                           @tortuvshin
+*                                                    @tortuvshin
 
 # --- Foundation ---------------------------------------------------------
 # Changes here ship to every consumer. Product vocabulary is not allowed
 # in these paths; the dependency-direction test enforces the import
 # graph, review enforces the rest.
-/packages/                  @tortuvshin
-/packages/registry/         @tortuvshin
+/packages/                                           @tortuvshin
+/packages/registry/                                  @tortuvshin
 
 # --- Boundary-defining files -------------------------------------------
 # Touching these changes what the architecture permits, not just what
 # the code does.
-/tests/architecture/        @tortuvshin
-/turbo.json                 @tortuvshin
-/pnpm-workspace.yaml        @tortuvshin
-/.github/workflows/         @tortuvshin
-/packages/core/src/db/migrations/  @tortuvshin
+/tests/architecture/                                 @tortuvshin
+/turbo.json                                          @tortuvshin
+/pnpm-workspace.yaml                                 @tortuvshin
+
+# --- High risk: begin ---------------------------------------------------
+# Identity, tenancy and persistence.
+/packages/auth/src/                                  @tortuvshin
+/packages/next/src/                                  @tortuvshin
+/packages/admin/src/                                 @tortuvshin
+/packages/core/src/db/                               @tortuvshin
+/packages/core/src/identity/                         @tortuvshin
+/packages/core/src/conversations/                    @tortuvshin
+/packages/core/src/documents/                        @tortuvshin
+/packages/core/src/attachments/                      @tortuvshin
+/packages/core/src/storage/                          @tortuvshin
+/packages/core/src/request-context.ts                @tortuvshin
+/packages/core/src/prompt.ts                         @tortuvshin
+
+# Money, the execution boundary and the records it writes.
+/packages/core/src/money.ts                          @tortuvshin
+/packages/billing/src/                               @tortuvshin
+/packages/executions/src/                            @tortuvshin
+/packages/audit/src/                                 @tortuvshin
+/packages/chat/src/                                  @tortuvshin
+
+# Request entry points: route handlers, Server Actions, the proxy and
+# the admin console's gate, at their source, in the scaffold templates
+# and in the generated reference app.
+/packages/registry/base/chat/route.ts                @tortuvshin
+/packages/registry/base/payment-poll/routes/         @tortuvshin
+/packages/registry/base/*/actions.ts                 @tortuvshin
+/packages/registry/base/admin-console/layout.tsx     @tortuvshin
+/packages/registry/base/admin-console/lib/admin-page.ts @tortuvshin
+/packages/cli/templates/app-scaffold/*-route.ts.tpl  @tortuvshin
+/packages/cli/templates/app-scaffold/proxy.ts.tpl    @tortuvshin
+/packages/cli/templates/maintenance/                 @tortuvshin
+/apps/app/app/api/                                   @tortuvshin
+/apps/app/app/*/admin/layout.tsx                     @tortuvshin
+/apps/app/actions/                                   @tortuvshin
+/apps/app/lib/admin-page.ts                          @tortuvshin
+/apps/app/proxy.ts                                   @tortuvshin
+
+# CI, release and publishing.
+/.github/workflows/                                  @tortuvshin
+/.github/CODEOWNERS                                  @tortuvshin
+/scripts/release-notes.mjs                           @tortuvshin
+/scripts/publish-order.mjs                           @tortuvshin
+/scripts/npm-maintain.mjs                            @tortuvshin
+/scripts/consumer-smoke.sh                           @tortuvshin
+/scripts/fix-esm-extensions.mjs                      @tortuvshin
+# --- High risk: end -----------------------------------------------------
