@@ -767,21 +767,23 @@ export function createChatHandler(config: ChatServerConfig): ChatHandler {
     // put words, tool results or files in the model's mouth that it never
     // produced. With the transport's own persistence each earlier message
     // is read back by id; one the conversation does not hold under the
-    // same role is left out. A deployment that persists elsewhere
-    // (`persist`) reads its own store in `prepareMessages`.
-    if (
-      config.persist === undefined &&
-      loaded.row &&
-      body.messages.length > 1
-    ) {
-      try {
-        body.messages = await asStoredHistory(actor, body);
-      } catch (error) {
-        log.error("Failed to read the stored history", {
-          conversationId: body.id,
-          error: errorMessage(error),
-        });
-        return refusal("INTERNAL", t("internalError"), where, {}, cors);
+    // same role is left out, and a conversation that does not exist yet
+    // holds nothing before the message being sent. A deployment that
+    // persists elsewhere (`persist`) reads its own store in
+    // `prepareMessages`.
+    if (config.persist === undefined && body.messages.length > 1) {
+      if (!loaded.row) {
+        body.messages = body.messages.slice(-1);
+      } else {
+        try {
+          body.messages = await asStoredHistory(actor, body);
+        } catch (error) {
+          log.error("Failed to read the stored history", {
+            conversationId: body.id,
+            error: errorMessage(error),
+          });
+          return refusal("INTERNAL", t("internalError"), where, {}, cors);
+        }
       }
     }
 

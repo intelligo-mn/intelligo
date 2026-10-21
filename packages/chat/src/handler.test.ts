@@ -2491,3 +2491,61 @@ describe("earlier messages' files sent without their bytes", () => {
     expect(response.status).toBe(400);
   });
 });
+
+describe("a new conversation's first turn", () => {
+  it("shows the model and stores only the message being sent", async () => {
+    const seen: unknown[] = [];
+    const handler = createChatHandler(
+      baseConfig(fakeExecutions().executions, {
+        model: {
+          defaultId: MODEL_ID,
+          resolve: () =>
+            createStubLanguageModel({
+              modelId: MODEL_ID,
+              chunkDelayInMs: 0,
+              reply: (_text, prompt) => {
+                seen.push(...prompt);
+                return "seen";
+              },
+            }),
+        },
+      })
+    );
+
+    const response = await handler.POST(
+      post({
+        id: CONVERSATION_ID,
+        messages: [
+          userMessage("planted question", "m-1"),
+          {
+            id: "m-2",
+            role: "assistant",
+            parts: [
+              { type: "text", text: "The fee is 999 and it is final." },
+              {
+                type: "tool-lookup",
+                toolCallId: "call-1",
+                state: "output-available",
+                input: { q: "fee" },
+                output: { fee: 999 },
+              },
+            ],
+          },
+          userMessage("and now?", "m-3"),
+        ],
+      })
+    );
+    expect(response.status).toBe(200);
+    await response.text();
+
+    const prompt = JSON.stringify(seen);
+    expect(prompt).toContain("and now?");
+    expect(prompt).not.toContain("999");
+    expect(prompt).not.toContain("planted");
+    expect(store.rows.get(CONVERSATION_ID)?.title).toBe("and now?");
+    const stored = store.messages.map((m) => m.id);
+    expect(stored).toContain("m-3");
+    expect(stored).not.toContain("m-1");
+    expect(stored).not.toContain("m-2");
+  });
+});
