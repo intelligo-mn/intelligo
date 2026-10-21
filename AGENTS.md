@@ -27,6 +27,7 @@ pnpm lint / pnpm type-check
 pnpm test             # Vitest (root projects config — the real suite)
 pnpm vitest run path/to/file.test.ts
 pnpm test:mutation    # Stryker over the scope in stryker.config.mjs (~1 min)
+pnpm test:e2e         # Playwright journey over a built apps/app (stub model, console email)
 
 # Registry
 pnpm registry:build   # shadcn build → packages/registry/public/r/*.json

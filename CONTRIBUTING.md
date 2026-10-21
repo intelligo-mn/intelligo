@@ -52,6 +52,26 @@ Every app and package reads the repository root `.env`; an app-local
 `.env` or the shell wins over it. `pnpm --filter app dev` runs only the
 reference app.
 
+### The browser journey
+
+`pnpm test:e2e` drives a production build of the reference app in
+Chromium: sign-up, onboarding, the billing page, a chat turn, usage and
+an artifact. It runs on the stub model, so it needs no provider key,
+and on console email, so sign-up issues a session without a mailbox.
+
+```bash
+docker compose up -d
+pnpm db:migrate
+pnpm --filter app exec drizzle-kit migrate
+pnpm turbo build --filter=app
+pnpm exec playwright install chromium
+EMAIL_PROVIDER=console GOOGLE_GENERATIVE_AI_API_KEY= pnpm test:e2e
+pnpm test:e2e:types    # type-checks the specs
+```
+
+Playwright starts the app on :4002 itself, or reuses one already
+running there outside CI.
+
 ## Making a change
 
 1. **Branch from `main`, one concern per pull request.** The subject is
