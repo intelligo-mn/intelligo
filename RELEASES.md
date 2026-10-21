@@ -98,6 +98,13 @@ a `@deprecated` tag naming the major that removes it and the replacement,
 and a `### Deprecated` changelog entry. A registry item that uses a
 deprecated API is updated in the major that removes it.
 
+The register is `packages/cli/src/deprecations.ts`: each deprecation's
+`INTELLIGO_DEPnnnn` code, the version that deprecated it, the major that
+removes it and its replacement. `tests/architecture/deprecations.test.ts`
+holds it equal to the `@deprecated` tags and lists the registry items
+each removal touches. A deprecated call logs a one-time Node
+`DeprecationWarning` carrying its code.
+
 ## Breaking changes outside a major
 
 Only a security fix may break stable public API outside a major, and

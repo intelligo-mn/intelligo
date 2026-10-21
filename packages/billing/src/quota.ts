@@ -55,6 +55,7 @@ import type {
 import { getPlanMessageLimit, getPlanMonthlyAllowance } from "./quota-plan";
 import { BillingNotConfiguredError } from "./plan-registry";
 import { ChargeError } from "./charge-error";
+import { warnDeprecated } from "./deprecation";
 import { createLogger } from "@intelligo-dev/core/logger";
 import { runInBackground } from "@intelligo-dev/core/request-context";
 import { isUniqueViolation, requestIdTaken } from "@intelligo-dev/executions";
@@ -328,14 +329,19 @@ export async function reserveQuota(
 }
 
 /**
- * @deprecated One name for two behaviours: with `requestId` this is
- * `reserveQuota` (atomic admission), without it `estimateQuota` (a
- * read-only estimate that must never gate a run). Call the one you mean.
+ * @deprecated Removed in 2.0.0 (INTELLIGO_DEP0001). One name for two
+ * behaviours: with `requestId` this is `reserveQuota` (atomic admission),
+ * without it `estimateQuota` (a read-only estimate that must never gate a
+ * run); call the one you mean.
  */
 export async function checkQuota(
   workspaceId: string,
   options?: { modelId?: string; requestId?: string }
 ): Promise<QuotaCheckResult> {
+  warnDeprecated(
+    "INTELLIGO_DEP0001",
+    "checkQuota is removed in 2.0.0; call reserveQuota to admit a run or estimateQuota for a read-only estimate."
+  );
   return options?.requestId
     ? reserveQuota(workspaceId, {
         modelId: options.modelId,

@@ -74,7 +74,8 @@ Some kinds of change have rules of their own:
 - **Public API** follows [RELEASES.md](RELEASES.md). A patch only
   fixes; removing or changing the meaning of a stable export, CLI flag,
   environment variable or schema object waits for a major, after a
-  deprecation in a released minor.
+  deprecation in a released minor, with an entry in
+  `packages/cli/src/deprecations.ts`.
 - **Migrations** are additive within a release, live in
   `packages/core/src/db/migrations/`, are registered in
   `meta/_journal.json`, and change structure, never rows. CI replays the
