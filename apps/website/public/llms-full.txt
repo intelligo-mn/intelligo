@@ -4003,19 +4003,29 @@ The reference app does the same from inside the monorepo, where the CLI is a wor
 
 `NEXT_PUBLIC_APP_URL` must be the public `https://` URL: auth callbacks, email links and redirects are built from it.
 
-With `NODE_ENV=production`, `assertEnv()` also logs an `[Env]` warning for each of these:
+With `NODE_ENV=production`, `assertEnv()` refuses to start without an email provider: set `RESEND_API_KEY` (with `EMAIL_FROM`) or `LOOPS_API_KEY`, or set `EMAIL_PROVIDER=console` to run without email on purpose, which leaves sign-ups unverified. In production only, it logs an `[Env]` warning for each of these:
 
-| Warning                                    | Consequence                                               |
-| ------------------------------------------ | --------------------------------------------------------- |
-| No `RESEND_API_KEY` or `LOOPS_API_KEY`     | Sign-ups are not email-verified; mail goes to the console |
-| `STRIPE_SECRET_KEY` starts with `sk_test_` | Production is running on a Stripe test key                |
-| `CRON_SECRET` unset or under 32 characters | The maintenance route answers 403                         |
+| Warning                                    | Consequence                                                      |
+| ------------------------------------------ | ---------------------------------------------------------------- |
+| `NEXT_PUBLIC_APP_URL` is not `https://`    | Auth callbacks, email links and secure cookies are built from it |
+| `STRIPE_SECRET_KEY` starts with `sk_test_` | Production is running on a Stripe test key                       |
+| `CRON_SECRET` unset or under 32 characters | The maintenance route answers 403                                |
+
+In any environment, it also warns about these:
+
+| Warning                                                                                                                                            | Consequence                                              |
+| -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| Part of a group set without the rest (Google's or GitHub's id and secret, Stripe's key and webhook secret, `STORAGE_BUCKET` and both storage keys) | That feature stays broken until all of the group are set |
+| `RESEND_API_KEY` set without `EMAIL_FROM`                                                                                                          | Every email fails                                        |
+| `AUTH_SECRET` set and `BETTER_AUTH_SECRET` not                                                                                                     | It is read as a legacy alias; rename it                  |
+| An optional secret shorter than its minimum (`CRON_SECRET`, 32 characters)                                                                         | Too weak for what it guards                              |
+| Optional variables unset                                                                                                                           | One line naming them; their features stay off            |
 
 Every variable is listed in [Environment](/docs/getting-started/environment).
 
 ## Email
 
-Sign-ups are held for email verification only when a provider is configured. Without one, verification, invitation and reset links are printed to the server log. Set a provider key, and set `EMAIL_FROM` to an address on a domain your provider lets you send from — there is no built-in sender, so with Resend and no `EMAIL_FROM` every send fails and startup warns about it. Loops takes the sender from each template.
+Sign-ups are held for email verification only when a provider is configured. Without one, verification, invitation and reset links are printed to the server log in development; in production startup refuses this unless `EMAIL_PROVIDER=console`, which also leaves sign-ups unverified. Set a provider key, and set `EMAIL_FROM` to an address on a domain your provider lets you send from — there is no built-in sender, so with Resend and no `EMAIL_FROM` every send fails and startup warns about it. Loops takes the sender from each template.
 
 ## The Stripe webhook
 

@@ -105,7 +105,8 @@ export const auth = betterAuth({
     // Verification is required exactly when a verification email can be
     // sent. Without a provider the link only reaches the server console,
     // so requiring it would lock every new account out — in production
-    // as much as in development. `validateEnv` warns about that case.
+    // as much as in development. `validateEnv` refuses that case in
+    // production unless EMAIL_PROVIDER=console.
     requireEmailVerification: !(getEmailProvider() instanceof ConsoleProvider),
     // A reset is what a user does when they think someone else has their
     // password: every session open before it ends with it.
