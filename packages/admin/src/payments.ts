@@ -9,7 +9,7 @@ import "server-only";
 import { db } from "@intelligo-dev/core/db";
 import { organization, payments, users } from "@intelligo-dev/core/db/schema";
 import { fromMinor, type Money } from "@intelligo-dev/core/money";
-import { and, count, desc, eq, type SQL } from "drizzle-orm";
+import { and, count, desc, eq, inArray, type SQL } from "drizzle-orm";
 
 import { pageBounds, type Paged } from "./directory";
 import { assertPlatformAdmin } from "./gate";
@@ -34,19 +34,25 @@ export type PaymentRow = {
   userEmail: string | null;
 };
 
-/** Invoices, newest first, optionally for one workspace or in one status. */
+/**
+ * Invoices, newest first, optionally for one workspace or in the given
+ * statuses (one, or any of several).
+ */
 export async function listPayments(input: {
   workspaceId?: string;
-  status?: string;
+  status?: string | readonly string[];
   limit: number;
   offset?: number;
 }): Promise<Paged<PaymentRow>> {
   await assertPlatformAdmin();
   const { limit, offset } = pageBounds(input);
+  const statuses =
+    typeof input.status === "string" ? [input.status] : (input.status ?? []);
   const filters: SQL[] = [];
   if (input.workspaceId)
     filters.push(eq(payments.workspaceId, input.workspaceId));
-  if (input.status) filters.push(eq(payments.status, input.status));
+  if (statuses.length > 0)
+    filters.push(inArray(payments.status, [...statuses]));
   const where = filters.length > 0 ? and(...filters) : undefined;
 
   const [rows, [counted]] = await Promise.all([

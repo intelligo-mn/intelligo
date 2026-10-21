@@ -205,6 +205,14 @@ d("the directory reads (integration)", () => {
       limit: 10,
     });
     expect(pending.rows.map((r) => r.id)).toEqual([`pay_${run}_2`]);
+
+    const either = await listPayments({
+      status: ["paid", "pending"],
+      limit: 200,
+    });
+    expect(
+      either.rows.filter((r) => r.id.startsWith(`pay_${run}`)).map((r) => r.id)
+    ).toEqual([`pay_${run}_2`, `pay_${run}_1`]);
   });
 
   it("names the users and workspaces it can, and leaves the rest out", async () => {
