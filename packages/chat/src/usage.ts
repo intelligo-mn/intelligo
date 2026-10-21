@@ -80,6 +80,7 @@ function inFlightStepUsage(
  */
 export function inFlightTracker(promptTokens: number) {
   let streamed: string | null = null;
+  // Stryker disable next-line ArrayDeclaration: equivalent — a seeded element has no `usage`, which every reader counts as zero and, as the previous step, falls back to `promptTokens` exactly as an empty list does.
   const finished: { usage?: TokenUsage }[] = [];
   let unreported: TokenUsage = {};
   const aborted = (steps: ReadonlyArray<{ usage?: TokenUsage }>) =>

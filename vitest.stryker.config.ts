@@ -49,6 +49,8 @@ export default defineConfig({
       "packages/chat/src/body.test.ts",
       "packages/chat/src/continuation.test.ts",
       "packages/chat/src/generation.test.ts",
+      "packages/chat/src/usage.test.ts",
+      "packages/chat/src/usage.property.test.ts",
       "packages/chat/src/windowing.test.ts",
     ],
     exclude: [

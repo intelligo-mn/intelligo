@@ -65,6 +65,7 @@ export default {
     "packages/chat/src/body.ts",
     "packages/chat/src/continuation.ts",
     "packages/chat/src/generation.ts",
+    "packages/chat/src/usage.ts",
     "packages/chat/src/windowing.ts",
   ],
   // `break` fails the command. It sits just under the score this scope
