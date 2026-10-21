@@ -218,6 +218,15 @@ export type SettleLocalInvoiceInput = {
 };
 
 /**
+ * Whether Postgres can hold `id` in a text column. It cannot hold the
+ * NUL character, and a query naming one fails instead of matching
+ * nothing, so such an id names no invoice.
+ */
+function storable(id: string): boolean {
+  return !id.includes("\u0000");
+}
+
+/**
  * Ask the issuing provider about `invoiceId` and settle it: grant what
  * it bought when paid, mark it failed when the provider says it failed
  * or expired, and report `pending` otherwise. Settling an invoice that
@@ -235,16 +244,18 @@ export type SettleLocalInvoiceInput = {
 export async function settleLocalInvoice(
   input: SettleLocalInvoiceInput
 ): Promise<LocalPaymentStatus> {
-  const [payment] = await db
-    .select()
-    .from(payments)
-    .where(
-      and(
-        eq(payments.invoiceId, input.invoiceId),
-        eq(payments.workspaceId, input.workspaceId)
-      )
-    )
-    .limit(1);
+  const [payment] = storable(input.invoiceId)
+    ? await db
+        .select()
+        .from(payments)
+        .where(
+          and(
+            eq(payments.invoiceId, input.invoiceId),
+            eq(payments.workspaceId, input.workspaceId)
+          )
+        )
+        .limit(1)
+    : [];
   if (!payment) {
     throw new BillingServiceError(
       "payment_not_found",
@@ -433,6 +444,9 @@ export type SettlePendingLocalInvoicesResult = Record<
 export async function settlePendingLocalInvoices(
   input: SettlePendingLocalInvoicesInput
 ): Promise<SettlePendingLocalInvoicesResult> {
+  if (input.invoiceId !== undefined && !storable(input.invoiceId)) {
+    return { paid: 0, pending: 0, failed: 0, errors: [], deferred: 0 };
+  }
   const now = Date.now();
   const unfulfilled = and(
     eq(payments.status, "pending"),
