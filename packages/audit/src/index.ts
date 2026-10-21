@@ -10,7 +10,7 @@
 import { db } from "@intelligo-dev/core/db";
 import { createLogger } from "@intelligo-dev/core/logger";
 import { createRegistry } from "@intelligo-dev/core/registry";
-import { and, desc, eq, lt } from "drizzle-orm";
+import { and, count, desc, eq, lt } from "drizzle-orm";
 
 import { auditEvents } from "./db/schema";
 
@@ -163,11 +163,12 @@ export type QueryAuditEventsOptions = {
   /** Keyset pagination: return events created strictly before this. */
   before?: Date;
   limit?: number;
+  /** Offset pagination: skip this many of the matching events. */
+  offset?: number;
 };
 
-/** Most-recent-first query for the admin console. */
-export async function queryAuditEvents(options: QueryAuditEventsOptions = {}) {
-  const filters = [
+function auditFilters(options: QueryAuditEventsOptions) {
+  return [
     options.workspaceId
       ? eq(auditEvents.workspaceId, options.workspaceId)
       : undefined,
@@ -180,13 +181,30 @@ export async function queryAuditEvents(options: QueryAuditEventsOptions = {}) {
       : undefined,
     options.before ? lt(auditEvents.createdAt, options.before) : undefined,
   ].filter(Boolean);
+}
 
+/** Most-recent-first query for the admin console. */
+export async function queryAuditEvents(options: QueryAuditEventsOptions = {}) {
+  const filters = auditFilters(options);
   return db
     .select()
     .from(auditEvents)
     .where(filters.length > 0 ? and(...filters) : undefined)
-    .orderBy(desc(auditEvents.createdAt))
-    .limit(Math.min(options.limit ?? 50, 500));
+    .orderBy(desc(auditEvents.createdAt), desc(auditEvents.id))
+    .limit(Math.min(options.limit ?? 50, 500))
+    .offset(Math.max(0, Math.floor(options.offset ?? 0)));
+}
+
+/** How many events `queryAuditEvents` would page through with these filters. */
+export async function countAuditEvents(
+  options: Omit<QueryAuditEventsOptions, "limit" | "offset"> = {}
+): Promise<number> {
+  const filters = auditFilters(options);
+  const [row] = await db
+    .select({ n: count() })
+    .from(auditEvents)
+    .where(filters.length > 0 ? and(...filters) : undefined);
+  return Number(row?.n ?? 0);
 }
 
 /**
