@@ -380,4 +380,6 @@ jobs:
             packages/core/src/identity/service.integration.test.ts \
             packages/core/src/attachments/service.integration.test.ts \
             packages/auth/src/team/service.integration.test.ts \
-            packages/auth/src/workspace/service.integration.test.ts
+            packages/auth/src/workspace/service.integration.test.ts \
+            apps/app/actions/__tests__/tenant-isolation.integration.test.ts \
+            apps/app/app/api/_tests/tenant-isolation.integration.test.ts
