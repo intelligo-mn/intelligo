@@ -37,6 +37,7 @@ export default defineConfig({
       "packages/core/src/registry.test.ts",
       "packages/core/src/documents/classifier.test.ts",
       "packages/executions/src/pricing.test.ts",
+      "packages/executions/src/pricing.property.test.ts",
       "packages/executions/src/lifecycle.test.ts",
       "packages/billing/src/plan-registry.test.ts",
       "packages/billing/src/feature-quota.test.ts",
