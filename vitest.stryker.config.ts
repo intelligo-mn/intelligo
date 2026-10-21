@@ -26,8 +26,13 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "node",
+    setupFiles: [path.resolve(__dirname, "./tests/setup/fast-check.ts")],
+    // Fewer cases per property than `pnpm test` runs: every mutant
+    // reruns the properties that cover it, and the seed stays fixed.
+    env: { FC_RUNS: "30" },
     include: [
       "packages/core/src/money.test.ts",
+      "packages/core/src/money.property.test.ts",
       "packages/core/src/prompt.test.ts",
       "packages/core/src/registry.test.ts",
       "packages/core/src/documents/classifier.test.ts",
