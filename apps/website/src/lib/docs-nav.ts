@@ -8,6 +8,7 @@ export const DOC_SECTIONS = [
   { id: "packages", title: "Packages" },
   { id: "cli", title: "CLI" },
   { id: "guides", title: "Guides" },
+  { id: "security", title: "Security" },
 ] as const;
 
 export type DocEntry = CollectionEntry<"docs">;

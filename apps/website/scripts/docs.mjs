@@ -43,6 +43,7 @@ export const DOC_SECTIONS = [
   { id: "packages", title: "Packages" },
   { id: "cli", title: "CLI" },
   { id: "guides", title: "Guides" },
+  { id: "security", title: "Security" },
 ];
 
 /** Paths under DOCS_DIR that only the generator writes. */

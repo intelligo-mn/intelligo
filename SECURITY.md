@@ -83,6 +83,12 @@ their own: a fix to an item ships in a release. Upgrade `@intelligo-dev/cli`
 and every `@intelligo-dev/*` package to the fixed version and run
 `intelligo sync <item>`.
 
+## How the framework is secured
+
+What the framework enforces and what it leaves to the application, with
+the production checklist and per-package threat models as they are
+published: https://intelligo.dev/docs/security.
+
 ## What is in scope
 
 The published `@intelligo-dev/*` packages, the registry items served at

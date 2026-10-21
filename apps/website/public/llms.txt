@@ -56,6 +56,10 @@ Every docs page below is also served as Markdown: the same URL with `.md` append
 - [Deploying](https://intelligo.dev/docs/guides/deploy): Put the app on Vercel with Postgres and pgvector, apply both migration chains on every deploy, and get email, Stripe webhooks and the cron working.
 - [Testing your app](https://intelligo.dev/docs/guides/testing): Run Vitest on an app built on the framework — the server-only stub, why the framework packages are inlined, keeping models out of CI, and what to test.
 
+## Security
+
+- [Security model](https://intelligo.dev/docs/security): What Intelligo enforces for you (tenancy, roles, credits, webhooks, audit) and what stays your job: prompts, tools, keys, headers and hosting.
+
 ## Pages
 
 Product pages installed into a Next.js app as your own source: `pnpm exec shadcn add @intelligo/<name>`.
