@@ -6,3 +6,6 @@ contact_links:
   - name: Ask a question
     url: https://github.com/intelligo-dev/intelligo/discussions
     about: Usage questions and ideas go to Discussions.
+  - name: Show what you built
+    url: https://github.com/intelligo-dev/intelligo/discussions/categories/show-and-tell
+    about: A product or demo built on Intelligo goes to Show and tell.
