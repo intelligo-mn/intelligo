@@ -72,6 +72,23 @@ pnpm test:e2e:types    # type-checks the specs
 Playwright starts the app on :4002 itself, or reuses one already
 running there outside CI.
 
+### Load test
+
+`scripts/load/chat.k6.js` puts load on `/api/chat`. It needs
+[k6](https://grafana.com/docs/k6/latest/set-up/install-k6/), installed
+separately, and a local production build of the reference app on the
+stub model:
+
+```bash
+pnpm turbo build --filter=app
+EMAIL_PROVIDER=console GOOGLE_GENERATIVE_AI_API_KEY= pnpm --filter app start
+k6 run -e BASE_URL=http://localhost:4002 scripts/load/chat.k6.js
+```
+
+The script's header lists its options (`VUS`, `PACE`, `SPOOF_IP`). It
+signs up accounts and spends their credits: never point it at a
+deployment with a provider key or a real mail provider.
+
 ## Making a change
 
 1. **Branch from `main`, one concern per pull request.** The subject is
