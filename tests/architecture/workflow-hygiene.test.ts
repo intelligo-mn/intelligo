@@ -32,7 +32,11 @@ import { ROOT } from "./tree";
 const WORKFLOWS_DIR = path.join(ROOT, ".github/workflows");
 
 /** Findings a workflow still carries on purpose, as `<file>: <rule>`. */
-const ALLOWED = ["release.yml: ref from workflow_run"];
+const ALLOWED = [
+  // The release job checks out the commit CI passed, and only after
+  // `git merge-base --is-ancestor` proves that commit is on main.
+  "release.yml: value from workflow_run's head",
+];
 
 /** The scopes GitHub's `permissions:` accepts. */
 const SCOPE =

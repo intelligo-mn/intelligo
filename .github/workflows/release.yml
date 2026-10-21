@@ -84,12 +84,24 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          # workflow_run checks out main's newest commit; start from the
-          # commit CI actually passed.
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
           fetch-depth: 0
           # Nothing in this job writes to the repository.
           persist-credentials: false
+
+      # workflow_run checks out main's newest commit. The version is read
+      # from the commit CI passed instead, once it is shown to be on main;
+      # which commit is built is decided by "Already on npm?" below.
+      - name: Check out the commit CI passed
+        if: github.event_name == 'workflow_run'
+        env:
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          if ! git merge-base --is-ancestor "$HEAD_SHA" origin/main; then
+            echo "::error::$HEAD_SHA is not on main"
+            exit 1
+          fi
+          git checkout --quiet "$HEAD_SHA"
 
       # The version is the manifests'. Every published workspace must
       # agree (a private one — packages/registry — is skipped), a hand
