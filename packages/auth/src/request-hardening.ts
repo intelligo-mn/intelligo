@@ -33,7 +33,12 @@ export const SERVICE_ONLY_ORGANIZATION_PATHS = [
  * `@intelligo-dev/admin`'s `startImpersonation` / `stopImpersonation`
  * (the reason and the audit events); the console reads users from its
  * own audited queries. Called over HTTP these would list every user and
- * their sessions, or end an impersonation, with no audit row.
+ * their sessions, or end an impersonation, with no audit row. The
+ * plugin's user writes — creating, editing, banning or removing a user,
+ * setting a role or a password, revoking sessions — have no audited
+ * wrapper, and the platform role holds no permission for them; they are
+ * closed too, so a role that gains one does not open them to the
+ * browser. `has-permission` stays open.
  */
 export const SERVICE_ONLY_ADMIN_PATHS = [
   "/admin/impersonate-user",
@@ -41,6 +46,15 @@ export const SERVICE_ONLY_ADMIN_PATHS = [
   "/admin/list-users",
   "/admin/get-user",
   "/admin/list-user-sessions",
+  "/admin/create-user",
+  "/admin/update-user",
+  "/admin/set-role",
+  "/admin/set-user-password",
+  "/admin/ban-user",
+  "/admin/unban-user",
+  "/admin/remove-user",
+  "/admin/revoke-user-session",
+  "/admin/revoke-user-sessions",
 ] as const;
 
 const list = (value: string | undefined) =>

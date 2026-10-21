@@ -43,6 +43,25 @@ describe("SERVICE_ONLY_ADMIN_PATHS", () => {
     ])
       expect(SERVICE_ONLY_ADMIN_PATHS).toContain(path);
   });
+
+  it("closes the user writes, which have no audited wrapper", () => {
+    for (const path of [
+      "/admin/create-user",
+      "/admin/update-user",
+      "/admin/set-role",
+      "/admin/set-user-password",
+      "/admin/ban-user",
+      "/admin/unban-user",
+      "/admin/remove-user",
+      "/admin/revoke-user-session",
+      "/admin/revoke-user-sessions",
+    ])
+      expect(SERVICE_ONLY_ADMIN_PATHS).toContain(path);
+  });
+
+  it("leaves has-permission open", () => {
+    expect(SERVICE_ONLY_ADMIN_PATHS).not.toContain("/admin/has-permission");
+  });
 });
 
 describe("ipAddressOptions", () => {
