@@ -77,7 +77,9 @@ changelog says so; from then on it follows the versioning above.
 ## Support windows
 
 The current minor gets every fix. Older lines get fixes only where
-SECURITY.md lists them as supported.
+SECURITY.md lists them as supported, until the end date it names there;
+its supported-versions table is the one place that says which lines
+those are.
 
 ## Deprecation
 
