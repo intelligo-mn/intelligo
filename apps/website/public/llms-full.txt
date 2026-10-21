@@ -349,9 +349,9 @@ Registry blocks are yours, but the standard is to use them unmodified. What a de
 
 Editing an installed component works, but it forks you from every later improvement to that block. If a product needs something a seam doesn't offer, the better change is a new seam in the registry.
 
-## The admin console is the exception
+## The admin console
 
-`@intelligo-dev/admin` is Intelligo-owned and not in the registry: what an operator can see across every tenant is not a per-product decision. `intelligo add admin-page` mounts it under `/admin`.
+The console is split along the same line. What an operator can see across every tenant, and who may see it, is not a per-product decision: the cross-tenant queries, the platform-admin gate, the health probes and impersonation are `@intelligo-dev/admin`'s, and every read checks for a platform admin itself. The pages are the `admin-console` registry item — overview, users, a workspace's support page, revenue and costs, operations — installed under `/admin` as source you own, with the sidebar in `lib/admin-nav.ts` and the product's own panels slotted in through `lib/admin-config.tsx`.
 
 ---
 
@@ -575,6 +575,7 @@ pnpm exec shadcn add @intelligo/chat
 pnpm exec shadcn add @intelligo/chat-panel
 pnpm exec shadcn add @intelligo/chat-widget
 pnpm exec shadcn add @intelligo/chat-share
+pnpm exec shadcn add @intelligo/admin-console
 ```
 
 | Block | Needs these blocks | Imports these scaffold files | Gates on these features |
@@ -607,6 +608,7 @@ pnpm exec shadcn add @intelligo/chat-share
 | [chat-panel](/blocks/chat-panel) | [chat](/blocks/chat) | `lib/utils` | — |
 | [chat-widget](/blocks/chat-widget) | [chat](/blocks/chat) | `i18n/navigation`, `lib/utils` | — |
 | [chat-share](/blocks/chat-share) | [chat](/blocks/chat) | `i18n/navigation` | — |
+| [admin-console](/blocks/admin-console) | [app-shell](/blocks/app-shell), [pricing](/blocks/pricing), [route-error](/blocks/route-error) | `i18n/navigation`, `lib/intelligo`, `lib/utils` | — |
 
 A feature key must be granted to a plan in `lib/plans.ts`; an unregistered feature is denied on every request. A key a config seam names (the `chat` item's `lib/chat-server-config.ts` gates on `chat` as shipped) is the app's to change and is not listed here; `intelligo doctor` warns when a seam names a key `lib/plans.ts` does not grant.
 
@@ -1423,6 +1425,53 @@ import { ChatWidget } from "@/components/chat/chat-widget";
 …
 <ChatWidget />
 ```
+
+## [admin-console](/blocks/admin-console)
+
+### `lib/admin-nav.ts`
+
+Bundled for the browser: no server imports, no secrets. Exports `AdminNavItem`, `adminNav`. [source](https://github.com/intelligo-dev/intelligo/blob/main/packages/registry/base/admin-console/lib/admin-nav.ts)
+
+The admin console's sidebar — consumer-owned (the contract of
+`lib/settings-nav.ts` for the settings tabs).
+
+`components/admin/admin-sidebar.tsx` renders exactly this list, in this
+order. Add the product's own console pages (`{ titleKey:
+"admin.nav.content", href: "/admin/content", icon: Newspaper }`), group
+several under one entry with `children`, or remove a section — no
+component edit needed.
+
+`titleKey` is a fully-qualified message key resolved through a
+namespace-less `useTranslations()`: the defaults point into this item's
+`admin-console` namespace, and an entry you add can point into any
+namespace you own.
+
+Icons are Lucide components, so this file is imported by the client
+sidebar and never passed from a server layout: component values cannot
+cross the RSC boundary as props.
+
+### `lib/admin-config.tsx`
+
+Runs on the server. Exports `AdminConfig`, `adminConfig`. [source](https://github.com/intelligo-dev/intelligo/blob/main/packages/registry/base/admin-console/lib/admin-config.tsx)
+
+The admin console's product slots — consumer-owned, server-side (the
+console's pages import it; no client component does, so a slot may
+read the database).
+
+- `brandKey`: the fully-qualified message key of the name at the top of
+  the sidebar.
+- `backHref`: where "Back to the app" goes.
+- `overviewPanels`: the product's own panels, rendered first on the
+  overview, above the platform's (the work waiting for review, the
+  numbers the product is run by).
+- `workspacePanels(workspaceId)`: the product's own panels on a
+  workspace's support page, under its stats and support actions.
+- `auditFilterPlaceholderKey`: the message key of the hint in the
+  operations page's audit filter — an action name the product records.
+
+A slot is called on the server for each request and may be async. One
+that throws is reported as unreadable in its place; the rest of the page
+still renders. Its copy belongs in a message namespace of the product's.
 
 ---
 
@@ -2623,46 +2672,70 @@ Source: https://intelligo.dev/docs/packages/admin
 pnpm add @intelligo-dev/admin drizzle-orm react
 ```
 
-`drizzle-orm` and `react` (19 or later) are peers. `intelligo add admin-page`
-from [`@intelligo-dev/cli`](https://www.npmjs.com/package/@intelligo-dev/cli)
-generates the mount below as source the application owns.
+`drizzle-orm` and `react` (19 or later) are peers.
 
 ## Use
 
+The package owns what the console reads and who may read it: the
+cross-tenant queries, the admin gate, the health probes and impersonation.
+The pages, their chrome and their copy are the `admin-console` registry
+item, installed as source the application owns
+(`intelligo sync admin-console`): an overview, users and a workspace's
+support view, revenue and costs, operations and the audit trail under
+`/admin`, with a sidebar from `lib/admin-nav.ts` and the product's own
+panels slotted in from `lib/admin-config.tsx`. The billing actions a support
+view takes — granting a plan, adding credit, the deployment's billing
+settings — live in that item, so this package stays free of a billing
+dependency.
+
+A page of the product's own uses the same reads:
+
 ```tsx
-// app/[locale]/admin/page.tsx
-import {
-  getPlatformOverview,
-  listUnsettledExecutions,
-  listWorkspaces,
-  requireAdmin,
-} from "@intelligo-dev/admin";
-import { PlatformOverviewView } from "@intelligo-dev/admin/views";
+// app/[locale]/admin/signups/page.tsx
+import { getSignupsByDay, requireAdmin } from "@intelligo-dev/admin";
 
-export default async function AdminPage() {
-  await requireAdmin("admin.overview.viewed");
-
-  const [overview, workspaces, unsettled] = await Promise.all([
-    getPlatformOverview(),
-    listWorkspaces(20),
-    listUnsettledExecutions(),
-  ]);
-
+export default async function SignupsPage() {
+  await requireAdmin("admin.signups.viewed");
+  const days = await getSignupsByDay({ days: 30, timeZone: "UTC" });
   return (
-    <PlatformOverviewView
-      overview={overview}
-      workspaces={workspaces}
-      unsettled={unsettled}
-    />
+    <ul>
+      {days.map((d) => (
+        <li key={d.day}>
+          {d.day}: {d.count}
+        </li>
+      ))}
+    </ul>
   );
 }
 ```
 
-The console is Intelligo-owned rather than consumer-owned source, and
-deliberately excluded from the page registry: what an operator can see across
-every tenant is not a per-product decision, and a fork could quietly stop
-showing unsettled executions. The application owns the route and the page
-chrome around the views.
+The reads:
+
+- `getPlatformOverview()`, `listWorkspaces(limit)`, `listUnsettledExecutions()`,
+  `listWorkspaceExecutions(workspaceId, limit)`, `listFailedJobs(limit)`;
+- `listUserSummaries({ query, limit, offset })`: users, newest first, each with
+  every workspace it belongs to, its role there and the workspace's plan.
+  `query` matches the email, the name or a workspace's name literally (`%` and
+  `_` are not wildcards); `total` counts every match for paging. Platform
+  admins are listed too;
+- `getWorkspace(id)` and `listWorkspaceMembers(id)` for a workspace's support
+  view;
+- `listPayments({ workspaceId, status, limit, offset })`: the local-payment
+  ledger, each invoice's amount as `Money` with the workspace's name;
+- `getSignupsByDay({ days, timeZone })`: sign-ups per calendar day in an IANA
+  zone, one entry per day, the last one today;
+- `queryAuditEvents(options)` and `countAuditEvents(options)`, and
+  `resolveDisplayNames({ userIds, workspaceIds })` to show an event's actor and
+  resource by name;
+- `getRevenue()`, `getProviderCostTotal()`, `getPlanDistribution()`,
+  `getUsageByModel(limit)`, `getUsageByUser(limit)`,
+  `listUsageRecords(limit, offset)` and `countUsageRecords()`.
+
+Each checks for itself that a platform admin is asking, so a page that forgot
+the gate refuses rather than listing every tenant.
+
+`@intelligo-dev/admin/views` holds the earlier unstyled, English-only screens,
+kept for applications that mounted them; the registry item does not use them.
 
 ## The gate
 
@@ -2670,6 +2743,11 @@ Every query sits behind `requireAdmin(action, resource?)`, which checks the
 platform admin role — `users.role`, a row rather than an environment variable,
 and never a workspace role: every signup owns a workspace. Each call writes an
 audit event with `actorKind: "support"`, so looking is on the record too.
+
+`isPlatformAdmin()` is the same check without the audit event, for a
+layout deciding between the console and a 404, or a page whose reads are not
+a customer's data: it answers `false` for a missing session or role and
+throws any other failure.
 
 `requireAdminOrRefuse` is the gate for anything destructive: it refuses the
 action when the audit event cannot be written. Reading a customer's data
@@ -2798,7 +2876,7 @@ to the new application, which is where `intelligo` comes from afterwards.
 pnpm dlx @intelligo-dev/cli create my-app   # a registry-ready Next.js app, plus the pages you pick
 pnpm dlx @intelligo-dev/cli create my-app --items chat,billing-settings --yes   # no questions
 pnpm dlx @intelligo-dev/cli create . --name "Acme Audit"   # into the current, empty directory (a .git may be there)
-intelligo add <feature>                # generate consumer-owned source (admin-page, maintenance, vitest)
+intelligo add <feature>                # generate consumer-owned source (maintenance, vitest)
 intelligo doctor                       # what is misconfigured, and why it matters
 intelligo migrate                      # apply the framework chain
 intelligo migrate --check [--json]     # compare the chain with the database, change nothing
@@ -2986,7 +3064,6 @@ their own, and refuse to overwrite the latter.
 | Feature | What it generates |
 | --- | --- |
 | `pnpm-standalone` | pnpm settings for an app that is its own workspace root: dependency build scripts declined, so pnpm 10+ installs without a prompt, and `pnpm add` allowed at the root for the shadcn CLI. `intelligo create` writes it when pnpm installs an app outside any workspace — `pnpm-workspace.yaml`, `.npmrc` |
-| `admin-page` | Mount the Intelligo operational console at /admin, styled with the app's tokens, for platform admins only — `app/[locale]/admin/page.tsx` |
 | `maintenance` | A CRON_SECRET-gated GET /api/cron/maintenance that reconciles stale executions, drops expired reservations and rate-limit buckets, expires trials, prunes old jobs and deletes what uploads leave behind — scheduled every five minutes, in vercel.json when the app has none — `app/api/cron/maintenance/route.ts` |
 | `vitest` | A Vitest setup for the app's own tests: the `@` alias, a `server-only` stub, and the `@intelligo-dev/*` packages inlined so the stub reaches them — `vitest.config.ts`, `tests/stubs/server-only.ts` |
 

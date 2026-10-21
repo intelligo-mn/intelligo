@@ -13,46 +13,70 @@ label: "admin"
 pnpm add @intelligo-dev/admin drizzle-orm react
 ```
 
-`drizzle-orm` and `react` (19 or later) are peers. `intelligo add admin-page`
-from [`@intelligo-dev/cli`](https://www.npmjs.com/package/@intelligo-dev/cli)
-generates the mount below as source the application owns.
+`drizzle-orm` and `react` (19 or later) are peers.
 
 ## Use
 
+The package owns what the console reads and who may read it: the
+cross-tenant queries, the admin gate, the health probes and impersonation.
+The pages, their chrome and their copy are the `admin-console` registry
+item, installed as source the application owns
+(`intelligo sync admin-console`): an overview, users and a workspace's
+support view, revenue and costs, operations and the audit trail under
+`/admin`, with a sidebar from `lib/admin-nav.ts` and the product's own
+panels slotted in from `lib/admin-config.tsx`. The billing actions a support
+view takes — granting a plan, adding credit, the deployment's billing
+settings — live in that item, so this package stays free of a billing
+dependency.
+
+A page of the product's own uses the same reads:
+
 ```tsx
-// app/[locale]/admin/page.tsx
-import {
-  getPlatformOverview,
-  listUnsettledExecutions,
-  listWorkspaces,
-  requireAdmin,
-} from "@intelligo-dev/admin";
-import { PlatformOverviewView } from "@intelligo-dev/admin/views";
+// app/[locale]/admin/signups/page.tsx
+import { getSignupsByDay, requireAdmin } from "@intelligo-dev/admin";
 
-export default async function AdminPage() {
-  await requireAdmin("admin.overview.viewed");
-
-  const [overview, workspaces, unsettled] = await Promise.all([
-    getPlatformOverview(),
-    listWorkspaces(20),
-    listUnsettledExecutions(),
-  ]);
-
+export default async function SignupsPage() {
+  await requireAdmin("admin.signups.viewed");
+  const days = await getSignupsByDay({ days: 30, timeZone: "UTC" });
   return (
-    <PlatformOverviewView
-      overview={overview}
-      workspaces={workspaces}
-      unsettled={unsettled}
-    />
+    <ul>
+      {days.map((d) => (
+        <li key={d.day}>
+          {d.day}: {d.count}
+        </li>
+      ))}
+    </ul>
   );
 }
 ```
 
-The console is Intelligo-owned rather than consumer-owned source, and
-deliberately excluded from the page registry: what an operator can see across
-every tenant is not a per-product decision, and a fork could quietly stop
-showing unsettled executions. The application owns the route and the page
-chrome around the views.
+The reads:
+
+- `getPlatformOverview()`, `listWorkspaces(limit)`, `listUnsettledExecutions()`,
+  `listWorkspaceExecutions(workspaceId, limit)`, `listFailedJobs(limit)`;
+- `listUserSummaries({ query, limit, offset })`: users, newest first, each with
+  every workspace it belongs to, its role there and the workspace's plan.
+  `query` matches the email, the name or a workspace's name literally (`%` and
+  `_` are not wildcards); `total` counts every match for paging. Platform
+  admins are listed too;
+- `getWorkspace(id)` and `listWorkspaceMembers(id)` for a workspace's support
+  view;
+- `listPayments({ workspaceId, status, limit, offset })`: the local-payment
+  ledger, each invoice's amount as `Money` with the workspace's name;
+- `getSignupsByDay({ days, timeZone })`: sign-ups per calendar day in an IANA
+  zone, one entry per day, the last one today;
+- `queryAuditEvents(options)` and `countAuditEvents(options)`, and
+  `resolveDisplayNames({ userIds, workspaceIds })` to show an event's actor and
+  resource by name;
+- `getRevenue()`, `getProviderCostTotal()`, `getPlanDistribution()`,
+  `getUsageByModel(limit)`, `getUsageByUser(limit)`,
+  `listUsageRecords(limit, offset)` and `countUsageRecords()`.
+
+Each checks for itself that a platform admin is asking, so a page that forgot
+the gate refuses rather than listing every tenant.
+
+`@intelligo-dev/admin/views` holds the earlier unstyled, English-only screens,
+kept for applications that mounted them; the registry item does not use them.
 
 ## The gate
 
@@ -60,6 +84,11 @@ Every query sits behind `requireAdmin(action, resource?)`, which checks the
 platform admin role — `users.role`, a row rather than an environment variable,
 and never a workspace role: every signup owns a workspace. Each call writes an
 audit event with `actorKind: "support"`, so looking is on the record too.
+
+`isPlatformAdmin()` is the same check without the audit event, for a
+layout deciding between the console and a 404, or a page whose reads are not
+a customer's data: it answers `false` for a missing session or role and
+throws any other failure.
 
 `requireAdminOrRefuse` is the gate for anything destructive: it refuses the
 action when the audit event cannot be written. Reading a customer's data

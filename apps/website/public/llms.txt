@@ -88,6 +88,7 @@ Product pages installed into a Next.js app as your own source: `pnpm exec shadcn
 - [Chat Panel](https://intelligo.dev/blocks/chat-panel): The chat as a side panel on any page: a sheet that opens the same thread the chat page runs, with the page's context on every turn.
 - [Chat Widget](https://intelligo.dev/blocks/chat-widget): The floating assistant: a launcher in a corner of every page and a compact chat over it, configured in lib/chat-widget-config.tsx.
 - [Chat Share](https://intelligo.dev/blocks/chat-share): A conversation its owner published, readable by anyone with the link at /share/[id]: the same transcript, read-only, minus reasoning, tool details and attachments.
+- [Admin Console](https://intelligo.dev/blocks/admin-console): The platform operator's console under /admin, for platform admins only (404 for anyone else): an overview with the product's own panels first, then the last 24 hours and integration health; a searchable, paged user directory with a record panel; a workspace's support page (plan, credit, members, payments, executions, and reason-required grant-plan, add-credit and impersonate actions); revenue and costs with the billing settings, the payment ledger and the usage ledger; and operations with failed jobs, unsettled executions and the audit trail by name.
 
 ## Components
 

@@ -1,10 +1,10 @@
 {
-  "sampledAt": "2026-10-20",
+  "sampledAt": "2026-10-21",
   "version": "1.2.4",
-  "published": "1.2.3",
+  "published": "1.2.4",
   "packages": 11,
-  "testFiles": 158,
-  "testCases": 1639,
+  "testFiles": 161,
+  "testCases": 1657,
   "architectureTests": 18,
-  "registryItems": 28
+  "registryItems": 29
 }

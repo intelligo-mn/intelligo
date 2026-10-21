@@ -64,5 +64,9 @@
   "chat-widget": [
     "lib/chat-widget-config.tsx"
   ],
-  "chat-share": []
+  "chat-share": [],
+  "admin-console": [
+    "lib/admin-nav.ts",
+    "lib/admin-config.tsx"
+  ]
 }

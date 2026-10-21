@@ -45,6 +45,7 @@ const GROUPS: Record<RegistryGroup, string[]> = {
     "language-switcher",
     "trial-banner",
     "route-error",
+    "admin-console",
   ],
   Settings: [
     "settings-shell",

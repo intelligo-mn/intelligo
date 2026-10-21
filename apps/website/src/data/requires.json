@@ -32,7 +32,9 @@
     "lib/chat-config.tsx": "agent identity, starters, header slot",
     "lib/chat-server-config.ts": "the chat transport's configuration",
     "lib/chat-widget-config.tsx": "the embedded widget",
-    "lib/notification-types.tsx": "icons for the product's notification types"
+    "lib/notification-types.tsx": "icons for the product's notification types",
+    "lib/admin-nav.ts": "the admin console's sidebar",
+    "lib/admin-config.tsx": "the admin console's brand, back link, product panels and audit filter hint"
   },
   "boundaries": {
     "lib/shell-config.tsx": "server",
@@ -58,7 +60,9 @@
     "lib/chat-config.tsx": "client",
     "lib/chat-server-config.ts": "server",
     "lib/chat-widget-config.tsx": "client",
-    "lib/notification-types.tsx": "client"
+    "lib/notification-types.tsx": "client",
+    "lib/admin-nav.ts": "client",
+    "lib/admin-config.tsx": "server"
   },
   "items": {
     "smoke": {
@@ -205,6 +209,12 @@
       "marker": "app/[locale]/share/[id]/page.tsx",
       "items": ["chat"],
       "files": ["i18n/navigation"]
+    },
+    "admin-console": {
+      "marker": "app/[locale]/admin/layout.tsx",
+      "items": ["app-shell", "pricing", "route-error"],
+      "files": ["i18n/navigation", "lib/intelligo", "lib/utils"],
+      "exports": { "lib/intelligo": ["composeIntelligo"] }
     }
   }
 }

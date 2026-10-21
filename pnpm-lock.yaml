@@ -836,6 +836,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^5.9.1
         version: 5.9.1(@standard-schema/spec@1.1.0)(ajv-formats@2.1.1(ajv@8.20.0))(ajv@8.20.0)(react-hook-form@7.89.0(@types/react@19.2.18)(react@19.3.0))(zod@4.6.5)
+      '@intelligo-dev/admin':
+        specifier: workspace:*
+        version: link:../admin
       '@intelligo-dev/auth':
         specifier: workspace:*
         version: link:../auth

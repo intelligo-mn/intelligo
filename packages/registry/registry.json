@@ -3040,6 +3040,187 @@
           "target": "lib/chat-eve.ts"
         }
       ]
+    },
+    {
+      "name": "admin-console",
+      "type": "registry:block",
+      "title": "Admin Console",
+      "description": "The platform operator's console under /admin, for platform admins only (404 for anyone else): an overview with the product's own panels first, then the last 24 hours and integration health; a searchable, paged user directory with a record panel; a workspace's support page (plan, credit, members, payments, executions, and reason-required grant-plan, add-credit and impersonate actions); revenue and costs with the billing settings, the payment ledger and the usage ledger; and operations with failed jobs, unsettled executions and the audit trail by name. Reads come from @intelligo-dev/admin; the sidebar is lib/admin-nav.ts and the product's slots are lib/admin-config.tsx. Its page title, panels, URL-state data list and property list are for a product's own console pages too. Requires app-shell, pricing and route-error.",
+      "registryDependencies": [
+        "alert",
+        "card",
+        "field",
+        "table",
+        "@intelligo/ai-sidebar",
+        "@intelligo/button",
+        "@intelligo/data-table",
+        "@intelligo/input",
+        "@intelligo/page-header",
+        "@intelligo/property-list",
+        "@intelligo/record-panel",
+        "@intelligo/spinner",
+        "@intelligo/stat-card",
+        "@intelligo/status-badge",
+        "@intelligo/tabs"
+      ],
+      "dependencies": [
+        "@intelligo-dev/admin",
+        "@intelligo-dev/auth",
+        "@intelligo-dev/billing",
+        "@intelligo-dev/core",
+        "lucide-react",
+        "next-intl",
+        "server-only",
+        "sonner",
+        "zod"
+      ],
+      "files": [
+        {
+          "path": "base/admin-console/layout.tsx",
+          "type": "registry:page",
+          "target": "app/[locale]/admin/layout.tsx"
+        },
+        {
+          "path": "base/admin-console/page.tsx",
+          "type": "registry:page",
+          "target": "app/[locale]/admin/page.tsx"
+        },
+        {
+          "path": "base/admin-console/error.tsx",
+          "type": "registry:page",
+          "target": "app/[locale]/admin/error.tsx"
+        },
+        {
+          "path": "base/admin-console/users-page.tsx",
+          "type": "registry:page",
+          "target": "app/[locale]/admin/users/page.tsx"
+        },
+        {
+          "path": "base/admin-console/workspace-page.tsx",
+          "type": "registry:page",
+          "target": "app/[locale]/admin/users/[workspaceId]/page.tsx"
+        },
+        {
+          "path": "base/admin-console/revenue-page.tsx",
+          "type": "registry:page",
+          "target": "app/[locale]/admin/revenue/page.tsx"
+        },
+        {
+          "path": "base/admin-console/operations-page.tsx",
+          "type": "registry:page",
+          "target": "app/[locale]/admin/operations/page.tsx"
+        },
+        {
+          "path": "base/admin-console/actions.ts",
+          "type": "registry:file",
+          "target": "actions/admin-console.ts"
+        },
+        {
+          "path": "base/admin-console/components/page-title.tsx",
+          "type": "registry:component",
+          "target": "components/admin/page-title.tsx"
+        },
+        {
+          "path": "base/admin-console/components/panel.tsx",
+          "type": "registry:component",
+          "target": "components/admin/panel.tsx"
+        },
+        {
+          "path": "base/admin-console/components/settled.tsx",
+          "type": "registry:component",
+          "target": "components/admin/settled.tsx"
+        },
+        {
+          "path": "base/admin-console/components/action-form.tsx",
+          "type": "registry:component",
+          "target": "components/admin/action-form.tsx"
+        },
+        {
+          "path": "base/admin-console/components/admin-sidebar.tsx",
+          "type": "registry:component",
+          "target": "components/admin/admin-sidebar.tsx"
+        },
+        {
+          "path": "base/admin-console/components/data-list.tsx",
+          "type": "registry:component",
+          "target": "components/admin/data-list.tsx"
+        },
+        {
+          "path": "base/admin-console/components/properties.tsx",
+          "type": "registry:component",
+          "target": "components/admin/properties.tsx"
+        },
+        {
+          "path": "base/admin-console/components/platform-overview.tsx",
+          "type": "registry:component",
+          "target": "components/admin/platform-overview.tsx"
+        },
+        {
+          "path": "base/admin-console/components/integration-health.tsx",
+          "type": "registry:component",
+          "target": "components/admin/integration-health.tsx"
+        },
+        {
+          "path": "base/admin-console/components/support-actions.tsx",
+          "type": "registry:component",
+          "target": "components/admin/support-actions.tsx"
+        },
+        {
+          "path": "base/admin-console/components/workspace-tables.tsx",
+          "type": "registry:component",
+          "target": "components/admin/workspace-tables.tsx"
+        },
+        {
+          "path": "base/admin-console/components/revenue.tsx",
+          "type": "registry:component",
+          "target": "components/admin/revenue.tsx"
+        },
+        {
+          "path": "base/admin-console/components/revenue-lists.tsx",
+          "type": "registry:component",
+          "target": "components/admin/revenue-lists.tsx"
+        },
+        {
+          "path": "base/admin-console/components/operations.tsx",
+          "type": "registry:component",
+          "target": "components/admin/operations.tsx"
+        },
+        {
+          "path": "base/admin-console/components/audit-list.tsx",
+          "type": "registry:component",
+          "target": "components/admin/audit-list.tsx"
+        },
+        {
+          "path": "base/admin-console/lib/admin-nav.ts",
+          "type": "registry:file",
+          "target": "lib/admin-nav.ts"
+        },
+        {
+          "path": "base/admin-console/lib/admin-config.tsx",
+          "type": "registry:file",
+          "target": "lib/admin-config.tsx"
+        },
+        {
+          "path": "base/admin-console/lib/admin-page.ts",
+          "type": "registry:file",
+          "target": "lib/admin-page.ts"
+        },
+        {
+          "path": "base/admin-console/lib/admin-format.ts",
+          "type": "registry:file",
+          "target": "lib/admin-format.ts"
+        },
+        {
+          "path": "base/admin-console/lib/admin-list.ts",
+          "type": "registry:file",
+          "target": "lib/admin-list.ts"
+        },
+        {
+          "path": "base/admin-console/messages/en.json",
+          "type": "registry:file",
+          "target": "messages/en/admin-console.json"
+        }
+      ]
     }
   ]
 }

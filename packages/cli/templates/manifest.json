@@ -154,7 +154,8 @@
         "template": "admin-page/admin-page.tsx.tpl",
         "target": "app/[locale]/admin/page.tsx"
       }
-    ]
+    ],
+    "deprecated": "Superseded by the `admin-console` registry item — install it with `intelligo sync admin-console` instead; it ships the whole console (overview, users, revenue, operations) as consumer-owned source at the same /admin route, so delete this page first."
   },
   "maintenance": {
     "templateVersion": "1.3.0",

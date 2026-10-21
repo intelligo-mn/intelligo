@@ -129,7 +129,7 @@ Services live in npm packages you upgrade. Each takes its dependencies as ports,
 | [`@intelligo-dev/core`](packages/core)             | The schema (Drizzle, Postgres, pgvector); conversations, versioned documents, notifications; data export and per-fact deletion; email, logging, env                                   |
 | [`@intelligo-dev/jobs`](packages/jobs)             | A Postgres-backed job queue — `FOR UPDATE SKIP LOCKED`, retries, backoff. No Redis                                                                                                    |
 | [`@intelligo-dev/audit`](packages/audit)           | Append-only audit events and the memory-audit contract                                                                                                                                |
-| [`@intelligo-dev/admin`](packages/admin)           | The operator's console: platform overview, operations, integration health                                                                                                             |
+| [`@intelligo-dev/admin`](packages/admin)           | The operator's console behind the `admin-console` block: cross-tenant reads, the platform-admin gate, integration health, audited impersonation                                       |
 | [`@intelligo-dev/next`](packages/next)             | The one package that imports `next/*`: request context and the auth route handlers                                                                                                    |
 | [`@intelligo-dev/mastra`](packages/mastra)         | Optional: a bridge from a native Mastra agent to the execution boundary                                                                                                               |
 | [`@intelligo-dev/cli`](packages/cli)               | `create`, `add`, `migrate` (and `--check` to gate a deploy), `doctor`, `upgrade --check` — which knows the generated files you customized, by content hash, and will not clobber them |
@@ -149,6 +149,7 @@ Pages do not come in a package. They arrive as registry **blocks** — pages, th
 | `pricing`          | `checkout`           | `billing-settings`    | `usage`                   |
 | `feature-gating`   | `trial-banner`       | `payment-poll`        | `artifacts`               |
 | `chat`             | `chat-panel`         | `chat-widget`         | `chat-share`              |
+| `admin-console`    |                      |                       |                           |
 
 Browse them running at [intelligo.dev/blocks](https://intelligo.dev/blocks), and the design system's components — AI message parts, motion patterns, restyled primitives — at [intelligo.dev/components](https://intelligo.dev/components).
 

@@ -38,6 +38,7 @@ pnpm exec shadcn add @intelligo/chat
 pnpm exec shadcn add @intelligo/chat-panel
 pnpm exec shadcn add @intelligo/chat-widget
 pnpm exec shadcn add @intelligo/chat-share
+pnpm exec shadcn add @intelligo/admin-console
 ```
 
 | Block | Needs these blocks | Imports these scaffold files | Gates on these features |
@@ -70,6 +71,7 @@ pnpm exec shadcn add @intelligo/chat-share
 | [chat-panel](/blocks/chat-panel) | [chat](/blocks/chat) | `lib/utils` | — |
 | [chat-widget](/blocks/chat-widget) | [chat](/blocks/chat) | `i18n/navigation`, `lib/utils` | — |
 | [chat-share](/blocks/chat-share) | [chat](/blocks/chat) | `i18n/navigation` | — |
+| [admin-console](/blocks/admin-console) | [app-shell](/blocks/app-shell), [pricing](/blocks/pricing), [route-error](/blocks/route-error) | `i18n/navigation`, `lib/intelligo`, `lib/utils` | — |
 
 A feature key must be granted to a plan in `lib/plans.ts`; an unregistered feature is denied on every request. A key a config seam names (the `chat` item's `lib/chat-server-config.ts` gates on `chat` as shipped) is the app's to change and is not listed here; `intelligo doctor` warns when a seam names a key `lib/plans.ts` does not grant.
 

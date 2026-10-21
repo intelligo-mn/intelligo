@@ -32,6 +32,6 @@ Registry blocks are yours, but the standard is to use them unmodified. What a de
 
 Editing an installed component works, but it forks you from every later improvement to that block. If a product needs something a seam doesn't offer, the better change is a new seam in the registry.
 
-## The admin console is the exception
+## The admin console
 
-`@intelligo-dev/admin` is Intelligo-owned and not in the registry: what an operator can see across every tenant is not a per-product decision. `intelligo add admin-page` mounts it under `/admin`.
+The console is split along the same line. What an operator can see across every tenant, and who may see it, is not a per-product decision: the cross-tenant queries, the platform-admin gate, the health probes and impersonation are `@intelligo-dev/admin`'s, and every read checks for a platform admin itself. The pages are the `admin-console` registry item — overview, users, a workspace's support page, revenue and costs, operations — installed under `/admin` as source you own, with the sidebar in `lib/admin-nav.ts` and the product's own panels slotted in through `lib/admin-config.tsx`.

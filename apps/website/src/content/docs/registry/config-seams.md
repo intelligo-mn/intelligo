@@ -811,3 +811,50 @@ import { ChatWidget } from "@/components/chat/chat-widget";
 …
 <ChatWidget />
 ```
+
+## [admin-console](/blocks/admin-console)
+
+### `lib/admin-nav.ts`
+
+Bundled for the browser: no server imports, no secrets. Exports `AdminNavItem`, `adminNav`. [source](https://github.com/intelligo-dev/intelligo/blob/main/packages/registry/base/admin-console/lib/admin-nav.ts)
+
+The admin console's sidebar — consumer-owned (the contract of
+`lib/settings-nav.ts` for the settings tabs).
+
+`components/admin/admin-sidebar.tsx` renders exactly this list, in this
+order. Add the product's own console pages (`{ titleKey:
+"admin.nav.content", href: "/admin/content", icon: Newspaper }`), group
+several under one entry with `children`, or remove a section — no
+component edit needed.
+
+`titleKey` is a fully-qualified message key resolved through a
+namespace-less `useTranslations()`: the defaults point into this item's
+`admin-console` namespace, and an entry you add can point into any
+namespace you own.
+
+Icons are Lucide components, so this file is imported by the client
+sidebar and never passed from a server layout: component values cannot
+cross the RSC boundary as props.
+
+### `lib/admin-config.tsx`
+
+Runs on the server. Exports `AdminConfig`, `adminConfig`. [source](https://github.com/intelligo-dev/intelligo/blob/main/packages/registry/base/admin-console/lib/admin-config.tsx)
+
+The admin console's product slots — consumer-owned, server-side (the
+console's pages import it; no client component does, so a slot may
+read the database).
+
+- `brandKey`: the fully-qualified message key of the name at the top of
+  the sidebar.
+- `backHref`: where "Back to the app" goes.
+- `overviewPanels`: the product's own panels, rendered first on the
+  overview, above the platform's (the work waiting for review, the
+  numbers the product is run by).
+- `workspacePanels(workspaceId)`: the product's own panels on a
+  workspace's support page, under its stats and support actions.
+- `auditFilterPlaceholderKey`: the message key of the hint in the
+  operations page's audit filter — an action name the product records.
+
+A slot is called on the server for each request and may be async. One
+that throws is reported as unreadable in its place; the rest of the page
+still renders. Its copy belongs in a message namespace of the product's.

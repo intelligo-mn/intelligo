@@ -1,0 +1,338 @@
+{
+  "meta": {
+    "title": "Admin"
+  },
+  "brand": "Admin",
+  "crumbs": "Breadcrumb",
+  "unavailable": "{what} could not be read — see the server log.",
+  "nav": {
+    "label": "Admin",
+    "close": "Close",
+    "toggle": "Open or close the menu",
+    "backToApp": "Back to the app",
+    "overview": "Overview",
+    "users": "Users",
+    "revenue": "Revenue and costs",
+    "operations": "Operations"
+  },
+  "reads": {
+    "product": "This product's panels",
+    "platform": "The platform overview",
+    "health": "Integration health",
+    "signups": "Sign-ups",
+    "users": "The users",
+    "billing": "This workspace's billing",
+    "billingSettings": "The billing settings",
+    "members": "The members",
+    "payments": "The payments",
+    "executions": "The executions",
+    "revenue": "Revenue",
+    "cost": "Provider cost",
+    "plans": "Plans in force",
+    "usageByModel": "Usage by model",
+    "usageByUser": "Usage by user",
+    "ledger": "The usage ledger",
+    "jobs": "Failed jobs",
+    "unsettled": "Unsettled executions",
+    "audit": "The audit trail"
+  },
+  "list": {
+    "search": "Search…",
+    "noResults": "No results.",
+    "rowsPerPage": "Rows per page",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "pageOf": "Page {page} of {pages}",
+    "results": "{total, plural, one {# row} other {# rows}}",
+    "columns": "Columns",
+    "density": "Row height",
+    "compact": "Compact",
+    "comfortable": "Comfortable",
+    "sortAscending": "Ascending",
+    "sortDescending": "Descending",
+    "hideColumn": "Hide column",
+    "selectAll": "Select all",
+    "selectRow": "Select row",
+    "actions": "Actions",
+    "filters": "Filters",
+    "clear": "Clear",
+    "reset": "Reset",
+    "noOptions": "No options",
+    "selectedRows": "Selected rows",
+    "selected": "{count} selected"
+  },
+  "panel": {
+    "previous": "Previous record",
+    "next": "Next record",
+    "fullPage": "Open full page"
+  },
+  "properties": {
+    "empty": "—",
+    "yes": "Yes",
+    "no": "No",
+    "showEmpty": "{count, plural, one {Show 1 empty field} other {Show # empty fields}}",
+    "hideEmpty": "Hide empty fields"
+  },
+  "status": {
+    "ok": "OK",
+    "paid": "Paid",
+    "succeeded": "Succeeded",
+    "active": "Active",
+    "running": "Running",
+    "settling": "Settling",
+    "pending": "Pending",
+    "opening": "Opening",
+    "degraded": "Degraded",
+    "refused": "Refused",
+    "expired": "Expired",
+    "cancelled": "Cancelled",
+    "failed": "Failed",
+    "down": "Down",
+    "unconfigured": "Not configured",
+    "notGranted": "Not granted"
+  },
+  "overview": {
+    "title": "Overview",
+    "description": "The platform's last 24 hours and what needs attention.",
+    "platform": {
+      "title": "Last 24 hours",
+      "workspaces": "Workspaces",
+      "users": "Users",
+      "charged": "Charged",
+      "nothingCharged": "Nothing charged",
+      "executions": "Executions",
+      "failed": "Failed",
+      "refused": "Refused",
+      "unsettled": "{count, plural, one {# execution unsettled} other {# executions unsettled}}",
+      "newest": "Newest workspaces",
+      "noWorkspaces": "No workspaces yet."
+    }
+  },
+  "health": {
+    "title": "Integration health",
+    "database": {
+      "label": "Database",
+      "ok": "Round-trip {latencyMs, number} ms.",
+      "degraded": "Round-trip took {latencyMs, number} ms — check the database region and pooling."
+    },
+    "jobs": {
+      "label": "Job queue",
+      "ok": "{pending, plural, one {# job queued} other {# jobs queued}}, none overdue.",
+      "degraded": "{failed24h, plural, one {# job} other {# jobs}} exhausted their retries in the last 24 hours.",
+      "down": "{overdue, plural, one {# job is} other {# jobs are}} overdue or stuck running for more than 15 minutes — no worker appears to be draining the queue."
+    },
+    "settlement": {
+      "label": "Execution settlement",
+      "ok": "Every execution older than 10 minutes has settled.",
+      "degraded": "{unsettled, plural, one {# execution} other {# executions}} never settled — credit is still held against them."
+    }
+  },
+  "users": {
+    "title": "Users",
+    "description": "Accounts, their workspaces and plans. Open a row for the user; open a workspace for support.",
+    "list": "Directory",
+    "search": "Email, name or workspace…",
+    "empty": "No users match.",
+    "platformAdmin": "Platform admin",
+    "more": "{role} · and {count, number} more",
+    "columns": {
+      "user": "User",
+      "workspace": "Workspace",
+      "plan": "Plan",
+      "joined": "Joined"
+    },
+    "signups": {
+      "month": "Signed up in the last 30 days",
+      "week": "In the last 7 days",
+      "today": "Today"
+    },
+    "panel": {
+      "email": "Email",
+      "name": "Name",
+      "platformRole": "Platform role",
+      "joined": "Joined",
+      "id": "ID",
+      "workspaces": "Workspaces",
+      "noWorkspaces": "Belongs to no workspace.",
+      "roleOnPlan": "{role} · {plan}"
+    }
+  },
+  "workspace": {
+    "description": "{slug} · created {created}",
+    "crumb": "Users",
+    "reason": "Reason",
+    "stats": {
+      "plan": "Plan",
+      "noPlan": "No plan",
+      "until": "Until {date}",
+      "credit": "Credit",
+      "noCredit": "None",
+      "members": "Members"
+    },
+    "grant": {
+      "title": "Grant a plan",
+      "submit": "Grant",
+      "plan": "Plan",
+      "days": "Days (0 for no end)",
+      "reasonHint": "The ticket, or why"
+    },
+    "credit": {
+      "title": "Add credit",
+      "submit": "Add",
+      "amount": "Amount ({currency})",
+      "reasonHint": "A refund, a goodwill credit…"
+    },
+    "impersonate": {
+      "title": "Act as a member",
+      "note": "Starts a 30-minute session as them. The audit trail records it under your name.",
+      "nobody": "No member can be acted as.",
+      "submit": "Act as this member",
+      "member": "Member"
+    },
+    "members": {
+      "title": "Members",
+      "empty": "No members.",
+      "email": "Email",
+      "name": "Name",
+      "role": "Role",
+      "joined": "Joined",
+      "platformAdmin": "Platform admin"
+    },
+    "payments": {
+      "title": "Payments",
+      "empty": "No payments.",
+      "date": "Date",
+      "reference": "For",
+      "status": "Status",
+      "amount": "Amount"
+    },
+    "executions": {
+      "title": "Recent executions",
+      "empty": "No executions.",
+      "started": "Started",
+      "capability": "Capability",
+      "model": "Model",
+      "status": "Status"
+    }
+  },
+  "revenue": {
+    "title": "Revenue and costs",
+    "description": "What the platform was paid, what the models cost, and every charge.",
+    "tabs": {
+      "summary": "Summary",
+      "payments": "Payments",
+      "ledger": "Usage ledger"
+    },
+    "settings": {
+      "title": "Billing settings",
+      "mismatch": "The database bills in {database}, but the app's prices and bundles are in {app}: every workspace's charge will be refused. While the ledger is empty, change the currency to {app} here — a currency change converts no existing row.",
+      "submit": "Save",
+      "currency": "Currency",
+      "rate": "One USD costs (in this currency)",
+      "margin": "Margin (% of cost — 400 is four times cost)",
+      "note": "The rate and margin price charges from now on; settled charges keep what they were charged."
+    },
+    "stats": {
+      "revenue": "Revenue",
+      "revenueHint": "Gross, per currency, before refunds and fees",
+      "cost": "Provider cost",
+      "plans": "Plans in force",
+      "planCount": "{plan}: {count, number}",
+      "none": "None"
+    },
+    "usage": {
+      "byModel": "By model",
+      "byUser": "By user",
+      "empty": "No usage yet.",
+      "model": "Model",
+      "requests": "Requests",
+      "tokens": "Tokens (in / out)",
+      "inOut": "{input} / {output}",
+      "cost": "Cost",
+      "user": "User",
+      "noUser": "No signed-in user"
+    },
+    "payments": {
+      "date": "Date",
+      "workspace": "Workspace",
+      "reference": "For",
+      "status": "Status",
+      "amount": "Amount",
+      "notGranted": "Paid, never granted",
+      "user": "Paid by",
+      "provider": "Provider",
+      "invoice": "Provider's invoice",
+      "expires": "Expires",
+      "fulfilled": "Granted",
+      "empty": "No payments."
+    },
+    "ledger": {
+      "date": "Recorded",
+      "who": "User",
+      "model": "Model",
+      "cost": "Cost",
+      "charged": "Charged",
+      "expected": "≠ {amount}",
+      "type": "Type",
+      "workspace": "Workspace",
+      "agent": "Agent",
+      "tokens": "Tokens (in / out)",
+      "inOut": "{input} / {output}",
+      "expectedCharge": "Its rate gives",
+      "id": "ID",
+      "empty": "No usage recorded."
+    }
+  },
+  "operations": {
+    "title": "Operations",
+    "description": "Failed jobs, unsettled executions and the audit trail.",
+    "jobs": {
+      "title": "Failed jobs",
+      "empty": "None.",
+      "attempts": "{at} · {attempts}/{max}"
+    },
+    "unsettled": {
+      "title": "Unsettled executions",
+      "empty": "None.",
+      "workspace": "Workspace"
+    },
+    "audit": {
+      "title": "Audit trail",
+      "filter": "Action, e.g. admin.plan.granted",
+      "date": "When",
+      "action": "Action",
+      "resource": "On",
+      "resourceKind": "Resource kind",
+      "resourceId": "Resource ID",
+      "workspace": "Workspace",
+      "actor": "Who",
+      "actorKind": "Acting as",
+      "outcome": "Outcome",
+      "metadata": "Details",
+      "id": "ID",
+      "empty": "No events match.",
+      "actorKinds": {
+        "user": "User",
+        "system": "System",
+        "support": "Support"
+      }
+    }
+  },
+  "actions": {
+    "planGranted": "{plan} granted until {endsAt}.",
+    "planGrantedOpen": "{plan} granted, with no end.",
+    "creditAdded": "Added {amount} of credit.",
+    "creditReplayed": "This credit was already added; nothing was added again.",
+    "settingsSaved": "Saved: {currency}, one USD = {rate}.",
+    "invalid": "Check the form: a value is missing or out of range.",
+    "reasonRequired": "Give a reason of at least three characters — it is the only record of why.",
+    "invalidPlan": "No plan has that name.",
+    "invalidCurrency": "That is not a three-letter currency code.",
+    "invalidRate": "The rate must be a positive amount.",
+    "invalidMargin": "The margin must be a positive whole percentage.",
+    "currencyMismatch": "This workspace's ledger is in another currency, so credit cannot be added in this one.",
+    "refused": "Refused: a platform admin must be signed in, and the action must be recorded.",
+    "impersonationFailed": "Could not act as this member.",
+    "failed": "That did not work. The server log has the details."
+  }
+}
