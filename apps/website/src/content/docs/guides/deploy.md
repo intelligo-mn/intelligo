@@ -110,15 +110,19 @@ In Stripe, add an endpoint at `NEXT_PUBLIC_APP_URL` + `/api/webhooks/stripe` and
 pnpm exec intelligo add maintenance
 ```
 
-This writes `app/api/cron/maintenance/route.ts`, which is yours to extend. One `GET` does five things:
+This writes `app/api/cron/maintenance/route.ts`, which is yours to extend. One `GET` does nine things:
 
-| Step                                                 | Effect                                                                                              |
-| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `findStaleExecutions`, then `executions.reconcile()` | Runs unfinished after 10 minutes are settled from recorded usage, or failed and their hold released |
-| `cleanupExpiredReservations`                         | Table hygiene; admission already ignores them                                                       |
-| `cleanupRateLimitEntries`                            | Table hygiene                                                                                       |
-| `processTrialExpirations`                            | Expires trials and sends the reminder emails                                                        |
-| `pruneJobs`                                          | Deletes finished jobs older than a week                                                             |
+| Step                                                 | Effect                                                                                                      |
+| ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `findStaleExecutions`, then `executions.reconcile()` | Runs unfinished after 10 minutes are settled from recorded usage, or failed and their hold released         |
+| `cleanupExpiredReservations`                         | Table hygiene; admission already ignores them                                                               |
+| `cleanupRateLimitEntries`                            | Table hygiene                                                                                               |
+| `processTrialExpirations`                            | Expires trials and sends the reminder emails                                                                |
+| `processExpiredPlanGrants`                           | Returns a plan granted with an end to free once it lapses                                                   |
+| `pruneJobs`                                          | Deletes finished jobs older than a week                                                                     |
+| `pruneNotifications`                                 | Deletes read notifications older than 90 days                                                               |
+| `purgeDeletedAccounts`                               | Removes accounts whose deletion grace period has ended, after `eraseActorFromAuditEvents` forgets the actor |
+| `sweepAttachments`                                   | With a storage adapter bound, deletes unclaimed uploads and the objects of deleted attachments              |
 
 It does not drain the job queue: draining needs your handlers.
 
@@ -136,6 +140,8 @@ Run `pnpm exec intelligo doctor` with the production variables before the first 
 
 After bumping `@intelligo-dev/*` versions, run `pnpm exec intelligo upgrade --check`. It lists generated files whose template changed and exits 1 only on a conflict — a file that both you and the template changed. The [CLI reference](/docs/cli) describes both.
 
+Before real users, go through the [production checklist](/docs/security/production-checklist).
+
 ## Not on Vercel
 
 The app is a standard Next.js 16 server: `pnpm db:migrate`, `pnpm build`, `pnpm start`, plus a scheduler for the maintenance route. Only `@intelligo-dev/next` imports `next/*`; it supplies `nextRequestContext` and the auth route handlers. Nothing in the framework depends on Vercel.
@@ -143,5 +149,6 @@ The app is a standard Next.js 16 server: `pnpm db:migrate`, `pnpm build`, `pnpm 
 ## Next
 
 - [Environment](/docs/getting-started/environment)
+- [Production checklist](/docs/security/production-checklist)
 - [Billing with Stripe](/docs/guides/billing-stripe)
 - [The composition root](/docs/concepts/composition-root)

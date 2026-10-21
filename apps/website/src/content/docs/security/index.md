@@ -33,7 +33,18 @@ Intelligo is the half of your product that decides who someone is, which workspa
 - **The network edge.** TLS, `AUTH_TRUSTED_PROXIES` behind a proxy chain, WAF and DDoS protection, and request-body limits for routes you add. The scaffold's `next.config.mjs` sends HSTS, nosniff, a referrer policy and a `Content-Security-Policy` that carries only `frame-ancestors 'none'`: extend that header with `script-src` and the rest, and keep `frame-ancestors`.
 - **The database.** A runtime role with data access only, separate from the role that runs `intelligo migrate`, so the app cannot drop the audit triggers; backups and point-in-time recovery.
 - **Your own queries and routes.** Anything you add must filter by workspace itself; the framework cannot see it.
-- **Operations.** Scheduling the maintenance route and watching its result.
+- **Operations.** Scheduling the maintenance route and watching its result, and the [production checklist](/docs/security/production-checklist).
+
+## Threat models
+
+Each one walks STRIDE (spoofing, tampering, repudiation, information disclosure, denial of service, elevation of privilege) over the package's entry points, names the control that answers each threat, and says what is left to you.
+
+- [Auth](/docs/security/threat-model-auth)
+- [Billing](/docs/security/threat-model-billing)
+- [Chat](/docs/security/threat-model-chat)
+- [Executions](/docs/security/threat-model-executions)
+- [Storage and uploads](/docs/security/threat-model-storage)
+- [Admin console and impersonation](/docs/security/threat-model-admin)
 
 ## Reporting
 
