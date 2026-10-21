@@ -13,7 +13,10 @@ import { assertPlatformAdmin } from "./gate";
 import { organization, users } from "@intelligo-dev/core/db/schema";
 import { executions, findStaleExecutions } from "@intelligo-dev/executions";
 import { PLATFORM_ADMIN_ROLE } from "@intelligo-dev/auth";
-import { queryAuditEvents as readAuditEvents } from "@intelligo-dev/audit";
+import {
+  countAuditEvents as countEvents,
+  queryAuditEvents as readAuditEvents,
+} from "@intelligo-dev/audit";
 import { listFailedJobs as readFailedJobs } from "@intelligo-dev/jobs";
 import { desc, eq, gte, sql } from "drizzle-orm";
 import { money, type Money } from "@intelligo-dev/core/money";
@@ -169,6 +172,14 @@ export async function queryAuditEvents(
 ): ReturnType<typeof readAuditEvents> {
   await assertPlatformAdmin();
   return readAuditEvents(...args);
+}
+
+/** How many audit events match, across tenants, for paging. */
+export async function countAuditEvents(
+  ...args: Parameters<typeof countEvents>
+): ReturnType<typeof countEvents> {
+  await assertPlatformAdmin();
+  return countEvents(...args);
 }
 
 /** Jobs that exhausted their attempts, across tenants. */

@@ -5,12 +5,31 @@
  */
 
 export {
+  isPlatformAdmin,
   requireAdmin,
   requireAdminOrRefuse,
   type AdminActor,
 } from "./authorization";
 
 export {
+  getSignupsByDay,
+  getWorkspace,
+  listUserSummaries,
+  listWorkspaceMembers,
+  resolveDisplayNames,
+  type DisplayNames,
+  type Paged,
+  type SignupDay,
+  type UserSummary,
+  type UserWorkspace,
+  type WorkspaceDetail,
+  type WorkspaceMember,
+} from "./directory";
+
+export { listPayments, type PaymentRow } from "./payments";
+
+export {
+  countAuditEvents,
   getPlatformOverview,
   listUsers,
   listWorkspaces,
@@ -24,6 +43,7 @@ export {
 } from "./queries";
 
 export {
+  countUsageRecords,
   getProviderCostTotal,
   getRevenue,
   getUsageByModel,

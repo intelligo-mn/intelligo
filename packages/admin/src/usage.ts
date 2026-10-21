@@ -226,8 +226,21 @@ export type UsageRecordRow = {
   type: string;
 };
 
-/** The most recent usage records, each with its charge audited. */
-export async function listUsageRecords(limit = 200): Promise<UsageRecordRow[]> {
+/** How many usage records there are, for paging `listUsageRecords`. */
+export async function countUsageRecords(): Promise<number> {
+  await assertPlatformAdmin();
+  const [row] = await db.select({ n: count() }).from(usageRecords);
+  return Number(row?.n ?? 0);
+}
+
+/**
+ * The most recent usage records, each with its charge audited; `offset`
+ * skips that many of the newest, for the next page.
+ */
+export async function listUsageRecords(
+  limit = 200,
+  offset = 0
+): Promise<UsageRecordRow[]> {
   await assertPlatformAdmin();
   const rows = await db
     .select({
@@ -249,8 +262,9 @@ export async function listUsageRecords(limit = 200): Promise<UsageRecordRow[]> {
     .from(usageRecords)
     .leftJoin(organization, eq(organization.id, usageRecords.workspaceId))
     .leftJoin(users, eq(users.id, usageRecords.userId))
-    .orderBy(desc(usageRecords.recordedAt))
-    .limit(Math.min(Math.max(1, limit), 1000));
+    .orderBy(desc(usageRecords.recordedAt), desc(usageRecords.id))
+    .limit(Math.min(Math.max(1, limit), 1000))
+    .offset(Math.max(0, Math.floor(offset)));
 
   return rows.map((r) => {
     const providerCost = usd(r.providerCostMicros);
