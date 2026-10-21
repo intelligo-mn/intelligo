@@ -205,9 +205,9 @@ asks the provider that issued it; when it is paid, the row is marked fulfilled
 and its stored grant is applied in the same transaction, so concurrent polls
 grant once and a change to the offer after the invoice was opened changes
 nothing it buys. `fulfil` decides the grant only for an invoice opened
-without one. A plan
-with `days` lapses that long after it is granted; bought again before then,
-the days add to the running grant.
+without one. A plan with `days` lapses that long after it is granted; bought
+again before then, the days add to the running grant. An invoice of another
+workspace is `payment_not_found`.
 
 A buyer who pays in their bank's app and closes the tab is not left
 unfulfilled: `settlePendingLocalInvoices({ fulfil })` settles every
@@ -216,32 +216,36 @@ polling) against the workspace that recorded it, until it is paid or past its
 expiry, and `settlePendingLocalInvoices({ invoiceId, fulfil })` settles the
 one a provider's callback names. An invoice still unpaid
 `LOCAL_INVOICE_EXPIRY_GRACE_MS` after the `expiresAt` its provider returned is
-cancelled at the provider (`cancelPayment`) and marked failed. Both ask the provider; a callback's body is never
-taken as payment. A provider whose callbacks name an invoice implements
-`invoiceIdFromCallback(request)`, and one that expects a particular answer
-(a status, a fixed body) implements `callbackResponse({ settled })`. The
-`payment-poll` item serves both at
-`/api/payments/local/settle` (a `CRON_SECRET` schedule) and
-`/api/webhooks/local-payment`. An invoice of
-another workspace is `payment_not_found`. The `payment-poll` registry item is
-the transport over both. A provider is `registerPaymentProvider(mode, {
-createPayment, checkPayment, cancelPayment })` from `/payment`, bound in the
-composition root; `creditBundleOffer(bundle)` turns one of the product's credit
-bundles into the offer the `lib/local-payment.ts` seam returns.
+cancelled at the provider (`cancelPayment`) and marked failed. Both ask the
+provider; a callback's body is never taken as payment.
 
-A provider is `registerPaymentProvider(mode, { currency, createPayment,
-checkPayment, cancelPayment })` from `/payment`, bound in the composition root.
+A provider is registered from the composition root with
+`registerPaymentProvider(mode, { currency, createPayment, checkPayment,
+cancelPayment, invoiceIdFromCallback?, callbackResponse? })` from `/payment`.
 `openLocalInvoice` records the invoice before it asks the provider and passes
 the row's id as `paymentId`: use it as the provider's merchant-side invoice
-number or in the callback URL, and `invoiceIdFromCallback` may return it in
-place of the provider's own id.
-Give a real provider its `currency`: `createPayment` takes bare minor units, and
-only a provider that names its currency makes `openLocalInvoice` refuse a price
-in another one (`currency_mismatch`) instead of sending that number as its own.
+number or in the callback URL. A provider whose callbacks name an invoice
+implements `invoiceIdFromCallback(request)`, which may return that
+`paymentId` in place of the provider's own id, and one that expects a
+particular answer (a status, a fixed body) implements
+`callbackResponse({ settled })`.
+
+`currency` is the ISO 4217 code the provider charges in. `createPayment`
+takes bare minor units, as `toMinor` gives them: a zero-decimal currency such
+as MNT or JPY arrives in whole units. With `currency` set, `openLocalInvoice`
+refuses a price in any other currency (`currency_mismatch`). Without it, such
+a price is sent as that many of the provider's own units, and registering the
+provider in production logs a warning.
+
 A plan is not sold through a local invoice to a workspace a live Stripe
 subscription bills: `openLocalInvoice` refuses it (`subscription_active`),
 since the subscription's next webhook would put its own plan back.
-Registering one without it in production logs a warning.
+
+The `payment-poll` registry item is the transport: it serves the sweep at
+`/api/payments/local/settle` (a `CRON_SECRET` schedule) and the provider's
+callback at `/api/webhooks/local-payment`. `creditBundleOffer(bundle)` turns
+one of the product's credit bundles into the offer the `lib/local-payment.ts`
+seam returns.
 
 ## Granting a plan
 
