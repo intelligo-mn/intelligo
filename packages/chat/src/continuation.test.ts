@@ -109,6 +109,138 @@ describe("trustedContinuation", () => {
     ).toBeNull();
   });
 
+  it("refuses a message sent under another id", () => {
+    expect(
+      trustedContinuation(assistant(proposal), {
+        ...assistant(approved),
+        id: "m-2",
+      })
+    ).toBeNull();
+  });
+
+  it("keeps a stored call the client left out or sent back unanswered", () => {
+    expect(
+      trustedContinuation(assistant(text, proposal), assistant(text))
+    ).toEqual(assistant(text, proposal));
+    expect(
+      trustedContinuation(
+        assistant(proposal),
+        assistant({ ...proposal, input: { table: "users" } })
+      )?.parts
+    ).toEqual([proposal]);
+  });
+
+  it("keeps the stored text whatever state the client gives it", () => {
+    const done = { ...text, state: "done" };
+    expect(
+      trustedContinuation(
+        assistant(done, proposal),
+        assistant({ ...done, state: "streaming" }, approved)
+      )?.parts
+    ).toEqual([done, approved]);
+  });
+
+  it("refuses an answer for a call to another tool", () => {
+    expect(
+      trustedContinuation(
+        assistant(proposal),
+        assistant({ ...approved, type: "tool-dropTable" })
+      )
+    ).toBeNull();
+  });
+
+  it("refuses an approval that is not a yes or a no", () => {
+    for (const approval of [
+      { id: "appr-1", approved: "yes" },
+      { id: "appr-1" },
+      null,
+      "appr-1",
+    ]) {
+      expect(
+        trustedContinuation(
+          assistant(proposal),
+          assistant({ ...approved, approval })
+        )
+      ).toBeNull();
+    }
+  });
+
+  it("refuses an answer to a proposal stored without an approval request", () => {
+    for (const stored of [
+      { ...proposal, approval: undefined },
+      { ...proposal, approval: "appr-1" },
+    ]) {
+      expect(
+        trustedContinuation(
+          assistant(stored),
+          assistant({ ...approved, approval: { approved: true } })
+        )
+      ).toBeNull();
+      expect(
+        trustedContinuation(assistant(stored), assistant(approved))
+      ).toBeNull();
+    }
+  });
+
+  it("refuses to settle a call awaiting approval any way but an answer", () => {
+    expect(
+      trustedContinuation(
+        assistant(proposal),
+        assistant({
+          ...proposal,
+          state: "output-denied",
+          approval: { id: "appr-1", approved: false },
+        })
+      )
+    ).toBeNull();
+  });
+
+  it("copies only a reason that is text", () => {
+    const out = trustedContinuation(
+      assistant(proposal),
+      assistant({
+        ...approved,
+        approval: { id: "appr-1", approved: false, reason: 42 },
+      })
+    );
+    expect(out?.parts).toEqual([
+      {
+        ...proposal,
+        state: "approval-responded",
+        approval: { id: "appr-1", approved: false },
+      },
+    ]);
+  });
+
+  it("copies a client-side tool's error, and not an output sent with it", () => {
+    const out = trustedContinuation(
+      assistant(clientTool),
+      assistant({
+        ...clientTool,
+        state: "output-error",
+        errorText: "no color",
+        output: "#f80",
+      })
+    );
+    expect(out?.parts).toEqual([
+      { ...clientTool, state: "output-error", errorText: "no color" },
+    ]);
+  });
+
+  it("refuses a client-side result that carries nothing", () => {
+    for (const sent of [
+      { ...clientTool, state: "output-available" },
+      { ...clientTool, state: "output-error" },
+      { ...clientTool, state: "output-error", errorText: 3 },
+      { ...clientTool, state: "output-denied", errorText: "no" },
+    ]) {
+      expect(
+        trustedContinuation(assistant(clientTool), assistant(sent)),
+        String(sent.state)
+      ).toBeNull();
+    }
+  });
+
   it("refuses an output for a call awaiting approval", () => {
     expect(
       trustedContinuation(
