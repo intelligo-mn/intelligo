@@ -115,7 +115,8 @@
         "__PACKAGE_NAME__": "app",
         "__APP_SLUG__": "app",
         "__INTELLIGO_DEP__": "workspace:*",
-        "__WORKSPACE_ROOT__": "\"../..\""
+        "__WORKSPACE_ROOT__": "\"../..\"",
+        "__INTELLIGO_REGISTRY__": "https://intelligo.dev/r/{name}.json"
       },
       "handedOver": [
         "app/globals.css",

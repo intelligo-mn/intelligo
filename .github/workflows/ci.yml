@@ -1,10 +1,12 @@
 name: CI
 
+# main, and release/X.Y: the branch a stable line's patch releases are
+# cut from while main carries the next minor.
 on:
   push:
-    branches: [main]
+    branches: [main, "release/**"]
   pull_request:
-    branches: [main]
+    branches: [main, "release/**"]
 
 # Read-only token. Nothing in CI writes to the repository; the release
 # workflow is the one place that holds write access.
@@ -14,7 +16,8 @@ permissions:
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   # A newer push to a pull request supersedes the older run. A run on
-  # main always finishes: the release workflow waits for it.
+  # main or a release branch always finishes: the release workflow waits
+  # for it.
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 # Dummy values for modules that instantiate at import time (better-auth,

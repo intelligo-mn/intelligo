@@ -1,5 +1,6 @@
 {
-  "$comment": "npm names the framework no longer publishes, each with where the code went. A maintainer applies these with `node scripts/npm-maintain.mjs` (trusted publishing cannot deprecate); an entry already on the registry is skipped, so the list only ever grows.",
+  "$comment": "npm names the framework no longer publishes, each with where the code went, and dist-tags no longer in use (`retiredTags`), removed from every published and deprecated name. A maintainer applies these with `node scripts/npm-maintain.mjs` (trusted publishing cannot deprecate or move a tag); an entry already on the registry is skipped, so the list only ever grows.",
+  "retiredTags": ["beta"],
   "deprecations": [
     {
       "name": "@intelligo-dev/money",

@@ -20,7 +20,7 @@
     "hooks": "@/hooks"
   },
   "registries": {
-    "@intelligo": "https://intelligo.dev/r/{name}.json"
+    "@intelligo": "__INTELLIGO_REGISTRY__"
   },
   "menuColor": "default",
   "menuAccent": "subtle"

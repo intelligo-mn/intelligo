@@ -6,5 +6,6 @@
 - **Which versions get fixes, and how an API is retired** — [RELEASES.md](RELEASES.md).
 
 Intelligo is maintained by a small team; there is no paid support
-channel. The documentation is [intelligo.dev/docs](https://intelligo.dev/docs),
-the [README](README.md) and [AGENTS.md](AGENTS.md).
+channel. The documentation is [intelligo.dev/docs](https://intelligo.dev/docs)
+and the [README](README.md); to change something, start with
+[CONTRIBUTING.md](CONTRIBUTING.md).

@@ -66,6 +66,15 @@ deprecation period. Each such change is listed under `### Changed` or
 changes nothing but fixes. A package becomes stable in a minor whose
 changelog says so; from then on it follows the versioning above.
 
+## Channels
+
+- **`latest`**: stable releases. `npm install` and every scaffold resolve
+  here, and a `^X.Y.Z` range never matches a prerelease.
+- **`next`**: the next minor while it stabilises, as `X.Y.0-next.N`.
+  `npx @intelligo-dev/cli@next create` scaffolds it, with the pages of
+  that same prerelease. A minor reaches `latest` by releasing the tree
+  `next` carried as a plain `X.Y.0`; `next` never stays below `latest`.
+
 ## Release cadence
 
 - **Minor releases** at most once a month.

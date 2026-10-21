@@ -1,15 +1,18 @@
 name: Release
 
-# Publishes every public package to npm when main carries a version
-# npm does not have yet.
+# Publishes every public package to npm when main, or the release/X.Y
+# branch the run came from, carries a version npm does not have yet.
 #
-# A release is one commit: bump every packages/*/package.json to the
-# new version and head CHANGELOG.md with a section for it. Once CI has
-# passed on that commit, this workflow builds, runs the full suite,
-# packs each package and publishes it, tags the release commit
-# `vX.Y.Z` and creates a GitHub release whose notes are that CHANGELOG
-# section. Nothing here is a second source of truth: the version is
-# what the manifests say, the notes are what the changelog says.
+# A release is one commit, squash-merged from a `chore(release)` pull
+# request: bump every packages/*/package.json to the new version and
+# head CHANGELOG.md with a section for it. The pull request's "Release
+# dry run" check (release-dry-run.yml) runs every check below before
+# the merge. Once CI has passed on the release commit, this workflow
+# builds, runs the full suite, packs each package and publishes it,
+# tags the release commit `vX.Y.Z` and creates a GitHub release whose
+# notes are that CHANGELOG section. Nothing here is a second source of
+# truth: the version is what the manifests say, the notes are what the
+# changelog says.
 #
 # There is no npm token. Every @intelligo-dev package names this file,
 # in the `npm` environment of intelligo-dev/intelligo, as its trusted
@@ -17,14 +20,16 @@ name: Release
 # attaches provenance. The registry work OIDC cannot do — deprecating
 # a folded package, and moving a dist-tag while npm accepts the OIDC
 # identity for `publish` only — is scripts/npm-maintain.mjs, which a
-# maintainer runs. After a prerelease the publish job says on the run
-# when `latest` is behind it.
+# maintainer runs. After a stable release the publish job says on the
+# run when `next` is behind `latest`.
 #
-# Three jobs, each holding only what it needs. `verify` installs,
-# builds and tests with a read-only token and packs the tarballs;
-# `publish` holds the OIDC identity and runs no install, build or
-# test — it publishes the packed tarballs; `release` holds the write
-# token and runs only `gh` against the API to tag and release.
+# Four jobs, each holding only what it needs. `verify`
+# (release-verify.yml, shared with the dry run) installs, builds and
+# tests with a read-only token and packs the tarballs; `publish` holds
+# the OIDC identity and runs no install, build or test — it publishes
+# the packed tarballs; `release` holds the write token and runs only
+# `gh` against the API to tag and release; `deploy-site` redeploys
+# intelligo.dev.
 #
 # What ships is the release commit's own tree: the commit that set the
 # manifests' version, on main, with a green CI run. Whichever run gets
@@ -35,16 +40,20 @@ name: Release
 # Pushing a `v*` tag by hand still works and is the fallback; the tag
 # must equal the manifests' version and point at the release commit.
 #
-# The npm dist-tag follows the version: `1.0.0-beta.2` publishes under
-# `beta`, `1.0.0-rc.1` under `rc`, and a plain `1.0.0` under `latest`.
-# A prerelease therefore never becomes what a bare `npm install`
-# resolves to.
+# The npm dist-tag follows the version: `1.3.0-next.2` publishes under
+# `next`, `1.3.0-rc.1` under `rc`, and a plain version under `latest`
+# (scripts/release-version.mjs). A prerelease therefore never becomes
+# what a bare `npm install` resolves to. Before publishing, a version
+# that would move its tag backwards is refused.
 
 on:
   workflow_run:
     workflows: [CI]
     types: [completed]
-    branches: [main]
+    # A release/X.Y branch publishes the stable line's patches while
+    # main carries the next minor. workflow_run always runs this file as
+    # main has it, so the `npm` environment's branch rule is unchanged.
+    branches: [main, "release/**"]
   push:
     tags: ["v*"]
   workflow_dispatch:
@@ -61,298 +70,30 @@ concurrency:
 jobs:
   verify:
     name: Build, test and pack
-    # A green CI run for a push to main, a version tag, or a manual run
-    # from main. A branch or a pull request cannot reach the publish.
+    # A green CI run for a push to main or a release/X.Y branch, a version
+    # tag, or a manual run from main. Any other branch or a pull request
+    # cannot reach the publish.
     if: >-
       (github.event_name == 'workflow_run' &&
        github.event.workflow_run.conclusion == 'success' &&
        github.event.workflow_run.event == 'push') ||
       (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) ||
       (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
-    runs-on: ubuntu-latest
-    # The scaffold checks take roughly eighteen minutes of it.
-    timeout-minutes: 60
     permissions:
       contents: read
       actions: read # the release commit's CI result
-    outputs:
-      version: ${{ steps.version.outputs.version }}
-      dist-tag: ${{ steps.version.outputs.dist-tag }}
-      published: ${{ steps.check.outputs.published }}
-      release-sha: ${{ steps.check.outputs.release-sha }}
-
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-          # Nothing in this job writes to the repository.
-          persist-credentials: false
-
-      # workflow_run checks out main's newest commit. The version is read
-      # from the commit CI passed instead, once it is shown to be on main;
-      # which commit is built is decided by "Already on npm?" below.
-      - name: Check out the commit CI passed
-        if: github.event_name == 'workflow_run'
-        env:
-          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
-        run: |
-          set -euo pipefail
-          if ! git merge-base --is-ancestor "$HEAD_SHA" origin/main; then
-            echo "::error::$HEAD_SHA is not on main"
-            exit 1
-          fi
-          git checkout --quiet "$HEAD_SHA"
-
-      # The version is the manifests'. Every published workspace must
-      # agree (a private one — packages/registry — is skipped), a hand
-      # pushed tag must match, and CHANGELOG.md must have the section
-      # the release notes come from.
-      - name: Resolve the version
-        id: version
-        run: |
-          set -euo pipefail
-          version=$(node -p "require('./packages/core/package.json').version")
-          for dir in packages/*/; do
-            if [ "$(node -p "require('./$dir/package.json').private === true")" = "true" ]; then continue; fi
-            v=$(node -p "require('./$dir/package.json').version")
-            if [ "$v" != "$version" ]; then
-              echo "$dir is $v but packages/core is $version"
-              exit 1
-            fi
-          done
-          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
-            tag="${GITHUB_REF_NAME#v}"
-            if [ "$tag" != "$version" ]; then
-              echo "the tag is v$tag but the manifests are $version"
-              exit 1
-            fi
-          fi
-          case "$version" in
-            *-*) dist_tag="${version#*-}"; dist_tag="${dist_tag%%.*}" ;;
-            *)   dist_tag="latest" ;;
-          esac
-          # npm refuses a dist-tag that parses as a version range.
-          if [[ "$dist_tag" =~ ^[0-9v] ]]; then
-            echo "$version would publish under dist-tag \"$dist_tag\"; use a named prerelease (1.0.0-beta.1)"
-            exit 1
-          fi
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-          echo "dist-tag=$dist_tag" >> "$GITHUB_OUTPUT"
-          echo "$version under dist-tag $dist_tag"
-
-      # Most CI runs on main are not releases: every package is already
-      # on npm at this version and there is nothing to publish. A tag
-      # pushed after a maintainer published from a workstation lands
-      # here too.
-      #
-      # The release commit is the one that set the version. It must be
-      # on main (a hand-pushed tag on another branch publishes nothing)
-      # and, when this run is to publish it, have passed CI as a push to
-      # main. The rest of this job builds that commit's tree.
-      - name: Already on npm?
-        id: check
-        env:
-          VERSION: ${{ steps.version.outputs.version }}
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          published=true
-          for dir in packages/*/; do
-            if [ "$(node -p "require('./$dir/package.json').private === true")" = "true" ]; then continue; fi
-            name=$(node -p "require('./$dir/package.json').name")
-            if ! npm view "$name@$VERSION" version >/dev/null 2>&1; then
-              echo "$name@$VERSION is not on npm yet"
-              published=false
-            fi
-          done
-
-          release=$(git log -1 --format=%H -S"\"version\": \"$VERSION\"" -- packages/core/package.json)
-          if [ -z "$release" ]; then
-            echo "::error::no commit sets packages/core to $VERSION"
-            exit 1
-          fi
-          if ! git merge-base --is-ancestor "$release" origin/main; then
-            echo "::error::$VERSION was set by $release, which is not on main"
-            exit 1
-          fi
-          if [ "$GITHUB_EVENT_NAME" = "push" ] && [ "$(git rev-parse HEAD)" != "$release" ]; then
-            echo "::error::v$VERSION points at $(git rev-parse --short HEAD), not at $release, the commit that set the version"
-            exit 1
-          fi
-          if [ "$published" != "true" ]; then
-            green=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/runs?head_sha=$release&event=push&branch=main&status=success" --jq '.total_count')
-            if [ "$green" = "0" ]; then
-              echo "::error::$VERSION is not on npm and its release commit $release has no green CI run on main yet. Its own run publishes once CI passes; if CI failed there, bump every manifest and head CHANGELOG.md with a new version in one commit."
-              exit 1
-            fi
-            git checkout --quiet "$release"
-          fi
-          echo "published=$published" >> "$GITHUB_OUTPUT"
-          echo "release-sha=$release" >> "$GITHUB_OUTPUT"
-          echo "release commit $release; published=$published"
-
-      - name: Release notes
-        env:
-          VERSION: ${{ steps.version.outputs.version }}
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/release"
-          node scripts/release-notes.mjs "$VERSION" > "$RUNNER_TEMP/release/notes.md"
-
-      - if: steps.check.outputs.published != 'true'
-        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0 — pnpm version from packageManager
-
-      # No dependency cache: a release builds from a clean install.
-      - if: steps.check.outputs.published != 'true'
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          node-version: 22
-
-      - if: steps.check.outputs.published != 'true'
-        run: pnpm install --frozen-lockfile
-
-      - if: steps.check.outputs.published != 'true'
-        run: pnpm turbo build
-
-      # Every package's tests, not only the packed-package check: a
-      # release is the one place a red suite must not be argued past.
-      # The vocabulary list comes with it, as in CI: a hand-pushed tag
-      # is a push build, where the publishability test refuses to run
-      # without the list.
-      - if: steps.check.outputs.published != 'true'
-        run: pnpm test
-        env:
-          DATABASE_URL: ""
-          INTELLIGO_PRIVATE_VOCABULARY: ${{ secrets.PRIVATE_VOCABULARY }}
-
-      # The three checks below prove that a consumer can install this —
-      # the packed tarballs resolve, the CLI scaffolds an app that
-      # boots, every registry item installs into it, and the reference
-      # app is still exactly the CLI's output. That is a question about
-      # publishing, so it is asked here, where a failure stops the
-      # publish instead of a commit.
-      - name: Packed-package compatibility
-        if: steps.check.outputs.published != 'true'
-        run: |
-          set -euo pipefail
-          pnpm turbo build
-          out=$(mktemp -d)
-
-          # Every relative import in dist carries an extension. tsc
-          # emits specifiers verbatim and the sources omit them; the
-          # post-build fixer adds them, because Node's ESM loader and
-          # vitest's resolver refuse "./foo" — a consumer's scripts and
-          # tests are the first to find out.
-          if grep -rhoE 'from "\.[^"]*"' packages/*/dist --include='*.js' --include='*.d.ts' | grep -qv '\.js"\|\.css"\|\.json"'; then
-            echo "dist contains extensionless relative imports:"
-            grep -rnE 'from "\.[^"]*"' packages/*/dist --include='*.js' --include='*.d.ts' | grep -v '\.js"\|\.css"\|\.json"' | head
-            exit 1
-          fi
-
-          for dir in packages/*/; do
-            if [ "$(node -p "require('./$dir/package.json').private === true")" = "true" ]; then continue; fi
-            name=$(node -p "require('./$dir/package.json').name")
-            (cd "$dir" && pnpm pack --pack-destination "$out" >/dev/null)
-            tgz=$(ls "$out"/*.tgz | head -1)
-            node -e "
-              const {execSync} = require('node:child_process');
-              const pkg = require('./$dir/package.json');
-              const exp = (pkg.publishConfig && pkg.publishConfig.exports) || {};
-              const listed = execSync('tar -tzf ' + JSON.stringify('$tgz'), {encoding:'utf8'})
-                .split('\n').map(l => l.replace(/^package\//, ''));
-              const missing = [];
-              for (const entry of Object.values(exp)) {
-                for (const p of typeof entry === 'string' ? [entry] : Object.values(entry)) {
-                  if (typeof p !== 'string' || !p.startsWith('./')) continue;
-                  if (!listed.includes(p.slice(2))) missing.push(p);
-                }
-              }
-              if (missing.length) {
-                console.error(pkg.name + ' publishes exports that are not in the tarball: ' + missing.join(', '));
-                process.exit(1);
-              }
-              console.log(pkg.name + ' ok');
-            "
-            rm -f "$out"/*.tgz
-          done
-
-          # The CLI additionally has to run from the tarball, since it
-          # is executed by Node rather than bundled — with the
-          # dependencies its packed manifest declares and nothing else,
-          # so one it imports without declaring fails here.
-          (cd packages/cli && pnpm pack --pack-destination "$out" >/dev/null)
-          tar -xzf "$out"/*.tgz -C "$out"
-          cd "$out/package"
-          npm install --omit=dev --no-package-lock --ignore-scripts --no-audit --no-fund
-          node dist/bin.js help
-          node dist/bin.js create "$out/scaffolded"
-          test -f "$out/scaffolded/lib/intelligo.ts"
-          test -f "$out/scaffolded/intelligo.manifest.json"
-
-      # apps/app is generated, not written: `intelligo create` plus
-      # `shadcn add` for every item, with only the files in
-      # scripts/reference-app-owned.json kept. A diff here means a
-      # generated file was edited by hand.
-      - name: The reference app is the CLI's output
-        if: steps.check.outputs.published != 'true'
-        run: pnpm app:regenerate --check
-
-      # What npm will serve, installed the way a consumer installs it:
-      # the packed tarballs in an app the packed CLI scaffolds outside
-      # this workspace. The bare scaffold and the app with every
-      # registry item each type-check, build and answer; see the
-      # script's header for what each probe proves.
-      - name: A consumer outside the monorepo
-        if: steps.check.outputs.published != 'true'
-        run: |
-          set -euo pipefail
-          pnpm registry:build
-          scripts/consumer-smoke.sh "$RUNNER_TEMP/consumer-smoke"
-
-      # intelligo.dev/r/<version>/ keeps this release's items, and is
-      # frozen once npm has the version: what it holds must be this
-      # commit's registry, or the site would serve another tree under the
-      # release's name for good.
-      - name: The hosted registry is this release's
-        if: steps.check.outputs.published != 'true'
-        env:
-          VERSION: ${{ steps.version.outputs.version }}
-        run: |
-          set -euo pipefail
-          pnpm sync
-          git checkout -- apps/website/src/data/proof.json
-          if [ -n "$(git status --porcelain -- "apps/website/public/r/$VERSION")" ]; then
-            git status --porcelain -- "apps/website/public/r/$VERSION"
-            echo "::error::apps/website/public/r/$VERSION is not this commit's registry. Run pnpm sync in the release commit."
-            exit 1
-          fi
-
-      # `pnpm pack` rewrites workspace:* ranges to the version and swaps
-      # in publishConfig. The tarballs are packed from a fresh build and
-      # listed in dependency order (scripts/publish-order.mjs): a package
-      # is published after every @intelligo-dev package it names, so npm
-      # never serves a version whose sibling is not there yet.
-      - name: Pack
-        if: steps.check.outputs.published != 'true'
-        run: |
-          set -euo pipefail
-          pnpm turbo build
-          out="$RUNNER_TEMP/release"
-          : > "$out/order.txt"
-          for dir in $(node scripts/publish-order.mjs); do
-            name=$(node -p "require('./$dir/package.json').name")
-            mkdir -p "$out/$name"
-            (cd "$dir" && pnpm pack --pack-destination "$out/$name" >/dev/null)
-            echo "$name" >> "$out/order.txt"
-          done
-          cat "$out/order.txt"
-
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: release
-          path: ${{ runner.temp }}/release
-          if-no-files-found: error
-          retention-days: 7
+    uses: ./.github/workflows/release-verify.yml
+    with:
+      mode: publish
+      # The commit CI passed; release-verify.yml checks it is on main or
+      # the release/X.Y branch the run came from before reading anything
+      # from it.
+      head-sha: ${{ github.event.workflow_run.head_sha }}
+      # The branch CI ran on; release-verify.yml accepts only main or
+      # release/X.Y. Empty for a tag push, which it looks up.
+      branch: ${{ github.event.workflow_run.head_branch }}
+    secrets:
+      PRIVATE_VOCABULARY: ${{ secrets.PRIVATE_VOCABULARY }}
 
   publish:
     name: Publish to npm
@@ -397,13 +138,14 @@ jobs:
             npm publish "$out/$name"/*.tgz --access public --tag "$DIST_TAG"
           done < "$out/order.txt"
 
-      # While no stable version exists, `latest` should follow the newest
-      # prerelease, so a bare `npx @intelligo-dev/cli` does not resolve to
-      # an old beta. npm accepts this run's OIDC identity for `publish`
-      # only, so the move is the maintainer's; this step reads the tag and,
-      # when it is behind, says so on the run with the command to run.
-      - name: Is latest behind the prerelease?
-        if: contains(needs.verify.outputs.version, '-')
+      # A minor is promoted by publishing the tree `next` carried as a
+      # plain X.Y.0 under `latest`, which leaves `next` on the last
+      # X.Y.0-next.N, below `latest`. npm accepts this run's OIDC identity
+      # for `publish` only, so moving `next` is the maintainer's; this
+      # step reads the tags and, when `next` is behind, says so on the
+      # run with the command to run.
+      - name: Is next behind latest?
+        if: "!contains(needs.verify.outputs.version, '-')"
         timeout-minutes: 2
         # A reminder: npm failing to answer must not skip the tag and the
         # GitHub release of packages already published.
@@ -412,14 +154,23 @@ jobs:
           VERSION: ${{ needs.verify.outputs.version }}
         run: |
           set -euo pipefail
-          versions=$(npm view @intelligo-dev/core versions --json)
-          if node -e 'process.exit([JSON.parse(process.argv[1])].flat().some((v) => !v.includes("-")) ? 0 : 1)' "$versions"; then
-            echo "a stable release exists; latest is this workflow's"
+          tags=$(npm view @intelligo-dev/core dist-tags --json)
+          next=$(node -p 'JSON.parse(process.argv[1]).next ?? ""' "$tags")
+          if [ -z "$next" ]; then
+            echo "no next tag"
             exit 0
           fi
-          latest=$(npm view @intelligo-dev/core dist-tags.latest)
-          if [ "$latest" != "$VERSION" ]; then
-            echo "::notice title=latest is $latest::npm latest still points at $latest, not $VERSION. A maintainer runs: node scripts/npm-maintain.mjs"
+          # No checkout here: VERSION is plain, so `next` is below it when
+          # its X.Y.Z is lower, or equal with a prerelease suffix.
+          behind=$(node -e '
+            const [a, b] = process.argv.slice(1).map((v) => v.split("-")[0].split(".").map(Number));
+            const core = a[0] - b[0] || a[1] - b[1] || a[2] - b[2];
+            console.log(core < 0 || (core === 0 && process.argv[1].includes("-")) ? "yes" : "no");
+          ' "$next" "$VERSION")
+          if [ "$behind" = "yes" ]; then
+            echo "::notice title=next is behind latest::npm next points at $next, below $VERSION. A maintainer runs: node scripts/npm-maintain.mjs"
+          else
+            echo "next is $next"
           fi
 
   release:
@@ -434,7 +185,8 @@ jobs:
       (needs.publish.result == 'success' || needs.publish.result == 'skipped')
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    # Only `gh` against the API runs here: no checkout, no install.
+    # Only API calls run here (gh, and npm's attestation endpoint): no
+    # checkout, no install.
     permissions:
       contents: write # the tag and the GitHub release
 
@@ -462,30 +214,79 @@ jobs:
           gh api "repos/$GITHUB_REPOSITORY/git/refs" -f "ref=refs/tags/v$VERSION" -f "sha=$SHA" >/dev/null
           echo "tagged $SHA as v$VERSION"
 
+      # The SLSA provenance npm attached to each package at publish, copied
+      # onto the release so it can be checked in one place: the Sigstore
+      # bundle per package (`.sigstore.json`) and the attested statements,
+      # one line per package (`.intoto.jsonl`). npm can take a few seconds
+      # to serve them after a publish, hence the retries; if it still
+      # does not, the release goes out without them.
+      - name: Provenance
+        if: needs.publish.result == 'success'
+        timeout-minutes: 3
+        continue-on-error: true
+        env:
+          VERSION: ${{ needs.verify.outputs.version }}
+        run: |
+          set -euo pipefail
+          work=$(mktemp -d)
+          slsa='.attestations[] | select(.predicateType == "https://slsa.dev/provenance/v1")'
+          while read -r name; do
+            file="${name#@}"
+            curl -fsS --retry 6 --retry-delay 5 --retry-all-errors \
+              "https://registry.npmjs.org/-/npm/v1/attestations/${name//\//%2f}@$VERSION" > "$work/attestations.json"
+            jq -e "$slsa | .bundle" "$work/attestations.json" > "$work/${file//\//-}-$VERSION.sigstore.json"
+            jq -c "$slsa | .bundle.dsseEnvelope" "$work/attestations.json" >> "$work/intelligo-dev-$VERSION.intoto.jsonl"
+          done < "$RUNNER_TEMP/release/order.txt"
+          rm "$work/attestations.json"
+          mv "$work" "$RUNNER_TEMP/release/provenance"
+
+      # The release carries the files written for it: an SBOM per package
+      # and, after a publish, its provenance. The SBOMs exist only in the
+      # run that packed the tarballs, so an existing release gets them
+      # only on "Re-run failed jobs" of that same run, which reuses its
+      # artifact; a release created on a later run, after npm already had
+      # the version, carries none.
       - name: GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ needs.verify.outputs.version }}
-          DIST_TAG: ${{ needs.verify.outputs.dist-tag }}
+          PRERELEASE: ${{ needs.verify.outputs.prerelease }}
         run: |
           set -euo pipefail
+          shopt -s nullglob
+          assets=(
+            "$RUNNER_TEMP"/release/sbom/*.cdx.json
+            "$RUNNER_TEMP"/release/provenance/*.sigstore.json
+            "$RUNNER_TEMP"/release/provenance/*.intoto.jsonl
+          )
           if gh release view "v$VERSION" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "release v$VERSION exists"
+            if [ "${#assets[@]}" -gt 0 ]; then
+              gh release upload "v$VERSION" --repo "$GITHUB_REPOSITORY" --clobber "${assets[@]}"
+            fi
             exit 0
           fi
-          prerelease=""
-          if [ "$DIST_TAG" != "latest" ]; then prerelease="--prerelease"; fi
-          gh release create "v$VERSION" --repo "$GITHUB_REPOSITORY" --verify-tag --title "v$VERSION" --notes-file "$RUNNER_TEMP/release/notes.md" $prerelease
+          prerelease=()
+          if [ "$PRERELEASE" = "true" ]; then prerelease=(--prerelease); fi
+          gh release create "v$VERSION" --repo "$GITHUB_REPOSITORY" --verify-tag --title "v$VERSION" --notes-file "$RUNNER_TEMP/release/notes.md" "${prerelease[@]}" "${assets[@]}"
 
-  # intelligo.dev reads the release npm serves at build time
+  # intelligo.dev reads the release npm tags `latest` at build time
   # (apps/website/scripts/serve-release.mjs), and the build Cloudflare ran
   # for the release commit ran before the publish. This one runs after it,
   # from main as Cloudflare would build it, so the site and /r serve the
-  # new release without waiting for the next push.
+  # new release without waiting for the next push. The site serves what
+  # npm tags `latest`, so a prerelease does not change it and does not
+  # redeploy it.
+  #
+  # A patch from a release/X.Y branch is not on main yet: its pages are
+  # built from the tag the release job pushed, so /r serves it at once,
+  # and the run warns until a forward-port pull request brings them and
+  # the changelog section to main. Until then main has no public/r/X.Y.Z,
+  # so main's next site build serves the previous release again.
   deploy-site:
     name: Deploy intelligo.dev
-    needs: [verify, publish]
-    if: needs.publish.result == 'success'
+    needs: [verify, publish, release]
+    if: needs.publish.result == 'success' && needs.release.result == 'success' && !contains(needs.verify.outputs.version, '-')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
@@ -494,6 +295,7 @@ jobs:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       VERSION: ${{ needs.verify.outputs.version }}
+      BRANCH: ${{ needs.verify.outputs.branch }}
 
     steps:
       - name: Cloudflare credentials
@@ -523,6 +325,14 @@ jobs:
       - if: steps.credentials.outputs.present == 'true'
         run: pnpm install --frozen-lockfile
 
+      - name: Build the release's pages from its tag
+        if: steps.credentials.outputs.present == 'true' && startsWith(needs.verify.outputs.branch, 'release/')
+        run: |
+          set -euo pipefail
+          git fetch --quiet origin "refs/tags/v$VERSION:refs/tags/v$VERSION"
+          pnpm registry:build
+          node apps/website/scripts/sync-framework.mjs --release "$VERSION"
+
       - if: steps.credentials.outputs.present == 'true'
         name: Build and deploy
         run: |
@@ -533,3 +343,8 @@ jobs:
             exit 1
           }
           pnpm --filter website exec wrangler deploy
+
+      - name: Forward-port
+        if: startsWith(needs.verify.outputs.branch, 'release/')
+        run: |
+          echo "::warning title=Forward-port $VERSION::$VERSION shipped from $BRANCH. Merge the forward-port before any other push to main: until then main's next site build serves the previous release at /r, and main's 'Site sync output is committed' fails until a pull request brings apps/website/public/r/$VERSION and the [$VERSION] changelog section to main: git fetch --tags && git switch -c forward/$VERSION origin/main && pnpm sync, copy the [$VERSION] section from $BRANCH's CHANGELOG.md, commit, and open the pull request."

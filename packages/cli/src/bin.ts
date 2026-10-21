@@ -73,7 +73,11 @@ import {
 import { itemNames, unknownFlags, wantsHelp } from "./args.js";
 import { commandUsage, usage } from "./usage.js";
 import { loadAppEnv } from "./env-files.js";
-import { workspaceRootVariable } from "./commands/create.js";
+import {
+  linksWorkspace,
+  registryVariable,
+  workspaceRootVariable,
+} from "./commands/create.js";
 import { resolveRegistryDir } from "./registry-bundle.js";
 import { findWorkspaceRoot, readRegistryCatalogue } from "./registry-items.js";
 import { MIGRATION_LOCATIONS, resolveMigrationsDir } from "./migrations-dir.js";
@@ -241,15 +245,23 @@ function runAdd(rest: readonly string[]): number {
     templatesDir: TEMPLATES_DIR,
     frameworkVersion: FRAMEWORK_VERSION,
     force: rest.includes("--force"),
-    // Computed, not recorded: an app made before the variable existed
-    // has no value for it.
     variables:
-      feature === "app-scaffold"
-        ? workspaceRootVariable(process.cwd())
-        : undefined,
+      feature === "app-scaffold" ? scaffoldVariables(process.cwd()) : undefined,
   });
   console.log(formatAddResult(result));
   return addExitCode(result);
+}
+
+/**
+ * The app scaffold's values computed from the app rather than read from
+ * its manifest: an app made before a variable existed has no recorded
+ * value for it. `add` writes with them and `upgrade` compares with them.
+ */
+function scaffoldVariables(appRoot: string): Record<string, string> {
+  return {
+    ...workspaceRootVariable(appRoot),
+    ...registryVariable(FRAMEWORK_VERSION, linksWorkspace(appRoot)),
+  };
 }
 
 async function runDoctor(rest: readonly string[]): Promise<number> {
@@ -281,6 +293,7 @@ async function runUpgrade(rest: readonly string[]): Promise<number> {
   const upgradeOptions = {
     appRoot: process.cwd(),
     templatesDir: TEMPLATES_DIR,
+    variables: scaffoldVariables(process.cwd()),
   };
   if (rest.includes("--diff") || rest.includes("--accept")) {
     if (!target) {

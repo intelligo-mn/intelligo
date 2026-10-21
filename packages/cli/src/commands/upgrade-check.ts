@@ -42,7 +42,24 @@ export type UpgradeReport = {
 export type UpgradeCheckOptions = {
   appRoot: string;
   templatesDir: string;
+  /**
+   * Values `intelligo add` computes rather than reads from the manifest,
+   * laid over the recorded ones as add lays them, so a template is
+   * compared as add would write it, and an app recorded before one of
+   * these placeholders existed still gets a value for it.
+   */
+  variables?: Record<string, string>;
 };
+
+/** The values a feature's templates are written with for this app. */
+function variablesFor(
+  options: UpgradeCheckOptions,
+  recorded: Record<string, string> | undefined
+): Record<string, string> | undefined {
+  return recorded || options.variables
+    ? { ...recorded, ...options.variables }
+    : undefined;
+}
 
 export function upgradeCheck(options: UpgradeCheckOptions): UpgradeReport {
   const manifest: Manifest | null = readManifest(options.appRoot);
@@ -92,7 +109,7 @@ export function upgradeCheck(options: UpgradeCheckOptions): UpgradeReport {
         const templateHash = hashContents(
           substitute(
             readFileSync(path.join(options.templatesDir, templateRel), "utf8"),
-            entry.variables
+            variablesFor(options, entry.variables)
           )
         );
         templateChanged = templateHash !== file.hash;
@@ -183,7 +200,7 @@ function renderedTemplate(
       feature,
       contents: substitute(
         readFileSync(path.join(options.templatesDir, file.template), "utf8"),
-        entry.variables
+        variablesFor(options, entry.variables)
       ),
     };
   }

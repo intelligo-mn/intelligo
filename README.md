@@ -193,7 +193,7 @@ pnpm registry:build   # rebuild the registry artifacts
 pnpm db:migrate       # apply the framework's schema
 ```
 
-A release is one commit: it bumps every published package and heads [`CHANGELOG.md`](CHANGELOG.md) with its section; merging it publishes to npm with provenance, tags, and creates the GitHub release. [CONTRIBUTING.md](CONTRIBUTING.md) says what a good pull request looks like, and [AGENTS.md](AGENTS.md) is the full map of the codebase — for people as much as for coding agents.
+A release is one squash-merged pull request: it bumps every published package and heads [`CHANGELOG.md`](CHANGELOG.md) with its section; merging it publishes to npm with provenance, tags, and creates the GitHub release. [CONTRIBUTING.md](CONTRIBUTING.md) is where to start a change; [AGENTS.md](AGENTS.md) is the full map of the codebase that coding agents load.
 
 ## Community
 

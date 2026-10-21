@@ -78,6 +78,14 @@ An older line that is still supported names the date its fixes end, as
 `Supported until YYYY-MM-DD`. How long a line is supported is in
 [RELEASES.md](RELEASES.md).
 
+The current stable minor is the one npm tags `latest`. While `main`
+carries the next minor on the `next` channel, fixes for a supported line
+are cut from its `release/X.Y` branch and published as patch releases,
+so a fix never brings unreleased features with it. `next` prereleases
+receive fixes in the next `-next.N`; a superseded prerelease is not
+supported. A release carrying a security fix says **Upgrade:** required
+at the top of its changelog section and its GitHub release.
+
 Registry items are source you own once installed and have no version of
 their own: a fix to an item ships in a release. Upgrade `@intelligo-dev/cli`
 and every `@intelligo-dev/*` package to the fixed version and run

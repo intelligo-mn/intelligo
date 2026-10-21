@@ -21,7 +21,9 @@ import {
   createApp,
   deriveNames,
   formatNextSteps,
+  linksWorkspace,
   packageNameFor,
+  registryVariable,
 } from "./create.js";
 import { hashContents, readManifest } from "../manifest.js";
 
@@ -348,5 +350,45 @@ describe("packageNameFor", () => {
     expect(
       JSON.parse(readFileSync(path.join(target, "package.json"), "utf8"))
     ).toEqual({ name: "@acme/app", title: "acme" });
+  });
+});
+
+describe("the @intelligo registry a scaffold installs from", () => {
+  it.each([
+    ["1.2.4", false, "https://intelligo.dev/r/{name}.json"],
+    ["1.3.0-next.2", false, "https://intelligo.dev/r/1.3.0-next.2/{name}.json"],
+    ["1.3.0-next.2", true, "https://intelligo.dev/r/{name}.json"],
+  ])("%s (linked: %s) installs from %s", (version, linked, url) => {
+    expect(registryVariable(version, linked)).toEqual({
+      __INTELLIGO_REGISTRY__: url,
+    });
+  });
+
+  it("writes a prerelease's own copy into components.json", () => {
+    writeFileSync(
+      path.join(templatesDir, "app-scaffold", "slug.tpl"),
+      '{ "registries": { "@intelligo": "__INTELLIGO_REGISTRY__" } }\n'
+    );
+    const target = path.join(workdir, "next-app");
+
+    createApp({ target, templatesDir, frameworkVersion: "1.3.0-next.2" });
+
+    expect(
+      JSON.parse(readFileSync(path.join(target, "lib/intelligo.ts"), "utf8"))
+    ).toEqual({
+      registries: {
+        "@intelligo": "https://intelligo.dev/r/1.3.0-next.2/{name}.json",
+      },
+    });
+  });
+
+  it("tells a linked app by its workspace dependency", () => {
+    const linked = path.join(workdir, "linked");
+    create(linked, true);
+    expect(linksWorkspace(linked)).toBe(true);
+    const installed = path.join(workdir, "installed");
+    create(installed);
+    expect(linksWorkspace(installed)).toBe(false);
+    expect(linksWorkspace(path.join(workdir, "nothing-here"))).toBe(false);
   });
 });

@@ -5,7 +5,7 @@
  * exist — and commit the result, so a deploy needs nothing but this
  * directory (Cloudflare builds from apps/website and never runs this;
  * its build runs scripts/serve-release.mjs, which moves `published` and
- * public/r/*.json to the release npm serves).
+ * public/r/*.json to the release npm tags `latest`).
  *
  *   pnpm sync        # repository root: builds the registry first (turbo)
  *
@@ -15,13 +15,13 @@
  *   src/data/seams.json      each block's consumer-owned config files
  *   src/content/docs/…       the generated reference pages, and the snippets
  *                            in hand-written ones (scripts/docs.mjs)
- *   src/data/proof.json      counts (tests, items, packages), this tree's version
- *                            and the version npm serves
+ *   src/data/proof.json      counts (tests, items, packages), this tree's version,
+ *                            whether npm has it, and the version npm tags `latest`
  *   src/data/package-edges.json
  *                            each package's declared @intelligo-dev/* dependencies
  *   public/r/<version>/*.json
  *                            every release's items, frozen once npm has it
- *   public/r/*.json          the items of the release npm serves —
+ *   public/r/*.json          the items of the release npm tags `latest` —
  *                            intelligo.dev/r/<item>.json is the hosted
  *                            registry consumers install from
  *   src/showcase/app/…       the items' client components, rebuilt from
@@ -56,7 +56,7 @@ import {
   isGenerated,
 } from "./docs.mjs";
 import { compareVersions, toRelease } from "./registry-release.mjs";
-import { publishedVersion, serveRelease } from "./serve-release.mjs";
+import { onNpm, publishedVersion, serveRelease } from "./serve-release.mjs";
 
 const SITE = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 // apps/website lives inside the framework repository: two directories up.
@@ -95,9 +95,10 @@ if (!existsSync(built)) {
 // The hosted registry is released, not built from main: a consumer on a
 // release installs items whose imports that release's packages export.
 // public/r/<version>/ keeps every release's items. The tree's version is
-// rewritten from the build until npm has it, and frozen from then on;
-// public/r/*.json, what the `@intelligo` namespace resolves, is the copy
-// of the release npm serves. Within a versioned copy an `@intelligo/<x>`
+// rewritten from the build until npm has that exact version, and frozen
+// from then on, whichever tag it went out under; public/r/*.json, what
+// the `@intelligo` namespace resolves, is the copy of the release npm
+// tags `latest`. Within a versioned copy an `@intelligo/<x>`
 // dependency names the same release's file, so installing from it never
 // mixes releases.
 const builtItems = readdirSync(built).filter((f) => f.endsWith(".json"));
@@ -159,7 +160,8 @@ const version = JSON.parse(
   readFileSync(join(FRAMEWORK, "packages/core/package.json"), "utf8")
 ).version;
 
-const published = await publishedVersion(version);
+const published = await publishedVersion();
+const treeOnNpm = await onNpm(version);
 
 function writeRelease(release, sourceDir) {
   rmSync(releaseDir(release), { recursive: true, force: true });
@@ -225,7 +227,8 @@ if (releaseFlag !== -1) {
 }
 
 const released =
-  published !== undefined && compareVersions(published, version) >= 0;
+  treeOnNpm ||
+  (published !== undefined && compareVersions(published, version) >= 0);
 if (!released) writeRelease(version, built);
 for (const v of new Set([version, published].filter(Boolean))) {
   if (!existsSync(releaseDir(v))) buildFromTag(v);
@@ -245,6 +248,7 @@ const proof = {
   sampledAt: new Date().toISOString().slice(0, 10),
   version,
   published,
+  onNpm: treeOnNpm,
   packages,
   testFiles: testFiles.length,
   testCases,
