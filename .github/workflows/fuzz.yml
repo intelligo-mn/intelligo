@@ -1,0 +1,144 @@
+name: Nightly fuzz
+
+# The property suites run on every pull request at the shared default
+# depth and a fixed seed, so CI stays fast and a red run is reproducible.
+# Here they run deep on a fresh seed, to reach the rarer inputs. The seed
+# is printed first; a failure is replayed with the same FC_SEED and
+# FC_RUNS (or by dispatching this workflow with that seed).
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+    inputs:
+      seed:
+        description: "A seed to replay (empty draws a fresh one)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fuzz-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  unit:
+    name: Property suites at depth
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0 — pnpm version from packageManager
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Draw the seed
+        env:
+          REQUESTED_SEED: ${{ inputs.seed }}
+        run: |
+          set -euo pipefail
+          if [ -n "$REQUESTED_SEED" ]; then
+            seed="$REQUESTED_SEED"
+          else
+            seed="$(od -An -N4 -tu4 /dev/urandom | tr -d ' ')"
+            seed=$((seed % 2147483647))
+          fi
+          # Digits only: the value is written to GITHUB_ENV.
+          case "$seed" in
+            '' | *[!0-9]*) echo "::error::the seed must be a non-negative integer"; exit 1 ;;
+          esac
+          echo "FC_SEED=$seed" >> "$GITHUB_ENV"
+          echo "fast-check seed: $seed (replay with FC_SEED=$seed FC_RUNS=20000)"
+
+      - name: Property suites
+        env:
+          FC_RUNS: "20000"
+          DATABASE_URL: ""
+        run: |
+          pnpm vitest run \
+            packages/core/src/money.property.test.ts \
+            packages/chat/src/body.fuzz.test.ts \
+            packages/chat/src/continuation.fuzz.test.ts \
+            packages/billing/src/webhook-route.fuzz.test.ts
+
+  database:
+    name: Database fuzz suites at depth
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: ci
+          POSTGRES_PASSWORD: ci
+          POSTGRES_DB: intelligo_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://ci:ci@localhost:5432/intelligo_ci
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0 — pnpm version from packageManager
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - run: pnpm install --frozen-lockfile
+
+      # The suites run against the replayed migrations, as CI's database
+      # integration step does.
+      - name: Replay the migration chain on a fresh database
+        run: |
+          set -euo pipefail
+          psql "$DATABASE_URL" -c 'CREATE DATABASE migration_replay;'
+          REPLAY_URL="${DATABASE_URL%/*}/migration_replay"
+          psql -v ON_ERROR_STOP=1 "$REPLAY_URL" -c 'CREATE EXTENSION IF NOT EXISTS vector;'
+          for f in packages/core/src/db/migrations/*.sql; do
+            psql -v ON_ERROR_STOP=1 -q "$REPLAY_URL" -f "$f"
+          done
+
+      - name: Draw the seed
+        env:
+          REQUESTED_SEED: ${{ inputs.seed }}
+        run: |
+          set -euo pipefail
+          if [ -n "$REQUESTED_SEED" ]; then
+            seed="$REQUESTED_SEED"
+          else
+            seed="$(od -An -N4 -tu4 /dev/urandom | tr -d ' ')"
+            seed=$((seed % 2147483647))
+          fi
+          # Digits only: the value is written to GITHUB_ENV.
+          case "$seed" in
+            '' | *[!0-9]*) echo "::error::the seed must be a non-negative integer"; exit 1 ;;
+          esac
+          echo "FC_SEED=$seed" >> "$GITHUB_ENV"
+          echo "fast-check seed: $seed (replay with FC_SEED=$seed FC_RUNS=2000)"
+
+      - name: Database fuzz suites
+        env:
+          FC_RUNS: "2000"
+          TEST_PG_URL: postgresql://ci:ci@localhost:5432/migration_replay
+          DATABASE_URL: postgresql://ci:ci@localhost:5432/migration_replay
+        run: |
+          pnpm vitest run --no-file-parallelism \
+            packages/billing/src/__tests__/local-payment-callback.fuzz.int.test.ts
