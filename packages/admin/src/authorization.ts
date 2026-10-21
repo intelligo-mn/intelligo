@@ -6,7 +6,7 @@ import "server-only";
  * cannot guard cross-tenant views. Every entry point is audited.
  */
 
-import { requirePlatformAdmin } from "@intelligo-dev/auth";
+import { isAuthGuardError, requirePlatformAdmin } from "@intelligo-dev/auth";
 import {
   recordAuditEvent,
   recordAuditEventOrThrow,
@@ -36,6 +36,27 @@ async function platformAdmin(): Promise<AdminActor> {
     });
   }
   return actor;
+}
+
+/**
+ * Whether a platform admin is behind this request, recording nothing
+ * about the visit: the check for a layout that decides between the
+ * console and a 404, and for a page whose reads are not a customer's
+ * data. A request with no session, or a user without the role, is
+ * `false`; any other failure (the database is down) is thrown, so it is
+ * never mistaken for "not an admin".
+ *
+ * The one row it may write is the promotion audit event, when
+ * `PLATFORM_ADMIN_EMAILS` just made this user an admin.
+ */
+export async function isPlatformAdmin(): Promise<boolean> {
+  try {
+    await platformAdmin();
+    return true;
+  } catch (error) {
+    if (isAuthGuardError(error)) return false;
+    throw error;
+  }
 }
 
 /**

@@ -11,14 +11,19 @@
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
-const mocks = vi.hoisted(() => ({
-  requirePlatformAdmin: vi.fn(),
-  recordAuditEvent: vi.fn(),
-  recordAuditEventOrThrow: vi.fn(),
-}));
+const mocks = vi.hoisted(() => {
+  class AuthGuardError extends Error {}
+  return {
+    AuthGuardError,
+    requirePlatformAdmin: vi.fn(),
+    recordAuditEvent: vi.fn(),
+    recordAuditEventOrThrow: vi.fn(),
+  };
+});
 
 vi.mock("@intelligo-dev/auth", () => ({
   requirePlatformAdmin: mocks.requirePlatformAdmin,
+  isAuthGuardError: (error: unknown) => error instanceof mocks.AuthGuardError,
 }));
 
 vi.mock("@intelligo-dev/audit", () => ({
@@ -28,7 +33,11 @@ vi.mock("@intelligo-dev/audit", () => ({
 
 vi.mock("server-only", () => ({}));
 
-import { requireAdmin, requireAdminOrRefuse } from "./authorization";
+import {
+  isPlatformAdmin,
+  requireAdmin,
+  requireAdminOrRefuse,
+} from "./authorization";
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -85,6 +94,38 @@ describe("requireAdmin", () => {
     await expect(requireAdmin("admin.overview.viewed")).resolves.toMatchObject({
       userId: "u-admin",
     });
+  });
+});
+
+describe("isPlatformAdmin", () => {
+  it("answers true for a platform admin and records no visit", async () => {
+    await expect(isPlatformAdmin()).resolves.toBe(true);
+    expect(mocks.recordAuditEvent).not.toHaveBeenCalled();
+    expect(mocks.recordAuditEventOrThrow).not.toHaveBeenCalled();
+  });
+
+  it("answers false when the guard refuses the caller", async () => {
+    mocks.requirePlatformAdmin.mockRejectedValue(
+      new mocks.AuthGuardError("Insufficient permissions")
+    );
+    await expect(isPlatformAdmin()).resolves.toBe(false);
+  });
+
+  it("throws any other failure rather than calling it a refusal", async () => {
+    mocks.requirePlatformAdmin.mockRejectedValue(new Error("db down"));
+    await expect(isPlatformAdmin()).rejects.toThrow("db down");
+  });
+
+  it("still records an allowlist promotion it made", async () => {
+    mocks.requirePlatformAdmin.mockResolvedValue({
+      user: { id: "u-admin", email: "admin@example.test" },
+      promoted: true,
+    });
+    await isPlatformAdmin();
+    expect(mocks.recordAuditEvent).toHaveBeenCalledTimes(1);
+    expect(mocks.recordAuditEvent).toHaveBeenCalledWith(
+      expect.objectContaining({ action: "admin.platform_admin.granted" })
+    );
   });
 });
 
