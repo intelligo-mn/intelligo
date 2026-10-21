@@ -46,6 +46,8 @@ export default defineConfig({
       "packages/billing/src/quota-reporting.test.ts",
       "packages/billing/src/quota-settlement.test.ts",
       "packages/billing/src/rate-limit.test.ts",
+      "packages/billing/src/charge-split.property.test.ts",
+      "packages/billing/src/quota-decision.property.test.ts",
       "packages/chat/src/body.test.ts",
       "packages/chat/src/continuation.test.ts",
       "packages/chat/src/generation.test.ts",

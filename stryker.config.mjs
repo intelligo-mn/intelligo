@@ -62,6 +62,8 @@ export default {
     "packages/executions/src/pricing.ts",
     "packages/billing/src/plan-registry.ts",
     "packages/billing/src/feature-quota.ts",
+    "packages/billing/src/quota-decision.ts",
+    "packages/billing/src/charge-split.ts",
     "packages/chat/src/body.ts",
     "packages/chat/src/continuation.ts",
     "packages/chat/src/generation.ts",

@@ -22,14 +22,10 @@ import { checkNotificationTriggers } from "./notifications";
 import {
   UnknownModelError,
   chargeFor,
-  estimateWorstCaseCharge,
   type BillingRate,
   type Workload,
 } from "@intelligo-dev/executions/pricing";
 import {
-  add,
-  compare,
-  formatMoney,
   isNegative,
   isZero,
   money,
@@ -56,6 +52,13 @@ import { getPlanMessageLimit, getPlanMonthlyAllowance } from "./quota-plan";
 import { BillingNotConfiguredError } from "./plan-registry";
 import { ChargeError } from "./charge-error";
 import { warnDeprecated } from "./deprecation";
+import {
+  assertChargeable,
+  decideQuota,
+  type Pools,
+  type Price,
+} from "./quota-decision";
+import { allowanceShare, remainderShares } from "./charge-split";
 import { createLogger } from "@intelligo-dev/core/logger";
 import { runInBackground } from "@intelligo-dev/core/request-context";
 import { isUniqueViolation, requestIdTaken } from "@intelligo-dev/executions";
@@ -72,32 +75,11 @@ import {
   getCurrentPeriodEnd,
 } from "./quota-usage";
 
+export { assertChargeable } from "./quota-decision";
+
 // ---------------------------------------------------------------------------
 // Admission
 // ---------------------------------------------------------------------------
-
-/**
- * The three pools a workspace can spend from, read once per decision.
- *
- *   remaining = max(zero, allowance − used) + topupBalance + trialRemaining
- *
- * `allowanceUsedMicros` is the part of this period's spend that the plan
- * allowance funded — `recordTokenUsage` increments it only up to the
- * allowance and sends the remainder to top-up or trial — so the three
- * pools never count one charge twice.
- */
-type Pools = {
-  planSlug: string;
-  trialActive: boolean;
-  /** The pools, in the deployment's own currency. */
-  allowance: Money;
-  used: Money;
-  planRemaining: Money;
-  topupBalance: Money;
-  trialRemaining: Money;
-  /** What this deployment bills in — currency, USD rate, margin. */
-  rate: BillingRate;
-};
 
 /**
  * Reads the pools through `reader`: inside admission that is the
@@ -177,13 +159,6 @@ function notConfigured(): QuotaCheckResult {
   };
 }
 
-/**
- * What admission holds for: the worst case of a run on a model (one
- * call, or its workload's), or a fixed amount the product charges for
- * one unit of work.
- */
-type Price = { modelId: string; workload?: Workload } | { amount: Money };
-
 function priceOf(options?: {
   modelId?: string;
   amount?: Money;
@@ -195,25 +170,6 @@ function priceOf(options?: {
         modelId: options?.modelId ?? DEFAULT_MODEL_ID,
         workload: options?.workload,
       };
-}
-
-/**
- * A fixed amount must be a positive whole number of micros in the
- * deployment's currency; the pools hold nothing else.
- */
-export function assertChargeable(amount: Money, currency: string): void {
-  if (!Number.isSafeInteger(amount.amount) || amount.amount <= 0) {
-    throw new ChargeError(
-      "invalid_amount",
-      `A charge is a positive whole number of micros, not ${amount.amount}.`
-    );
-  }
-  if (amount.currency !== currency) {
-    throw new ChargeError(
-      "currency_mismatch",
-      `This deployment bills in ${currency}; ${amount.currency} cannot be charged.`
-    );
-  }
 }
 
 /**
@@ -348,116 +304,6 @@ export async function checkQuota(
         requestId: options.requestId,
       })
     : estimateQuota(workspaceId, { modelId: options?.modelId });
-}
-
-function decideQuota(
-  pools: Pools,
-  price: Price,
-  reservedMicros: number
-): QuotaCheckResult {
-  {
-    const { trialActive } = pools;
-    const remaining = add(
-      add(pools.planRemaining, pools.topupBalance),
-      pools.trialRemaining
-    );
-    const reserved = money(reservedMicros, pools.rate.currency);
-
-    // A model with no registered price cannot be estimated, and
-    // admission must not invent a ceiling. Refuse with a code the
-    // transport can turn into a 402 that says why, rather than letting
-    // the throw become a 500.
-    let estimated: Money;
-    try {
-      if ("amount" in price) {
-        assertChargeable(price.amount, pools.rate.currency);
-        estimated = price.amount;
-      } else {
-        estimated = estimateWorstCaseCharge(
-          price.modelId,
-          pools.rate,
-          price.workload
-        );
-      }
-    } catch (error) {
-      if (error instanceof UnknownModelError) {
-        return {
-          allowed: false,
-          code: "unknown_model",
-          reason: error.message,
-          billingMode: "subscription",
-          usage: {
-            used: pools.used.amount,
-            limit: pools.allowance.amount,
-            percentage: 0,
-          },
-          usingTrialCredits: false,
-          graceActive: false,
-        };
-      }
-      throw error;
-    }
-    const percentage =
-      pools.allowance.amount > 0
-        ? Math.min(
-            100,
-            Math.round((pools.used.amount / pools.allowance.amount) * 100)
-          )
-        : 0;
-
-    const base = {
-      billingMode: "subscription" as const,
-      usage: {
-        used: pools.used.amount,
-        limit: pools.allowance.amount,
-        percentage,
-      },
-      estimated,
-      creditBalance: pools.topupBalance,
-      remaining,
-      graceActive: false,
-    };
-
-    // Plan + top-up first; trial is fallback only. The pools, the
-    // ceiling and the outstanding reservations are all in the
-    // deployment's own currency.
-    const nonTrial = subtract(
-      add(pools.planRemaining, pools.topupBalance),
-      reserved
-    );
-    if (compare(nonTrial, estimated) >= 0) {
-      return { allowed: true, usingTrialCredits: false, ...base };
-    }
-    // Reservations count against the trial pool once the non-trial
-    // pool (minus reservations) can no longer cover them.
-    const overflow = subtract(
-      reserved,
-      add(pools.planRemaining, pools.topupBalance)
-    );
-    const trialAvailable = isNegative(overflow)
-      ? pools.trialRemaining
-      : subtract(pools.trialRemaining, overflow);
-    if (trialActive && compare(trialAvailable, estimated) >= 0) {
-      return { allowed: true, usingTrialCredits: true, ...base };
-    }
-    return remaining.amount > 0
-      ? {
-          allowed: false,
-          code: "insufficient_credits",
-          // Both amounts name their own currency.
-          reason: `Insufficient credits for this request (need ~${formatMoney(estimated, "en-US")}, have ${formatMoney(remaining, "en-US")}). Top up to continue.`,
-          usingTrialCredits: false,
-          ...base,
-        }
-      : {
-          allowed: false,
-          code: "allowance_depleted",
-          reason:
-            "Monthly credit allowance depleted. Top up or upgrade your plan to continue.",
-          usingTrialCredits: false,
-          ...base,
-        };
-  }
 }
 
 /**
@@ -732,23 +578,18 @@ async function settleCharge(
       .for("update")
       .limit(1);
 
-    // The allowance takes the lesser of the charge and what is left of
-    // it; whatever remains goes to exactly one of trial or top-up, never
-    // both. Taking the remainder by subtraction keeps
-    // `charged === plan + topup + trial` exact. A period row in another
-    // currency leaves no allowance, as admission reads it.
+    // A period row in another currency leaves no allowance, as admission
+    // reads it.
     const periodCurrency = periodRows[0]?.currency ?? rate.currency;
     const allowanceUsed =
       periodCurrency === rate.currency
         ? money(Number(periodRows[0]?.allowanceUsedMicros ?? 0), rate.currency)
         : allowance;
-    const allowanceLeft = subtract(allowance, allowanceUsed);
-    const plan = isNegative(allowanceLeft)
-      ? zero(rate.currency)
-      : compare(charged, allowanceLeft) <= 0
-        ? charged
-        : allowanceLeft;
-    const remainder = subtract(charged, plan);
+    const { plan, remainder } = allowanceShare(
+      charged,
+      allowance,
+      allowanceUsed
+    );
 
     await tx
       .update(monthlyUsage)
@@ -874,13 +715,12 @@ async function debitRemainder(
 
   const held = (micros: number | null | undefined) =>
     money(Math.max(0, Number(micros ?? 0)), unit);
-  const lesser = (a: Money, b: Money) => (compare(a, b) <= 0 ? a : b);
 
-  const fromTopup = lesser(remainder, held(balanceRow[0]?.balanceMicros));
-  const trial = trialRow[0]
-    ? lesser(subtract(remainder, fromTopup), held(trialRow[0].remainingMicros))
-    : zero(unit);
-  const topup = subtract(remainder, trial);
+  const { topup, trial } = remainderShares(
+    remainder,
+    held(balanceRow[0]?.balanceMicros),
+    trialRow[0] ? held(trialRow[0].remainingMicros) : null
+  );
 
   if (!isZero(trial)) {
     await tx
