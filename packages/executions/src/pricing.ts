@@ -335,9 +335,13 @@ const BP_PER_MULTIPLE = 10_000;
  * What a provider cost is charged at a rate: cost × margin, converted
  * into the deployment's currency at its own rate.
  *
- * Both steps round up, so a charge is at most two micros over — a
- * millionth of a cent, against a fraction that would otherwise be the
- * deployment's to eat on every request.
+ * Both steps round up, against a fraction that would otherwise be the
+ * deployment's to eat on every request. The margin step adds under one
+ * USD micro, which the conversion then scales by the rate, and the
+ * conversion adds under one micro of its own: a charge is less than
+ * `usdRateMicros / 1e6 + 1` micros over the exact cost × margin × rate.
+ * In a USD deployment that is under two micros; at 3450 MNT to the
+ * dollar, under 3451 micros, which is about 0.0035 MNT.
  *
  * Exported for audits: a usage record keeps its provider cost and the
  * rate it was billed at, and re-applying the rate to the cost must give
