@@ -581,6 +581,7 @@ describe("publishability", () => {
       "SECURITY.md",
       "RELEASES.md",
       "CONTRIBUTING.md",
+      "GOVERNANCE.md",
       "TRADEMARK.md",
       "README.md",
       "CHANGELOG.md",

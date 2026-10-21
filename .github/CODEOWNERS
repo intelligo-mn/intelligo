@@ -3,11 +3,13 @@
 # in review rather than only in CI.
 #
 # The "High risk" section lists source whose every changed line a person
-# reads. scripts/review-policy.mjs parses it, and
+# reads (CONTRIBUTING.md). scripts/review-policy.mjs parses it, and
 # tests/architecture/review-policy.test.ts fails on a pattern there that
 # matches no tracked file. Package READMEs and manifests are left out on
 # purpose: a release bumps every manifest. Later lines win, so the
-# section stays last.
+# section stays last. scripts/review-window.mjs reads this section: a
+# pull request that touches one of its paths waits for the
+# review-window status.
 
 # Everything defaults to the maintainer.
 *                                                    @tortuvshin
@@ -67,9 +69,12 @@
 # CI, release and publishing.
 /.github/workflows/                                  @tortuvshin
 /.github/CODEOWNERS                                  @tortuvshin
+/.github/rulesets/                                   @tortuvshin
 /scripts/release-notes.mjs                           @tortuvshin
 /scripts/publish-order.mjs                           @tortuvshin
 /scripts/npm-maintain.mjs                            @tortuvshin
 /scripts/consumer-smoke.sh                           @tortuvshin
 /scripts/fix-esm-extensions.mjs                      @tortuvshin
+/scripts/review-policy.mjs                           @tortuvshin
+/scripts/review-window.mjs                           @tortuvshin
 # --- High risk: end -----------------------------------------------------

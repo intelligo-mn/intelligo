@@ -2,6 +2,13 @@
 
 <!-- What this changes and why. Link the issue it closes. -->
 
+## Review
+
+- [ ] AI-assisted: an agent wrote part of this diff
+- [ ] Touches a high-risk path (the "High risk" section of `.github/CODEOWNERS`); the review-window check holds it for 24 hours after it is first seen as high-risk
+
+<!-- If either box is ticked: the files you read line by line, and any test assertion you changed or removed, and why. -->
+
 ## Checklist
 
 - [ ] One concern, with a conventional commit subject

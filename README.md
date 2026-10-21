@@ -197,7 +197,7 @@ A release is one squash-merged pull request: it bumps every published package an
 
 ## Community
 
-Questions and ideas go to [Discussions](https://github.com/intelligo-dev/intelligo/discussions), bugs to [issues](https://github.com/intelligo-dev/intelligo/issues/new/choose), and vulnerabilities go privately, the way [SECURITY.md](SECURITY.md) describes. See also [SUPPORT.md](SUPPORT.md) and the [code of conduct](CODE_OF_CONDUCT.md).
+Questions and ideas go to [Discussions](https://github.com/intelligo-dev/intelligo/discussions), bugs to [issues](https://github.com/intelligo-dev/intelligo/issues/new/choose), and vulnerabilities go privately, the way [SECURITY.md](SECURITY.md) describes. See also [SUPPORT.md](SUPPORT.md) and the [code of conduct](CODE_OF_CONDUCT.md). How the project is run, and how to become a maintainer: [GOVERNANCE.md](GOVERNANCE.md).
 
 ## Licence
 

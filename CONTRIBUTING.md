@@ -14,6 +14,8 @@ once a change crosses packages, not before.
 - **Code**: pick an issue labelled `good first issue` or `help wanted`
   and say in it that you are taking it. For anything larger than a fix,
   open a discussion first: most of the review happens before the code.
+- **Triage or review**: [GOVERNANCE.md](GOVERNANCE.md) says how to take
+  it on.
 
 ## The rule that decides most pull requests
 
@@ -95,6 +97,63 @@ CI runs three checks on every pull request: **Typecheck, lint, unit
 tests**, **Mutation score**, and **Migrations and database integration
 tests**. A maintainer reviews once they pass; a red check is the first
 thing to fix.
+
+A pull request that touches a path in the "High risk" section of
+`.github/CODEOWNERS`, or carries the `security` label, also gets the
+**review-window** check: it stays pending for 24 hours from the moment
+the pull request is first seen as high-risk, so a change to those paths
+is public for a full day before it can merge. Pushing again restarts
+the clock. A release (version bumps and the changelog) touches no
+high-risk path and is not held. The fix to a privately reported
+vulnerability can be released from the window with the
+`security-embargo` label, which counts only when a repository admin
+applies it. Until the maintainers set up the app that posts it, the
+check is not reported.
+
+## AI-assisted changes
+
+Intelligo is developed with coding agents, and contributions written
+with one are welcome. The same bar applies to every line, whoever typed
+it, and the person who opens the pull request answers for all of it.
+
+**What every change passes, by machine.** Type-check, lint and
+formatting; the whole Vitest suite, including `tests/architecture/`
+(the boundary and dependency direction, publishability, the registry's
+schema and design rules, model registration, the migration baseline,
+comments); the database integration suites against a fresh Postgres;
+and the mutation score over the pure modules that hold money, pricing,
+quotas and prompt sanitization. Passing them is necessary. It is not a
+review.
+
+**What a person reads line by line.** The author before opening the
+pull request, and the reviewer before approving it:
+
+- every changed line under a path in the "High risk" section of
+  `.github/CODEOWNERS`: auth, tenancy and persistence, money and
+  billing, the execution boundary, audit, the chat transport, admin and
+  impersonation, route handlers, Server Actions and the proxy,
+  workflows and the release scripts;
+- every changed or deleted assertion in an existing test, and every new
+  `// Stryker disable`, `eslint-disable`, `@ts-expect-error` or
+  architecture-test allowance. Making a check pass by loosening it is
+  the failure this section exists to catch;
+- every query added or changed: it filters by `workspaceId`, and by
+  `userId` where the data is user-private;
+- every SQL statement in a migration;
+- every new dependency and every change to `pnpm.overrides`.
+
+Generated output (the registry build, `apps/app` from
+`pnpm app:regenerate`, the site's `pnpm sync` files) is compared by CI
+rather than read; reading the source it came from is enough.
+
+**What the pull request says.** Tick "AI-assisted" in the template and,
+when a high-risk path is touched, list the files you read line by line.
+Write the description yourself: why the change is needed, in your own
+words.
+
+**What an agent does not do here.** Push to `main`, merge, change
+repository settings, publish to npm, or change a settled decision.
+Those are maintainer actions.
 
 ## Releases
 

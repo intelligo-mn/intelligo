@@ -16,7 +16,12 @@
  *    with this workflow's token. A script inside `run: |` is not read, so
  *    the env var that feeds it is where the rule fires.
  * 6. No workflow triggers on pull_request_target, which runs a fork's
- *    pull request with the base repository's token and secrets.
+ *    pull request with the base repository's token and secrets. One
+ *    that is allowed to (ALLOWED) keeps the shape that makes it safe:
+ *    no token scope at the top level, no checkout of anything but the
+ *    base branch, nothing from the pull request's head in any value,
+ *    and no dependency install or cache that would run or restore what
+ *    the pull request chose.
  *
  * Line-based, like ci-suites.test.ts: the rules read a handful of shapes
  * and need no YAML parser. Comments and block scalars (`run: |`) are
@@ -36,7 +41,33 @@ const ALLOWED = [
   // The release job checks out the commit CI passed, and only after
   // `git merge-base --is-ancestor` proves that commit is on main.
   "release.yml: value from workflow_run's head",
+  // Posts the review-window status from main's copy of a script that
+  // reads the pull request only through the API.
+  "review-window.yml: pull_request_target trigger",
 ];
+
+/**
+ * Why a pull_request_target workflow is unsafe, if it is: each entry
+ * names a way the pull request's own code or the base token could
+ * reach a step.
+ */
+function pullRequestTargetRisks(text: string): string[] {
+  const risks: string[] = [];
+  const code = yamlLines(text).map((line) => line.code);
+  if (!code.some((line) => /^permissions:\s*\{\s*\}$/.test(line)))
+    risks.push("top-level permissions are not {}");
+  if (code.some((line) => /^\s*(?:-\s+)?(?:ref|repository):/.test(line)))
+    risks.push("checks out a ref or repository other than the base");
+  if (/github\.event\.pull_request\.head\b|\bgithub\.head_ref\b/.test(text))
+    risks.push("reads the pull request's head");
+  if (
+    /\b(?:pnpm|npm|yarn)\s+(?:install|ci|i)\b|actions\/cache@|cache:\s*\S/.test(
+      text
+    )
+  )
+    risks.push("installs or caches dependencies");
+  return risks;
+}
 
 /** The scopes GitHub's `permissions:` accepts. */
 const SCOPE =
@@ -216,6 +247,15 @@ describe("workflow hygiene", () => {
     ).toEqual([]);
   });
 
+  it("a workflow allowed pull_request_target runs only the base branch's files", () => {
+    const allowedTargets = workflows.filter(({ name }) =>
+      ALLOWED.includes(`${name}: pull_request_target trigger`)
+    );
+    expect(allowedTargets.length).toBeGreaterThan(0);
+    for (const { name, text } of allowedTargets)
+      expect(pullRequestTargetRisks(text), name).toEqual([]);
+  });
+
   it("every allowed finding still occurs", () => {
     const stale = ALLOWED.filter(
       (entry) => !findings.map(withoutLine).includes(entry)
@@ -349,6 +389,54 @@ describe("lintWorkflow", () => {
     );
     expect(lintWorkflow("w.yml", text)).toEqual([
       "w.yml:3 pull_request_target trigger",
+    ]);
+  });
+});
+
+describe("pullRequestTargetRisks", () => {
+  const SHA = "3d3c42e5aac5ba805825da76410c181273ba90b1";
+  const target = (permissions: string, ...steps: string[]) =>
+    [
+      "on:",
+      "  pull_request_target:",
+      "    branches: [main]",
+      permissions,
+      "jobs:",
+      "  w:",
+      "    runs-on: ubuntu-latest",
+      "    steps:",
+      `      - uses: actions/checkout@${SHA} # v7.0.1`,
+      "        with:",
+      "          persist-credentials: false",
+      ...steps.map((s) => `      ${s}`),
+      "",
+    ].join("\n");
+
+  it("passes a workflow that runs only the base branch's files", () => {
+    expect(
+      pullRequestTargetRisks(target("permissions: {}", "- run: node x.mjs"))
+    ).toEqual([]);
+  });
+
+  it("names each way the pull request could reach a step", () => {
+    expect(
+      pullRequestTargetRisks(
+        target(
+          "permissions:\n  contents: read",
+          "- run: pnpm install --frozen-lockfile",
+          "- env:",
+          "    SHA: ${{ github.event.pull_request.head.sha }}",
+          "  run: echo $SHA"
+        ).replace(
+          "persist-credentials: false",
+          "persist-credentials: false\n          ref: refs/pull/1/merge"
+        )
+      )
+    ).toEqual([
+      "top-level permissions are not {}",
+      "checks out a ref or repository other than the base",
+      "reads the pull request's head",
+      "installs or caches dependencies",
     ]);
   });
 });
