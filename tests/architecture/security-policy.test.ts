@@ -112,15 +112,19 @@ describe("SECURITY.md supported versions", () => {
 });
 
 describe("policy documents", () => {
-  it.each(["SECURITY.md", "RELEASES.md", "SUPPORT.md"])(
-    "%s links only to files that exist",
-    (file) => {
-      const text = readFileSync(path.join(ROOT, file), "utf8");
-      const missing = [...text.matchAll(/\]\(([^)#\s]+)(?:#[^)]*)?\)/g)]
-        .map((match) => match[1]!)
-        .filter((target) => !/^[a-z]+:/.test(target))
-        .filter((target) => !existsSync(path.join(ROOT, target)));
-      expect(missing).toEqual([]);
-    }
-  );
+  it.each([
+    "SECURITY.md",
+    "RELEASES.md",
+    "SUPPORT.md",
+    "docs/incident-response.md",
+  ])("%s links only to files that exist", (file) => {
+    const text = readFileSync(path.join(ROOT, file), "utf8");
+    const missing = [...text.matchAll(/\]\(([^)#\s]+)(?:#[^)]*)?\)/g)]
+      .map((match) => match[1]!)
+      .filter((target) => !/^[a-z]+:/.test(target))
+      .filter(
+        (target) => !existsSync(path.join(ROOT, path.dirname(file), target))
+      );
+    expect(missing).toEqual([]);
+  });
 });

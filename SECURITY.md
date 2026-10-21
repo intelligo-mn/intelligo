@@ -43,7 +43,9 @@ with any mitigation a deployment can apply itself.
 The fix is listed in [CHANGELOG.md](CHANGELOG.md) under `### Fixed` or
 `### Changed`, with what to change under `### Upgrading`. A fix may change
 behaviour in a patch release when that behaviour is the vulnerability
-([RELEASES.md](RELEASES.md)).
+([RELEASES.md](RELEASES.md)). How the maintainers run a report or an
+incident from triage to release is
+[docs/incident-response.md](docs/incident-response.md).
 
 ## Disclosure
 
