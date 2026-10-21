@@ -12,10 +12,14 @@ import { defaultStatements, userAc } from "better-auth/plugins/admin/access";
 import { PLATFORM_ADMIN_ROLE } from "./roles";
 import { resolveTrustedOrigins } from "./trusted-origins";
 import {
+  AUTH_RATE_LIMIT,
+  AUTH_RATE_LIMIT_RULES,
   displayNameProblem,
+  IMPERSONATION_SECONDS,
   ipAddressOptions,
   SERVICE_ONLY_ADMIN_PATHS,
   SERVICE_ONLY_ORGANIZATION_PATHS,
+  SESSION_LIFETIME,
   workspaceNameProblem,
 } from "./request-hardening";
 import { APIError } from "better-auth/api";
@@ -161,11 +165,7 @@ export const auth = betterAuth({
       : {}),
   },
 
-  session: {
-    expiresIn: 60 * 60 * 24 * 7,
-    // Refreshed at most daily, extending the expiry while in use.
-    updateAge: 60 * 60 * 24,
-  },
+  session: SESSION_LIFETIME,
 
   trustedOrigins: TRUSTED_ORIGINS,
 
@@ -174,6 +174,8 @@ export const auth = betterAuth({
   // burst, otherwise gives every instance its own allowance of sign-in
   // and reset attempts.
   rateLimit: {
+    ...AUTH_RATE_LIMIT,
+    customRules: AUTH_RATE_LIMIT_RULES,
     storage: "database",
     modelName: "rateLimit",
   },
@@ -339,7 +341,7 @@ export const auth = betterAuth({
       roles: { user: userRole, [PLATFORM_ADMIN_ROLE]: platformAdminRole },
       defaultRole: "user",
       adminRoles: [PLATFORM_ADMIN_ROLE],
-      impersonationSessionDuration: 30 * 60,
+      impersonationSessionDuration: IMPERSONATION_SECONDS,
       allowImpersonatingAdmins: false,
     }),
   ],
