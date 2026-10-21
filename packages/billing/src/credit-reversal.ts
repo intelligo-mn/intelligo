@@ -14,6 +14,7 @@
  */
 
 import { and, eq, like, sql } from "drizzle-orm";
+import type Stripe from "stripe";
 
 import { recordAuditEvent } from "@intelligo-dev/audit";
 import { db } from "@intelligo-dev/core/db";
@@ -23,6 +24,8 @@ import {
   usageRecords,
 } from "@intelligo-dev/core/db/schema";
 import { createLogger } from "@intelligo-dev/core/logger";
+
+import { getStripe } from "./stripe";
 
 const log = createLogger("CreditReversal");
 
@@ -240,6 +243,51 @@ export async function reverseCreditPurchase(
     });
   }
   return result;
+}
+
+/** Reverse the share of a purchase that a charge's refunds cover so far. */
+export function reverseRefundedCharge(
+  charge: Stripe.Charge,
+  paymentIntentId: string,
+  checkoutSessionId: string | null
+): Promise<CreditReversalResult> {
+  return reverseCreditPurchase({
+    paymentIntentId,
+    checkoutSessionId,
+    covered: charge.amount_refunded,
+    paid: charge.amount,
+    key: `refund:${charge.id}`,
+    status: charge.refunded ? "refunded" : null,
+    reason: "refund",
+  });
+}
+
+/**
+ * Take back what has been refunded of a granted purchase's payment.
+ *
+ * A refund handled while its purchase was still pending had no credit
+ * to take back, and Stripe delivers events in no fixed order, so a
+ * partial refund can be handled before the grant it applies to. After
+ * a grant, and on every redelivery that finds the purchase granted,
+ * the payment's charges are read from Stripe and each refunded one is
+ * reversed under the key its own `charge.refunded` uses: the reversal
+ * per key is idempotent, so the two never take one refund back twice.
+ * A failed read throws, the delivery is retried, and the retry finds
+ * the purchase granted and reads again.
+ */
+export async function reverseRefundsSinceGrant(
+  paymentIntentId: string | null,
+  checkoutSessionId: string
+): Promise<void> {
+  if (!paymentIntentId) return;
+  const charges = await getStripe().charges.list({
+    payment_intent: paymentIntentId,
+    limit: 100,
+  });
+  for (const charge of charges.data) {
+    if (charge.amount_refunded <= 0) continue;
+    await reverseRefundedCharge(charge, paymentIntentId, checkoutSessionId);
+  }
 }
 
 function isReversed(status: string): boolean {
