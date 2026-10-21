@@ -236,16 +236,23 @@ function isUserPart(part: { type: string }): boolean {
 }
 
 /**
- * A file part as the client may send it. A provider reference makes
- * the AI SDK hand the provider that file in place of the URL checked
- * here, so it is dropped with the provider metadata.
+ * A message's parts as the client may send them. A provider reference
+ * makes the AI SDK hand the provider that file in place of the URL
+ * checked here, so a file part loses it with its provider metadata. A
+ * user's part loses its provider metadata too: the AI SDK passes it to
+ * the provider as that part's options, which are the deployment's to
+ * set, not the user's. An assistant's other parts keep theirs, which
+ * the provider wrote.
  */
 function withoutProviderFields(message: UIMessage): UIMessage {
-  if (!message.parts.some((part) => part.type === "file")) return message;
+  const user = message.role === "user";
+  if (!user && !message.parts.some((part) => part.type === "file")) {
+    return message;
+  }
   return {
     ...message,
     parts: message.parts.map((part) => {
-      if (part.type !== "file") return part;
+      if (part.type !== "file" && !user) return part;
       const {
         providerReference: _reference,
         providerMetadata: _metadata,

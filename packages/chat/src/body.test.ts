@@ -251,6 +251,42 @@ describe("parseChatBody", () => {
     });
   });
 
+  it("drops the provider metadata on every part of a user message", () => {
+    const metadata = { anthropic: { cacheControl: { type: "ephemeral" } } };
+    const parsed = parseChatBody(
+      body({
+        messages: [
+          {
+            id: "a",
+            role: "assistant",
+            parts: [{ type: "text", text: "ok", providerMetadata: metadata }],
+          },
+          {
+            id: "m",
+            role: "user",
+            parts: [
+              { type: "text", text: "hi", providerMetadata: metadata },
+              { type: "data-pick", data: { n: 1 }, providerMetadata: metadata },
+            ],
+          },
+        ],
+      }),
+      opts
+    );
+    expect(parsed.ok).toBe(true);
+    if (!parsed.ok) return;
+    const [assistant, user] = parsed.body.messages;
+    expect(user!.parts).toEqual([
+      { type: "text", text: "hi" },
+      { type: "data-pick", data: { n: 1 } },
+    ]);
+    expect(assistant!.parts[0]).toEqual({
+      type: "text",
+      text: "ok",
+      providerMetadata: metadata,
+    });
+  });
+
   it("refuses an assistant file that does not carry its bytes", () => {
     const history = (url: string) =>
       body({

@@ -1476,6 +1476,44 @@ describe("POST streaming", () => {
     });
   });
 
+  it("passes no provider options a user wrote on a part to the provider or the store", async () => {
+    const model = recordingModel();
+    const { POST } = createChatHandler(
+      baseConfig(fakeExecutions().executions, {
+        model: { defaultId: MODEL_ID, resolve: () => model },
+      })
+    );
+    const response = await POST(
+      post({
+        id: CONVERSATION_ID,
+        messages: [
+          {
+            id: "m-user-1",
+            role: "user",
+            parts: [
+              {
+                type: "text",
+                text: "go",
+                providerMetadata: {
+                  anthropic: { cacheControl: { type: "ephemeral" } },
+                },
+              },
+            ],
+          },
+        ],
+      })
+    );
+    expect(response.status).toBe(200);
+    await response.text();
+
+    expect(JSON.stringify(model.doStreamCalls[0]!.prompt)).not.toContain(
+      "ephemeral"
+    );
+    expect(
+      store.messages.find((m) => m.id === "m-user-1")?.parts
+    ).not.toContain("ephemeral");
+  });
+
   it("caps a step at the registered model's output ceiling by default", async () => {
     registerModel({
       ...DEFAULT_MODELS[0]!,
