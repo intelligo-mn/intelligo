@@ -187,6 +187,15 @@ describe("publishing", () => {
   it("holds the OIDC identity and the npm environment only in release.yml's publish job", () => {
     for (const { name, text } of WORKFLOWS) {
       const at = [...text.matchAll(/^\s+(id-token: write|environment: npm)/gm)];
+      if (name === "scorecard.yml") {
+        // scorecard.dev accepts a published result only with the run's
+        // OIDC token; the job has no npm environment and publishes nothing.
+        expect(
+          at.map((match) => match[1]),
+          name
+        ).toEqual(["id-token: write"]);
+        continue;
+      }
       if (name !== "release.yml") {
         expect(at, name).toEqual([]);
         continue;

@@ -349,6 +349,10 @@ describe("the rulesets", () => {
       "the job that posts the review-window status; the app's status is the required check",
     "Review window (not set up)":
       "reports that the review window is not set up yet",
+    "Production dependency audit":
+      "fails on an advisory published upstream, whatever the pull request changed; the weekly run and main's run report it",
+    "Browser journey (reference app)":
+      "boots a production build in a browser for up to 30 minutes; a failure is read in the run until the journey has held green on main",
   };
 
   /**

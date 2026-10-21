@@ -50,7 +50,6 @@ import type {
 } from "./quota-types";
 import { getPlanMessageLimit, getPlanMonthlyAllowance } from "./quota-plan";
 import { BillingNotConfiguredError } from "./plan-registry";
-import { ChargeError } from "./charge-error";
 import { warnDeprecated } from "./deprecation";
 import {
   assertChargeable,
