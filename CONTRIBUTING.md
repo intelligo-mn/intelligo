@@ -56,6 +56,10 @@ Every app and package reads the repository root `.env`; an app-local
   build.
 - **A changelog entry** under `[Unreleased]` in `CHANGELOG.md` for
   anything a consumer of the packages or the registry notices.
+- **Public API follows [RELEASES.md](RELEASES.md).** A patch only fixes;
+  removing or changing the meaning of a stable export, CLI flag,
+  environment variable or schema object waits for a major, after a
+  deprecation in a released minor.
 - **No new dependency** without saying in the pull request what it
   replaces or why nothing in the tree does the job.
 

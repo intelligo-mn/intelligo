@@ -571,6 +571,7 @@ describe("publishability", () => {
       "NOTICE",
       "CODE_OF_CONDUCT.md",
       "SECURITY.md",
+      "RELEASES.md",
       "CONTRIBUTING.md",
       "TRADEMARK.md",
       "README.md",
