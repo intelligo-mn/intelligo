@@ -14,6 +14,50 @@ untagged milestones that followed. None of them were released to npm —
 happened alongside the framework is out of scope and noted only where
 it explains a framework decision.
 
+## [Unreleased]
+
+### Added
+
+- The `admin-console` registry item: the platform operator's console under
+  `/admin`, installed as source the application owns
+  (`intelligo sync admin-console`). An overview (the product's own panels
+  first, then the last 24 hours and integration health), a searchable,
+  paged user directory with a record panel, a workspace's support page
+  (plan, credit, members, payments, executions, and grant-plan, add-credit
+  and impersonate actions that each need a reason), revenue and costs (the
+  billing settings, the payment ledger and the usage ledger, paged), and
+  operations (failed jobs, unsettled executions and the audit trail, with
+  actors and resources by name). A platform admin only; anyone else gets
+  the app's 404. Every string is in the `admin-console` message namespace,
+  and dates and money are written by next-intl's formatter in the
+  reader's time zone.
+- Its seams: `lib/admin-nav.ts` (the sidebar, `titleKey`s resolved like
+  `lib/settings-nav.ts`) and `lib/admin-config.tsx` (`brandKey`,
+  `backHref`, `overviewPanels`, `workspacePanels(workspaceId)`,
+  `auditFilterPlaceholderKey`).
+- Its components serve a product's own console pages too:
+  `components/admin/page-title.tsx` (`title`, `description`, `crumbs`,
+  `actions`), `panel.tsx` (`Panel`, `Stat`, `Status`, `PaymentStatus`),
+  `action-form.tsx`, `data-list.tsx` (a URL-state list over `data-table`
+  and `record-panel`, with `bulk` actions and `UrlTabs`), `properties.tsx`
+  (`property-list` without the server and browser formatting a value two
+  ways), `settled.tsx`, and `lib/admin-page.ts` / `lib/admin-list.ts` /
+  `lib/admin-format.ts`.
+- `@intelligo-dev/admin`: `isPlatformAdmin()`, the admin check without an
+  audit row; `listUserSummaries({ query, limit, offset })`,
+  `getWorkspace(id)`, `listWorkspaceMembers(id)`,
+  `listPayments({ workspaceId, status, limit, offset })`,
+  `getSignupsByDay({ days, timeZone })`, `resolveDisplayNames()`,
+  `countAuditEvents()` and `countUsageRecords()`; `listUsageRecords` takes
+  an offset.
+- `@intelligo-dev/audit`: `queryAuditEvents` takes an `offset`, and
+  `countAuditEvents` counts the same filters.
+
+### Deprecated
+
+- `intelligo add admin-page`: superseded by the `admin-console` item, which
+  ships the same route; delete the generated page before installing it.
+
 ## [1.2.4] — 2026-10-21
 
 ### Fixed
