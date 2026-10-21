@@ -163,6 +163,31 @@ describe("convert", () => {
     expect(toMajor(mnt)).toBe(3450);
   });
 
+  it("rounds up exactly where the amount times the rate passes 2^53", () => {
+    // 9493.302845 USD at 3678.61617 is 34_922_217_352_324.00365 micros;
+    // a float product loses the fraction and rounds down.
+    expect(
+      convert(money(9_493_302_845, "USD"), "MNT", 3_678_616_170).amount
+    ).toBe(34_922_217_352_325);
+    // 520.335907 USD at 3450 is exactly 1_795_158_879_150 micros; a float
+    // product lands just over it and rounds up a micro nobody owed.
+    expect(
+      convert(money(520_335_907, "USD"), "MNT", 3_450_000_000).amount
+    ).toBe(1_795_158_879_150);
+  });
+
+  it("rounds a fraction of a micro up, toward zero for a negative amount", () => {
+    expect(convert(money(1, "USD"), "MNT", 1_500_000).amount).toBe(2);
+    expect(convert(money(-1, "USD"), "MNT", 1_500_000).amount).toBe(-1);
+    expect(convert(money(-2, "USD"), "MNT", 1_500_000).amount).toBe(-3);
+  });
+
+  it("refuses a result past the safe range", () => {
+    expect(() =>
+      convert(money(Number.MAX_SAFE_INTEGER, "USD"), "MNT", 3_450_000_000)
+    ).toThrow(expect.objectContaining({ code: "out_of_range" }));
+  });
+
   it("refuses a rate that is not a positive integer of micros", () => {
     const usd = fromMajor(1, "USD");
     expect(() => convert(usd, "MNT", 3450)).not.toThrow(); // 0.00345, odd but explicit
