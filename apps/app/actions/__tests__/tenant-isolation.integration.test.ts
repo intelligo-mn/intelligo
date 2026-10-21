@@ -303,10 +303,9 @@ const CASES: Record<string, Case> = {
           {
             messageId: v.assistantMessageId,
             conversationId: v.conversationId,
-            content: "x",
           },
         ],
-        refusal: /invalidArtifact/,
+        refusal: /conversationNotFound/,
       },
     ],
   },
@@ -825,7 +824,11 @@ d("server actions refuse another workspace's ids", () => {
       },
     ]);
     await call(attacker.owner, actions.get("chat#saveMessageAsArtifact")!, [
-      { messageId: victim.assistantMessageId, content: mark, title: mark },
+      {
+        conversationId: victim.conversationId,
+        messageId: victim.assistantMessageId,
+        title: mark,
+      },
     ]);
 
     const reads = await Promise.all([
