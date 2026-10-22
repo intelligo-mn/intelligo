@@ -48,6 +48,14 @@ async function callModel(prompt: string): Promise<AssistantResult> {
 export async function POST(request: Request) {
   composeIntelligo();
 
+  let context;
+  try {
+    context = await requireWorkspace();
+  } catch (error) {
+    if (!isAuthGuardError(error)) throw error;
+    return Response.json({ error: "unauthorized" }, { status: 401 });
+  }
+
   let prompt: string;
   try {
     const body = (await request.json()) as { prompt?: unknown };
@@ -57,14 +65,6 @@ export async function POST(request: Request) {
     prompt = body.prompt;
   } catch {
     return Response.json({ error: "invalid JSON body" }, { status: 400 });
-  }
-
-  let context;
-  try {
-    context = await requireWorkspace();
-  } catch (error) {
-    if (!isAuthGuardError(error)) throw error;
-    return Response.json({ error: "unauthorized" }, { status: 401 });
   }
 
   try {

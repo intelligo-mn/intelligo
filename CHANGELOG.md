@@ -352,6 +352,10 @@ previous tag of its series.
   custom `persist`, every save is refused with the new
   `actions.unstoredArtifact` message. Run `intelligo sync` to pick up
   both.
+- `intelligo add` creates `vercel.json` only when no file is there at the
+  moment it writes, and reads each target once to decide whether it may
+  replace it, so a file that appears between the check and the write is
+  never overwritten.
 
 ### Security
 

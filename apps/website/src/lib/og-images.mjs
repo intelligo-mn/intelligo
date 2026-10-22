@@ -64,10 +64,18 @@ function section(route) {
   return null;
 }
 
+/** Markup removed until none is left: one pass can leave a tag its removal joined together. */
+const stripTags = (html) => {
+  let out = html;
+  for (let prev; prev !== out;) {
+    prev = out;
+    out = out.replace(/<[^>]+>/g, "");
+  }
+  return out;
+};
+
 const text = (html) =>
-  html
-    .replace(/<br\s*\/?>/g, " ")
-    .replace(/<[^>]+>/g, "")
+  stripTags(html.replace(/<br\s*\/?>/g, " "))
     .replace(/&#39;/g, "'")
     .replace(/&quot;/g, '"')
     .replace(/&lt;/g, "<")

@@ -49,6 +49,10 @@ export async function publishedVersion() {
     if (!response.ok) throw new Error(`npm answered ${response.status}`);
     const published = (await response.json()).latest;
     if (!published) throw new Error('npm has no "latest" dist-tag');
+    // It names a directory and lands in proof.json: a version, nothing else.
+    if (typeof published !== "string" || !SEMVER.test(published)) {
+      throw new Error(`"latest" is not a version: ${published}`);
+    }
     return published;
   } catch (error) {
     console.warn(

@@ -49,10 +49,14 @@ function sentEmail(): SentEmail {
 
 /** The email's visible text, without markup or the zero-width preview padding. */
 async function emailText(): Promise<string> {
-  const html = await render(sentEmail().react);
-  return html
-    .replace(/<!--.*?-->/g, "")
-    .replace(/<[^>]+>/g, " ")
+  let markup = await render(sentEmail().react);
+  for (let prev; prev !== markup;) {
+    prev = markup;
+    markup = markup.replace(/<!--[\s\S]*?--!?>|<[^>]+>/g, (m) =>
+      m.startsWith("<!--") ? "" : " "
+    );
+  }
+  return markup
     .replace(/&#x27;|&lsquo;|&rsquo;|‘|’/g, "'")
     .replace(/&nbsp;|\u00a0/g, " ")
     .replace(/\s+/g, " ");

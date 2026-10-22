@@ -172,7 +172,10 @@ describe("every indexable page", () => {
   it("has a social card image that the site serves", () => {
     expect(
       offenders((p) => {
-        if (!p.ogImage?.startsWith(ORIGIN)) return `og:image ${p.ogImage}`;
+        if (!p.ogImage || !URL.canParse(p.ogImage))
+          return `og:image ${p.ogImage}`;
+        if (new URL(p.ogImage).origin !== ORIGIN)
+          return `og:image ${p.ogImage}`;
         return (
           !existsSync(path.join(out, new URL(p.ogImage).pathname)) &&
           `${p.ogImage} is not built`
