@@ -15,7 +15,8 @@ import { PACKAGES_DIR, ROOT, walk } from "./tree";
 
 export const REGISTRY_BASE = path.join(PACKAGES_DIR, "registry", "base");
 
-const USE_SERVER = /^\s*(\/\/[^\n]*\n|\/\*[\s\S]*?\*\/\s*)*["']use server["']/;
+const USE_SERVER =
+  /^\s*(\/\/[^\n]*\n|\/\*(?:[^*]|\*(?!\/))*\*\/\s*)*["']use server["']/;
 
 /** Whether `source` is a module of server actions. */
 export function isServerActions(source: string): boolean {

@@ -96,7 +96,7 @@ function code(source: string): string {
 
 /** Where `entry` is used in `source`, as 1-based line numbers. */
 function uses(entry: Deprecation, source: string): number[] {
-  const name = entry.name.replace(/\$/g, "\\$");
+  const name = entry.name.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
   // A property is read off a value (`bundle.credits`); an export is
   // named wherever it is imported or called.
   const re =
