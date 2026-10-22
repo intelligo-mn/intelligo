@@ -194,7 +194,9 @@ jobs:
             exit 0
           fi
 
-          release=$(git log -1 --first-parent --diff-merges=first-parent --format=%H -S"\"version\": \"$VERSION\"" -- packages/core/package.json)
+          # --diff-merges prints each commit's patch too; --no-patch keeps
+          # the output to the hash alone.
+          release=$(git log -1 --first-parent --diff-merges=first-parent --no-patch --format=%H -S"\"version\": \"$VERSION\"" -- packages/core/package.json)
           if [ -z "$release" ]; then
             echo "::error::no commit sets packages/core to $VERSION"
             exit 1
