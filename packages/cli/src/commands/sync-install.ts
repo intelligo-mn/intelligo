@@ -4,7 +4,7 @@
  */
 
 import { spawn } from "node:child_process";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createServer, type Server } from "node:http";
 import type { AddressInfo } from "node:net";
 import path from "node:path";
@@ -95,6 +95,13 @@ export async function installItems(
 }
 
 function serveRegistry(dir: string): Promise<{ server: Server; url: string }> {
+  // The items the directory holds; a request is answered from this list,
+  // never by joining what it asked for onto a path.
+  const items = new Map(
+    readdirSync(dir)
+      .filter((f) => /^[a-z0-9-]+\.json$/.test(f))
+      .map((f) => [f, path.join(dir, f)])
+  );
   return new Promise((resolve, reject) => {
     const server = createServer((req, res) => {
       let name = "";
@@ -106,13 +113,8 @@ function serveRegistry(dir: string): Promise<{ server: Server; url: string }> {
       } catch {
         // A malformed escape names no item: answered 404 below.
       }
-      if (!/^[a-z0-9-]+\.json$/.test(name)) {
-        res.writeHead(404);
-        res.end();
-        return;
-      }
-      const file = path.join(dir, name);
-      if (!existsSync(file)) {
+      const file = items.get(name);
+      if (!file) {
         res.writeHead(404);
         res.end();
         return;

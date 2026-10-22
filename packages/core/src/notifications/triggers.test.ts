@@ -52,7 +52,9 @@ async function emailText(): Promise<string> {
   let markup = await render(sentEmail().react);
   for (let prev; prev !== markup;) {
     prev = markup;
-    markup = markup.replace(/<!--[\s\S]*?--!?>/g, "").replace(/<[^>]+>/g, " ");
+    markup = markup.replace(/<!--[\s\S]*?--!?>|<[^>]+>/g, (m) =>
+      m.startsWith("<!--") ? "" : " "
+    );
   }
   return markup
     .replace(/&#x27;|&lsquo;|&rsquo;|‘|’/g, "'")
