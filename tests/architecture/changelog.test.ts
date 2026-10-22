@@ -34,6 +34,7 @@ type NotesModule = {
     notes: string,
     options: { version: string; known: string[]; added?: string[] }
   ) => string[];
+  checkAdvisories: (notes: string, options: { version: string }) => string[];
   previousRelease: (options: {
     version: string;
     sha: string;
@@ -75,6 +76,15 @@ describe("CHANGELOG.md", () => {
       if (!notes.needsHeader(version)) continue;
       expect(
         notes.checkHeader(text, { version, known }),
+        `CHANGELOG.md [${version}]`
+      ).toEqual([]);
+    }
+  });
+
+  it("links an advisory from every Security entry of a released section", () => {
+    for (const { version, notes: text } of notes.parseSections(changelog)) {
+      expect(
+        notes.checkAdvisories(text, { version }),
         `CHANGELOG.md [${version}]`
       ).toEqual([]);
     }
@@ -138,7 +148,7 @@ describe("the header", () => {
     expect(check(section(HEADER, "### Breaking\n\n- x"))[0]).toMatch(
       /under Removed or Changed/
     );
-    expect(check(section(HEADER, "### Security\n\n- x"))).toHaveLength(1);
+    expect(check(section(HEADER, "### Notes\n\n- x"))).toHaveLength(1);
   });
 
   it("leaves a section below HEADER_SINCE alone", () => {
@@ -181,6 +191,74 @@ describe("the header", () => {
   it("is left as written by prettier, so GitHub renders three lines", async () => {
     const text = `## [1.3.0] — 2026-11-04\n\n${section(HEADER)}\n`;
     expect(await prettier.format(text, { parser: "markdown" })).toBe(text);
+  });
+});
+
+describe("security entries", () => {
+  const LINK =
+    "https://github.com/intelligo-dev/intelligo/security/advisories/GHSA-4q3c-9x2m-r8vw";
+  const REQUIRED = [
+    "- **Upgrade:** required — a security fix.",
+    HEADER[1]!,
+    HEADER[2]!,
+  ];
+  const advisories = (text: string, version = "1.3.0") =>
+    notes.checkAdvisories(text, { version });
+
+  it("passes an entry that links its advisory", () => {
+    const body = `### Security\n\n- A first turn read forged history\n  ([GHSA-4q3c-9x2m-r8vw](${LINK})).`;
+    expect(advisories(section(REQUIRED, body))).toEqual([]);
+    expect(check(section(REQUIRED, body))).toEqual([]);
+  });
+
+  it("refuses an entry without one, or with a placeholder id", () => {
+    expect(
+      advisories(section(REQUIRED, "### Security\n\n- A fix."))
+    ).toHaveLength(1);
+    const placeholder = `${LINK.replace(/GHSA-.*/, "")}GHSA-TODO`;
+    expect(
+      advisories(section(REQUIRED, `### Security\n\n- A fix (${placeholder}).`))
+    ).toHaveLength(1);
+    expect(
+      advisories(
+        section(
+          REQUIRED,
+          `### Security\n\n- A fix (${LINK}).\n- Another fix.\n\n### Fixed\n\n- A bug.`
+        )
+      )
+    ).toHaveLength(1);
+  });
+
+  it("refuses another repository's advisory", () => {
+    const elsewhere = LINK.replace("intelligo-dev/intelligo", "someone/else");
+    expect(
+      advisories(section(REQUIRED, `### Security\n\n- A fix (${elsewhere}).`))
+    ).toHaveLength(1);
+  });
+
+  it("refuses a link that only carries the advisory's address inside it", () => {
+    const wrapped = `https://example.com/?to=${LINK}`;
+    expect(
+      advisories(section(REQUIRED, `### Security\n\n- A fix (${wrapped}).`))
+    ).toHaveLength(1);
+  });
+
+  it("asks a section with a security fix to say Upgrade: required", () => {
+    const body = `### Security\n\n- A fix (${LINK}).`;
+    expect(advisories(section(HEADER, body))).toEqual([
+      "a section with ### Security says **Upgrade:** required",
+    ]);
+  });
+
+  it("holds a section below HEADER_SINCE to the link, not the header", () => {
+    expect(advisories(`### Security\n\n- A fix (${LINK}).`, "1.2.5")).toEqual(
+      []
+    );
+    expect(advisories("### Security\n\n- A fix.", "1.2.5")).toHaveLength(1);
+  });
+
+  it("leaves a section below ADVISORY_SINCE alone", () => {
+    expect(advisories("### Security\n\n- A fix.", "1.2.4")).toEqual([]);
   });
 });
 

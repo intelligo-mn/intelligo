@@ -116,6 +116,9 @@ only when the API is the vulnerability. It is listed under `### Fixed` or
 `CHANGELOG.md` follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), using only
 Added, Changed, Deprecated, Removed (majors, and experimental packages),
-Fixed and Upgrading. A breaking change in a major goes under Removed or
-Changed, with its steps under Upgrading. Tests, CI and documentation get
-one line under Changed.
+Fixed, Security and Upgrading. A breaking change in a major goes under
+Removed or Changed, with its steps under Upgrading. Tests, CI and
+documentation get one line under Changed. Each Security entry links its
+published GitHub security advisory, and the section says
+**Upgrade:** required; `scripts/release-notes.mjs` refuses a release
+whose section does not.

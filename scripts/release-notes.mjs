@@ -16,6 +16,12 @@
  *
  * and uses only the categories in CATEGORIES.
  *
+ * From ADVISORY_SINCE on, each bullet under `### Security` links the
+ * repository's published advisory for it (ADVISORY), and from
+ * HEADER_SINCE on such a section says **Upgrade:** required. The
+ * advisories for fixes released before ADVISORY_SINCE are listed in
+ * SECURITY.md.
+ *
  *   node scripts/release-notes.mjs 1.3.0
  *   node scripts/release-notes.mjs 1.3.0 --release-commit <sha>
  *
@@ -41,8 +47,21 @@ export const CATEGORIES = [
   "Deprecated",
   "Removed",
   "Fixed",
+  "Security",
   "Upgrading",
 ];
+
+/** The first version whose Security entries must link an advisory. */
+export const ADVISORY_SINCE = "1.2.5";
+
+/** The whole URL of one of the repository's GitHub security advisories. */
+export const ADVISORY =
+  /^https:\/\/github\.com\/intelligo-dev\/intelligo\/security\/advisories\/GHSA(-[23456789cfghjmpqrvwx]{4}){3}$/;
+
+/** Every https URL in a text, bare or as a Markdown link's target. */
+function linkTargets(text) {
+  return text.match(/https:\/\/[^\s()<>[\]]+/g) ?? [];
+}
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const JOURNAL = "packages/core/src/db/migrations/meta/_journal.json";
@@ -83,6 +102,33 @@ export function checkCategories(notes) {
         : `### ${category} is not a category; use ${CATEGORIES.join(", ")}`,
     ];
   });
+}
+
+/**
+ * What is wrong with a section's `### Security` entries, as messages:
+ * a bullet that links no advisory, or, from HEADER_SINCE on, an
+ * Upgrade line other than required.
+ */
+export function checkAdvisories(notes, { version }) {
+  const problems = [];
+  if (compareVersions(version.replace(/-.*$/, ""), ADVISORY_SINCE) < 0)
+    return problems;
+  const security = /^### Security\n([\s\S]*?)(?=^### |(?![\s\S]))/m.exec(notes);
+  if (!security) return problems;
+
+  const bullets = security[1]
+    .split(/^- /m)
+    .slice(1)
+    .map((bullet) => bullet.replace(/\s+/g, " ").trim());
+  for (const bullet of bullets) {
+    if (linkTargets(bullet).some((url) => ADVISORY.test(url))) continue;
+    problems.push(
+      `### Security entry links no advisory (GHSA) of intelligo-dev/intelligo: "${bullet.slice(0, 60)}…"`
+    );
+  }
+  if (needsHeader(version) && !/^- \*\*Upgrade:\*\* required\b/m.test(notes))
+    problems.push("a section with ### Security says **Upgrade:** required");
+  return problems;
 }
 
 /**
@@ -244,7 +290,10 @@ function main() {
     }
   }
 
-  const problems = checkHeader(section.notes, { version, known, added });
+  const problems = [
+    ...checkHeader(section.notes, { version, known, added }),
+    ...checkAdvisories(section.notes, { version }),
+  ];
   if (problems.length) {
     console.error(
       `CHANGELOG.md's "## [${version}]" section:\n  ${problems.join("\n  ")}`
