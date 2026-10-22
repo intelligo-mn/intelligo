@@ -23,7 +23,7 @@ function htmlFiles(dir, out = []) {
 export function inlineScriptHashes(html) {
   const hashes = new Set();
   for (const [, attrs, body] of html.matchAll(
-    /<script\b([^>]*)>([\s\S]*?)<\/script>/g
+    /<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi
   )) {
     if (/\bsrc=/.test(attrs)) continue;
     const type = /\btype="([^"]*)"/.exec(attrs)?.[1];

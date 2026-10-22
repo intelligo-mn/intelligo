@@ -63,6 +63,9 @@ const marker = (source) =>
 
 const read = (root, p) => readFileSync(join(root, p), "utf8");
 
+/** Text safe inside a Markdown table cell: backslashes and pipes escaped. */
+const tableCell = (t) => t.replace(/\\/g, "\\\\").replace(/\|/g, "\\|");
+
 /** Every file under a directory. */
 function walkFiles(dir) {
   return readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
@@ -237,7 +240,7 @@ function packagePages(root) {
     pkgs
       .map(
         ({ dir, manifest }) =>
-          `| [${dir}](/docs/packages/${dir}) | ${manifest.description.replace(/\|/g, "\\|")} |`
+          `| [${dir}](/docs/packages/${dir}) | ${tableCell(manifest.description)} |`
       )
       .join("\n") +
     "\n";
@@ -295,7 +298,7 @@ function cliPage(root) {
         features
           .map(
             ([f, def]) =>
-              `| \`${f}\` | ${def.description.replace(/\|/g, "\\|")} — ${def.files.map((x) => `\`${x.target}\``).join(", ")} |`
+              `| \`${f}\` | ${tableCell(def.description)} — ${def.files.map((x) => `\`${x.target}\``).join(", ")} |`
           )
           .join("\n");
     }
@@ -501,7 +504,7 @@ function environmentPage(root) {
       `docs: the packages read ${[...undocumented].join(", ")}, which ${ENV_TEMPLATE} does not document — add them there`
     );
 
-  const cell = (t) => t.replace(/\|/g, "\\|").replace(/</g, "&lt;");
+  const cell = (t) => tableCell(t).replace(/</g, "&lt;");
   const body = sections
     .map((s) => {
       const rows = s.entries.map((e) => {
