@@ -102,7 +102,7 @@ describe("release-verify.yml", () => {
 
   it("finds the release commit on main's first-parent line", () => {
     expect(step(verify, "Already on npm?")).toContain(
-      "git log -1 --first-parent --diff-merges=first-parent"
+      "git log -1 --first-parent --diff-merges=first-parent --no-patch --format=%H"
     );
   });
 
