@@ -21,7 +21,11 @@ none, or what a consumer changes (with the steps under `### Upgrading`);
 since the previous stable release, or for a prerelease since the
 previous tag of its series.
 
-## [Unreleased]
+## [1.3.0-next.1] — 2026-10-22
+
+- **Upgrade:** recommended — the chat transport no longer reads client-sent history on a new conversation's first turn
+- **Breaking:** the admin plugin's user writes answer 404 over HTTP, and the chat item's `saveMessageAsArtifact` takes `{ conversationId, messageId, title? }` (steps under Upgrading)
+- **Migrations:** none
 
 ### Added
 
@@ -356,9 +360,6 @@ previous tag of its series.
   moment it writes, and reads each target once to decide whether it may
   replace it, so a file that appears between the check and the write is
   never overwritten.
-
-### Security
-
 - The first turn of a new conversation read every message the client
   sent before its own as history, though the conversation held none, so
   a client could put words in the assistant's or a tool's mouth. A
@@ -377,6 +378,11 @@ previous tag of its series.
 `intelligo upgrade --check` lists the maintenance route (template
 1.4.0). An app that added the route before this release adds the two
 steps by hand, as `intelligo add maintenance` now writes them.
+
+A browser client that called the admin plugin's user writes
+(`authClient.admin.createUser` and the rest listed under Changed) calls
+them from the server through `auth.api` instead. Run `intelligo sync chat`
+for the `saveMessageAsArtifact` action and the page that calls it.
 
 ## [1.2.4] — 2026-10-21
 

@@ -61,9 +61,19 @@ const coreVersion = (
   ) as { version: string }
 ).version;
 
+const changelog = readFileSync(path.join(ROOT, "CHANGELOG.md"), "utf8");
+
+/**
+ * The stable version the current line follows: the packages' own, or,
+ * while they carry a `next` prerelease, the newest stable section of
+ * CHANGELOG.md, which is what npm tags `latest`.
+ */
+const stableVersion = coreVersion.includes("-")
+  ? /^## \[(\d+\.\d+\.\d+)\]/m.exec(changelog)?.[1]
+  : coreVersion;
+
 /** The date of the newest released section of CHANGELOG.md. */
 function newestReleaseDay(): string {
-  const changelog = readFileSync(path.join(ROOT, "CHANGELOG.md"), "utf8");
   const day = /^## \[\d[^\]]*\] — (\d{4}-\d{2}-\d{2})$/m.exec(changelog)?.[1];
   if (day === undefined) throw new Error("CHANGELOG.md has no dated release");
   return day;
@@ -75,11 +85,11 @@ describe("SECURITY.md supported versions", () => {
   });
 
   it("names the released minor as the one current line", () => {
-    const [major, minor] = coreVersion.split(".");
+    const [major, minor] = (stableVersion ?? "").split(".");
     const line = `${major}.${minor}.x`;
     expect(
       rows.filter((row) => row.status === CURRENT).map((row) => row.version),
-      `the packages are at ${coreVersion}; SECURITY.md's current line must be ${line}`
+      `the packages are at ${coreVersion} (stable ${stableVersion}); SECURITY.md's current line must be ${line}`
     ).toEqual([line]);
   });
 
