@@ -9,7 +9,9 @@
  *
  *   1. every entry in scripts/npm-deprecations.json is applied, once —
  *      npm answers 422 to a deprecation that changes nothing, so an
- *      entry whose message is already on the registry is skipped;
+ *      entry whose message is already on the registry is skipped. Its
+ *      `vulnerable.fixedIn` deprecates each package's versions below
+ *      the first one without a published security advisory against it;
  *   2. `next` never resolves below `latest`, and the tags in
  *      `retiredTags` are removed (scripts/npm-dist-tags.mjs), for every
  *      published package and every deprecated name. `latest` is the
@@ -78,9 +80,34 @@ function npm(args) {
   if (result.status !== 0) process.exit(result.status ?? 1);
 }
 
-const { deprecations, retiredTags = [] } = JSON.parse(
+const {
+  deprecations,
+  retiredTags = [],
+  vulnerable,
+} = JSON.parse(
   readFileSync(new URL("./npm-deprecations.json", import.meta.url), "utf8")
 );
+for (const [name, fixedIn] of Object.entries(vulnerable?.fixedIn ?? {})) {
+  if (view(`${name}@>=${fixedIn}`, "version") === undefined) {
+    console.log(`${name}@${fixedIn} is not on npm yet — nothing deprecated`);
+    continue;
+  }
+  const spec = `${name}@<${fixedIn}`;
+  const versions = [view(spec, "version") ?? []].flat();
+  if (versions.length === 0) {
+    console.log(`${spec} matches nothing on npm — nothing to deprecate`);
+    continue;
+  }
+  const messages = [view(spec, "deprecated") ?? []].flat();
+  if (
+    messages.length === versions.length &&
+    messages.every((m) => m === vulnerable.message)
+  ) {
+    console.log(`${spec} is already deprecated with this message`);
+    continue;
+  }
+  npm(["deprecate", spec, vulnerable.message]);
+}
 for (const { name, message } of deprecations) {
   if (view(name, "versions") === undefined) {
     console.log(`${name} was never on npm — nothing to deprecate`);
