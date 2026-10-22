@@ -144,28 +144,45 @@ fixed so a new application cannot repeat it.
 1. Develop the fix privately: in the private report's temporary fork, or
    a branch that is not pushed to the public repository. Its test fails
    without the fix.
-2. Cut the release as any release is cut ([AGENTS.md](../AGENTS.md)): one
+2. Write the advisory in the private report: the affected packages and
+   ranges (`>=X.Y.Z <fixed`, from the window found above), the patched
+   version, a CVSS 4.0 vector, the CWE, and what a deployment must do.
+   Request a CVE from it. The draft already has its GHSA id.
+3. Cut the release as any release is cut ([AGENTS.md](../AGENTS.md)): one
    commit that bumps every published manifest to the next patch version
-   and heads `CHANGELOG.md` with its section. The entry goes under
-   `### Fixed` or `### Changed` and says what was wrong in neutral terms,
-   without the steps to reproduce it; what a deployment must do (upgrade,
+   and heads `CHANGELOG.md` with its section, opening with
+   **Upgrade:** required. The entry goes under `### Security`, says what
+   was wrong in neutral terms, without the steps to reproduce it, and
+   links the advisory by its GHSA id (`scripts/release-notes.mjs`
+   refuses the release otherwise); what a deployment must do (upgrade,
    run `intelligo sync <item>`, rotate a secret) goes under
    `### Upgrading`.
-3. Merge the fix and the release commit to main together, so as little
+4. Merge the fix and the release commit to main together, so as little
    time as possible passes between the fix being public and the version
    being on npm. CI passing on main starts the Release workflow: it
    publishes with provenance, tags `vX.Y.Z`, creates the GitHub release
    from the changelog section and deploys intelligo.dev.
-4. Check it landed: `npm view @intelligo-dev/core dist-tags`, the
+5. Check it landed: `npm view @intelligo-dev/core dist-tags`, the
    release run's summary, and `/r` serving the new version.
-5. Every line SECURITY.md lists as supported gets the fix. A line past
+6. Publish the advisory, then add it to SECURITY.md's published
+   advisories and deprecate the affected versions:
+   `scripts/npm-deprecations.json` gets an entry per affected package
+   with the range and the advisory, and a maintainer runs
+   `node scripts/npm-maintain.mjs`.
+7. Every line SECURITY.md lists as supported gets the fix. A line past
    its end date does not.
 
 ## Telling users
 
-- **The changelog and the GitHub release notes** carry the fix, the
-  versions to upgrade to and the steps under `### Upgrading`. The
-  reporter is credited there unless they asked not to be.
+- **The GitHub security advisory** is the record: GitHub alerts every
+  repository that depends on an affected version through Dependabot, and
+  `npm audit` reports it. The reporter is credited on it unless they
+  asked not to be.
+- **The changelog and the GitHub release notes** carry the fix, a link
+  to the advisory, the versions to upgrade to and the steps under
+  `### Upgrading`.
+- **npm** marks the affected versions deprecated, naming the advisory,
+  so an install of one warns.
 - **A post in GitHub Discussions** (Announcements) the day the release
   lands: what is affected, the window for a compromise, the versions to
   upgrade to, and what a deployment must do. It links the release and

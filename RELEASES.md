@@ -108,8 +108,8 @@ each removal touches. A deprecated call logs a one-time Node
 ## Breaking changes outside a major
 
 Only a security fix may break stable public API outside a major, and
-only when the API is the vulnerability. It is listed under `### Fixed` or
-`### Changed`, with what to change under `### Upgrading`.
+only when the API is the vulnerability. It is listed under `### Security`
+with a link to its advisory, with what to change under `### Upgrading`.
 
 ## Changelog categories
 

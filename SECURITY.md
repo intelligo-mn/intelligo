@@ -40,11 +40,18 @@ If a deadline cannot be met (for example, the fix waits on an upstream
 release), you are told why and given a new date before it passes, along
 with any mitigation a deployment can apply itself.
 
-The fix is listed in [CHANGELOG.md](CHANGELOG.md) under `### Fixed` or
-`### Changed`, with what to change under `### Upgrading`. A fix may change
-behaviour in a patch release when that behaviour is the vulnerability
-([RELEASES.md](RELEASES.md)). How the maintainers run a report or an
-incident from triage to release is
+Every fixed vulnerability gets a published
+[GitHub security advisory](https://github.com/intelligo-dev/intelligo/security/advisories)
+with its affected and patched versions, a CVSS score and, where one is
+assigned, a CVE; Dependabot and `npm audit` report it to every project
+that depends on an affected version. It is published once the fixed
+version is on npm. The fix is listed in [CHANGELOG.md](CHANGELOG.md)
+under `### Security` with a link to the advisory, with what to change
+under `### Upgrading`, and npm marks the affected versions deprecated.
+Hardening with no exploitable impact goes under `### Changed` and gets
+no advisory. A fix may change behaviour in a patch release when that
+behaviour is the vulnerability ([RELEASES.md](RELEASES.md)). How the
+maintainers run a report or an incident from triage to release is
 [docs/incident-response.md](docs/incident-response.md).
 
 ## Disclosure
@@ -90,6 +97,11 @@ Registry items are source you own once installed and have no version of
 their own: a fix to an item ships in a release. Upgrade `@intelligo-dev/cli`
 and every `@intelligo-dev/*` package to the fixed version and run
 `intelligo sync <item>`.
+
+## Published advisories
+
+Every advisory, with its affected and patched versions, is on
+[GitHub](https://github.com/intelligo-dev/intelligo/security/advisories).
 
 ## How the framework is secured
 
