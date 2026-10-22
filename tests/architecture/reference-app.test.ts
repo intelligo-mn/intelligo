@@ -119,3 +119,37 @@ describe("the reference app is the registry, installed", () => {
     ).toEqual([]);
   });
 });
+
+/** The names a file imports from the framework's packages. */
+function frameworkImports(file: string): string[] {
+  const source = readFileSync(file, "utf8");
+  return [
+    ...source.matchAll(
+      /import\s*\{([^}]*)\}\s*from\s*"@intelligo-dev\/[^"]+"/g
+    ),
+  ].flatMap((match) =>
+    match[1]!
+      .split(",")
+      .map((name) => name.trim())
+      .filter(Boolean)
+  );
+}
+
+describe("the maintenance route", () => {
+  it("runs in a new app every framework step the reference app's runs", () => {
+    const template = frameworkImports(
+      path.join(
+        ROOT,
+        "packages/cli/templates/maintenance/maintenance-route.ts.tpl"
+      )
+    );
+    const app = frameworkImports(
+      path.join(APP, "app/api/cron/maintenance/route.ts")
+    );
+    expect(app.length).toBeGreaterThan(0);
+    expect(
+      app.filter((name) => !template.includes(name)),
+      "the reference app's maintenance route runs a step `intelligo add maintenance` does not write"
+    ).toEqual([]);
+  });
+});

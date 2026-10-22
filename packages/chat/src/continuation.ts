@@ -99,6 +99,7 @@ export function trustedContinuation(
   const known = new Set<string>();
   for (const raw of stored.parts) {
     const part = raw as unknown as Part;
+    // Stryker disable next-line BlockStatement: equivalent — a part with no call id finds no answer below and is kept as stored.
     if (!isToolPart(part)) {
       parts.push(part);
       continue;

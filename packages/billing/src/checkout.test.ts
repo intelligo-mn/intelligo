@@ -33,6 +33,13 @@ const mocks = vi.hoisted(() => ({
   insertValues: vi.fn(),
   insert: vi.fn(),
   txExecute: vi.fn(),
+
+  warnDeprecated: vi.fn(),
+}));
+
+// Mocked so the once-per-process memory cannot hide a later case's call.
+vi.mock("./deprecation", () => ({
+  warnDeprecated: mocks.warnDeprecated,
 }));
 
 vi.mock("./stripe", async () => ({
@@ -489,6 +496,15 @@ describe("createCreditCheckout", () => {
         customer: "cus_123",
       })
     );
+    // The legacy shape names both deprecated fields' replacements.
+    expect(mocks.warnDeprecated).toHaveBeenCalledWith(
+      "INTELLIGO_DEP0002",
+      expect.stringContaining("grant")
+    );
+    expect(mocks.warnDeprecated).toHaveBeenCalledWith(
+      "INTELLIGO_DEP0003",
+      expect.stringContaining("price")
+    );
   });
 
   it("throws invalid_bundle on a malformed bundle", async () => {
@@ -544,6 +560,7 @@ describe("createCreditCheckout", () => {
         ],
       })
     );
+    expect(mocks.warnDeprecated).not.toHaveBeenCalled();
   });
 
   it("refuses a grant in a currency the ledger is not denominated in", async () => {

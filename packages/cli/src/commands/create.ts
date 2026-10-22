@@ -17,7 +17,7 @@
  * instead.
  */
 
-import { existsSync, mkdirSync, readdirSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 
 import {
@@ -156,6 +156,7 @@ export function createApp(options: CreateOptions): AddResult {
         ? "workspace:*"
         : `^${options.frameworkVersion}`,
       ...workspaceRootVariable(target),
+      ...registryVariable(options.frameworkVersion, options.linkWorkspace),
     },
   });
 
@@ -192,6 +193,41 @@ export function workspaceRootVariable(target: string): Record<string, string> {
         )
       : "null",
   };
+}
+
+/**
+ * `__INTELLIGO_REGISTRY__` for the scaffold's components.json: where the
+ * `@intelligo` namespace installs pages from. /r serves the release npm
+ * tags `latest`, so a prerelease's pages are its own copy at
+ * /r/<version>/. An app linked to the workspace builds against the tree
+ * and keeps the unversioned URL.
+ */
+export function registryVariable(
+  frameworkVersion: string,
+  linkWorkspace = false
+): Record<string, string> {
+  const release =
+    frameworkVersion.includes("-") && !linkWorkspace
+      ? `${frameworkVersion}/`
+      : "";
+  return {
+    __INTELLIGO_REGISTRY__: `https://intelligo.dev/r/${release}{name}.json`,
+  };
+}
+
+/** Whether the app at `appRoot` takes @intelligo-dev/* from a workspace. */
+export function linksWorkspace(appRoot: string): boolean {
+  try {
+    const manifest = JSON.parse(
+      readFileSync(path.join(appRoot, "package.json"), "utf8")
+    ) as { dependencies?: Record<string, string> };
+    return Object.entries(manifest.dependencies ?? {}).some(
+      ([name, spec]) =>
+        name.startsWith("@intelligo-dev/") && spec.startsWith("workspace:")
+    );
+  } catch {
+    return false;
+  }
 }
 
 export type NextSteps = {

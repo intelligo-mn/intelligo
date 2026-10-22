@@ -76,19 +76,29 @@ The reference app does the same from inside the monorepo, where the CLI is a wor
 
 `NEXT_PUBLIC_APP_URL` must be the public `https://` URL: auth callbacks, email links and redirects are built from it.
 
-With `NODE_ENV=production`, `assertEnv()` also logs an `[Env]` warning for each of these:
+With `NODE_ENV=production`, `assertEnv()` refuses to start without an email provider: set `RESEND_API_KEY` (with `EMAIL_FROM`) or `LOOPS_API_KEY`, or set `EMAIL_PROVIDER=console` to run without email on purpose, which leaves sign-ups unverified. In production only, it logs an `[Env]` warning for each of these:
 
-| Warning                                    | Consequence                                               |
-| ------------------------------------------ | --------------------------------------------------------- |
-| No `RESEND_API_KEY` or `LOOPS_API_KEY`     | Sign-ups are not email-verified; mail goes to the console |
-| `STRIPE_SECRET_KEY` starts with `sk_test_` | Production is running on a Stripe test key                |
-| `CRON_SECRET` unset or under 32 characters | The maintenance route answers 403                         |
+| Warning                                    | Consequence                                                      |
+| ------------------------------------------ | ---------------------------------------------------------------- |
+| `NEXT_PUBLIC_APP_URL` is not `https://`    | Auth callbacks, email links and secure cookies are built from it |
+| `STRIPE_SECRET_KEY` starts with `sk_test_` | Production is running on a Stripe test key                       |
+| `CRON_SECRET` unset or under 32 characters | The maintenance route answers 403                                |
+
+In any environment, it also warns about these:
+
+| Warning                                                                                                                                            | Consequence                                              |
+| -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| Part of a group set without the rest (Google's or GitHub's id and secret, Stripe's key and webhook secret, `STORAGE_BUCKET` and both storage keys) | That feature stays broken until all of the group are set |
+| `RESEND_API_KEY` set without `EMAIL_FROM`                                                                                                          | Every email fails                                        |
+| `AUTH_SECRET` set and `BETTER_AUTH_SECRET` not                                                                                                     | It is read as a legacy alias; rename it                  |
+| An optional secret shorter than its minimum (`CRON_SECRET`, 32 characters)                                                                         | Too weak for what it guards                              |
+| Optional variables unset                                                                                                                           | One line naming them; their features stay off            |
 
 Every variable is listed in [Environment](/docs/getting-started/environment).
 
 ## Email
 
-Sign-ups are held for email verification only when a provider is configured. Without one, verification, invitation and reset links are printed to the server log. Set a provider key, and set `EMAIL_FROM` to an address on a domain your provider lets you send from — there is no built-in sender, so with Resend and no `EMAIL_FROM` every send fails and startup warns about it. Loops takes the sender from each template.
+Sign-ups are held for email verification only when a provider is configured. Without one, verification, invitation and reset links are printed to the server log in development; in production startup refuses this unless `EMAIL_PROVIDER=console`, which also leaves sign-ups unverified. Set a provider key, and set `EMAIL_FROM` to an address on a domain your provider lets you send from — there is no built-in sender, so with Resend and no `EMAIL_FROM` every send fails and startup warns about it. Loops takes the sender from each template.
 
 ## The Stripe webhook
 
@@ -100,15 +110,19 @@ In Stripe, add an endpoint at `NEXT_PUBLIC_APP_URL` + `/api/webhooks/stripe` and
 pnpm exec intelligo add maintenance
 ```
 
-This writes `app/api/cron/maintenance/route.ts`, which is yours to extend. One `GET` does five things:
+This writes `app/api/cron/maintenance/route.ts`, which is yours to extend. One `GET` does nine things:
 
-| Step                                                 | Effect                                                                                              |
-| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `findStaleExecutions`, then `executions.reconcile()` | Runs unfinished after 10 minutes are settled from recorded usage, or failed and their hold released |
-| `cleanupExpiredReservations`                         | Table hygiene; admission already ignores them                                                       |
-| `cleanupRateLimitEntries`                            | Table hygiene                                                                                       |
-| `processTrialExpirations`                            | Expires trials and sends the reminder emails                                                        |
-| `pruneJobs`                                          | Deletes finished jobs older than a week                                                             |
+| Step                                                 | Effect                                                                                                      |
+| ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `findStaleExecutions`, then `executions.reconcile()` | Runs unfinished after 10 minutes are settled from recorded usage, or failed and their hold released         |
+| `cleanupExpiredReservations`                         | Table hygiene; admission already ignores them                                                               |
+| `cleanupRateLimitEntries`                            | Table hygiene                                                                                               |
+| `processTrialExpirations`                            | Expires trials and sends the reminder emails                                                                |
+| `processExpiredPlanGrants`                           | Returns a plan granted with an end to free once it lapses                                                   |
+| `pruneJobs`                                          | Deletes finished jobs older than a week                                                                     |
+| `pruneNotifications`                                 | Deletes read notifications older than 90 days                                                               |
+| `purgeDeletedAccounts`                               | Removes accounts whose deletion grace period has ended, after `eraseActorFromAuditEvents` forgets the actor |
+| `sweepAttachments`                                   | With a storage adapter bound, deletes unclaimed uploads and the objects of deleted attachments              |
 
 It does not drain the job queue: draining needs your handlers.
 
@@ -126,6 +140,8 @@ Run `pnpm exec intelligo doctor` with the production variables before the first 
 
 After bumping `@intelligo-dev/*` versions, run `pnpm exec intelligo upgrade --check`. It lists generated files whose template changed and exits 1 only on a conflict — a file that both you and the template changed. The [CLI reference](/docs/cli) describes both.
 
+Before real users, go through the [production checklist](/docs/security/production-checklist).
+
 ## Not on Vercel
 
 The app is a standard Next.js 16 server: `pnpm db:migrate`, `pnpm build`, `pnpm start`, plus a scheduler for the maintenance route. Only `@intelligo-dev/next` imports `next/*`; it supplies `nextRequestContext` and the auth route handlers. Nothing in the framework depends on Vercel.
@@ -133,5 +149,6 @@ The app is a standard Next.js 16 server: `pnpm db:migrate`, `pnpm build`, `pnpm 
 ## Next
 
 - [Environment](/docs/getting-started/environment)
+- [Production checklist](/docs/security/production-checklist)
 - [Billing with Stripe](/docs/guides/billing-stripe)
 - [The composition root](/docs/concepts/composition-root)

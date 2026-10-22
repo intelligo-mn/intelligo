@@ -130,18 +130,20 @@ Source: https://intelligo.dev/docs/getting-started/environment
 | --- | --- |
 | `GOOGLE_CLIENT_ID`<br>`GOOGLE_CLIENT_SECRET`<br>`GITHUB_CLIENT_ID`<br>`GITHUB_CLIENT_SECRET` | Sign in with Google or GitHub. A provider's button appears once both of its values are set; the callback URL to register with the provider is NEXT_PUBLIC_APP_URL + /api/auth/callback/google (or /github). |
 | `AUTH_IP_HEADERS`<br>`AUTH_TRUSTED_PROXIES` | Behind proxies: the headers the auth rate limiter reads the client's address from, in order (default x-forwarded-for), and the proxies' CIDRs, so a forwarded chain is read up to the first hop not among them. Without them, an app behind more than one proxy counts every client as one. |
-| `RESEND_API_KEY` | Email. Without a provider, emails (verification, invitations, reset links) are printed to the server console, and sign-ups are not held for email verification. |
+| `RESEND_API_KEY` | Email. Without a provider, emails (verification, invitations, reset links) are printed to the server console in development, and sign-ups are not held for email verification; production refuses to start unless EMAIL_PROVIDER=console. |
 | `EMAIL_FROM` | The sender of every email, on a domain verified with Resend. Required with RESEND_API_KEY: there is no built-in sender, so sends fail without it. Loops ignores it and takes the sender from each template. The scaffold sets `Acme <noreply@example.com>`. |
 | `APP_NAME`<br>`SUPPORT_EMAIL` | The product's name in every email's heading and footer; defaults to the display name in EMAIL_FROM. SUPPORT_EMAIL is the address the footer offers for replies; without it the footer offers none. The scaffold sets `Acme`. |
 | `LOOPS_API_KEY` | Loops sends by template id instead of HTML: map each template with LOOPS_TRANSACTIONAL_ID_&lt;KEY>, e.g. LOOPS_TRANSACTIONAL_ID_VERIFY_EMAIL. |
 | `EMAIL_PROVIDER` | With both keys set Resend wins; force one with resend \| loops \| console. |
 | `STRIPE_SECRET_KEY`<br>`STRIPE_WEBHOOK_SECRET` | Stripe. Billing pages say "not configured" until these are set; the webhook at /api/webhooks/stripe verifies with the secret. |
+| `STORAGE_BUCKET`<br>`STORAGE_REGION`<br>`STORAGE_ENDPOINT`<br>`STORAGE_ACCESS_KEY_ID`<br>`STORAGE_SECRET_ACCESS_KEY` | File storage for chat attachments in stored mode, on any S3-compatible bucket. Read by s3StorageFromEnv() once lib/intelligo.ts binds it with setStorageAdapter() (see @intelligo-dev/core's README). The bucket and both keys go together; the region defaults to auto. |
 | `PAYMENT_MODE` | Which registered payment provider serves payments outside Stripe (registerPaymentProvider in the composition root). Defaults to the in-memory mock, which production refuses. |
 | `OPENAI_API_KEY`<br>`ANTHROPIC_API_KEY`<br>`GOOGLE_GENERATIVE_AI_API_KEY` | AI providers. Chat runs on a built-in stub model until lib/chat-model.ts names a real one. Set only the key of the provider that model belongs to — the provider's SDK reads it, and the framework checks none of them. |
 | `INTELLIGO_ALLOW_STUB_MODEL` | The stub refuses to reply in a production build, so a deployment that never bound a model fails loudly. Set to 1 for one meant to run on it. |
 | `CRON_SECRET` | Bearer token your scheduler sends to /api/cron/maintenance (`intelligo add maintenance`). At least 32 characters. |
 | `LOG_LEVEL` | How much the server logs: fatal, error, warn, info, debug or trace. Defaults to info in production and debug elsewhere. |
 | `PLATFORM_ADMIN_EMAILS` | Comma-separated emails allowed to reach the Intelligo admin console. Closed by default: with no value, nobody is a platform admin. |
+| `ACCOUNT_DELETION_GRACE_DAYS` | Days a deleted account can still be restored before it is purged (default 30). The restore screen and the purge both read it. |
 
 ---
 
@@ -2025,9 +2027,9 @@ asks the provider that issued it; when it is paid, the row is marked fulfilled
 and its stored grant is applied in the same transaction, so concurrent polls
 grant once and a change to the offer after the invoice was opened changes
 nothing it buys. `fulfil` decides the grant only for an invoice opened
-without one. A plan
-with `days` lapses that long after it is granted; bought again before then,
-the days add to the running grant.
+without one. A plan with `days` lapses that long after it is granted; bought
+again before then, the days add to the running grant. An invoice of another
+workspace is `payment_not_found`.
 
 A buyer who pays in their bank's app and closes the tab is not left
 unfulfilled: `settlePendingLocalInvoices({ fulfil })` settles every
@@ -2036,32 +2038,36 @@ polling) against the workspace that recorded it, until it is paid or past its
 expiry, and `settlePendingLocalInvoices({ invoiceId, fulfil })` settles the
 one a provider's callback names. An invoice still unpaid
 `LOCAL_INVOICE_EXPIRY_GRACE_MS` after the `expiresAt` its provider returned is
-cancelled at the provider (`cancelPayment`) and marked failed. Both ask the provider; a callback's body is never
-taken as payment. A provider whose callbacks name an invoice implements
-`invoiceIdFromCallback(request)`, and one that expects a particular answer
-(a status, a fixed body) implements `callbackResponse({ settled })`. The
-`payment-poll` item serves both at
-`/api/payments/local/settle` (a `CRON_SECRET` schedule) and
-`/api/webhooks/local-payment`. An invoice of
-another workspace is `payment_not_found`. The `payment-poll` registry item is
-the transport over both. A provider is `registerPaymentProvider(mode, {
-createPayment, checkPayment, cancelPayment })` from `/payment`, bound in the
-composition root; `creditBundleOffer(bundle)` turns one of the product's credit
-bundles into the offer the `lib/local-payment.ts` seam returns.
+cancelled at the provider (`cancelPayment`) and marked failed. Both ask the
+provider; a callback's body is never taken as payment.
 
-A provider is `registerPaymentProvider(mode, { currency, createPayment,
-checkPayment, cancelPayment })` from `/payment`, bound in the composition root.
+A provider is registered from the composition root with
+`registerPaymentProvider(mode, { currency, createPayment, checkPayment,
+cancelPayment, invoiceIdFromCallback?, callbackResponse? })` from `/payment`.
 `openLocalInvoice` records the invoice before it asks the provider and passes
 the row's id as `paymentId`: use it as the provider's merchant-side invoice
-number or in the callback URL, and `invoiceIdFromCallback` may return it in
-place of the provider's own id.
-Give a real provider its `currency`: `createPayment` takes bare minor units, and
-only a provider that names its currency makes `openLocalInvoice` refuse a price
-in another one (`currency_mismatch`) instead of sending that number as its own.
+number or in the callback URL. A provider whose callbacks name an invoice
+implements `invoiceIdFromCallback(request)`, which may return that
+`paymentId` in place of the provider's own id, and one that expects a
+particular answer (a status, a fixed body) implements
+`callbackResponse({ settled })`.
+
+`currency` is the ISO 4217 code the provider charges in. `createPayment`
+takes bare minor units, as `toMinor` gives them: a zero-decimal currency such
+as MNT or JPY arrives in whole units. With `currency` set, `openLocalInvoice`
+refuses a price in any other currency (`currency_mismatch`). Without it, such
+a price is sent as that many of the provider's own units, and registering the
+provider in production logs a warning.
+
 A plan is not sold through a local invoice to a workspace a live Stripe
 subscription bills: `openLocalInvoice` refuses it (`subscription_active`),
 since the subscription's next webhook would put its own plan back.
-Registering one without it in production logs a warning.
+
+The `payment-poll` registry item is the transport: it serves the sweep at
+`/api/payments/local/settle` (a `CRON_SECRET` schedule) and the provider's
+callback at `/api/webhooks/local-payment`. `creditBundleOffer(bundle)` turns
+one of the product's credit bundles into the offer the `lib/local-payment.ts`
+seam returns.
 
 ## Granting a plan
 
@@ -3064,7 +3070,7 @@ their own, and refuse to overwrite the latter.
 | Feature | What it generates |
 | --- | --- |
 | `pnpm-standalone` | pnpm settings for an app that is its own workspace root: dependency build scripts declined, so pnpm 10+ installs without a prompt, and `pnpm add` allowed at the root for the shadcn CLI. `intelligo create` writes it when pnpm installs an app outside any workspace — `pnpm-workspace.yaml`, `.npmrc` |
-| `maintenance` | A CRON_SECRET-gated GET /api/cron/maintenance that reconciles stale executions, drops expired reservations and rate-limit buckets, expires trials, prunes old jobs and deletes what uploads leave behind — scheduled every five minutes, in vercel.json when the app has none — `app/api/cron/maintenance/route.ts` |
+| `maintenance` | A CRON_SECRET-gated GET /api/cron/maintenance that reconciles stale executions, drops expired reservations and rate-limit buckets, expires trials and lapsed plan grants, prunes old jobs and read notifications, purges accounts whose deletion grace period has ended and deletes what uploads leave behind — scheduled every five minutes, in vercel.json when the app has none — `app/api/cron/maintenance/route.ts` |
 | `vitest` | A Vitest setup for the app's own tests: the `@` alias, a `server-only` stub, and the `@intelligo-dev/*` packages inlined so the stub reaches them — `vitest.config.ts`, `tests/stubs/server-only.ts` |
 
 ## doctor
@@ -4003,19 +4009,29 @@ The reference app does the same from inside the monorepo, where the CLI is a wor
 
 `NEXT_PUBLIC_APP_URL` must be the public `https://` URL: auth callbacks, email links and redirects are built from it.
 
-With `NODE_ENV=production`, `assertEnv()` also logs an `[Env]` warning for each of these:
+With `NODE_ENV=production`, `assertEnv()` refuses to start without an email provider: set `RESEND_API_KEY` (with `EMAIL_FROM`) or `LOOPS_API_KEY`, or set `EMAIL_PROVIDER=console` to run without email on purpose, which leaves sign-ups unverified. In production only, it logs an `[Env]` warning for each of these:
 
-| Warning                                    | Consequence                                               |
-| ------------------------------------------ | --------------------------------------------------------- |
-| No `RESEND_API_KEY` or `LOOPS_API_KEY`     | Sign-ups are not email-verified; mail goes to the console |
-| `STRIPE_SECRET_KEY` starts with `sk_test_` | Production is running on a Stripe test key                |
-| `CRON_SECRET` unset or under 32 characters | The maintenance route answers 403                         |
+| Warning                                    | Consequence                                                      |
+| ------------------------------------------ | ---------------------------------------------------------------- |
+| `NEXT_PUBLIC_APP_URL` is not `https://`    | Auth callbacks, email links and secure cookies are built from it |
+| `STRIPE_SECRET_KEY` starts with `sk_test_` | Production is running on a Stripe test key                       |
+| `CRON_SECRET` unset or under 32 characters | The maintenance route answers 403                                |
+
+In any environment, it also warns about these:
+
+| Warning                                                                                                                                            | Consequence                                              |
+| -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| Part of a group set without the rest (Google's or GitHub's id and secret, Stripe's key and webhook secret, `STORAGE_BUCKET` and both storage keys) | That feature stays broken until all of the group are set |
+| `RESEND_API_KEY` set without `EMAIL_FROM`                                                                                                          | Every email fails                                        |
+| `AUTH_SECRET` set and `BETTER_AUTH_SECRET` not                                                                                                     | It is read as a legacy alias; rename it                  |
+| An optional secret shorter than its minimum (`CRON_SECRET`, 32 characters)                                                                         | Too weak for what it guards                              |
+| Optional variables unset                                                                                                                           | One line naming them; their features stay off            |
 
 Every variable is listed in [Environment](/docs/getting-started/environment).
 
 ## Email
 
-Sign-ups are held for email verification only when a provider is configured. Without one, verification, invitation and reset links are printed to the server log. Set a provider key, and set `EMAIL_FROM` to an address on a domain your provider lets you send from — there is no built-in sender, so with Resend and no `EMAIL_FROM` every send fails and startup warns about it. Loops takes the sender from each template.
+Sign-ups are held for email verification only when a provider is configured. Without one, verification, invitation and reset links are printed to the server log in development; in production startup refuses this unless `EMAIL_PROVIDER=console`, which also leaves sign-ups unverified. Set a provider key, and set `EMAIL_FROM` to an address on a domain your provider lets you send from — there is no built-in sender, so with Resend and no `EMAIL_FROM` every send fails and startup warns about it. Loops takes the sender from each template.
 
 ## The Stripe webhook
 
@@ -4027,15 +4043,19 @@ In Stripe, add an endpoint at `NEXT_PUBLIC_APP_URL` + `/api/webhooks/stripe` and
 pnpm exec intelligo add maintenance
 ```
 
-This writes `app/api/cron/maintenance/route.ts`, which is yours to extend. One `GET` does five things:
+This writes `app/api/cron/maintenance/route.ts`, which is yours to extend. One `GET` does nine things:
 
-| Step                                                 | Effect                                                                                              |
-| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `findStaleExecutions`, then `executions.reconcile()` | Runs unfinished after 10 minutes are settled from recorded usage, or failed and their hold released |
-| `cleanupExpiredReservations`                         | Table hygiene; admission already ignores them                                                       |
-| `cleanupRateLimitEntries`                            | Table hygiene                                                                                       |
-| `processTrialExpirations`                            | Expires trials and sends the reminder emails                                                        |
-| `pruneJobs`                                          | Deletes finished jobs older than a week                                                             |
+| Step                                                 | Effect                                                                                                      |
+| ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `findStaleExecutions`, then `executions.reconcile()` | Runs unfinished after 10 minutes are settled from recorded usage, or failed and their hold released         |
+| `cleanupExpiredReservations`                         | Table hygiene; admission already ignores them                                                               |
+| `cleanupRateLimitEntries`                            | Table hygiene                                                                                               |
+| `processTrialExpirations`                            | Expires trials and sends the reminder emails                                                                |
+| `processExpiredPlanGrants`                           | Returns a plan granted with an end to free once it lapses                                                   |
+| `pruneJobs`                                          | Deletes finished jobs older than a week                                                                     |
+| `pruneNotifications`                                 | Deletes read notifications older than 90 days                                                               |
+| `purgeDeletedAccounts`                               | Removes accounts whose deletion grace period has ended, after `eraseActorFromAuditEvents` forgets the actor |
+| `sweepAttachments`                                   | With a storage adapter bound, deletes unclaimed uploads and the objects of deleted attachments              |
 
 It does not drain the job queue: draining needs your handlers.
 
@@ -4053,6 +4073,8 @@ Run `pnpm exec intelligo doctor` with the production variables before the first 
 
 After bumping `@intelligo-dev/*` versions, run `pnpm exec intelligo upgrade --check`. It lists generated files whose template changed and exits 1 only on a conflict — a file that both you and the template changed. The [CLI reference](/docs/cli) describes both.
 
+Before real users, go through the [production checklist](/docs/security/production-checklist).
+
 ## Not on Vercel
 
 The app is a standard Next.js 16 server: `pnpm db:migrate`, `pnpm build`, `pnpm start`, plus a scheduler for the maintenance route. Only `@intelligo-dev/next` imports `next/*`; it supplies `nextRequestContext` and the auth route handlers. Nothing in the framework depends on Vercel.
@@ -4060,6 +4082,7 @@ The app is a standard Next.js 16 server: `pnpm db:migrate`, `pnpm build`, `pnpm 
 ## Next
 
 - [Environment](/docs/getting-started/environment)
+- [Production checklist](/docs/security/production-checklist)
 - [Billing with Stripe](/docs/guides/billing-stripe)
 - [The composition root](/docs/concepts/composition-root)
 
@@ -4170,3 +4193,734 @@ Most of an app built on the framework is installed source the registry already t
 - **Your tools and prompts** — the functions an agent calls, with the model mocked.
 - **Your Server Actions** — parse, call the service, map its typed error. Mock the service's package and assert the mapping.
 - **Your own tables** — against a real Postgres, skipped when there is none: `describe.skipIf(!process.env.TEST_DATABASE_URL)`.
+
+---
+
+# Security model
+
+Source: https://intelligo.dev/docs/security
+
+Intelligo is the half of your product that decides who someone is, which workspace they act in, what they may spend and what was recorded. This page says which of those guarantees the framework holds on its own, and which hold only if you do your part.
+
+## What the framework enforces
+
+| Risk                                        | What holds it                                                                                                                                                                                                                                                                     | Where                                                                 |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| One tenant reads another's data             | Services take resolved actor ids; transports call `requireWorkspace` / `requireRole` first; framework queries filter by workspace, and by user where data is private                                                                                                              | `@intelligo-dev/auth`, every service                                  |
+| A workspace limit is skipped over HTTP      | Better-Auth's organization mutations answer 404; only the team and workspace services call them                                                                                                                                                                                   | `SERVICE_ONLY_ORGANIZATION_PATHS`                                     |
+| Platform admin power used without a record  | Impersonation, the raw user listings and the admin plugin's user writes answer 404 over HTTP; impersonation goes through `startImpersonation` (reason required, audit row written first, 30 minutes at most); grants and revokes go through `intelligo admin` with an audit event | `SERVICE_ONLY_ADMIN_PATHS`                                            |
+| A workspace owner reaches platform surfaces | Platform admin is `users.role`, never a workspace role; `PLATFORM_ADMIN_EMAILS` promotes a verified address only                                                                                                                                                                  | `requirePlatformAdmin`                                                |
+| Cross-site requests to auth                 | Only `NEXT_PUBLIC_APP_URL` is a trusted origin; in production, an unset value trusts none                                                                                                                                                                                         | `resolveTrustedOrigins`                                               |
+| Credential stuffing                         | Auth attempts are counted in Postgres, shared by every instance, at limits set by `@intelligo-dev/auth` (production only)                                                                                                                                                         | `AUTH_RATE_LIMIT_RULES`                                               |
+| A turn runs without being paid for          | Each turn opens an execution with a credit hold before the model runs; settlement is compare-and-swap                                                                                                                                                                             | `createChatHandler`, `@intelligo-dev/executions`                      |
+| A client rewrites the assistant's message   | Continuations rebuild from the stored message and apply only an approval answer or a client tool's output                                                                                                                                                                         | `@intelligo-dev/chat`                                                 |
+| A forged or replayed Stripe event           | Signature verified; receipt recorded before handling; one claim per event                                                                                                                                                                                                         | `createStripeWebhookHandler`                                          |
+| A shared chat leaks internals               | Reasoning, tool input and output, provider metadata and file URLs are stripped                                                                                                                                                                                                    | share policy (`keepToolOutput`)                                       |
+| Audit history is rewritten                  | Database triggers refuse UPDATE and DELETE on the audit tables, except clearing who acted (a deleted workspace or user, or the erasure of a deleted account), and refuse TRUNCATE                                                                                                 | migrations `0007_schema_hardening`, `0008_wide_counters_kept_ledgers` |
+| A deployment runs on fakes                  | Production refuses the mock payment provider and the stub model                                                                                                                                                                                                                   | `PAYMENT_MODE`, `INTELLIGO_ALLOW_STUB_MODEL`                          |
+
+## What stays yours
+
+- **Your agent.** Prompts, tools and what a tool may do. Put a destructive or paying tool behind the AI SDK's `needsApproval`, and record decisions with `onTurn.approval`.
+- **Text you put in a prompt.** The framework adds no user text to a system prompt. When you do, pass it through `sanitizeForSystemPrompt` (one layer of English phrases and structural markers; extend the patterns for your language).
+- **What the model's output may load.** Set `imageHosts` and `linkHosts` in `lib/chat-config.tsx` for any model that reads pages you do not control.
+- **Secrets and their rotation.** `BETTER_AUTH_SECRET`, `CRON_SECRET`, Stripe and provider keys live in your host's secret store.
+- **The network edge.** TLS, `AUTH_TRUSTED_PROXIES` behind a proxy chain, WAF and DDoS protection, and request-body limits for routes you add. The scaffold's `next.config.mjs` sends HSTS, nosniff, a referrer policy and a `Content-Security-Policy` that carries only `frame-ancestors 'none'`: extend that header with `script-src` and the rest, and keep `frame-ancestors`.
+- **The database.** A runtime role with data access only, separate from the role that runs `intelligo migrate`, so the app cannot drop the audit triggers; backups and point-in-time recovery.
+- **Your own queries and routes.** Anything you add must filter by workspace itself; the framework cannot see it.
+- **Operations.** Scheduling the maintenance route and watching its result, and the [production checklist](/docs/security/production-checklist).
+
+## Threat models
+
+Each one walks STRIDE (spoofing, tampering, repudiation, information disclosure, denial of service, elevation of privilege) over the package's entry points, names the control that answers each threat, and says what is left to you.
+
+- [Auth](/docs/security/threat-model-auth)
+- [Billing](/docs/security/threat-model-billing)
+- [Chat](/docs/security/threat-model-chat)
+- [Executions](/docs/security/threat-model-executions)
+- [Storage and uploads](/docs/security/threat-model-storage)
+- [Admin console and impersonation](/docs/security/threat-model-admin)
+
+## Reporting
+
+Report a vulnerability privately, as [SECURITY.md](https://github.com/intelligo-dev/intelligo/blob/main/SECURITY.md) describes. It also lists which release lines receive fixes.
+
+---
+
+# Production checklist
+
+Source: https://intelligo.dev/docs/security/production-checklist
+
+Go through this once before launch, and again after every release that changes a template (`intelligo upgrade --check` lists them).
+
+## Environment and secrets
+
+- [ ] `DATABASE_URL`, `BETTER_AUTH_SECRET` (at least 32 characters, from `openssl rand -base64 32`) and `NEXT_PUBLIC_APP_URL` are set. `assertEnv` refuses to start without them, or with a shorter secret.
+- [ ] `NEXT_PUBLIC_APP_URL` is the public `https://` origin. It is the only origin the auth CSRF check trusts, and email links are built from it.
+- [ ] An email provider is set (`RESEND_API_KEY` with `EMAIL_FROM` on a verified domain, or `LOOPS_API_KEY`). Production refuses to start without one unless `EMAIL_PROVIDER=console`, which leaves sign-ups unverified.
+- [ ] `STRIPE_SECRET_KEY` is a live key, not `sk_test_`, and `STRIPE_WEBHOOK_SECRET` is the live endpoint's secret.
+- [ ] `CRON_SECRET` is at least 32 characters. Below that, the maintenance route answers 403.
+- [ ] The `[Env]` lines in the first boot log name no half-set group (Google, GitHub, Stripe, `STORAGE_*`): such a group is a feature that fails later. The one line listing optional variables left unset is expected.
+- [ ] `pnpm exec intelligo doctor` reports no failure with the production environment.
+- [ ] Secrets live in the host's secret store, not in the repository, and you know how to rotate each one.
+
+## Behind a proxy
+
+- [ ] With more than one proxy in front of the app (CDN plus load balancer), set `AUTH_TRUSTED_PROXIES` to their CIDRs, and `AUTH_IP_HEADERS` if the client address is not in `x-forwarded-for`. Without them, every client shares one auth rate-limit bucket.
+
+## Rate limits
+
+- [ ] Auth endpoints are limited per client address, counted in Postgres and active when `NODE_ENV=production`. The global limit is 100 requests per 10 s; these paths have their own:
+
+<!-- snippet: packages/auth/src/request-hardening.ts#AUTH_RATE_LIMIT_RULES -->
+
+```ts
+export const AUTH_RATE_LIMIT_RULES = {
+  "/sign-in/*": { window: 10, max: 3 },
+  "/sign-up/*": { window: 10, max: 3 },
+  "/change-password": { window: 10, max: 3 },
+  "/change-email": { window: 10, max: 3 },
+  "/request-password-reset": { window: 60, max: 3 },
+  "/send-verification-email": { window: 60, max: 3 },
+  "/forget-password": { window: 60, max: 3 },
+} as const;
+```
+
+- [ ] Chat and uploads are limited per workspace per minute by the plan. Each plan you sell has an entry; an unregistered plan gets the floor:
+
+<!-- snippet: packages/billing/src/plan-registry.ts#DEFAULT_REQUESTS_PER_MINUTE -->
+
+```ts
+export const DEFAULT_REQUESTS_PER_MINUTE = 10;
+```
+
+<!-- snippet: packages/cli/templates/app-scaffold/plans.ts.tpl#RATE_LIMITS -->
+
+```ts
+export const RATE_LIMITS = plans.values({
+  free: 10,
+  pro: 60,
+});
+```
+
+## Platform admins
+
+- [ ] `PLATFORM_ADMIN_EMAILS` names only verified addresses of people who need the console.
+- [ ] To revoke an admin, remove the address from `PLATFORM_ADMIN_EMAILS`, then run `pnpm exec intelligo admin revoke <email> --force` against production. The revoke is audited, and an address left in the variable is promoted again on its next visit.
+- [ ] Impersonation reasons are reviewed: every start and stop is in the audit log.
+
+## The maintenance cron
+
+- [ ] `GET /api/cron/maintenance` runs on a schedule with `Authorization: Bearer $CRON_SECRET`, every five minutes where the host allows it. A stale run keeps its credit hold until the first run after:
+
+<!-- snippet: packages/cli/templates/maintenance/maintenance-route.ts.tpl#STALE_AFTER_MS -->
+
+```ts
+const STALE_AFTER_MS = 10 * 60_000;
+```
+
+- [ ] The route includes `purgeDeletedAccounts` (with `eraseActorFromAuditEvents`) and `pruneNotifications` (maintenance template 1.4.0 or later). Without them, deleted accounts are never erased.
+- [ ] `ACCOUNT_DELETION_GRACE_DAYS` matches your privacy policy (30 by default).
+- [ ] An alert fires when the route answers anything but 200. A 207 means a step failed, and its name is in `errors`.
+- [ ] If you use jobs, a separate route drains the queue; maintenance only prunes it.
+
+## Stripe
+
+- [ ] The webhook endpoint is `NEXT_PUBLIC_APP_URL` + `/api/webhooks/stripe` and sends the events [Billing with Stripe](/docs/guides/billing-stripe) lists, including `charge.refunded` and `charge.dispute.created`.
+- [ ] Stripe's dashboard shows no failing deliveries. A 500 means a handler threw and Stripe will retry; a 409 means a concurrent delivery holds the event.
+- [ ] Your edge caps the request body on `/api/webhooks/stripe`; the handler reads it whole.
+- [ ] `PAYMENT_MODE` names a registered provider if you sell outside Stripe; production refuses the mock.
+
+## The AI surface
+
+- [ ] `lib/chat-model.ts` binds a real model, and every model id is registered with its price (`registerModels`). An unregistered id refuses the turn as `unknown_model`.
+- [ ] `INTELLIGO_ALLOW_STUB_MODEL` is unset.
+- [ ] Every tool that writes, sends or spends has `needsApproval`, and `onTurn.approval` records the answer.
+- [ ] Any user-authored text you add to a system prompt goes through `sanitizeForSystemPrompt`.
+- [ ] `imageHosts` names the image CDNs replies may load from (none by default), and `linkHosts` is set if the model reads pages you do not control.
+- [ ] `cors.origins` in `lib/chat-server-config.ts` lists only the sites that embed the widget.
+- [ ] With stored attachments: `lib/intelligo.ts` binds the storage adapter (`setStorageAdapter(s3StorageFromEnv())`), `STORAGE_*` is set, the bucket is private, and the routes `createChatUploadHandler` and `createChatAttachmentHandler` serve are mounted.
+
+## Edge and database
+
+- [ ] TLS everywhere. The scaffold sends HSTS, nosniff, a referrer policy and a `Content-Security-Policy` of only `frame-ancestors 'none'`. Extend that header in `next.config.mjs` with `script-src` and the rest, and keep `frame-ancestors`.
+- [ ] Migrations run as their own deploy step with an owner role: `DATABASE_URL=<owner-role url> pnpm exec intelligo migrate`. The app's runtime `DATABASE_URL` uses a role with data access only (no DDL, no trigger changes), so a build that migrates with the runtime URL has to change.
+- [ ] Backups and point-in-time recovery are on, and a restore has been tested.
+- [ ] `pnpm db:check` (`intelligo migrate --check`) reports nothing pending after each deploy.
+
+## What to watch
+
+| Signal                 | Where                                       | Act when                                                          |
+| ---------------------- | ------------------------------------------- | ----------------------------------------------------------------- |
+| Integration health     | Admin console, `getIntegrationHealth`       | any probe `degraded` or `down`                                    |
+| Database latency       | health probe `database`                     | `degraded`                                                        |
+| Job backlog            | health probe `jobs`                         | jobs overdue or running longer than the threshold below           |
+| Unsettled executions   | health probe `settlement`                   | runs unsettled longer than the threshold below                    |
+| Maintenance result     | the cron's HTTP status                      | not 200                                                           |
+| Chat refusals by code  | `onTurn.refuse`                             | a jump in `RATE_LIMITED`, `QUOTA_EXCEEDED` or `MODEL_UNAVAILABLE` |
+| Turn failures by phase | `onTurn.fail`                               | any `settlement` or `persistence` failure                         |
+| Webhook failures       | Stripe dashboard, `StripeWebhook` log lines | any 500                                                           |
+| Startup warnings       | `[Env]` log lines                           | a new one                                                         |
+
+<!-- snippet: packages/admin/src/health.ts#JOB_BACKLOG_WARN_MS -->
+
+```ts
+const JOB_BACKLOG_WARN_MS = 15 * 60_000;
+```
+
+<!-- snippet: packages/admin/src/health.ts#UNSETTLED_MS -->
+
+```ts
+const UNSETTLED_MS = 10 * 60_000;
+```
+
+Add probes for your payment, mail and model providers with `registerIntegrationProbe`.
+
+---
+
+# Threat model: auth
+
+Source: https://intelligo.dev/docs/security/threat-model-auth
+
+- **Scope:** `@intelligo-dev/auth` and the Better-Auth instance it configures, mounted at `/api/auth/[...all]` by `@intelligo-dev/next/auth`; the team, workspace, profile and onboarding services; the guards `requireAuth`, `requireWorkspace`, `requireRole`, `requirePlatformAdmin`.
+- **Assets:** sessions, credentials, workspace membership and roles, the platform-admin role.
+- **Trust boundaries:** browser → `/api/auth/*`; server actions → services; the database.
+
+## Spoofing
+
+| Threat                                                               | Control                                                                                                                                                                      | Yours                                                                                                     |
+| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Password guessing                                                    | Per-address limits on sign-in, sign-up and credential changes, counted in Postgres across instances, active in production (below)                                            | `AUTH_TRUSTED_PROXIES` behind a proxy chain, or every client shares one bucket; WAF or captcha for volume |
+| Registering someone else's address to inherit an invitation or admin | Verification is required whenever an email provider exists, and production will not start without one unless told to; `PLATFORM_ADMIN_EMAILS` counts only a verified address | Do not run production on `EMAIL_PROVIDER=console`                                                         |
+| Stolen session                                                       | Sessions expire and refresh as below; a password reset revokes every session                                                                                                 | Cookie domain and TLS                                                                                     |
+| Cross-site request with the user's cookie                            | Only `NEXT_PUBLIC_APP_URL` is trusted                                                                                                                                        | Keep it the exact public origin                                                                           |
+
+<!-- snippet: packages/auth/src/request-hardening.ts#AUTH_RATE_LIMIT_RULES -->
+
+```ts
+export const AUTH_RATE_LIMIT_RULES = {
+  "/sign-in/*": { window: 10, max: 3 },
+  "/sign-up/*": { window: 10, max: 3 },
+  "/change-password": { window: 10, max: 3 },
+  "/change-email": { window: 10, max: 3 },
+  "/request-password-reset": { window: 60, max: 3 },
+  "/send-verification-email": { window: 60, max: 3 },
+  "/forget-password": { window: 60, max: 3 },
+} as const;
+```
+
+<!-- snippet: packages/auth/src/request-hardening.ts#SESSION_LIFETIME -->
+
+```ts
+export const SESSION_LIFETIME = {
+  expiresIn: 60 * 60 * 24 * 7,
+  updateAge: 60 * 60 * 24,
+} as const;
+```
+
+<!-- snippet: packages/auth/src/trusted-origins.ts#resolveTrustedOrigins -->
+
+```ts
+export function resolveTrustedOrigins(env: {
+  NEXT_PUBLIC_APP_URL?: string;
+  NODE_ENV?: string;
+}): string[] {
+  if (env.NEXT_PUBLIC_APP_URL) return [env.NEXT_PUBLIC_APP_URL];
+  if (env.NODE_ENV === "production") return [];
+  return ["http://localhost:*", "http://127.0.0.1:*"];
+}
+```
+
+## Tampering
+
+| Threat                                                                                      | Control                                                                                               |
+| ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Calling Better-Auth's organization or admin endpoints directly to skip plan limits or audit | These paths answer 404; the services call them server-side                                            |
+| Links in a display or workspace name, phishing through invitation emails                    | `displayNameProblem` refuses links and names over 50 characters; `workspaceNameProblem` refuses links |
+
+<!-- snippet: packages/auth/src/request-hardening.ts#SERVICE_ONLY_ORGANIZATION_PATHS -->
+
+```ts
+export const SERVICE_ONLY_ORGANIZATION_PATHS = [
+  "/organization/create",
+  "/organization/update",
+  "/organization/delete",
+  "/organization/invite-member",
+  "/organization/accept-invitation",
+  "/organization/reject-invitation",
+  "/organization/cancel-invitation",
+  "/organization/remove-member",
+  "/organization/update-member-role",
+  "/organization/leave",
+] as const;
+```
+
+<!-- snippet: packages/auth/src/request-hardening.ts#SERVICE_ONLY_ADMIN_PATHS -->
+
+```ts
+export const SERVICE_ONLY_ADMIN_PATHS = [
+  "/admin/impersonate-user",
+  "/admin/stop-impersonating",
+  "/admin/list-users",
+  "/admin/get-user",
+  "/admin/list-user-sessions",
+  "/admin/create-user",
+  "/admin/update-user",
+  "/admin/set-role",
+  "/admin/set-user-password",
+  "/admin/ban-user",
+  "/admin/unban-user",
+  "/admin/remove-user",
+  "/admin/revoke-user-session",
+  "/admin/revoke-user-sessions",
+] as const;
+```
+
+## Repudiation
+
+Impersonation start and stop and platform-admin grants and revokes write audit events. Impersonation writes its row before the session exists and aborts if the write fails. The admin plugin's own user writes are closed over HTTP (above). Audit rows cannot be updated or deleted, except that the database lets the actor and workspace be cleared, which happens when a workspace or user is deleted or a deleted account is erased.
+
+## Information disclosure
+
+| Threat                                             | Control                                                                               | Yours                                      |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------ |
+| Reading another workspace's data                   | Guards resolve the active workspace from the session; framework services filter by it | Every query you write filters by workspace |
+| Listing users or sessions through the admin plugin | Closed over HTTP; the console reads through its own queries                           | —                                          |
+
+## Denial of service
+
+Reset and verification emails have their own, stricter limit (above). Volumetric attacks are the edge's job.
+
+## Elevation of privilege
+
+| Threat                                 | Control                                                                                                             | Yours                                                                          |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| A workspace owner gains platform reach | Platform admin is `users.role`; workspace roles never grant it                                                      | —                                                                              |
+| A member promotes themselves           | Role changes go through the team service, which requires an owner or admin caller and sets only `admin` or `member` | —                                                                              |
+| A removed admin keeps access           | `intelligo admin revoke <email>` clears the role and records it                                                     | Remove the address from `PLATFORM_ADMIN_EMAILS` first, or it is promoted again |
+| Impersonation outlives its purpose     | A reason is required; the session is capped (below)                                                                 | Review the reasons                                                             |
+
+<!-- snippet: packages/auth/src/request-hardening.ts#IMPERSONATION_SECONDS -->
+
+```ts
+export const IMPERSONATION_SECONDS = 30 * 60;
+```
+
+## Residual risks
+
+- The auth rate limits are off outside `NODE_ENV=production`.
+- No static check proves that a query you add filters by workspace.
+
+---
+
+# Threat model: billing
+
+Source: https://intelligo.dev/docs/security/threat-model-billing
+
+- **Scope:** `@intelligo-dev/billing`: the quota engine, credit balances and reservations, feature gates, trials, rate limiting, `createStripeWebhookHandler`, checkout, payment providers.
+- **Assets:** credit balances, subscriptions, plan grants, finance events.
+- **Trust boundaries:** Stripe → `/api/webhooks/stripe`; a payment provider → `/api/webhooks/local-payment`; server actions → checkout.
+
+## Spoofing
+
+| Threat                        | Control                                                                                                                                                  | Yours                                                   |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| Forged Stripe event           | `constructEvent` with `STRIPE_WEBHOOK_SECRET`; a missing or bad signature gets 400                                                                       | Keep the secret per environment                         |
+| Forged local-payment callback | Only the invoice id is read from the request; the invoice is settled by asking the provider (`checkPayment`), so a forged callback grants nothing unpaid | Implement `invoiceIdFromCallback` defensively           |
+| Mock payments in production   | The mock provider is refused in production                                                                                                               | Register a real provider with `registerPaymentProvider` |
+
+## Tampering
+
+| Threat                                         | Control                                                                                                                                     |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Replaying an event to grant credit twice       | Receipt keyed by Stripe's event id; processing is gated by a claim; a processed event answers 200 as a duplicate, one in flight answers 409 |
+| An old subscription update undoing a newer one | The handler reads the subscription back from Stripe and writes its current state; a late event never reactivates a canceled subscription    |
+| Keeping purchased credit after a refund        | `charge.refunded` and `charge.dispute.created` take the refunded or disputed share back out of the balance                                  |
+| Racing two requests past a limit               | Admission and settlement are transactions; the rate-limit counter is an atomic upsert                                                       |
+
+## Repudiation
+
+Every Stripe event is written to `finance_events`, keyed by its id, before any handler runs, and is marked processed only after the handlers succeed. Payments and credit purchases are rows with their own status, and each execution's usage is a row in `usage_records`.
+
+## Information disclosure
+
+The webhook's answers say nothing beyond Stripe's contract. The local-payment callback answers the provider's expected response, or `{ ok }`; what failed is only in the server log. Billing reads are scoped to the caller's workspace.
+
+## Denial of service
+
+| Threat                        | Control                                                                        | Yours                                                     |
+| ----------------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------- |
+| Flooding chat or uploads      | Per-workspace, per-minute limits from the plan                                 | A rate for every plan you sell                            |
+| Failed runs locking up credit | Holds expire; maintenance reconciles stale runs and drops expired reservations | Schedule the cron                                         |
+| A huge webhook body           | —                                                                              | Cap the body size at the edge; the handler reads it whole |
+
+<!-- snippet: packages/billing/src/plan-registry.ts#DEFAULT_REQUESTS_PER_MINUTE -->
+
+```ts
+export const DEFAULT_REQUESTS_PER_MINUTE = 10;
+```
+
+## Elevation of privilege
+
+| Threat                                   | Control                                                                                                                                   | Yours                                                                                                      |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Repeated trials through address variants | `checkTrialAbuse` normalizes addresses and allows at most 3 trials per address and 5 per IP; it limits repetition, it does not prevent it | Pass the client IP as `ipAddress` to `provisionTrialCredits`; the scaffold's example passes only the email |
+| Using a feature the plan lacks           | `hasFeature` gates on the server; an unregistered feature is denied, and so is every feature while the flags cannot be read               | —                                                                                                          |
+
+## Residual risks
+
+- The Stripe webhook reads its body without a size cap.
+- Signed-in surfaces are limited per workspace, not per IP. A public route needs its own `checkRateLimit` on a hashed IP.
+
+---
+
+# Threat model: chat
+
+Source: https://intelligo.dev/docs/security/threat-model-chat
+
+- **Scope:** `createChatHandler` (POST and DELETE), `createChatUploadHandler`, `createChatAttachmentHandler`, share links, and the `chat` registry item's renderer.
+- **Assets:** conversations, attachments, the model budget, tools' side effects.
+- **Trust boundaries:** browser → `/api/chat`; the model → your tools; the model's output → the reader's browser; the public → a share link.
+
+## Spoofing
+
+| Threat                                            | Control                                                                                                                                         | Yours                |
+| ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| An unauthenticated turn                           | Authentication runs before the body is read, so an anonymous request costs no more than its headers; nothing is loaded or held without an actor | —                    |
+| A site embedding the chat with the user's cookies | CORS headers go only to origins listed in `cors.origins`; the scaffold forbids framing                                                          | List only your sites |
+
+## Tampering
+
+| Threat                                                                                | Control                                                                                                                                                                                                               | Yours                                                                                                                    |
+| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| A client rewriting what the assistant said, or a tool call's input, on a continuation | The stored message is the base and only the client's approval answers and client-tool outputs are copied onto it; a continuation that does not match is refused. Earlier messages are replaced by their stored copies | With your own `persist`, make the same check in `prepareMessages`                                                        |
+| Prompt injection through user text, files or pages the model reads                    | The framework adds no user text to the system prompt                                                                                                                                                                  | `needsApproval` on every tool that writes, sends or spends; `sanitizeForSystemPrompt` on text you add to a system prompt |
+
+## Repudiation
+
+Each turn is an execution row with usage and cost. `onTurn.approval` fires once per approval answer, which is your record of who allowed a gated action.
+
+## Information disclosure
+
+| Threat                                                                | Control                                                                                                                                                           | Yours                                                           |
+| --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| A reply that loads a tracking image or carries data out through a URL | Images load only from `imageHosts` (none by default); relative URLs resolve to nothing; links are http, https, mailto and tel only                                | `linkHosts` when the model reads untrusted pages                |
+| A shared link leaking reasoning, tool data or files                   | New shares use a random token, and sharing again after unsharing issues a new one. Reasoning, tool input and output, provider metadata and file URLs are stripped | `keepToolOutput` only for tools whose output is safe to publish |
+| A file URL outliving access                                           | Signed URLs expire (below) and are never stored; the attachment route looks the file up by workspace and uploader on every request                                | A private bucket                                                |
+| An uploaded file run as a page                                        | Only the types below are served inline; anything else downloads                                                                                                   | —                                                               |
+| Probing for another workspace's conversation                          | Another workspace's id answers as if it did not exist                                                                                                             | —                                                               |
+
+<!-- snippet: packages/chat/src/attachments.ts#SIGNED_URL_SECONDS -->
+
+```ts
+const SIGNED_URL_SECONDS = 900;
+```
+
+<!-- snippet: packages/chat/src/attachments.ts#INLINE_TYPES -->
+
+```ts
+const INLINE_TYPES: ReadonlySet<string> = new Set([
+  "image/png",
+  "image/jpeg",
+  "image/gif",
+  "image/webp",
+  "image/avif",
+  "application/pdf",
+  "text/plain",
+]);
+```
+
+## Denial of service
+
+| Threat                    | Control                                                                | Yours                                                          |
+| ------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------- |
+| Flooding turns or uploads | Per-workspace plan rate limits; uploads count in their own bucket      | Rates per plan                                                 |
+| Huge requests             | Body cap, message length cap, history window and tool-step cap (below) | Lower them with `maxBodyBytes`, `maxMessageLength`, `maxSteps` |
+| Unbounded spend           | Credit hold at `executions.begin()`; unknown models refused            | Register every model's price                                   |
+
+<!-- snippet: packages/chat/src/handler.ts#DEFAULT_MAX_MESSAGE_LENGTH -->
+
+```ts
+const DEFAULT_MAX_MESSAGE_LENGTH = 8000;
+```
+
+<!-- snippet: packages/chat/src/handler.ts#DEFAULT_MAX_STEPS -->
+
+```ts
+const DEFAULT_MAX_STEPS = 5;
+```
+
+<!-- snippet: packages/chat/src/handler.ts#DEFAULT_WINDOW -->
+
+```ts
+const DEFAULT_WINDOW = { maxMessages: 40, maxTokens: 12_000 } as const;
+```
+
+<!-- snippet: packages/chat/src/handler.ts#TRANSCRIPT_BODY_BYTES -->
+
+```ts
+const TRANSCRIPT_BODY_BYTES = 8 * 1024 * 1024;
+```
+
+## Elevation of privilege
+
+| Threat                                   | Control                                                                        |
+| ---------------------------------------- | ------------------------------------------------------------------------------ |
+| Asking for a model the plan lacks        | Model gate per request; a model's `featureKey` is checked                      |
+| Reading another workspace's conversation | Conversations load by id and the actor's workspace; anything else is NOT_FOUND |
+
+## Residual risks
+
+- Prompt injection is not solved; approval and least-privilege tools are the real control.
+- The injection patterns `sanitizeForSystemPrompt` removes are English phrases plus structural markers.
+- A conversation shared before share tokens existed is still found by its conversation id until it is unshared and shared again.
+
+---
+
+# Threat model: executions
+
+Source: https://intelligo.dev/docs/security/threat-model-executions
+
+- **Scope:** `createExecutions` (`begin`, `complete`, `fail`, `reconcile`), its ports to billing, `findStaleExecutions`, the `/pricing` registry.
+- **Assets:** the execution record, credit holds, settled usage and cost.
+- **Trust boundaries:** your agent code → the execution handle; the handle → billing ports.
+
+## Spoofing
+
+Server code opens an execution with resolved actor ids; there is no HTTP surface. A reused `requestId` hits a unique index: the hold admission just took is released and the call fails.
+
+## Tampering
+
+| Threat                                         | Control                                                                                                                                                                                                                |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Settling the same run twice                    | Terminal transitions are compare-and-swap; the first of complete or fail wins, and a reconcile racing either cannot charge or release twice                                                                            |
+| A crash mid-settlement leaving a false success | `settling` is non-terminal; reconcile asks the ledger (`findSettlement`) whether the charge exists, confirms it if so, and otherwise re-runs settlement from the recorded usage. Without that port it refuses to guess |
+| Pricing a run with a made-up model id          | Pricing throws `UnknownModelError`; chat refuses the turn                                                                                                                                                              |
+
+## Repudiation
+
+Every run, admitted or refused, is a row with actor, workspace, capability, usage, cost and credits. Audit events record refusals, completions, failures, failed settlements and reconciliations.
+
+## Information disclosure
+
+The framework writes accounting fields only: no prompts, messages or tool data. The row's `metadata` holds whatever the caller puts there.
+
+## Denial of service
+
+| Threat                        | Control                                                                                                                                                                       | Yours                                               |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Abandoned runs holding credit | Maintenance reconciles runs older than the threshold below, charging the usage a run recorded or releasing its hold; the admin health probe flags runs unsettled past its own | Schedule the cron every five minutes where possible |
+
+<!-- snippet: packages/cli/templates/maintenance/maintenance-route.ts.tpl#STALE_AFTER_MS -->
+
+```ts
+const STALE_AFTER_MS = 10 * 60_000;
+```
+
+<!-- snippet: packages/admin/src/health.ts#UNSETTLED_MS -->
+
+```ts
+const UNSETTLED_MS = 10 * 60_000;
+```
+
+## Elevation of privilege
+
+| Threat                               | Control | Yours                                                                                                                                                   |
+| ------------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Calling a model outside the boundary | —       | Every model call goes through `executions.begin()` or `createChatHandler`; `runWithExecution` from `@intelligo-dev/mastra` does this for a Mastra agent |
+
+## Residual risks
+
+- The boundary cannot see a model call your code makes without it. Code review is the control.
+- On a host whose cron runs daily, a failed turn's hold can stay for up to a day.
+
+---
+
+# Threat model: storage and uploads
+
+Source: https://intelligo.dev/docs/security/threat-model-storage
+
+- **Scope:** the storage port in `@intelligo-dev/core/storage` (`setStorageAdapter`, `createS3Storage`, `s3StorageFromEnv`), attachment rows and `sweepAttachments` in `@intelligo-dev/core/attachments`, and the stored-attachment routes `createChatUploadHandler` and `createChatAttachmentHandler` build. Inline attachments travel inside the message and are covered by the [chat threat model](/docs/security/threat-model-chat).
+- **Assets:** uploaded files, the bucket and its credentials, the workspace's storage budget.
+- **Trust boundaries:** browser → the upload route; browser → the attachment route → the bucket; the transport → the model provider, which fetches a signed URL.
+
+## Spoofing
+
+| Threat                                        | Control                                                                                                                               | Yours                                                     |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| An anonymous upload                           | The upload route authenticates first and refuses without a session and a workspace                                                    | —                                                         |
+| Fetching someone else's file through the app  | The attachment route looks the row up by id, workspace and uploader, then redirects to a fresh signed URL; anything else is not found | —                                                         |
+| Requests to the bucket that are not the app's | The S3 adapter signs every request with AWS Signature Version 4                                                                       | Keys scoped to this bucket, with put, get and delete only |
+
+## Tampering
+
+| Threat                                                      | Control                                                                                                                                                                        | Yours |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----- |
+| A file part naming a URL the server would fetch             | A user's file part must carry the app URL of an upload (stored mode) or a data URL within the size cap (inline mode); an assistant's only a data URL. Any other URL is refused | —     |
+| A file part naming another tenant's upload                  | Stored parts are resolved against the actor's own rows; one that is not theirs is dropped before the model sees it                                                             | —     |
+| A file name that walks a path or carries control characters | The name is cut to its last segment, control characters removed and the length capped at 255; the object key never uses it                                                     | —     |
+| A stored object written under another workspace             | Keys are built by the server from the workspace id and a random id                                                                                                             | —     |
+
+<!-- snippet: packages/core/src/storage/index.ts#attachmentStorageKey -->
+
+```ts
+export function attachmentStorageKey(workspaceId: string, id: string): string {
+  return `ws/${workspaceId}/att/${id}`;
+}
+```
+
+## Repudiation
+
+Every upload is a row with workspace, uploader, file name, type, size and time. Uploads write no audit event; deleting a row queues its object for deletion in the database (`storage_deletions`), so a cascade from a deleted workspace or account leaves a record of what to remove.
+
+## Information disclosure
+
+| Threat                                                | Control                                                                                                       | Yours                                                       |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| A file URL outliving access                           | Signed URLs expire and are never persisted; the transcript keeps the app URL, and shared pages drop file URLs | A private bucket with no public listing                     |
+| An uploaded file run as a page on the bucket's origin | Only the types below are served inline; anything else is sent as a download                                   | Serve the bucket from an origin that is not your app's      |
+| A signed URL handed to the model provider             | It lasts 15 minutes and names one object                                                                      | Choose a provider whose retention you accept                |
+| Files kept after an account is erased                 | Rows cascade with the workspace or user; the sweep deletes their queued objects                               | Schedule the maintenance route with a storage adapter bound |
+
+<!-- snippet: packages/chat/src/attachments.ts#INLINE_TYPES -->
+
+```ts
+const INLINE_TYPES: ReadonlySet<string> = new Set([
+  "image/png",
+  "image/jpeg",
+  "image/gif",
+  "image/webp",
+  "image/avif",
+  "application/pdf",
+  "text/plain",
+]);
+```
+
+## Denial of service
+
+| Threat                                     | Control                                                                                                         | Yours                                          |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| Many uploads                               | Per-workspace rate limit from the plan, counted apart from chat turns; the chat feature gate                    | Rates per plan                                 |
+| One huge upload                            | A declared length over the cap is refused before the body is read; an undeclared one is read only up to the cap | Lower `maxBytes`; cap bodies at the edge       |
+| Filling the bucket with files no turn uses | Unclaimed uploads are capped per workspace; the sweep deletes unclaimed rows after a day                        | `admitUpload` for a per-plan or per-user quota |
+| A slow bucket holding requests             | Each request to the bucket is abandoned after 30 seconds by default                                             | —                                              |
+
+<!-- snippet: packages/chat/src/body.ts#ATTACHMENT_MAX_BYTES -->
+
+```ts
+export const ATTACHMENT_MAX_BYTES = 10 * 1024 * 1024;
+```
+
+<!-- snippet: packages/chat/src/attachments.ts#DEFAULT_UNCLAIMED_FILES -->
+
+```ts
+const DEFAULT_UNCLAIMED_FILES = 10;
+```
+
+<!-- snippet: packages/cli/templates/maintenance/maintenance-route.ts.tpl#UNCLAIMED_UPLOAD_AFTER_MS -->
+
+```ts
+const UNCLAIMED_UPLOAD_AFTER_MS = 24 * 60 * 60_000;
+```
+
+## Elevation of privilege
+
+| Threat                                   | Control                                                          | Yours                                                                                    |
+| ---------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Uploading on a plan without chat         | The upload route checks the chat feature before reading the body | —                                                                                        |
+| A parser exploited by a crafted document | The framework parses no file content                             | `extractText` runs your parser on untrusted bytes at upload: keep it patched and bounded |
+
+## Residual risks
+
+- A file's media type is the one the browser declared; the bytes are not inspected. The inline list keeps a mislabelled file to types a browser displays without running anything.
+- Files are not scanned for malware.
+- Text that `extractText` returns reaches the model, so a document can carry a prompt injection like any page the model reads.
+- Objects are deleted only when the maintenance route runs with a storage adapter bound; a deletion storage refuses stays queued and is retried.
+
+---
+
+# Threat model: admin console
+
+Source: https://intelligo.dev/docs/security/threat-model-admin
+
+- **Scope:** `@intelligo-dev/admin` (`requireAdmin`, `requireAdminOrRefuse`, `isPlatformAdmin`, the cross-tenant reads, `startImpersonation` / `stopImpersonation`, the health probes) and the `admin-console` registry item's pages and actions under `/admin`.
+- **Assets:** every tenant's users, workspaces, payments, usage and audit trail; plan grants and credit; the ability to act as a user.
+- **Trust boundaries:** a signed-in browser → `/admin` pages and their server actions; the console → billing services; an admin's session → the target's session during impersonation.
+
+## Spoofing
+
+| Threat                                                  | Control                                                                                                                | Yours                               |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| A workspace owner opening the console                   | The gate is the platform-admin role on the user row, never a workspace role; every self-serve sign-up owns a workspace | —                                   |
+| Becoming an admin by registering an allowlisted address | `PLATFORM_ADMIN_EMAILS` promotes a verified address only, and the promotion is an audit event                          | Keep the list to people who need it |
+| Impersonating another admin to borrow their reach       | A platform admin cannot be impersonated, by role or by allowlist, checked before Better-Auth's own check               | —                                   |
+
+## Tampering
+
+| Threat                                                    | Control                                                                                                                                                                         | Yours                                 |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| Granting a plan or credit with no record                  | Each action authorizes with `requireAdminOrRefuse`, which refuses when its audit event cannot be written; a reason of at least three characters is required                     | Review the reasons                    |
+| A resubmitted form crediting twice                        | The credit form carries a request id minted when it renders; the same id credits once                                                                                           | —                                     |
+| Calling the admin plugin's user writes directly           | They answer 404 over HTTP (see the [auth threat model](/docs/security/threat-model-auth))                                                                                       | —                                     |
+| A page or action added under `/admin` that skips the gate | The layout gate does not guard a page's reads or actions, so every console page and action calls the gate itself, and every cross-tenant read checks for a platform admin again | Do the same in your own console pages |
+
+<!-- snippet: packages/admin/src/authorization.ts#requireAdminOrRefuse -->
+
+```ts
+export async function requireAdminOrRefuse(
+  action: string,
+  resource: { kind: string; id?: string; workspaceId?: string },
+  metadata?: Record<string, unknown>
+): Promise<AdminActor> {
+  const actor = await platformAdmin();
+
+  await recordAuditEventOrThrow({
+    workspaceId: resource.workspaceId ?? null,
+    actorId: actor.userId,
+    actorKind: "support",
+    action,
+    resourceKind: resource.kind,
+    resourceId: resource.id ?? null,
+    ...(metadata ? { metadata } : {}),
+  });
+
+  return actor;
+}
+```
+
+## Repudiation
+
+Every console page visit is an audit event with `actorKind: "support"`; a failed write there is logged and does not block a support engineer mid-incident. Every action and every impersonation start is recorded before it happens, and refused if the record cannot be written. A start that Better-Auth then refuses is followed by a refusal event, so the trail does not show an impersonation that never happened. Stopping records the end before ending it, with the admin named by the session's `impersonatedBy` stamp as the actor.
+
+## Information disclosure
+
+| Threat                           | Control                                                                                                     | Yours                                                                                                |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Learning that the console exists | A visitor who is not a platform admin gets the app's 404, not a refusal                                     | —                                                                                                    |
+| Internals in an error            | Actions answer with a message key, never the error's text; why an impersonation failed is logged, not shown | —                                                                                                    |
+| Seeing more than support needs   | —                                                                                                           | Grant the role to as few people as possible; `intelligo admin revoke` removes it with an audit event |
+
+## Denial of service
+
+The console's reads are paged. Health probes report a failing check as `down` with its own message rather than failing the page.
+
+## Elevation of privilege
+
+| Threat                                | Control                                                                                            | Yours                                                      |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| An impersonation that lasts           | The session is capped (below)                                                                      | —                                                          |
+| Spending or deleting as the customer  | While impersonating, checkout, the billing portal, local payments and account deletion are refused | Refuse the same in your own actions with `isImpersonating` |
+| Using the console while impersonating | The session is the target's, so the console answers 404 until the impersonation ends               | —                                                          |
+
+<!-- snippet: packages/auth/src/request-hardening.ts#IMPERSONATION_SECONDS -->
+
+```ts
+export const IMPERSONATION_SECONDS = 30 * 60;
+```
+
+## Residual risks
+
+- What an admin does while impersonating, other than the refused actions above, runs as the target user and is recorded as theirs; the start and stop events bracket it.
+- An impersonation that simply expires has a start event and no stop event.
+- A page visit whose audit write fails is not recorded; only actions are refused in that case.
+- A platform admin can read every tenant's data. The role is the control, and the audit trail is how its use is reviewed.

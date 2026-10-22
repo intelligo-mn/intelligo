@@ -11,7 +11,7 @@
     "deprecated": "Superseded by the `usage` registry item \u2014 install it with the shadcn CLI from the Intelligo registry instead; it ships a full page, components and thin actions as consumer-owned source."
   },
   "app-scaffold": {
-    "templateVersion": "1.22.0",
+    "templateVersion": "1.23.0",
     "description": "A new application: composition root (run once per server process from instrumentation.ts), plans, an assistant route, a Stripe webhook endpoint, config, a drizzle config for the tables you own, next-intl i18n plumbing, and a registry-consuming shadcn base-nova setup with the intelligo design tokens",
     "files": [
       {
@@ -158,8 +158,8 @@
     "deprecated": "Superseded by the `admin-console` registry item — install it with `intelligo sync admin-console` instead; it ships the whole console (overview, users, revenue, operations) as consumer-owned source at the same /admin route, so delete this page first."
   },
   "maintenance": {
-    "templateVersion": "1.3.0",
-    "description": "A CRON_SECRET-gated GET /api/cron/maintenance that reconciles stale executions, drops expired reservations and rate-limit buckets, expires trials, prunes old jobs and deletes what uploads leave behind \u2014 scheduled every five minutes, in vercel.json when the app has none",
+    "templateVersion": "1.4.0",
+    "description": "A CRON_SECRET-gated GET /api/cron/maintenance that reconciles stale executions, drops expired reservations and rate-limit buckets, expires trials and lapsed plan grants, prunes old jobs and read notifications, purges accounts whose deletion grace period has ended and deletes what uploads leave behind \u2014 scheduled every five minutes, in vercel.json when the app has none",
     "cron": {
       "path": "/api/cron/maintenance",
       "schedule": "0-59/5 * * * *"

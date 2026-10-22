@@ -12,7 +12,7 @@ export const FAQ = [
   },
   {
     q: "Is it ready for production?",
-    a: "It is a 1.0 beta. Everything on this site exists and runs today, but APIs are still settling: a beta can break one, and every break is listed in the changelog with what to change. The database schema is one baseline that only moves forward through migrations.",
+    a: "Stable releases go out on npm's latest tag and follow SemVer: a patch only fixes, and anything a consumer has to change is on the Breaking line at the top of that release's changelog section, with the steps under Upgrading. The next minor ships first on the next tag for anyone who wants to try it. Everything on this site exists and runs today, and the database schema is one baseline that only moves forward through migrations.",
   },
   {
     q: "Is Intelligo a starter kit?",

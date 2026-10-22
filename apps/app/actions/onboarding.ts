@@ -41,13 +41,21 @@ async function friendlyError(error: unknown): Promise<string> {
  * completion screen, which persists no step id, so the caller resumes
  * at `from`.
  */
-export async function advanceStep(move: {
+export async function advanceStep(input: {
   from: string;
   to: string | null;
   answers?: OnboardingAnswers;
 }): Promise<OnboardingActionResult> {
+  const move = parseMove(input);
+  if (!move) {
+    const t = await getTranslations("onboarding");
+    return { success: false, error: t("errors.generic") };
+  }
   try {
     if (move.answers && onboardingConfig.onStepSubmit) {
+      // Resolves the caller first, so a signed-out request never reaches
+      // the consumer's callback.
+      await onboarding.getState();
       await onboardingConfig.onStepSubmit(move.from, move.answers);
     }
     await onboarding.setStep(move.to ?? move.from);
@@ -55,6 +63,29 @@ export async function advanceStep(move: {
   } catch (error) {
     return { success: false, error: await friendlyError(error) };
   }
+}
+
+type Move = { from: string; to: string | null; answers?: OnboardingAnswers };
+
+/**
+ * The step ids and answers `advanceStep` reads, or null: `answers` is a
+ * plain object of strings, the shape `onStepSubmit` is typed to receive.
+ */
+function parseMove(value: unknown): Move | null {
+  if (typeof value !== "object" || value === null) return null;
+  const { from, to, answers } = value as Record<string, unknown>;
+  if (typeof from !== "string") return null;
+  if (to !== null && typeof to !== "string") return null;
+  if (answers === undefined) return { from, to };
+  if (typeof answers !== "object" || answers === null) return null;
+  if (Array.isArray(answers)) return null;
+  const entries = Object.entries(answers);
+  if (entries.some(([, answer]) => typeof answer !== "string")) return null;
+  return {
+    from,
+    to,
+    answers: Object.fromEntries(entries) as OnboardingAnswers,
+  };
 }
 
 export async function completeOnboarding(): Promise<OnboardingActionResult> {

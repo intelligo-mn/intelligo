@@ -1,0 +1,85 @@
+name: Review window
+
+# A pull request into main that touches a high-risk path (the "High
+# risk" section of .github/CODEOWNERS) or carries the `security` label
+# merges no sooner than 24 hours after it is first marked pending. The
+# rule is the commit status `review-window`, which the main ruleset
+# requires from the review-window GitHub App.
+#
+# pull_request_target runs this file and the script as they are on
+# main, and nothing from the pull request is checked out or run: its
+# changed paths and labels come from the API. The app's key lives in
+# the review-window environment, which only main may use, so a pull
+# request's own workflows cannot post this status. The hourly run
+# releases pull requests whose window has passed.
+#
+# The workflow does nothing until the repository variable
+# REVIEW_WINDOW_CLIENT_ID is set: the `window` job is skipped, so the
+# environment is not referenced (and not created without its branch
+# policy), and the `inactive` job says so in a notice. Create the app,
+# the environment and its REVIEW_WINDOW_PRIVATE_KEY secret first, and
+# set the variable last.
+
+on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, reopened, synchronize, ready_for_review, labeled, unlabeled]
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: review-window-${{ github.event.pull_request.number || 'sweep' }}
+  cancel-in-progress: false
+
+jobs:
+  inactive:
+    name: Review window (not set up)
+    if: vars.REVIEW_WINDOW_CLIENT_ID == ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Say the window is not enforced
+        run: echo "::notice title=Review window::Not set up — REVIEW_WINDOW_CLIENT_ID is unset, so no review-window status is posted."
+
+  window:
+    name: Review window
+    if: vars.REVIEW_WINDOW_CLIENT_ID != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: review-window
+    permissions:
+      contents: read
+    steps:
+      - id: app
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ vars.REVIEW_WINDOW_CLIENT_ID }}
+          private-key: ${{ secrets.REVIEW_WINDOW_PRIVATE_KEY }}
+          permission-statuses: write
+          permission-pull-requests: read
+          permission-issues: read
+
+      # The base branch: with pull_request_target into main, the default
+      # ref is main.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            .github/CODEOWNERS
+            scripts/review-policy.mjs
+            scripts/review-window.mjs
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+
+      - name: Set the review-window status
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          REVIEW_APP_LOGIN: ${{ steps.app.outputs.app-slug }}[bot]
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: node scripts/review-window.mjs

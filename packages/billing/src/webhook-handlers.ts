@@ -17,6 +17,8 @@ import { creditPurchasedBalance } from "./credit-ledger";
 import {
   REVERSED_PURCHASE_STATUSES,
   reverseCreditPurchase,
+  reverseRefundedCharge,
+  reverseRefundsSinceGrant,
 } from "./credit-reversal";
 import { getStripe } from "./stripe";
 import { getProductPlans, getRegisteredProductSlugs } from "./plan-registry";
@@ -351,6 +353,10 @@ async function grantCreditPurchase(
 
   if (purchase.status === "completed") {
     log.info("Credit purchase already completed, skipping", { workspaceId });
+    await reverseRefundsSinceGrant(
+      paymentIntentId ?? purchase.stripePaymentIntentId,
+      checkoutSessionId
+    );
     return;
   }
   if (isFinished(purchase.status)) {
@@ -435,6 +441,11 @@ async function grantCreditPurchase(
     grantedMicros,
     currency: grantedCurrency,
   });
+
+  await reverseRefundsSinceGrant(
+    paymentIntentId ?? purchase.stripePaymentIntentId,
+    checkoutSessionId
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -672,15 +683,11 @@ export async function handleChargeRefunded(charge: Stripe.Charge) {
   const paymentIntentId = idOf(charge.payment_intent);
   if (!paymentIntentId || charge.amount_refunded <= 0) return;
 
-  const result = await reverseCreditPurchase({
+  const result = await reverseRefundedCharge(
+    charge,
     paymentIntentId,
-    checkoutSessionId: await checkoutSessionFor(paymentIntentId),
-    covered: charge.amount_refunded,
-    paid: charge.amount,
-    key: `refund:${charge.id}`,
-    status: charge.refunded ? "refunded" : null,
-    reason: "refund",
-  });
+    await checkoutSessionFor(paymentIntentId)
+  );
   if (result.outcome === "no_purchase") {
     log.debug("Refunded charge bought no credit", { chargeId: charge.id });
   }

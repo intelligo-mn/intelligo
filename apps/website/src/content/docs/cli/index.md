@@ -74,7 +74,7 @@ their own, and refuse to overwrite the latter.
 | Feature | What it generates |
 | --- | --- |
 | `pnpm-standalone` | pnpm settings for an app that is its own workspace root: dependency build scripts declined, so pnpm 10+ installs without a prompt, and `pnpm add` allowed at the root for the shadcn CLI. `intelligo create` writes it when pnpm installs an app outside any workspace — `pnpm-workspace.yaml`, `.npmrc` |
-| `maintenance` | A CRON_SECRET-gated GET /api/cron/maintenance that reconciles stale executions, drops expired reservations and rate-limit buckets, expires trials, prunes old jobs and deletes what uploads leave behind — scheduled every five minutes, in vercel.json when the app has none — `app/api/cron/maintenance/route.ts` |
+| `maintenance` | A CRON_SECRET-gated GET /api/cron/maintenance that reconciles stale executions, drops expired reservations and rate-limit buckets, expires trials and lapsed plan grants, prunes old jobs and read notifications, purges accounts whose deletion grace period has ended and deletes what uploads leave behind — scheduled every five minutes, in vercel.json when the app has none — `app/api/cron/maintenance/route.ts` |
 | `vitest` | A Vitest setup for the app's own tests: the `@` alias, a `server-only` stub, and the `@intelligo-dev/*` packages inlined so the stub reaches them — `vitest.config.ts`, `tests/stubs/server-only.ts` |
 
 ## doctor

@@ -149,7 +149,8 @@
     "feedbackFailed": "Couldn't save your feedback.",
     "save": "Save",
     "savedToArtifacts": "Saved to artifacts.",
-    "emptyArtifact": "There's nothing in this reply to save."
+    "emptyArtifact": "There's nothing in this reply to save.",
+    "unstoredArtifact": "This reply isn't stored in the conversation, so it can't be saved as an artifact."
   },
   "branch": {
     "previous": "Previous version",

@@ -33,6 +33,11 @@
  *   (`grantPlan({ days })`, a one-time local payment) stays on until
  *   this step moves it back.
  * - **Prune finished jobs** older than a week.
+ * - **Prune read notifications** older than 90 days. Unread ones stay.
+ * - **Purge deleted accounts** whose grace period
+ *   (`ACCOUNT_DELETION_GRACE_DAYS`, 30 by default) has ended: the user
+ *   row goes, with their private data; usage and billing rows stay
+ *   unattributed, and both audit trails forget who they were.
  * - **Delete what uploads leave behind**, when a storage adapter is
  *   bound: uploads no conversation claimed within a day, and the
  *   objects of attachment rows deleted since — by a deleted chat, or a
@@ -52,7 +57,10 @@ import {
   processExpiredPlanGrants,
   processTrialExpirations,
 } from "@intelligo-dev/billing";
+import { eraseActorFromAuditEvents } from "@intelligo-dev/audit";
+import { purgeDeletedAccounts } from "@intelligo-dev/auth";
 import { sweepAttachments } from "@intelligo-dev/core/attachments";
+import { pruneNotifications } from "@intelligo-dev/core/notifications";
 import {
   getStorageAdapter,
   hasStorageAdapter,
@@ -71,6 +79,8 @@ export const maxDuration = 60;
 const STALE_AFTER_MS = 10 * 60_000;
 /** Finished jobs older than this are pruned. */
 const PRUNE_JOBS_AFTER_MS = 7 * 24 * 60 * 60_000;
+/** Read notifications older than this are pruned. */
+const PRUNE_NOTIFICATIONS_AFTER_MS = 90 * 24 * 60 * 60_000;
 /** An upload no conversation claimed within this long is deleted. */
 const UNCLAIMED_UPLOAD_AFTER_MS = 24 * 60 * 60_000;
 
@@ -126,6 +136,16 @@ export async function GET(request: Request) {
     planGrants: await step("processExpiredPlanGrants", processExpiredPlanGrants),
     jobsPruned: await step("pruneJobs", () =>
       pruneJobs(new Date(Date.now() - PRUNE_JOBS_AFTER_MS))
+    ),
+    notificationsPruned: await step("pruneNotifications", () =>
+      pruneNotifications(new Date(Date.now() - PRUNE_NOTIFICATIONS_AFTER_MS))
+    ),
+    deletedAccounts: await step("purgeDeletedAccounts", () =>
+      purgeDeletedAccounts({
+        beforePurge: async (userId) => {
+          await eraseActorFromAuditEvents(userId);
+        },
+      })
     ),
     attachments: hasStorageAdapter()
       ? await step("sweepAttachments", () =>

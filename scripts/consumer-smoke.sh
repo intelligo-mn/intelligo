@@ -137,6 +137,9 @@ step "every registry item installs through the packed CLI"
 items=$(node -e 'console.log(Object.keys(require(process.argv[1]).items).join(" "))' "$ROOT/packages/registry/requires.json")
 pnpm exec intelligo sync intelligo $items --force >"$WORK/sync.log" 2>&1 \
   || { tail -30 "$WORK/sync.log"; fail "intelligo sync failed"; }
+# The generated maintenance route builds with the rest: templates are
+# not type-checked anywhere else.
+pnpm exec intelligo add maintenance >/dev/null || fail "intelligo add maintenance failed"
 tail -2 "$WORK/sync.log"
 pnpm exec intelligo sync --check || fail "intelligo sync --check reports drift right after a sync"
 pnpm install --no-frozen-lockfile

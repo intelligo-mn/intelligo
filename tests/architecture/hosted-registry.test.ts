@@ -3,12 +3,12 @@
  *
  * public/r/<version>/ keeps each release's items, and every component
  * one of them builds on is that same release's; public/r/*.json is the
- * copy of the release npm serves (proof.json's `published`). The site
+ * copy of the release npm tags `latest` (proof.json's `published`). The site
  * answers with the headers the build writes: no framing, inline scripts
  * only by hash, and the registry as JSON any origin can read.
  */
 
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 
@@ -19,6 +19,10 @@ type ReleaseModule = {
   compareVersions: (a: string, b: string) => number;
   toRelease: (text: string, release: string) => string;
   fromRelease: (text: string, release: string) => string;
+};
+type ServeModule = {
+  publishedVersion: () => Promise<string | undefined>;
+  onNpm: (version: string) => Promise<boolean>;
 };
 type HeadersModule = {
   inlineScriptHashes: (html: string) => Set<string>;
@@ -31,13 +35,16 @@ const R = path.join(SITE, "public/r");
 const release = (await import(
   path.join(SITE, "scripts/registry-release.mjs")
 )) as ReleaseModule;
+const serve = (await import(
+  path.join(SITE, "scripts/serve-release.mjs")
+)) as ServeModule;
 const headers = (await import(
   path.join(SITE, "src/lib/headers.mjs")
 )) as HeadersModule;
 
 const proof = JSON.parse(
   readFileSync(path.join(SITE, "src/data/proof.json"), "utf8")
-) as { version: string; published?: string };
+) as { version: string; published?: string; onNpm?: boolean };
 const releases = readdirSync(R).filter((f) =>
   statSync(path.join(R, f)).isDirectory()
 );
@@ -78,6 +85,48 @@ describe("versions", () => {
   });
 });
 
+describe("what npm has", () => {
+  const DIST_TAGS = { latest: "1.2.4", next: "1.3.0-next.2" };
+
+  /** npm's registry, answering the dist-tags and the versions it has. */
+  function registry(versions: string[]) {
+    return async (url: string) => {
+      if (url.endsWith("/dist-tags"))
+        return new Response(JSON.stringify(DIST_TAGS));
+      const version = url.slice(url.lastIndexOf("/") + 1);
+      return versions.includes(version)
+        ? new Response("{}")
+        : new Response("not found", { status: 404 });
+    };
+  }
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
+
+  it("serves `latest` while a prerelease is on `next`", async () => {
+    vi.stubGlobal("fetch", registry(["1.2.4", "1.3.0-next.2"]));
+    expect(await serve.publishedVersion()).toBe("1.2.4");
+    expect(await serve.onNpm("1.3.0-next.2")).toBe(true);
+  });
+
+  it("says a version npm answers 404 for is not on npm", async () => {
+    vi.stubGlobal("fetch", registry(["1.2.4"]));
+    expect(await serve.onNpm("1.3.0-next.3")).toBe(false);
+  });
+
+  it("keeps the proof's last answer when npm cannot be read", async () => {
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    vi.stubGlobal("fetch", async () => {
+      throw new Error("offline");
+    });
+    expect(await serve.publishedVersion()).toBe(proof.published);
+    expect(await serve.onNpm(proof.version)).toBe(proof.onNpm === true);
+    expect(await serve.onNpm(`${proof.version}-next.0`)).toBe(false);
+  });
+});
+
 describe("public/r", () => {
   it("keeps the release npm serves, and serves it at /r", () => {
     expect(proof.published).toBeDefined();
@@ -98,9 +147,7 @@ describe("public/r", () => {
   });
 
   it("keeps the tree's own version once it is on npm", () => {
-    if (release.compareVersions(proof.published!, proof.version) >= 0) {
-      expect(releases).toContain(proof.version);
-    }
+    if (proof.onNpm) expect(releases).toContain(proof.version);
   });
 
   it.each(releases)(

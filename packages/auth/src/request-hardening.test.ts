@@ -1,10 +1,14 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  AUTH_RATE_LIMIT,
+  AUTH_RATE_LIMIT_RULES,
   displayNameProblem,
+  IMPERSONATION_SECONDS,
   ipAddressOptions,
   SERVICE_ONLY_ADMIN_PATHS,
   SERVICE_ONLY_ORGANIZATION_PATHS,
+  SESSION_LIFETIME,
   workspaceNameProblem,
 } from "./request-hardening";
 
@@ -42,6 +46,71 @@ describe("SERVICE_ONLY_ADMIN_PATHS", () => {
       "/admin/list-user-sessions",
     ])
       expect(SERVICE_ONLY_ADMIN_PATHS).toContain(path);
+  });
+
+  it("closes the user writes, which have no audited wrapper", () => {
+    for (const path of [
+      "/admin/create-user",
+      "/admin/update-user",
+      "/admin/set-role",
+      "/admin/set-user-password",
+      "/admin/ban-user",
+      "/admin/unban-user",
+      "/admin/remove-user",
+      "/admin/revoke-user-session",
+      "/admin/revoke-user-sessions",
+    ])
+      expect(SERVICE_ONLY_ADMIN_PATHS).toContain(path);
+  });
+
+  it("leaves has-permission open", () => {
+    expect(SERVICE_ONLY_ADMIN_PATHS).not.toContain("/admin/has-permission");
+  });
+});
+
+describe("AUTH_RATE_LIMIT", () => {
+  it("allows 100 requests per 10 seconds on an endpoint no rule names", () => {
+    expect(AUTH_RATE_LIMIT).toEqual({ window: 10, max: 100 });
+  });
+});
+
+describe("AUTH_RATE_LIMIT_RULES", () => {
+  it("allows 3 attempts per 10 seconds at signing in, signing up and changing credentials", () => {
+    for (const path of [
+      "/sign-in/*",
+      "/sign-up/*",
+      "/change-password",
+      "/change-email",
+    ] as const) {
+      expect(AUTH_RATE_LIMIT_RULES[path]).toEqual({ window: 10, max: 3 });
+    }
+  });
+
+  it("allows 3 reset or verification emails per minute", () => {
+    for (const path of [
+      "/request-password-reset",
+      "/send-verification-email",
+      "/forget-password",
+    ] as const) {
+      expect(AUTH_RATE_LIMIT_RULES[path]).toEqual({ window: 60, max: 3 });
+    }
+  });
+
+  it("names no other path", () => {
+    expect(Object.keys(AUTH_RATE_LIMIT_RULES)).toHaveLength(7);
+  });
+});
+
+describe("session limits", () => {
+  it("keeps a session for a week, extended at most daily", () => {
+    expect(SESSION_LIFETIME).toEqual({
+      expiresIn: 7 * 24 * 60 * 60,
+      updateAge: 24 * 60 * 60,
+    });
+  });
+
+  it("ends an impersonation after 30 minutes", () => {
+    expect(IMPERSONATION_SECONDS).toBe(1800);
   });
 });
 

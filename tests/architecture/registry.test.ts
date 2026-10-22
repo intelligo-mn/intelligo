@@ -772,12 +772,10 @@ describe("registry", () => {
   describe("money is formatted per deployment, not per package", () => {
     const registry = readBlocks();
 
-    // `formatPrice` (@intelligo-dev/billing/plans) hardcodes the tugrik
-    // symbol and the Mongolian word for "free". Installed pages format
-    // money through next-intl against `CURRENCY` in the consumer's
-    // lib/billing-config.ts instead, so one deployment's currency can
-    // never leak into another's UI.
-    it("never imports the deprecated formatPrice helper", () => {
+    // Installed pages format money through next-intl against `CURRENCY`
+    // in the consumer's lib/billing-config.ts; an item that names a
+    // helper called `formatPrice` fails.
+    it("never names a helper called formatPrice", () => {
       const violations: string[] = [];
 
       for (const item of registry.items) {

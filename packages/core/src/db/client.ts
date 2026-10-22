@@ -58,6 +58,27 @@ function onPoolError(error: Error) {
 }
 
 /**
+ * The pool listens for errors only on idle connections. A connection
+ * lost while a query holds it rejects that query, and also emits
+ * `error` on the connection, which with no listener is an uncaught
+ * exception. This listener keeps it from being one; the rejected query
+ * carries the failure, and an idle connection's error still reaches
+ * `onPoolError`.
+ */
+function ignoreConnectionError() {}
+
+function watchConnections(pool: {
+  on(
+    event: "connect",
+    listener: (client: {
+      on(event: "error", listener: () => void): unknown;
+    }) => void
+  ): unknown;
+}) {
+  pool.on("connect", (client) => client.on("error", ignoreConnectionError));
+}
+
+/**
  * Which driver a connection string gets. Pure, so the rule is testable
  * without a database: an explicit `INTELLIGO_DB_DRIVER` wins; otherwise
  * Neon hosts (`neon.tech`) and Neon endpoint ids (`@ep-…`) take the
@@ -94,12 +115,14 @@ function initDb(): Db {
     }
     const pool = new NeonPool({ connectionString: url, ...poolOptions() });
     pool.on("error", onPoolError);
+    watchConnections(pool);
     console.log("📊 Database: Neon (serverless, WebSocket)");
     return drizzleNeon(pool, options);
   }
 
   const pool = new Pool({ connectionString: url, ...poolOptions() });
   pool.on("error", onPoolError);
+  watchConnections(pool);
   console.log("📊 Database: PostgreSQL");
   return drizzlePostgres(pool as any, options);
 }

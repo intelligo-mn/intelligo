@@ -26,12 +26,18 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "node",
+    setupFiles: [path.resolve(__dirname, "./tests/setup/fast-check.ts")],
+    // Fewer cases per property than `pnpm test` runs: every mutant
+    // reruns the properties that cover it, and the seed stays fixed.
+    env: { FC_RUNS: "30" },
     include: [
       "packages/core/src/money.test.ts",
+      "packages/core/src/money.property.test.ts",
       "packages/core/src/prompt.test.ts",
       "packages/core/src/registry.test.ts",
       "packages/core/src/documents/classifier.test.ts",
       "packages/executions/src/pricing.test.ts",
+      "packages/executions/src/pricing.property.test.ts",
       "packages/executions/src/lifecycle.test.ts",
       "packages/billing/src/plan-registry.test.ts",
       "packages/billing/src/feature-quota.test.ts",
@@ -40,7 +46,13 @@ export default defineConfig({
       "packages/billing/src/quota-reporting.test.ts",
       "packages/billing/src/quota-settlement.test.ts",
       "packages/billing/src/rate-limit.test.ts",
+      "packages/billing/src/charge-split.property.test.ts",
+      "packages/billing/src/quota-decision.property.test.ts",
+      "packages/chat/src/body.test.ts",
+      "packages/chat/src/continuation.test.ts",
       "packages/chat/src/generation.test.ts",
+      "packages/chat/src/usage.test.ts",
+      "packages/chat/src/usage.property.test.ts",
       "packages/chat/src/windowing.test.ts",
     ],
     exclude: [

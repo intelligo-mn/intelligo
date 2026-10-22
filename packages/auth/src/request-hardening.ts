@@ -33,7 +33,12 @@ export const SERVICE_ONLY_ORGANIZATION_PATHS = [
  * `@intelligo-dev/admin`'s `startImpersonation` / `stopImpersonation`
  * (the reason and the audit events); the console reads users from its
  * own audited queries. Called over HTTP these would list every user and
- * their sessions, or end an impersonation, with no audit row.
+ * their sessions, or end an impersonation, with no audit row. The
+ * plugin's user writes — creating, editing, banning or removing a user,
+ * setting a role or a password, revoking sessions — have no audited
+ * wrapper, and the platform role holds no permission for them; they are
+ * closed too, so a role that gains one does not open them to the
+ * browser. `has-permission` stays open.
  */
 export const SERVICE_ONLY_ADMIN_PATHS = [
   "/admin/impersonate-user",
@@ -41,7 +46,53 @@ export const SERVICE_ONLY_ADMIN_PATHS = [
   "/admin/list-users",
   "/admin/get-user",
   "/admin/list-user-sessions",
+  "/admin/create-user",
+  "/admin/update-user",
+  "/admin/set-role",
+  "/admin/set-user-password",
+  "/admin/ban-user",
+  "/admin/unban-user",
+  "/admin/remove-user",
+  "/admin/revoke-user-session",
+  "/admin/revoke-user-sessions",
 ] as const;
+
+/**
+ * Requests one client may make to an auth endpoint no rule below names:
+ * `max` per `window` seconds. Counted per client address and path, in
+ * production only.
+ */
+export const AUTH_RATE_LIMIT = { window: 10, max: 100 } as const;
+
+/**
+ * The tighter limits on the endpoints that guess or mail credentials.
+ * Better-Auth applies these after its built-in rules and plugin rules, so
+ * on the paths named here a dependency update or a plugin cannot change
+ * them. A `*` matches one path segment; a path no key matches, such as a
+ * deeper one under `/sign-in/` or a plugin's own endpoint, keeps
+ * Better-Auth's built-in rule.
+ */
+export const AUTH_RATE_LIMIT_RULES = {
+  "/sign-in/*": { window: 10, max: 3 },
+  "/sign-up/*": { window: 10, max: 3 },
+  "/change-password": { window: 10, max: 3 },
+  "/change-email": { window: 10, max: 3 },
+  "/request-password-reset": { window: 60, max: 3 },
+  "/send-verification-email": { window: 60, max: 3 },
+  "/forget-password": { window: 60, max: 3 },
+} as const;
+
+/**
+ * A session lasts `expiresIn` seconds and is extended, at most once per
+ * `updateAge` seconds, while it is in use.
+ */
+export const SESSION_LIFETIME = {
+  expiresIn: 60 * 60 * 24 * 7,
+  updateAge: 60 * 60 * 24,
+} as const;
+
+/** How long an impersonation session lasts, in seconds. */
+export const IMPERSONATION_SECONDS = 30 * 60;
 
 const list = (value: string | undefined) =>
   (value ?? "")

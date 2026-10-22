@@ -38,6 +38,7 @@ const mocks = vi.hoisted(() => ({
   estimateWorstCaseCharge: vi.fn(),
   chargeFor: vi.fn(),
   checkNotificationTriggers: vi.fn(),
+  warnDeprecated: vi.fn(),
 }));
 
 // In-memory reservation store driving the mocked tx chains.
@@ -67,6 +68,10 @@ vi.mock("./billing-settings", () => ({
 }));
 vi.mock("./notifications", () => ({
   checkNotificationTriggers: mocks.checkNotificationTriggers,
+}));
+// Mocked so the once-per-process memory cannot hide a later case's call.
+vi.mock("./deprecation", () => ({
+  warnDeprecated: mocks.warnDeprecated,
 }));
 vi.mock("./quota-plan", async () => {
   const { BillingNotConfiguredError } = await import("./plan-registry");
@@ -379,6 +384,26 @@ describe("a model with no registered price", () => {
 
     expect(r.allowed).toBe(false);
     expect(store.reservations).toHaveLength(0);
+  });
+});
+
+describe("checkQuota is deprecated", () => {
+  it("warns with INTELLIGO_DEP0001 in either mode", async () => {
+    await checkQuota("ws-1", { modelId: "m" });
+    await checkQuota("ws-1", { modelId: "m", requestId: "req-dep" });
+
+    expect(mocks.warnDeprecated).toHaveBeenCalledTimes(2);
+    for (const [code, message] of mocks.warnDeprecated.mock.calls) {
+      expect(code).toBe("INTELLIGO_DEP0001");
+      expect(message).toMatch(/reserveQuota.*estimateQuota/);
+    }
+  });
+
+  it("does not warn from estimateQuota or reserveQuota", async () => {
+    await estimateQuota("ws-1", { modelId: "m" });
+    await reserveQuota("ws-1", { modelId: "m", requestId: "req-new" });
+
+    expect(mocks.warnDeprecated).not.toHaveBeenCalled();
   });
 });
 

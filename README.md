@@ -8,6 +8,7 @@ You build the agent, with the AI framework you already use.<br/>
 Intelligo is everything around it — and it is tested, typed, and yours.
 
 <a href="https://github.com/intelligo-dev/intelligo/actions/workflows/ci.yml"><img src="https://github.com/intelligo-dev/intelligo/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI" /></a>
+<a href="https://scorecard.dev/viewer/?uri=github.com/intelligo-dev/intelligo"><img src="https://api.scorecard.dev/projects/github.com/intelligo-dev/intelligo/badge" alt="OpenSSF Scorecard" /></a>
 <a href="https://www.npmjs.com/package/@intelligo-dev/core"><img src="https://img.shields.io/npm/v/@intelligo-dev/core?label=npm" alt="npm" /></a>
 <img src="https://img.shields.io/badge/licence-Apache--2.0-blue" alt="Apache-2.0" />
 <img src="https://img.shields.io/badge/TypeScript-strict-blue" alt="TypeScript" />
@@ -192,11 +193,11 @@ pnpm registry:build   # rebuild the registry artifacts
 pnpm db:migrate       # apply the framework's schema
 ```
 
-A release is one commit: it bumps every published package and heads [`CHANGELOG.md`](CHANGELOG.md) with its section; merging it publishes to npm with provenance, tags, and creates the GitHub release. [CONTRIBUTING.md](CONTRIBUTING.md) says what a good pull request looks like, and [AGENTS.md](AGENTS.md) is the full map of the codebase — for people as much as for coding agents.
+A release is one squash-merged pull request: it bumps every published package and heads [`CHANGELOG.md`](CHANGELOG.md) with its section; merging it publishes to npm with provenance, tags, and creates the GitHub release. [CONTRIBUTING.md](CONTRIBUTING.md) is where to start a change; [AGENTS.md](AGENTS.md) is the full map of the codebase that coding agents load.
 
 ## Community
 
-Questions and ideas go to [Discussions](https://github.com/intelligo-dev/intelligo/discussions), bugs to [issues](https://github.com/intelligo-dev/intelligo/issues/new/choose), and vulnerabilities go privately, the way [SECURITY.md](SECURITY.md) describes. See also [SUPPORT.md](SUPPORT.md) and the [code of conduct](CODE_OF_CONDUCT.md).
+Questions and ideas go to [Discussions](https://github.com/intelligo-dev/intelligo/discussions), bugs to [issues](https://github.com/intelligo-dev/intelligo/issues/new/choose), and vulnerabilities go privately, the way [SECURITY.md](SECURITY.md) describes. See also [SUPPORT.md](SUPPORT.md) and the [code of conduct](CODE_OF_CONDUCT.md). How the project is run, and how to become a maintainer: [GOVERNANCE.md](GOVERNANCE.md).
 
 ## Licence
 

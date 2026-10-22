@@ -24,6 +24,7 @@ import {
 } from "@intelligo-dev/core/money";
 
 import { getBillingSettings } from "./billing-settings";
+import { warnDeprecated } from "./deprecation";
 import type { LocalPaymentOffer } from "./local-payments";
 import { getStripe, toStripeLocale } from "./stripe";
 import { getPlanBySlug } from "./plans";
@@ -304,9 +305,9 @@ export const creditBundleSchema = z.union([
   z.object({
     id: z.string().min(1),
     name: z.string().min(1),
-    /** @deprecated Whole units of the billing currency; use `grant`. */
+    /** @deprecated Removed in 2.0.0 (INTELLIGO_DEP0002); use `grant`. Whole units of the billing currency. */
     credits: z.number().int().positive(),
-    /** @deprecated USD price; use `price`. */
+    /** @deprecated Removed in 2.0.0 (INTELLIGO_DEP0003); use `price`. A USD price. */
     priceUsd: z.number().positive(),
   }),
 ]);
@@ -331,6 +332,16 @@ async function bundleAmounts(
   bundle: CreditBundle
 ): Promise<{ grant: Money; price: Money }> {
   const settings = await getBillingSettings();
+  if ("credits" in bundle) {
+    warnDeprecated(
+      "INTELLIGO_DEP0002",
+      "A credit bundle's credits is removed in 2.0.0; give grant as { amount, currency } in micros."
+    );
+    warnDeprecated(
+      "INTELLIGO_DEP0003",
+      "A credit bundle's priceUsd is removed in 2.0.0; give price as { amount, currency } in micros."
+    );
+  }
   const grant: Money =
     "grant" in bundle
       ? money(bundle.grant.amount, bundle.grant.currency)

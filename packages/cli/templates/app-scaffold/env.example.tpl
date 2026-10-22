@@ -44,8 +44,9 @@ INTELLIGO_BILLING_PRODUCT=__APP_SLUG__
 # AUTH_TRUSTED_PROXIES=
 
 # Email. Without a provider, emails (verification, invitations, reset
-# links) are printed to the server console, and sign-ups are not held
-# for email verification.
+# links) are printed to the server console in development, and sign-ups
+# are not held for email verification; production refuses to start
+# unless EMAIL_PROVIDER=console.
 # RESEND_API_KEY=
 # The sender of every email, on a domain verified with Resend. Required
 # with RESEND_API_KEY: there is no built-in sender, so sends fail without
@@ -66,6 +67,16 @@ INTELLIGO_BILLING_PRODUCT=__APP_SLUG__
 # webhook at /api/webhooks/stripe verifies with the secret.
 # STRIPE_SECRET_KEY=
 # STRIPE_WEBHOOK_SECRET=
+
+# File storage for chat attachments in stored mode, on any S3-compatible
+# bucket. Read by s3StorageFromEnv() once lib/intelligo.ts binds it with
+# setStorageAdapter() (see @intelligo-dev/core's README). The bucket and
+# both keys go together; the region defaults to auto.
+# STORAGE_BUCKET=
+# STORAGE_REGION=
+# STORAGE_ENDPOINT=
+# STORAGE_ACCESS_KEY_ID=
+# STORAGE_SECRET_ACCESS_KEY=
 
 # Which registered payment provider serves payments outside Stripe
 # (registerPaymentProvider in the composition root). Defaults to the
@@ -93,3 +104,7 @@ INTELLIGO_BILLING_PRODUCT=__APP_SLUG__
 # Comma-separated emails allowed to reach the Intelligo admin console.
 # Closed by default: with no value, nobody is a platform admin.
 # PLATFORM_ADMIN_EMAILS=
+
+# Days a deleted account can still be restored before it is purged
+# (default 30). The restore screen and the purge both read it.
+# ACCOUNT_DELETION_GRACE_DAYS=

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Point the site at the release npm serves: `published` in
+ * Point the site at the release npm tags `latest`: `published` in
  * src/data/proof.json, and public/r/*.json as the copy of
  * public/r/<published>/. `sync` calls it, and so does every build — a
  * build after a release serves that release with nothing committed, as
@@ -25,6 +25,7 @@ import { fileURLToPath } from "node:url";
 import { fromRelease } from "./registry-release.mjs";
 
 const SITE = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const SEMVER = /^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$/;
 const PROOF = join(SITE, "src/data/proof.json");
 const REGISTRY_ROOT = join(SITE, "public/r");
 
@@ -33,26 +34,51 @@ function readProof() {
 }
 
 /**
- * What npm serves under the dist-tag `version` releases to — the one
- * version the site may call "on npm". The tree runs ahead of npm between
- * a version bump and its release, and stays ahead if the release fails.
- * Without the network the last answer stands.
+ * What npm serves under `latest`, the release the site and /r serve. A
+ * prerelease on another tag never changes it. The tree runs ahead of npm
+ * between a version bump and its release, and stays ahead if the release
+ * fails. Without the network the last answer stands.
  */
-export async function publishedVersion(version) {
+export async function publishedVersion() {
   const last = readProof().published;
-  const tag = /-([a-z]+)/.exec(version)?.[1] ?? "latest";
   try {
     const response = await fetch(
       "https://registry.npmjs.org/-/package/@intelligo-dev%2fcore/dist-tags",
       { signal: AbortSignal.timeout(10_000) }
     );
     if (!response.ok) throw new Error(`npm answered ${response.status}`);
-    const published = (await response.json())[tag];
-    if (!published) throw new Error(`npm has no "${tag}" dist-tag`);
+    const published = (await response.json()).latest;
+    if (!published) throw new Error('npm has no "latest" dist-tag');
     return published;
   } catch (error) {
     console.warn(
       `proof: could not read npm (${error.message}); keeping published = ${last ?? "unknown"}`
+    );
+    return last;
+  }
+}
+
+/**
+ * Whether npm has this exact version, under any tag: once it does, its
+ * public/r copy is frozen. Without the network the last answer for the
+ * same version stands, and a version the proof has not seen counts as
+ * not on npm.
+ */
+export async function onNpm(version) {
+  if (!SEMVER.test(version)) throw new Error(`not a version: ${version}`);
+  const proof = readProof();
+  const last = proof.version === version ? proof.onNpm === true : false;
+  try {
+    const response = await fetch(
+      `https://registry.npmjs.org/@intelligo-dev%2fcore/${encodeURIComponent(version)}`,
+      { signal: AbortSignal.timeout(10_000) }
+    );
+    if (response.status === 404) return false;
+    if (!response.ok) throw new Error(`npm answered ${response.status}`);
+    return true;
+  } catch (error) {
+    console.warn(
+      `proof: could not read npm (${error.message}); keeping onNpm = ${last} for ${version}`
     );
     return last;
   }
@@ -74,7 +100,7 @@ export function serveRelease(release) {
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const proof = readProof();
-  const published = await publishedVersion(proof.version);
+  const published = await publishedVersion();
   if (!published || published === proof.published) {
     console.log(`serve-release: /r serves ${proof.published ?? "nothing"}`);
   } else if (!existsSync(join(REGISTRY_ROOT, published))) {

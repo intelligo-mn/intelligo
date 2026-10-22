@@ -1,10 +1,12 @@
 name: CI
 
+# main, and release/X.Y: the branch a stable line's patch releases are
+# cut from while main carries the next minor.
 on:
   push:
-    branches: [main]
+    branches: [main, "release/**"]
   pull_request:
-    branches: [main]
+    branches: [main, "release/**"]
 
 # Read-only token. Nothing in CI writes to the repository; the release
 # workflow is the one place that holds write access.
@@ -14,7 +16,8 @@ permissions:
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   # A newer push to a pull request supersedes the older run. A run on
-  # main always finishes: the release workflow waits for it.
+  # main or a release branch always finishes: the release workflow waits
+  # for it.
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 # Dummy values for modules that instantiate at import time (better-auth,
@@ -46,6 +49,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # No step pushes or fetches; the token stays out of .git/config.
+          persist-credentials: false
 
       - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0 — pnpm version from packageManager
 
@@ -199,6 +205,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0 — pnpm version from packageManager
 
@@ -242,6 +250,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0 — pnpm version from packageManager
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
@@ -301,6 +311,7 @@ jobs:
             packages/billing/src/__tests__ \
             packages/admin/src/__tests__ \
             packages/auth/src/raw-organization-paths.int.test.ts \
+            packages/auth/src/rate-limit.int.test.ts \
             packages/auth/src/account-deletion.int.test.ts \
             packages/core/src/attachments/sweep.integration.test.ts \
             packages/cli/src/commands/migrate.int.test.ts
@@ -369,4 +380,79 @@ jobs:
             packages/core/src/identity/service.integration.test.ts \
             packages/core/src/attachments/service.integration.test.ts \
             packages/auth/src/team/service.integration.test.ts \
-            packages/auth/src/workspace/service.integration.test.ts
+            packages/auth/src/workspace/service.integration.test.ts \
+            apps/app/actions/__tests__/tenant-isolation.integration.test.ts \
+            apps/app/app/api/_tests/tenant-isolation.integration.test.ts
+
+  # The reference app in a real browser: sign-up, onboarding, the
+  # billing page, a chat turn on the stub model, usage, an artifact.
+  # Console email issues the session at sign-up, and an empty Gemini key
+  # keeps lib/chat-model.ts on the stub.
+  e2e:
+    name: Browser journey (reference app)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: ci
+          POSTGRES_PASSWORD: ci
+          POSTGRES_DB: intelligo_e2e
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://ci:ci@localhost:5432/intelligo_e2e
+      EMAIL_PROVIDER: console
+      RESEND_API_KEY: ""
+      GOOGLE_GENERATIVE_AI_API_KEY: ""
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0 — pnpm version from packageManager
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Enable pgvector
+        run: psql "$DATABASE_URL" -c 'CREATE EXTENSION IF NOT EXISTS vector;'
+
+      # The CLI runs from source: its bin is dist/bin.js, which the
+      # build below has not produced yet.
+      - name: Migrate
+        run: |
+          pnpm exec tsx packages/cli/src/bin.ts migrate
+          pnpm --filter app exec drizzle-kit migrate
+
+      - name: Build the reference app
+        run: pnpm turbo build --filter=app
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Type-check the specs
+        run: pnpm test:e2e:types
+
+      - name: Browser journey
+        run: pnpm test:e2e
+
+      - if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

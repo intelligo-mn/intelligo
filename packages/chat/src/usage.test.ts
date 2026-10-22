@@ -1,6 +1,35 @@
 import { describe, expect, it } from "vitest";
 
-import { abortedUsage, inFlightTracker, sumStepUsage } from "./usage";
+import {
+  abortedUsage,
+  inFlightTracker,
+  pickUsage,
+  sumStepUsage,
+} from "./usage";
+
+describe("pickUsage", () => {
+  it("keeps the three fields settlement reads and drops what a provider adds", () => {
+    const usage = {
+      inputTokens: 12,
+      outputTokens: 3,
+      totalTokens: 15,
+      inputTokenDetails: { cacheReadTokens: 4 },
+    };
+    expect(pickUsage(usage)).toStrictEqual({
+      inputTokens: 12,
+      outputTokens: 3,
+      totalTokens: 15,
+    });
+  });
+
+  it("reads no usage as three missing fields", () => {
+    expect(pickUsage(undefined)).toStrictEqual({
+      inputTokens: undefined,
+      outputTokens: undefined,
+      totalTokens: undefined,
+    });
+  });
+});
 
 describe("abortedUsage", () => {
   const finished = [

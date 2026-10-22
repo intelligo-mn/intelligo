@@ -96,6 +96,7 @@ export const FOOTER: {
       { href: "/docs/concepts/boundary", label: "Concepts" },
       { href: "/docs/packages", label: "Packages" },
       { href: "/docs/cli", label: "CLI" },
+      { href: "/docs/security", label: "Security" },
     ],
   },
   {

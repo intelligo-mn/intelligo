@@ -62,21 +62,42 @@ export default {
     "packages/executions/src/pricing.ts",
     "packages/billing/src/plan-registry.ts",
     "packages/billing/src/feature-quota.ts",
+    "packages/billing/src/quota-decision.ts",
+    "packages/billing/src/charge-split.ts",
+    "packages/chat/src/body.ts",
+    "packages/chat/src/continuation.ts",
     "packages/chat/src/generation.ts",
+    "packages/chat/src/usage.ts",
     "packages/chat/src/windowing.ts",
   ],
   // `break` fails the command. It sits just under the score this scope
-  // actually holds (98.6), so a regression is a red build rather than a
+  // actually holds (98.5), so a regression is a red build rather than a
   // number someone stops reading. Raise it with the score; never lower
   // it to make a run pass.
   //
-  // Ten mutants keep it off 100, and none of them is a missing test:
-  // eight are whitespace-equivalent regex edits in the injection list
-  // (`\s+` for `\s`, where the sweep collapses the difference away),
-  // one is `<` for `<=` in `compare`, which the branch above it already
-  // answered, and one is `PROVIDER_CURRENCY`, evaluated at module load
-  // — the runner does not re-import the module, so the edit never
-  // takes effect. The equivalents that could be marked are marked, in
-  // the source, with a reason.
+  // Twenty-one mutants keep it off 100.
+  //
+  // Five are in the chat body parser and the continuation check, and
+  // each is equivalent: a `typeof` guard dropped where the next check
+  // refuses the same values anyway (a primitive has no `id`; a role or a
+  // media type that is not a string is in no list), `approval !== null`
+  // dropped where a null approval comes back as null either way, and
+  // `!isToolPart(part)` made `false`, where a part with no call id finds
+  // no answer and is kept as stored. Each shares its line with killed
+  // mutants of the same mutator, so a directive cannot mark it alone.
+  //
+  // Sixteen are in `prompt.ts`, `money.ts` and `pricing.ts`. Two are
+  // equivalent: `<` for `<=` in `compare`, which the branch above it
+  // already answered, and the `PROVIDER_CURRENCY` literal, evaluated at
+  // module load, where the runner does not re-import the module. The
+  // other fourteen change behaviour that no test observes: ten regex
+  // edits in the injection list (`\s+` narrowed to `\s`, `\s*` widened
+  // to `\S*`, `instructions?` narrowed to `instructions`), and in the
+  // sanitizer two edits to the zero-width check that picks which form
+  // to clean and the `removed / originalLength > 0.5` cut-off, plus the
+  // `currency_mismatch` code of pricing's error.
+  //
+  // The equivalents that could be marked are marked in the source, each
+  // with a reason.
   thresholds: { high: 99, low: 97, break: 97 },
 };

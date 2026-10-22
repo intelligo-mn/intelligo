@@ -376,6 +376,27 @@ describe("upgradeCheck", () => {
     expect(check().items[0]!.state).toBe("current");
   });
 
+  it("fills a placeholder the manifest does not record with the computed value", () => {
+    // An app made before the template carried __INTELLIGO_REGISTRY__ has
+    // no recorded value; its unchanged components.json must stay current.
+    const url = "https://intelligo.dev/r/{name}.json";
+    writeTemplates("1.0.0", `{ "@intelligo": "${url}" }\n`);
+    add();
+    writeTemplates("1.1.0", '{ "@intelligo": "__INTELLIGO_REGISTRY__" }\n');
+    const options = {
+      appRoot,
+      templatesDir,
+      variables: { __INTELLIGO_REGISTRY__: url },
+    };
+
+    expect(upgradeCheck(options).items[0]!.state).toBe("current");
+    writeFileSync(target(), `{ "@intelligo": "${url}" } // mine\n`);
+    expect(upgradeCheck(options).items[0]!.state).toBe("customized");
+    expect(upgradeDiff(options, "app/demo/page.tsx")).not.toContain(
+      "__INTELLIGO_REGISTRY__"
+    );
+  });
+
   it("reports a file the consumer deleted", () => {
     add();
     rmSync(target());

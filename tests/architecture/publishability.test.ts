@@ -506,21 +506,29 @@ describe("publishability", () => {
   });
 
   it("has release notes for the version the manifests carry", () => {
-    // The release workflow refuses a version with no CHANGELOG section
-    // (scripts/release-notes.mjs). Failing here, before the merge that
-    // would publish, is the cheaper place to find out.
+    // The release workflow refuses a version with no CHANGELOG section,
+    // or one that does not open with the Upgrade/Breaking/Migrations
+    // bullets (scripts/release-notes.mjs). Failing here, before the
+    // merge that would publish, is the cheaper place to find out.
     const version = JSON.parse(
       readFileSync(path.join(PACKAGES_DIR, "core/package.json"), "utf8")
     ).version as string;
-    const notes = execFileSync(
-      process.execPath,
-      [path.join(ROOT, "scripts/release-notes.mjs"), version],
-      { encoding: "utf8" }
-    );
+    let notes = "";
+    let refusal = "";
+    try {
+      notes = execFileSync(
+        process.execPath,
+        [path.join(ROOT, "scripts/release-notes.mjs"), version],
+        { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }
+      );
+    } catch (error) {
+      refusal = (error as { stderr: string }).stderr;
+    }
     expect(
-      notes.trim().length,
-      `CHANGELOG.md has no section for ${version}`
-    ).toBeGreaterThan(0);
+      refusal,
+      `CHANGELOG.md's section for ${version} is missing or does not open with the Upgrade/Breaking/Migrations bullets`
+    ).toBe("");
+    expect(notes.trim().length).toBeGreaterThan(0);
   });
 
   it("publishes every package after the packages it depends on", () => {
@@ -571,7 +579,9 @@ describe("publishability", () => {
       "NOTICE",
       "CODE_OF_CONDUCT.md",
       "SECURITY.md",
+      "RELEASES.md",
       "CONTRIBUTING.md",
+      "GOVERNANCE.md",
       "TRADEMARK.md",
       "README.md",
       "CHANGELOG.md",

@@ -24,12 +24,13 @@ import { Client } from "pg";
 const stripe = vi.hoisted(() => ({
   sessionsList: vi.fn(),
   chargesRetrieve: vi.fn(),
+  chargesList: vi.fn(),
 }));
 
 vi.mock("../stripe", () => ({
   getStripe: () => ({
     checkout: { sessions: { list: stripe.sessionsList } },
-    charges: { retrieve: stripe.chargesRetrieve },
+    charges: { retrieve: stripe.chargesRetrieve, list: stripe.chargesList },
   }),
 }));
 
@@ -82,6 +83,7 @@ d("credit purchase reversal (integration)", () => {
   beforeEach(async () => {
     vi.clearAllMocks();
     stripe.sessionsList.mockResolvedValue({ data: [] });
+    stripe.chargesList.mockResolvedValue({ data: [] });
     await client.query(`DELETE FROM organization WHERE id = $1`, [WORKSPACE]);
     await client.query(
       `INSERT INTO organization (id, name, slug) VALUES ($1, 'Reversal', $1)`,
@@ -181,6 +183,63 @@ d("credit purchase reversal (integration)", () => {
     } as unknown as Stripe.Checkout.Session);
     expect(await purchaseStatus()).toBe("refunded");
     expect(await balance()).toMatchObject({ balance: String(GRANTED) });
+  });
+
+  describe("a partial refund handled before the purchase is granted", () => {
+    const paid = {
+      id: "cs_1",
+      mode: "payment",
+      payment_status: "paid",
+      payment_intent: INTENT,
+      metadata: { workspaceId: WORKSPACE, purchaseId: PURCHASE },
+    } as unknown as Stripe.Checkout.Session;
+
+    beforeEach(async () => {
+      await client.query(
+        `UPDATE credit_purchases SET status = 'pending' WHERE id = $1`,
+        [PURCHASE]
+      );
+      await client.query(
+        `UPDATE credit_balances SET balance_micros = 0, total_purchased_micros = 0
+          WHERE workspace_id = $1`,
+        [WORKSPACE]
+      );
+      stripe.chargesList.mockResolvedValue({ data: [charge(1400)] });
+    });
+
+    it("is taken back once the grant lands", async () => {
+      await handlers.handleChargeRefunded(charge(1400));
+      expect(await purchaseStatus()).toBe("pending");
+
+      await handlers.handleCheckoutCompleted(paid);
+      await handlers.handleCheckoutCompleted(paid);
+
+      const kept = GRANTED - Math.floor((GRANTED * 1400) / 3500);
+      expect(await purchaseStatus()).toBe("completed");
+      expect(await balance()).toEqual({
+        balance: String(kept),
+        purchased: String(kept),
+      });
+    });
+
+    // Pins "never twice" when both paths reverse the refund; the order in
+    // which they run is not controlled, so the case above pins the ordering.
+    it("is never taken back twice when the refund and the grant race", async () => {
+      await Promise.all([
+        handlers.handleChargeRefunded(charge(1400)),
+        handlers.handleCheckoutCompleted(paid),
+        handlers.handleChargeRefunded(charge(1400)),
+      ]);
+
+      const kept = GRANTED - Math.floor((GRANTED * 1400) / 3500);
+      expect(await balance()).toMatchObject({ balance: String(kept) });
+      const { rows } = await client.query<{ n: string; total: string }>(
+        `SELECT count(*) AS n, sum(charged_micros) AS total FROM usage_records
+          WHERE workspace_id = $1 AND type = 'credit'`,
+        [WORKSPACE]
+      );
+      expect(rows[0]).toEqual({ n: "1", total: String(GRANTED - kept) });
+    });
   });
 
   it("ignores a refunded charge that bought no credit", async () => {

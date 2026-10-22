@@ -1,5 +1,17 @@
 {
-  "$comment": "npm names the framework no longer publishes, each with where the code went. A maintainer applies these with `node scripts/npm-maintain.mjs` (trusted publishing cannot deprecate); an entry already on the registry is skipped, so the list only ever grows.",
+  "$comment": "npm names the framework no longer publishes, each with where the code went, and dist-tags no longer in use (`retiredTags`), removed from every published and deprecated name. `vulnerable.fixedIn` names, per package, the first version that no published security advisory affects; every version below it is deprecated with `vulnerable.message`. A maintainer applies these with `node scripts/npm-maintain.mjs` (trusted publishing cannot deprecate or move a tag); an entry already on the registry is skipped, so the list only ever grows.",
+  "retiredTags": ["beta"],
+  "vulnerable": {
+    "message": "This version is affected by a published security advisory (https://github.com/intelligo-dev/intelligo/security/advisories). Upgrade every @intelligo-dev/* package to the latest release.",
+    "fixedIn": {
+      "@intelligo-dev/admin": "1.1.2",
+      "@intelligo-dev/auth": "1.1.2",
+      "@intelligo-dev/billing": "1.1.2",
+      "@intelligo-dev/chat": "1.2.5",
+      "@intelligo-dev/cli": "1.1.2",
+      "@intelligo-dev/core": "1.2.0"
+    }
+  },
   "deprecations": [
     {
       "name": "@intelligo-dev/money",

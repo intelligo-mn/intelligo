@@ -259,10 +259,17 @@ export function convert(
     }
     return value;
   }
-  return {
-    amount: micros(Math.ceil((value.amount * rateMicros) / MICROS_PER_UNIT)),
-    currency: target,
-  };
+  // In BigInt: at a rate in the thousands, the product of an amount and
+  // the rate passes 2^53 from a few dollars up, and a float product
+  // rounded there can land the result one micro either side of the
+  // rounded-up quotient.
+  const scale = BigInt(MICROS_PER_UNIT);
+  const product = BigInt(value.amount) * BigInt(rateMicros);
+  const quotient = product / scale;
+  // Division truncates toward zero, which is already up for a negative
+  // amount; a positive remainder rounds up.
+  const amount = product % scale > 0n ? quotient + 1n : quotient;
+  return { amount: micros(Number(amount)), currency: target };
 }
 
 /** Two significant digits is enough to read a sub-cent amount by. */

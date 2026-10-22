@@ -9,17 +9,22 @@
  *
  *   1. every entry in scripts/npm-deprecations.json is applied, once —
  *      npm answers 422 to a deprecation that changes nothing, so an
- *      entry whose message is already on the registry is skipped;
- *   2. while a package has no stable release, `latest` follows its
- *      newest prerelease, so a bare `npm install` does not resolve to
- *      an old beta. Once a stable version exists the release workflow
- *      owns `latest` and this leaves it alone.
+ *      entry whose message is already on the registry is skipped. Its
+ *      `vulnerable.fixedIn` deprecates each package's versions below
+ *      the first one without a published security advisory against it;
+ *   2. `next` never resolves below `latest`, and the tags in
+ *      `retiredTags` are removed (scripts/npm-dist-tags.mjs), for every
+ *      published package and every deprecated name. `latest` is the
+ *      release workflow's and is never moved here; the release run says
+ *      when `next` is behind it.
  *
  *   node scripts/npm-maintain.mjs            # apply
  *   node scripts/npm-maintain.mjs --dry-run  # print what would change
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
+
+import { planDistTags } from "./npm-dist-tags.mjs";
 
 const dryRun = process.argv.includes("--dry-run");
 
@@ -75,9 +80,34 @@ function npm(args) {
   if (result.status !== 0) process.exit(result.status ?? 1);
 }
 
-const { deprecations } = JSON.parse(
+const {
+  deprecations,
+  retiredTags = [],
+  vulnerable,
+} = JSON.parse(
   readFileSync(new URL("./npm-deprecations.json", import.meta.url), "utf8")
 );
+for (const [name, fixedIn] of Object.entries(vulnerable?.fixedIn ?? {})) {
+  if (view(`${name}@>=${fixedIn}`, "version") === undefined) {
+    console.log(`${name}@${fixedIn} is not on npm yet — nothing deprecated`);
+    continue;
+  }
+  const spec = `${name}@<${fixedIn}`;
+  const versions = [view(spec, "version") ?? []].flat();
+  if (versions.length === 0) {
+    console.log(`${spec} matches nothing on npm — nothing to deprecate`);
+    continue;
+  }
+  const messages = [view(spec, "deprecated") ?? []].flat();
+  if (
+    messages.length === versions.length &&
+    messages.every((m) => m === vulnerable.message)
+  ) {
+    console.log(`${spec} is already deprecated with this message`);
+    continue;
+  }
+  npm(["deprecate", spec, vulnerable.message]);
+}
 for (const { name, message } of deprecations) {
   if (view(name, "versions") === undefined) {
     console.log(`${name} was never on npm — nothing to deprecate`);
@@ -90,24 +120,18 @@ for (const { name, message } of deprecations) {
   npm(["deprecate", `${name}@*`, message]);
 }
 
+const names = deprecations.map(({ name }) => name);
 const packages = new URL("../packages/", import.meta.url);
-for (const dir of readdirSync(packages)) {
+for (const dir of readdirSync(packages).sort()) {
   const manifest = new URL(`${dir}/package.json`, packages);
   if (!existsSync(manifest)) continue;
   const pkg = JSON.parse(readFileSync(manifest, "utf8"));
-  if (pkg.private) continue;
-
-  const versions = [view(pkg.name, "versions") ?? []].flat();
-  if (versions.length === 0) continue;
-  if (versions.some((v) => !v.includes("-"))) {
-    console.log(`${pkg.name} has a stable release — latest is the workflow's`);
-    continue;
-  }
-  const newest = versions.at(-1);
-  const latest = view(pkg.name, "dist-tags")?.latest;
-  if (latest === newest) {
-    console.log(`${pkg.name}: latest is ${newest}`);
-    continue;
-  }
-  npm(["dist-tag", "add", `${pkg.name}@${newest}`, "latest"]);
+  if (!pkg.private) names.push(pkg.name);
+}
+for (const name of names) {
+  const tags = view(name, "dist-tags");
+  if (tags === undefined) continue;
+  const plan = planDistTags({ name, tags, retired: retiredTags });
+  if (plan.length === 0) console.log(`${name}: dist-tags are in order`);
+  for (const args of plan) npm(args);
 }

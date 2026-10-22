@@ -470,6 +470,20 @@ d("local payments (integration)", () => {
     });
   });
 
+  it("answers an id the database cannot hold as no invoice", async () => {
+    const invoice = await open();
+    payment.mockCompletePayment(invoice.invoiceId);
+
+    await expect(
+      local.settleLocalInvoice({
+        invoiceId: `${invoice.invoiceId}\u0000`,
+        workspaceId: WORKSPACE,
+        fulfil: () => ({ credits: credits() }),
+      })
+    ).rejects.toMatchObject({ code: "payment_not_found" });
+    expect(await balanceMicros()).toBe(0);
+  });
+
   it("records a failed invoice and grants nothing", async () => {
     const invoice = await open();
     await payment.mockPaymentProvider.cancelPayment(invoice.invoiceId);
@@ -556,6 +570,23 @@ d("local payments (integration)", () => {
       const result = await sweep({ invoiceId: invoice.invoiceId });
 
       expect(result).toMatchObject({ paid: 0, pending: 1, errors: [] });
+      expect(await balanceMicros()).toBe(0);
+    });
+
+    it("settles nothing for a callback naming an id the database cannot hold", async () => {
+      const invoice = await open();
+      payment.mockCompletePayment(invoice.invoiceId);
+
+      for (const invoiceId of ["\u0000", `${invoice.invoiceId}\u0000`]) {
+        expect(await sweep({ invoiceId })).toEqual({
+          paid: 0,
+          pending: 0,
+          failed: 0,
+          errors: [],
+          deferred: 0,
+        });
+      }
+      expect((await row(invoice.invoiceId))?.fulfilled_at).toBeNull();
       expect(await balanceMicros()).toBe(0);
     });
 

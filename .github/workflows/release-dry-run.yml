@@ -1,0 +1,119 @@
+name: Release dry run
+
+# A release pull request runs every check the publish runs, before it
+# merges: the suite, the packed tarballs, a consumer app outside the
+# monorepo with every registry item, the reference app, the hosted
+# registry and `npm publish --dry-run` (release-verify.yml, in dry-run
+# mode). After the merge those checks could only fail by refusing a
+# version npm will then never get.
+#
+# Every pull request reports "Release dry run", so it can be a required
+# check: one that does not change the version passes in a few seconds.
+# A manual run checks the branch it is started on when npm does not
+# have that branch's version yet, and otherwise reports "not a release".
+
+on:
+  pull_request:
+    branches: [main, "release/**"]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: release-dry-run-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  detect:
+    name: Is this a release?
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      release: ${{ steps.detect.outputs.release }}
+
+    steps:
+      # The pull request's merge commit, and its first parent: the base
+      # branch it would merge into.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+
+      # A release changes the manifests' version. A manual run has no
+      # base to compare with, so it checks whenever npm does not have
+      # the branch's version yet.
+      - name: Does it change the version?
+        id: detect
+        run: |
+          set -euo pipefail
+          read_version() { node -p "JSON.parse(require('fs').readFileSync(0, 'utf8')).version"; }
+          head=$(read_version < packages/core/package.json)
+          if [ "$GITHUB_EVENT_NAME" != "pull_request" ]; then
+            if npm view "@intelligo-dev/core@$head" version >/dev/null 2>&1; then
+              echo "npm already has $head: not a release"
+              echo "release=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "npm does not have $head yet: a release"
+              echo "release=true" >> "$GITHUB_OUTPUT"
+            fi
+            exit 0
+          fi
+          base=$(git show HEAD^1:packages/core/package.json | read_version)
+          if [ "$head" != "$base" ]; then
+            echo "packages/core goes from $base to $head: a release"
+            echo "release=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "packages/core stays at $head: not a release"
+            echo "release=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  dry-run:
+    name: Release checks
+    needs: detect
+    if: needs.detect.outputs.release == 'true'
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/release-verify.yml
+    with:
+      mode: dry-run
+      # The branch the release would merge into: on release/X.Y only an
+      # X.Y.Z patch may be released.
+      branch: ${{ github.base_ref }}
+    # A pull request from this repository sees the secret; a fork's
+    # runs without it, as in CI, and the publishability test then reads
+    # no private vocabulary.
+    secrets:
+      PRIVATE_VOCABULARY: ${{ secrets.PRIVATE_VOCABULARY }}
+
+  result:
+    name: Release dry run
+    needs: [detect, dry-run]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions: {}
+
+    steps:
+      - name: Did the release checks pass?
+        env:
+          DETECT: ${{ needs.detect.result }}
+          RELEASE: ${{ needs.detect.outputs.release }}
+          DRY_RUN: ${{ needs.dry-run.result }}
+        run: |
+          set -euo pipefail
+          if [ "$DETECT" != "success" ]; then
+            echo "::error::could not tell whether this is a release ($DETECT)"
+            exit 1
+          fi
+          if [ "$RELEASE" != "true" ]; then
+            echo "not a release: nothing to dry-run"
+            exit 0
+          fi
+          if [ "$DRY_RUN" != "success" ]; then
+            echo "::error::the release checks did not pass ($DRY_RUN)"
+            exit 1
+          fi
+          echo "the release checks passed"

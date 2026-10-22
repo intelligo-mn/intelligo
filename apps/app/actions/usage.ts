@@ -37,6 +37,8 @@ import { planName } from "@/lib/plan-copy";
 
 export type UsagePeriod = "7d" | "30d" | "current";
 
+const PERIODS: readonly UsagePeriod[] = ["7d", "30d", "current"];
+
 export type UsagePeriodSummary = {
   tokensUsed: number;
   /**
@@ -372,6 +374,9 @@ export async function getUsagePeriodSummary(
   period: UsagePeriod
 ): Promise<ActionResult<UsagePeriodSummary>> {
   const t = await getTranslations("usage");
+  if (!PERIODS.includes(period)) {
+    return { success: false, error: t("errors.loadSummary") };
+  }
 
   try {
     const { workspaceId, filter } = await usageReader();
