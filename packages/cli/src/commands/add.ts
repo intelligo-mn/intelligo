@@ -8,7 +8,7 @@
  * their own, and refuse to overwrite the latter.
  */
 
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { backUp } from "./backup.js";
@@ -101,6 +101,16 @@ const PLACEHOLDER = /__[A-Z][A-Z0-9_]*__/;
 
 const VERCEL_CONFIG = "vercel.json";
 
+/** The file's text, or null when there is no file. */
+function readIfPresent(file: string): string | null {
+  try {
+    return readFileSync(file, "utf8");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return null;
+    throw error;
+  }
+}
+
 /**
  * Schedule the cron in vercel.json when the app has none. An existing
  * one is deployment configuration the consumer wrote: it is read to see
@@ -112,13 +122,18 @@ function scheduleCron(
   cron: TemplateCron
 ): "written" | "present" | "manual" {
   const file = path.join(appRoot, VERCEL_CONFIG);
-  if (!existsSync(file)) {
-    const config = {
-      $schema: "https://openapi.vercel.sh/vercel.json",
-      crons: [cron],
-    };
-    writeFileSync(file, JSON.stringify(config, null, 2) + "\n");
+  const config = {
+    $schema: "https://openapi.vercel.sh/vercel.json",
+    crons: [cron],
+  };
+  try {
+    // "wx" creates the file or fails on an existing one, in one step.
+    writeFileSync(file, JSON.stringify(config, null, 2) + "\n", {
+      flag: "wx",
+    });
     return "written";
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
   }
   try {
     const config = JSON.parse(readFileSync(file, "utf8")) as {
@@ -188,10 +203,9 @@ export function addFeature(feature: string, options: AddOptions): AddResult {
     const replaced = spec.files
       .filter((file) => !handedOver.has(file.target))
       .filter((file) => {
-        const target = path.join(options.appRoot, file.target);
-        if (!existsSync(target)) return false;
-        const current = hashContents(readFileSync(target, "utf8"));
-        return current !== previousByPath.get(file.target)?.hash;
+        const existing = readIfPresent(path.join(options.appRoot, file.target));
+        if (existing === null) return false;
+        return hashContents(existing) !== previousByPath.get(file.target)?.hash;
       })
       .map((file) => file.target);
     if (replaced.length > 0) {
@@ -208,8 +222,9 @@ export function addFeature(feature: string, options: AddOptions): AddResult {
     const source = path.join(options.templatesDir, file.template);
     const target = path.join(options.appRoot, file.target);
     const contents = substitute(readFileSync(source, "utf8"), variables);
-    if (existsSync(target) && !options.force) {
-      const current = hashContents(readFileSync(target, "utf8"));
+    const existing = options.force ? null : readIfPresent(target);
+    if (existing !== null) {
+      const current = hashContents(existing);
       const known = previousByPath.get(file.target);
 
       if (!known) {

@@ -106,8 +106,13 @@ function serveRegistry(dir: string): Promise<{ server: Server; url: string }> {
       } catch {
         // A malformed escape names no item: answered 404 below.
       }
+      if (!/^[a-z0-9-]+\.json$/.test(name)) {
+        res.writeHead(404);
+        res.end();
+        return;
+      }
       const file = path.join(dir, name);
-      if (!/^[a-z0-9-]+\.json$/.test(name) || !existsSync(file)) {
+      if (!existsSync(file)) {
         res.writeHead(404);
         res.end();
         return;
