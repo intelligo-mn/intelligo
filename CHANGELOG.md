@@ -14,10 +14,21 @@ untagged milestones that followed. None of them were released to npm —
 happened alongside the framework is out of scope and noted only where
 it explains a framework decision.
 
+From 1.3.0, and its prereleases, every section opens with three
+bullets: **Upgrade:** required, recommended or optional; **Breaking:**
+none, or what a consumer changes (with the steps under `### Upgrading`);
+**Migrations:** none, or the migrations `intelligo migrate` applies
+since the previous stable release, or for a prerelease since the
+previous tag of its series.
+
 ## [Unreleased]
 
 ### Added
 
+- `### Security` is a changelog category. From 1.2.5, each of its entries
+  links the GitHub security advisory published for it, and from 1.3.0 a
+  section that has one says **Upgrade:** required;
+  `scripts/release-notes.mjs` refuses a release whose section does not.
 - The `admin-console` registry item: the platform operator's console under
   `/admin`, installed as source the application owns
   (`intelligo sync admin-console`). An overview (the product's own panels
@@ -52,11 +63,316 @@ it explains a framework decision.
   an offset.
 - `@intelligo-dev/audit`: `queryAuditEvents` takes an `offset`, and
   `countAuditEvents` counts the same filters.
+- From this release on, every GitHub release carries a CycloneDX 1.6
+  SBOM per published package (`intelligo-dev-<package>-<version>.cdx.json`):
+  its runtime dependencies as the release's lockfile resolved them, each
+  with its registry hash, and the package's tarball hash in hex — the
+  sha512 npm serves as integrity. Earlier releases carry none.
+- From this release on, every GitHub release carries each package's SLSA
+  provenance as npm serves it: the Sigstore bundle
+  (`intelligo-dev-<package>-<version>.sigstore.json`) and the attested
+  statements (`intelligo-dev-<version>.intoto.jsonl`).
+- A `next` channel: the next minor ships as `X.Y.0-next.N`, and
+  `npx @intelligo-dev/cli@next create` scaffolds it with its own pages
+  from `/r/<version>/` (the scaffold template is 1.23.0). A maintainer's
+  `node scripts/npm-maintain.mjs` keeps `next` at or above `latest` and
+  removes the retired `beta` tag; the release run says when `next` is
+  behind.
+
+### Changed
+
+- Calling `checkQuota`, or checking out a credit bundle with
+  `credits`/`priceUsd`, logs a one-time `DeprecationWarning`
+  (INTELLIGO_DEP0001 to INTELLIGO_DEP0003) naming the replacement.
+- The admin plugin's user writes — `create-user`, `update-user`,
+  `set-role`, `set-user-password`, `ban-user`, `unban-user`,
+  `remove-user`, `revoke-user-session(s)` — answer 404 over HTTP, like
+  impersonation and the user listings already did. They leave no audit
+  row, and the platform role holds no permission for them; closing them
+  keeps a role that gains one from opening them to the browser.
+  Server-side calls through `auth.api` are unaffected.
+- `@intelligo-dev/auth` sets the rate limits of its credential
+  endpoints itself rather than inheriting Better-Auth's: 3 attempts per
+  10 seconds at signing in, signing up and changing a password or email,
+  3 reset or verification emails per minute, and 100 requests per 10
+  seconds elsewhere. The numbers are unchanged; on the paths
+  `AUTH_RATE_LIMIT_RULES` names, a dependency update can no longer move
+  them, and any other path keeps Better-Auth's built-in rule. They, the
+  session lifetime and the impersonation length are named constants in
+  `request-hardening.ts`.
+- `@intelligo-dev/billing`'s admission rule and settlement's pool split
+  are pure internal modules, with no change in behaviour or API.
+- `applyRate`'s documentation states its rounding bound in the
+  deployment's own currency: under `usdRateMicros / 1e6 + 1` micros
+  over the exact charge, which is two micros only in a USD deployment.
+- `.env.example` (app-scaffold 1.23.0) and the Environment page list
+  `STORAGE_*`, read once a storage adapter is bound, and
+  `ACCOUNT_DELETION_GRACE_DAYS`, and say production refuses to start
+  without an email provider. The docs guard now finds a variable read
+  from an injected `env` as well as from `process.env`.
+- The deploy guide says production refuses to start without an email
+  provider unless `EMAIL_PROVIDER=console`, and lists the warnings
+  `assertEnv()` logs, separating those logged only in production from
+  those logged in every environment.
+- The billing README (and `/docs/packages/billing`) describes registering
+  a local payment provider once, with what its `currency` does.
+- The docs have a Security section, opening at `/docs/security` with what
+  the framework enforces and what stays the application's.
+- A production checklist at `/docs/security/production-checklist`: the
+  environment, proxies, rate limits, platform admins, the maintenance
+  cron, Stripe, the AI surface, the edge and database, and what to watch.
+- Threat models at `/docs/security/`: `threat-model-auth`,
+  `threat-model-billing`, `threat-model-chat`, `threat-model-executions`,
+  `threat-model-storage` (file storage and chat uploads) and
+  `threat-model-admin` (the admin console and support impersonation).
+- intelligo.dev and `/r` serve the release npm tags `latest`; a
+  prerelease keeps its own copy at `/r/<version>/`, frozen once npm has
+  it, and its publish does not redeploy the site.
+- Every fixed vulnerability gets a published GitHub security advisory,
+  with its affected and patched versions, a CVSS score and a CVE where
+  one is assigned, so Dependabot and `npm audit` report it to projects on
+  an affected version. `SECURITY.md` says so and links the published
+  advisories; its fix goes under `### Security`, linking the advisory,
+  and npm marks the affected versions deprecated.
+  `docs/incident-response.md` writes the advisory in the private report
+  and publishes it once the fixed version is on npm.
+- `RELEASES.md`: what a patch, minor and major may change, what counts as
+  public API, which packages are stable and which experimental, the
+  release cadence, the support window and the deprecation rule.
+  `SECURITY.md` says how fast a report is acknowledged, triaged and fixed
+  by severity, that disclosure is coordinated within 90 days, the safe
+  harbour for good-faith research, a scope that includes the registry
+  items, the CLI scaffold and what client data may reach server state,
+  and a supported-versions table that an architecture test holds to the
+  released minor.
+- `docs/incident-response.md`: the maintainers' runbook for a report or an
+  incident — roles, severity and timelines, containing a compromised npm
+  account, trusted publisher or Cloudflare token and a leaked
+  `BETTER_AUTH_SECRET`, how the fix release is cut, and how users are told.
+- `GOVERNANCE.md`: roles, review rules, and how a contributor becomes a
+  maintainer.
+- `CONTRIBUTING.md` is written for people: where to start, the boundary
+  rule, setup, the steps of a change and what review checks. It no
+  longer sends a newcomer to `AGENTS.md` first. `SUPPORT.md` drops the
+  beta wording.
+- `CONTRIBUTING.md` and the pull request template say what an
+  AI-assisted change passes and which lines a person reads.
+- `.github/CODEOWNERS` marks the high-risk source paths, and a test keeps
+  every pattern there matching a tracked file.
+- The `review-window` status holds a pull request that touches a
+  high-risk path, or is labelled `security`, for 24 hours. Its workflow
+  stays inactive until the repository variable `REVIEW_WINDOW_CLIENT_ID`
+  is set.
+- The new-issue chooser links the Show and tell discussions, for a
+  product or demo built on Intelligo.
+- `node scripts/npm-maintain.mjs` deprecates, per package, the versions a
+  published security advisory affects (`vulnerable.fixedIn` in
+  `scripts/npm-deprecations.json`), so installing one warns and points at
+  the advisories; nothing is deprecated for a package until npm has its
+  fixed version.
+- CI fails when a workflow uses an action by tag instead of commit SHA,
+  grants a write scope at the top level, leaves the token in a checkout,
+  hands a checkout, an env var or a step the triggering event's head
+  (a `workflow_run`, a pull request's head, `head_ref`) or triggers on
+  `pull_request_target`; CI's checkouts no longer keep the token.
+- OpenSSF Scorecard runs weekly and on every push to main; its results are
+  public at scorecard.dev and in the repository's code-scanning alerts.
+- The README shows the OpenSSF Scorecard score.
+- A dependency-audit workflow, separate from the CI run the release waits
+  on, fails on a known high or critical advisory in a production
+  dependency; the workspace's resolved `hono`, `vite`, `markdown-it` and
+  `@modelcontextprotocol/server` are raised to their fixed releases.
+- The release workflow reads the version from the commit CI passed after
+  checking that the commit is on main, instead of checking out a ref taken
+  from the triggering run.
+- A release refuses a version that would move its npm dist-tag
+  backwards: a plain version below `latest`, or a prerelease not above
+  its own tag or `latest`.
+- From 1.3.0 a release's changelog section opens with Upgrade, Breaking
+  and Migrations bullets, and uses only the release policy's categories;
+  the release refuses a section without them, and one whose Migrations
+  line does not name exactly the migrations added since the previous
+  release.
+- Releases are cut as squash-merged `chore(release)` pull requests;
+  `CONTRIBUTING.md` says how.
+- A release pull request runs the release checks and an npm dry-run
+  publish before it merges (the "Release dry run" check), and the
+  release workflow finds the release commit on main's first-parent line,
+  so a release merged by any method resolves to the commit that brought
+  the version in.
+- Patch releases for the current stable minor ship from `release/X.Y`
+  while main carries the next minor: CI, the release dry run and the
+  release workflow run on those branches, a release branch carries
+  `X.Y.Z` patches only, and the site serves the patch from its tag until
+  a forward-port pull request brings it to main. `SECURITY.md` states
+  which versions receive fixes.
+- CodeQL analyses the TypeScript sources and the GitHub workflows on every
+  pull request, on every push to main and weekly.
+- The rulesets for `main`, the `release/**` branches and the `v*` tags
+  are kept in `.github/rulesets/`, and a test holds main's required
+  checks equal to the checks a pull request runs.
+- AGENTS.md states both database-suite gates: `*.int.test.ts` on
+  `TEST_PG_URL` against the replayed migrations, `*.integration.test.ts`
+  on `DATABASE_URL` against the pushed schema.
+- An architecture test requires every server action a registry item ships
+  to reach an auth guard — directly, through a helper in its own module,
+  or through a service that guards itself — or to be listed as public with
+  the reason anyone may call it.
+- An architecture test lists every place the framework and its registry
+  read a request body, and every server-action parameter that is not a
+  plain string with the check its value gets. A new one fails until it is
+  declared with how it is checked.
+- A test enforces the chat transport's client-data whitelist, and the
+  mutation run covers the chat body parser and the continuation check.
+- The registry architecture test states what its `formatPrice` check
+  enforces.
+- Every server action in the reference app is called by another
+  workspace's owner and member with the victim's ids; the victim's rows
+  must not change and no answer may carry its data. Actions are
+  discovered, so a new one fails the suite until it is classified.
+- Every route handler in the reference app is called as another
+  workspace's user, unsigned and with a wrong cron secret; a new route
+  fails the suite until it is classified.
+- Money arithmetic is covered by property tests (fast-check, with a
+  fixed seed): one currency per operation, no silent overflow, and
+  minor-unit and Stripe conversions that never undercharge.
+- The hold ceiling is covered by property tests: within the workload a
+  run declares, no run is charged more than its hold, and the charge
+  stays inside `applyRate`'s rounding bound in any currency.
+- Step usage is covered by property tests and joins the mutation run: a
+  step that streamed text but reported nothing is never settled as
+  free, a step refused before any output costs nothing, and a reported
+  step is settled at what it reported.
+- Admission and the split of a charge across plan, top-up and trial are
+  covered by property tests (no overcommit, a charge conserved, pools
+  taken in order) and join the mutation-testing scope.
+- The execution lifecycle's call order is covered by a command model:
+  any sequence of begin, complete, fail, progress and reconcile, with
+  settlement faults and the clock past the abandonment cutoff, settles
+  each run at most once, charges what succeeded, releases what failed,
+  and charges a run abandoned after recording progress.
+- The chat transport is covered by a property over where a turn's
+  stream fails: whichever step the provider refuses or breaks off, the
+  steps it already billed are settled, and the hold is released only
+  when nothing was spent.
+- The credit ledger is checked against a reference model on Postgres:
+  generated admissions (several at once included), settlements, replays,
+  releases, expired holds and top-ups leave every pool as the model
+  says, and nothing is forgiven while no charge exceeds its hold.
+- Crashes and dropped connections between admission and settlement are
+  tested on Postgres: an abandoned run releases its hold, a run that
+  recorded progress or whose charge committed is charged once, a killed
+  settlement leaves no charge and keeps its hold until `reconcile()`
+  settles it once, a killed admission leaves no hold, and a late
+  `complete()` racing `reconcile()` charges once.
+- Stripe webhook delivery is tested on Postgres as Stripe delivers:
+  concurrent copies of an event run its handlers once, a failed delivery
+  is retried to completion, a stale claim is taken again, and a credit
+  purchase's payment, refunds and dispute in any order, duplicated, with
+  one failed delivery, credit it at most once.
+- Local-payment settlement is tested on Postgres with polls, callbacks
+  and the sweep racing one invoice while the provider's answer changes:
+  it is fulfilled at most once, never marked failed once fulfilled,
+  never granted for a mismatched amount, and grants its credit or plan
+  exactly once when paid in full.
+- A canceled subscription is tested to stay canceled on Postgres
+  whatever order and how many times Stripe delivers its updates,
+  deletion and paid invoices: once the deletion is handled, the
+  workspace is on the free plan.
+- The chat request body, attachment URLs, the bounded body reader and
+  continuation rebuilding are fuzzed with property tests; `FC_RUNS` and
+  `FC_SEED` set the depth and replay a failure.
+- The Stripe webhook entry (any body and signature, any signed event, a
+  stale timestamp) and local-payment settlement by an arbitrary callback
+  invoice id are fuzzed with property tests.
+- A nightly workflow runs the property and fuzz suites at depth on a
+  fresh seed, which it prints for the replay.
+- A browser journey over the reference app runs in CI on the stub model
+  (`pnpm test:e2e`), and `scripts/load/chat.k6.js` is a k6 load script
+  for `/api/chat` on the stub model.
 
 ### Deprecated
 
 - `intelligo add admin-page`: superseded by the `admin-console` item, which
   ships the same route; delete the generated page before installing it.
+- `checkQuota` (`@intelligo-dev/billing`, INTELLIGO_DEP0001) is removed in
+  2.0.0: call `reserveQuota` to admit a run or `estimateQuota` for a
+  read-only estimate.
+- A credit bundle's `credits` and `priceUsd` (INTELLIGO_DEP0002,
+  INTELLIGO_DEP0003) are removed in 2.0.0: give `grant` and `price` as
+  `{ amount, currency }` in micros. The `billing-settings` item stops
+  reading them in the same release.
+
+### Fixed
+
+- The maintenance route `intelligo add maintenance` writes now purges
+  accounts whose deletion grace period has ended (`purgeDeletedAccounts`,
+  forgetting the actor in the audit trail first) and prunes read
+  notifications older than 90 days. Since 1.2.0 only the reference app
+  did, so in an app created from the template a deleted account was
+  never removed. A test now holds the template to every framework step
+  the reference app's route runs.
+- A partial refund handled while its credit purchase was still waiting
+  for payment took nothing back, and the grant that followed credited
+  the whole purchase. Granting a purchase now reads the payment's
+  refunds from Stripe and takes back their share, under the same key
+  `charge.refunded` uses, so a refund is never taken back twice. A
+  purchase granted from a session that names its payment intent costs
+  one Stripe read per delivery.
+- `convert` (`@intelligo-dev/core/money`) multiplied the amount by the
+  rate in floating point, so where that product passed 2^53 (a few
+  dollars and up at a rate in the thousands) a result could land one
+  micro under or over the rounded-up quotient. It now computes the
+  product and the rounding exactly, and a charge converted at a rate is
+  never short of its cost.
+- A database connection lost while a query held it (the server
+  restarting, the backend terminated, the network dropping) raised an
+  uncaught exception besides rejecting that query, which ends a Node
+  process. `@intelligo-dev/core/db` now listens for the error on every
+  connection its pool opens, on both drivers: the query rejects, and the
+  pool replaces the connection.
+- `@intelligo-dev/billing`: a local-payment callback or poll naming an
+  invoice id with a NUL character failed the request with a database
+  error. Postgres cannot hold that character, so the id now names no
+  invoice: `settlePendingLocalInvoices` settles nothing and
+  `settleLocalInvoice` answers `payment_not_found`.
+- The registry's server actions check what a client sends before calling
+  a service. `setConversationPinned` and `setConversationShared` take only
+  a boolean, `voteMessage` only `up`, `down` or null, and
+  `getUsagePeriodSummary` only a known period; `saveArtifactVersion` and
+  `advanceStep` parse their input first. A value the page never sends is
+  refused instead of being stored in conversation metadata or handed to
+  the feedback event or `onStepSubmit`. `advanceStep` resolves the
+  signed-in caller before it runs `onStepSubmit`.
+- `saveMessageAsArtifact` saves the stored reply's text, read from the
+  reader's own conversation, instead of the text the page sends with it.
+  It takes `{ conversationId, messageId, title? }`, and refuses a message
+  that is not an assistant reply in that conversation. It needs the
+  transcript the chat transport stores: with `persist: false` or a
+  custom `persist`, every save is refused with the new
+  `actions.unstoredArtifact` message. Run `intelligo sync` to pick up
+  both.
+
+### Security
+
+- The first turn of a new conversation read every message the client
+  sent before its own as history, though the conversation held none, so
+  a client could put words in the assistant's or a tool's mouth. A
+  conversation that does not exist yet holds nothing before the message
+  being sent, so that message is now all the model reads, all that is
+  stored and what the title comes from, as on every later turn with the
+  transport's own persistence.
+- Provider metadata a client put on a user message's text or data part
+  reached the provider as that part's options (an Anthropic cache
+  breakpoint, for one), and was stored with the message. A user
+  message's parts now lose their provider metadata the way file parts
+  already did; an assistant's keep theirs.
+
+### Upgrading
+
+`intelligo upgrade --check` lists the maintenance route (template
+1.4.0). An app that added the route before this release adds the two
+steps by hand, as `intelligo add maintenance` now writes them.
 
 ## [1.2.4] — 2026-10-21
 
